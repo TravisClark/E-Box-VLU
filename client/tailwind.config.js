@@ -3,16 +3,18 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        heavyBlue: "#0060FF",
+        lightBlue: "#3F80FF",
+        lightGray: "#757575",
+        defaultGray: "#AEB2BB",
+      },
+    },
     fontFamily: {
       sans: ["Roboto", ...fontFamily.sans],
     },
-    colors: {
-      heavyBlue: "#0060FF",
-      lightBlue: "#3F80FF",
-      lightGray: "#757575",
-      gray: "#AEB2BB",
-    },
+    
     screens: {
       sm: "480px",
       // => @media (min-width: 480px) { Mobile }
