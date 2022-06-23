@@ -4,6 +4,7 @@ import Layout from "./components/Layout/Layout";
 import Ebox from "./pages/Ebox";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
+import ViewQuestions from "./pages/ViewQuestions";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route path="/E-boxVLU/login">
           <Login />
+        </Route>
+        <Route path="/E-boxVLU/Home">
+          <ViewQuestions/>
         </Route>
         <Route path="*">
           <PageNotFound/>

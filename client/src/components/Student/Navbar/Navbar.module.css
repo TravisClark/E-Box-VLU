@@ -53,13 +53,14 @@
   }
   
   .mobileNavClose {
-    display: flex;
+    display: none;
     animation: navClose 0.5s forwards;
   }
   
   @keyframes navClose {
     from {
       transform: translateX(0%);
+      /* display: flex; */
     }
     to {
       transform: translateX(100%);
@@ -70,9 +71,11 @@
   @keyframes navOpen {
     from {
       transform: translateX(100%);
+      display: none;
     }
     to {
       transform: translateX(0%);
+      display: flex;
     }
   }
   
