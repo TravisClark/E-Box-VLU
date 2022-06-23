@@ -1,0 +1,15 @@
+.downArrow{
+    animation: downArrowAnimation 2s forwards infinite;
+}
+
+@keyframes downArrowAnimation {
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(70%);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}

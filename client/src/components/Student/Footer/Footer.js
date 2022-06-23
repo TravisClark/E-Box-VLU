@@ -4,7 +4,7 @@ import Container from "../../UI/Container";
 import houseIcon from "../../../assets/house.png";
 function Footer() {
   return (
-    <footer>
+    <footer id='footer'>
       <Container className="flex flex-col px-10 items-center pt-16 bg-black min-w-full ">
         <div className="flex flex-col min-w-sm space-y-8 md:flex-row md:space-y-0 md:space-x-40 md:justify-around">
           <div className="md:mb-20 md:w-1/2">
