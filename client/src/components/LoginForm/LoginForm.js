@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useRef} from "react";
 import Button from "../UI/Button";
 import Container from "../UI/Container";
 function LoginForm() {
+  const usernameRef = useRef();
+  const passwordRef = useRef();
   return (
     <form>
       <Container className="absolute min-w-full min-h-full p-0 top-0 flex items-center justify-center">
@@ -15,11 +17,15 @@ function LoginForm() {
               type="text"
               className="p-4 bg-gray-700 rounded-md text-white outline-none"
               placeholder="Nhập tài khoản"
+              required
+              ref={usernameRef}
             />
             <input
               type="password"
               className="p-4 bg-gray-700 rounded-md text-white outline-none"
               placeholder="Nhập mật khẩu"
+              required
+              ref={passwordRef}
             />
             <Button title='Đăng Nhập' className="bg-heavyBlue text-white"/>
             <span className="text-gray-400 italic">*Lưu ý: Chỉ sinh viên khoa CNTT được đăng nhập vào hệ thống!</span>

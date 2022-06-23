@@ -82,9 +82,21 @@ function Navbar() {
           </Link>
         </div>
         <button className={hamBtnClass} onClick={openNavHandler}>
-          <span className={classes["hamburger-top"]}></span>
-          <span className={classes["hamburger-middle"]}></span>
-          <span className={classes["hamburger-bottom"]}></span>
+          <span
+            className={`${classes["hamburger-top"]} ${
+              changeBgColor && "bg-black"
+            }`}
+          ></span>
+          <span
+            className={`${classes["hamburger-middle"]} ${
+              changeBgColor && "bg-black"
+            }`}
+          ></span>
+          <span
+            className={`${classes["hamburger-bottom"]} ${
+              changeBgColor && "bg-black"
+            }`}
+          ></span>
         </button>
         <div
           className={`${
