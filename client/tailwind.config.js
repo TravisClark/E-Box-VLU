@@ -9,6 +9,7 @@ module.exports = {
         lightBlue: "#3F80FF",
         lightGray: "#757575",
         defaultGray: "#AEB2BB",
+        heavyGray: '#444444'
       },
     },
     fontFamily: {

@@ -12,18 +12,3 @@ background: linear-gradient(150deg, rgba(89,149,238,0.8004866180048662) 3%, rgba
     background-repeat: no-repeat;
     background-image: url("../../../assets/school.png");
 }
-.downArrow{
-    animation: downArrowAnimation 2s forwards infinite;
-}
-
-@keyframes downArrowAnimation {
-    0%{
-        transform: translateY(0);
-    }
-    50%{
-        transform: translateY(70%);
-    }
-    100%{
-        transform: translateY(0);
-    }
-}
