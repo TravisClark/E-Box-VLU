@@ -31,8 +31,8 @@ class UserController {
         }
     };
 
-    //[POST] /user/api/check_account
-    check_account = async (req, res, next) => {
+    //[POST] /user/api/login
+    login = async (req, res, next) => {
         try {
             const formData = req.body;
             var username = formData.username;
@@ -54,6 +54,7 @@ class UserController {
         }
     };
 
+    //[POST] /user/api/check_account
     change_password = async (req, res, next) => {
         try {
             const formData = req.body;
@@ -63,7 +64,7 @@ class UserController {
             else if(!formData.new_password === formData.re_new_password) {
                 res.json({ err: 'Vui long kiem tra lai password va re-enter password'})
             } else{
-                
+
             }
 
         } catch (err) {
