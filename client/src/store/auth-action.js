@@ -14,6 +14,8 @@ export const loginRequest = (authData) => {
         if(!request.ok){
             return console.log('Error')
         }
+        const responseData = await request.json();
+         console.log(responseData)
     };
     try {
         await sendRequest();
