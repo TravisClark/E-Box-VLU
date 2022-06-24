@@ -5,6 +5,6 @@ const userController = require('../app/controllers/UserController');
 
 router.post('/api/check_account', userController.check_account);
 router.post('/api/add_user', userController.add_user);
-router.get('/', userController.index);
+router.get('/api/list_users', userController.index);
 
 module.exports = router;
