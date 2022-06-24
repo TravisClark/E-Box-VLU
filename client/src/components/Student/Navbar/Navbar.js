@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Container from "../../UI/Container";
 import { Link } from "react-router-dom";
 import classes from "./Navbar.module.css";
+import { useEffect } from "react";
 
 function Navbar() {
   const [changeBgColor, setChangeBgColor] = useState(false);
@@ -22,6 +23,19 @@ function Navbar() {
   const openNavHandler = () => {
     setNavbarIsOpen((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const responseData = await fetch(
+          `http://localhost:5000/user/api/list_users`
+        );
+        console.log(responseData.json());
+      } catch (err) {}
+    };
+    fetchPlaces();
+  }, []);
+  
   return (
     <nav>
       <Container
