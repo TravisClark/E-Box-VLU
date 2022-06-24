@@ -1,7 +1,7 @@
 import { authActions } from "./auth-slice";
 
 
-const API_KEY = "";
+const API_KEY = "http://localhost:5000/user/api/login";
 
 export const loginRequest = (authData) => {
   return async (dispatch) => {
@@ -12,14 +12,14 @@ export const loginRequest = (authData) => {
             headers: {'Content-Type': 'application/json'}
         })
         if(!request.ok){
-            
+            return console.log('Error')
         }
     };
     try {
-        // await sendRequest();
+        await sendRequest();
         console.log(authData)
         await dispatch(authActions.loginHandler(authData))
-        console.log('Authenticate successfully!')
+        // console.log('Authenticate successfully!')
     } catch (error) {
         alert(error)
     }
