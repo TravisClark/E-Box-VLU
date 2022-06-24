@@ -38,15 +38,15 @@ class UserController {
             var username = formData.username;
             var password = formData.password;
             UserModel.findOne({
-                username: username,
-                password: password,
+                username,
+                password,
             }).then((data) => {
                 if (data) {
-                    res.json('Dang nhap thanh cong');
+                    res.status(200).json('Dang nhap thanh cong');
                 } else {
-                    res.json({
+                    return next(res.status(404).json({
                         err: 'Tai khoan hoac mat khau khong chinh xac',
-                    });
+                    })); 
                 }
             });
         } catch (err) {
