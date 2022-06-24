@@ -6,5 +6,6 @@
         "titleBar.activeForeground": "#e7e7e7",
         "titleBar.inactiveBackground": "#2566a799",
         "titleBar.inactiveForeground": "#e7e7e799"
-    }
+    },
+    "svn.ignoreMissingSvnWarning": true
 }
