@@ -54,7 +54,22 @@ class UserController {
         }
     };
 
-    change_password = async (req, res, next) => {};
+    change_password = async (req, res, next) => {
+        try {
+            const formData = req.body;
+            if(!formData.password){
+                res.json({err: 'Vui long nhap password'});
+            }
+            else if(!formData.new_password === formData.re_new_password) {
+                res.json({ err: 'Vui long kiem tra lai password va re-enter password'})
+            } else{
+                
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
+    };
 }
 
 module.exports = new UserController();
