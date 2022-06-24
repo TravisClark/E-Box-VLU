@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../../UI/Button";
 import classes from "./IntroContent.module.css";
 import vluIcon from "../../../assets/u48.png";
+import { Link } from "react-router-dom";
 function IntroContent() {
   return (
     <div className="absolute flex flex-col w-full p-4 space-y-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center items-center sm:p-20 md:max-w-4xl sm:max-w-xl">
@@ -24,10 +25,10 @@ function IntroContent() {
           d="M11.178 19.569a.998.998 0 0 0 1.644 0l9-13A.999.999 0 0 0 21 5H3a1.002 1.002 0 0 0-.822 1.569l9 13z"
         ></path>
       </svg>
-      <Button
-        title="Đăng Nhập"
-        className="bg-black text-white hover:bg-white hover:text-black transition"
-      />
+      <Link
+        className="bg-black text-white py-4 px-8 font-bold rounded-md hover:bg-white hover:text-black transition"
+        to='E-boxVlu/login'
+      >Đăng Nhập</Link>
     </div>
   );
 }
