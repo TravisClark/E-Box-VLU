@@ -1,5 +1,6 @@
 import { authActions } from "./auth-slice";
 
+
 const API_KEY = "";
 
 export const loginRequest = (authData) => {
@@ -15,7 +16,8 @@ export const loginRequest = (authData) => {
         }
     };
     try {
-        await sendRequest();
+        // await sendRequest();
+        console.log(authData)
         await dispatch(authActions.loginHandler(authData))
         console.log('Authenticate successfully!')
     } catch (error) {
