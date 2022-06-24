@@ -4,21 +4,21 @@ const Schema = mongoose.Schema;
 
 const User = new Schema(
     {
-        id_user: { 
-            type: Number
+        id_user: {
+            type: Number,
         },
         username: {
             type: 'string',
             maxlength: 255,
             required: true,
-            unique: true
+            unique: true,
         },
-        password: { 
-            type: 'string', 
+        password: {
+            type: 'string',
             maxlength: 255,
             required: true,
         },
-        role_name: { 
+        role_name: {
             type: 'string',
             required: true,
             default: 'Sinh vien',
@@ -29,6 +29,6 @@ const User = new Schema(
     },
 );
 
-User.plugin(AutoIncrement, {inc_field: 'id_user'})
+User.plugin(AutoIncrement, { inc_field: 'id_user' });
 
 module.exports = mongoose.model('User', User);
