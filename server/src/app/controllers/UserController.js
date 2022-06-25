@@ -1,8 +1,8 @@
 const UserModel = require('../models/UserModel');
 
 class UserController {
-    //[GET] http://localhost:5000/user/
-    index = async (req, res) => {
+    //[GET] http://localhost:5000/user/api/list_users
+    list_users = async (req, res) => {
         try {
             const users = await UserModel.find();
             res.json(users);
@@ -58,22 +58,33 @@ class UserController {
     login = async (req, res, next) => {
         try {
             const formData = req.body;
-            var username = formData.username;
-            var password = formData.password;
-            UserModel.findOne({
-                username,
-                password,
-            }).then((data) => {
-                if (data) {
-                    res.status(200).json('Dang nhap thanh cong');
-                } else {
-                    return next(
-                        res.status(404).json({
-                            err: 'Tai khoan hoac mat khau khong chinh xac',
-                        }),
-                    );
-                }
-            });
+            var data_username = formData.username;
+            var data_password = formData.password;
+            var username = data_username.replace(/\s+/g, '');
+            var password = data_password.replace(/\s+/g, '');
+            if((username == null || username === '') || (password == null || password === '')) {
+                return next(
+                    res.status(401).json({
+                        err: 'username va password khong duoc bo trong',
+                    }),
+                );
+            }
+            else{
+                UserModel.findOne({
+                    username,
+                    password,
+                }).then((data) => {
+                    if (data) {
+                        res.status(200).json('Dang nhap thanh cong');
+                    } else {
+                        return next(
+                            res.status(404).json({
+                                err: 'Tai khoan hoac mat khau khong chinh xac',
+                            }),
+                        );
+                    }
+                });
+            }
         } catch (err) {
             console.log(err);
         }
