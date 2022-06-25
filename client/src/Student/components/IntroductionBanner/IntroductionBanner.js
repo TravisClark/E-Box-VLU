@@ -1,6 +1,7 @@
 import React from "react";
 import introVideo from "../../../assets/[VLU] VAN LANG UNIVERSITY CAMPUS TOUR _ 2021 (online-video-cutter.com).mp4";
-import Container from "../../UI/Container";
+import Container from "../UI/Container";
+
 import classes from "./IntroductionBanner.module.css";
 
 function IntroductionBanner(props) {
