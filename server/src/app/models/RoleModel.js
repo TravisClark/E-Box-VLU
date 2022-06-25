@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
-const slug = require('mongoose-slug-generator');
 const NewSchema = mongoose.Schema;
-
-mongoose.plugin(slug);
 
 const Role = new NewSchema({
     id_role: { type: Number },
