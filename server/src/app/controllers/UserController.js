@@ -1,4 +1,6 @@
 const UserModel = require('../models/UserModel');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 class UserController {
     //[GET] http://localhost:5000/user/api/list_users
@@ -70,20 +72,24 @@ class UserController {
                 );
             }
             else{
-                UserModel.findOne({
+                const user = await UserModel.findOne({
                     username,
                     password,
-                }).then((data) => {
-                    if (data) {
-                        res.status(200).json('Dang nhap thanh cong');
-                    } else {
-                        return next(
-                            res.status(404).json({
-                                err: 'Tai khoan hoac mat khau khong chinh xac',
-                            }),
-                        );
-                    }
                 });
+                
+                if(!user){
+                    return next(
+                        res.status(401).json({
+                            err: 'Tai khoan hoac mat khau khong chinh xac',
+                        }),
+                    );
+                }else{
+                    res.status(201).json({
+                        username: user.username,
+                        role_name: user.role_name,
+                        token: generateToken(user.username,user.role_name),
+                    });
+                }
             }
         } catch (err) {
             console.log(err);
@@ -157,5 +163,11 @@ class UserController {
         }
     };
 }
+
+const generateToken = (username,role_name) => {
+    return jwt.sign({ username, role_name }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: '1d',
+    });
+};
 
 module.exports = new UserController();
