@@ -10,20 +10,18 @@ export const loginRequest = (authData) => {
             method: 'POST',
             body: JSON.stringify({username: authData.username, password: authData.password}),
             headers: {'Content-Type': 'application/json'}
-        })
+          })
+          const responseData = await request.json();
         if(!request.ok){
-            return console.log('Error')
+            throw new Error(responseData.err)
         }
-        const responseData = await request.json();
-         console.log(responseData)
-    };
-    try {
-        await sendRequest();
-        console.log(authData)
         await dispatch(authActions.loginHandler(authData))
-        // console.log('Authenticate successfully!')
-    } catch (error) {
-        alert(error)
+    };
+    try{
+      await sendRequest()
+    }
+    catch(err){
+      alert(err)
     }
   };
 };

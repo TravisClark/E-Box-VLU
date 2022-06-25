@@ -1,6 +1,7 @@
 import React from 'react'
+import IntroductionBanner from '../components/IntroductionBanner/IntroductionBanner'
 import LoginForm from '../components/LoginForm/LoginForm'
-import IntroductionBanner from '../components/Student/IntroductionBanner/IntroductionBanner'
+
 
 function Login() {
   return (

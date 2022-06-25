@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import Container from "../../UI/Container";
+
 import { Link } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import { useEffect } from "react";
+import Container from "../UI/Container";
+import { useSelector } from "react-redux";
 
 function Navbar() {
   const [changeBgColor, setChangeBgColor] = useState(false);
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
+  const {isLoggedIn} = useSelector(state => state.auth);
+  const {username} = useSelector(state => state.auth.account);
 
   const changeNavbarColor = () => {
     if (window.scrollY > 50) {
@@ -25,15 +29,6 @@ function Navbar() {
   };
 
   useEffect(() => {
-    const fetchPlaces = async () => {
-      try {
-        const responseData = await fetch(
-          `http://localhost:5000/user/api/list_users`
-        );
-        console.log(responseData.json());
-      } catch (err) {}
-    };
-    fetchPlaces();
   }, []);
   
   return (
@@ -72,7 +67,7 @@ function Navbar() {
             }`}
             href="#services"
           >
-            Dịch Vụ
+            {!isLoggedIn ? 'Dịch Vụ' : username}
           </a>
           <a
             className={`font-medium  transition duration-500 ${
@@ -92,7 +87,7 @@ function Navbar() {
             }`}
             to={"E-boxVlu/login"}
           >
-            Đăng Nhập
+            {!isLoggedIn ? 'Đăng Nhập' : "Đăng Xuất"}
           </Link>
         </div>
         <button className={hamBtnClass} onClick={openNavHandler}>
