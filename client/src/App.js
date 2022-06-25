@@ -1,10 +1,11 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Layout from "./components/Layout/Layout";
-import Ebox from "./pages/Ebox";
-import Login from "./pages/Login";
-import PageNotFound from "./pages/PageNotFound";
-import ViewQuestions from "./pages/ViewQuestions";
+import Layout from "./Student/components/Layout/Layout";
+import Ebox from "./Student/pages/Ebox";
+import Login from "./Student/pages/Login";
+import PageNotFound from "./Student/pages/PageNotFound";
+import ViewQuestions from "./Student/pages/ViewQuestions";
+
 
 function App() {
   return (

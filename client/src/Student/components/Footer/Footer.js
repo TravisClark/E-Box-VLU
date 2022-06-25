@@ -1,7 +1,8 @@
 import React from "react";
 import vluIcon from "../../../assets/_hjkj3598HJ_logo2.png";
-import Container from "../../UI/Container";
+
 import houseIcon from "../../../assets/house.png";
+import Container from "../UI/Container";
 function Footer() {
   return (
     <footer id='footer'>
