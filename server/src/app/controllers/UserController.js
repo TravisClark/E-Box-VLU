@@ -1,7 +1,7 @@
 const UserModel = require('../models/UserModel');
 
 class UserController {
-    //[GET] /user/
+    //[GET] http://localhost:5000/user/
     index = async (req, res) => {
         try {
             const users = await UserModel.find();
@@ -11,27 +11,46 @@ class UserController {
         }
     };
 
-    //[POST] /user/api/add_user
+    //[POST] http://localhost:5000/user/api/add_user
     add_user = async (req, res, next) => {
         try {
             const formData = req.body;
-            var username = formData.username;
+            var data_username = formData.username;
+            var username = data_username.replace(/\s+/g, '');
+            const format = /[a-z || A-Z || 0-9]/g;
+            if(username == null || username === ''){
+                return next(res.status(401).json({
+                    err: 'username khong duoc bo trong',
+                })); 
+            }
+            else if(username.length < 5 || username.length > 20){
+                return next(res.status(411).json({
+                    err: 'do dai cua username chi tu 5 den 20 ky tu',
+                })); 
+            }
+            else if(username.match(format).length != username.length){
+                return next(res.status(411).json({
+                    err: 'Sai format',
+                })); 
+            }else {
+                formData.password = `VLU${username.trim().slice(-5)}`;
 
-            formData.password = `VLU${username.trim().slice(-5)}`;
-
-            const user = new UserModel(formData);
-            await user
-                .save()
-                .then(() => {
-                    res.send({ Message: 'Tao tk thanh cong' });
-                })
-                .catch(next);
+                const user = new UserModel(formData);
+                await user
+                    .save()
+                    .then(() => {
+                        res.status(200).json({
+                            Message: 'Tao tai khoan thanh cong',
+                        });
+                    })
+                    .catch(next);
+            }
         } catch (err) {
             console.log(err);
         }
     };
 
-    //[POST] /user/api/login
+    //[POST] http://localhost:5000/user/api/login
     login = async (req, res, next) => {
         try {
             const formData = req.body;
@@ -54,7 +73,7 @@ class UserController {
         }
     };
 
-    //[POST] /user/api/check_account
+    //[POST] http://localhost:5000/user/api/check_account
     change_password = async (req, res, next) => {
         try {
             const formData = req.body;
@@ -63,9 +82,8 @@ class UserController {
             }
             else if(!formData.new_password === formData.re_new_password) {
                 res.json({ err: 'Vui long kiem tra lai password va re-enter password'})
-            } else{
-
-            }
+            } 
+            
 
         } catch (err) {
             console.log(err);
