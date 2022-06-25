@@ -18,21 +18,25 @@ class UserController {
             var data_username = formData.username;
             var username = data_username.replace(/\s+/g, '');
             const format = /[a-z || A-Z || 0-9]/g;
-            if(username == null || username === ''){
-                return next(res.status(401).json({
-                    err: 'username khong duoc bo trong',
-                })); 
-            }
-            else if(username.length < 5 || username.length > 20){
-                return next(res.status(411).json({
-                    err: 'do dai cua username chi tu 5 den 20 ky tu',
-                })); 
-            }
-            else if(username.match(format).length != username.length){
-                return next(res.status(411).json({
-                    err: 'Sai format',
-                })); 
-            }else {
+            if (username == null || username === '') {
+                return next(
+                    res.status(401).json({
+                        err: 'username khong duoc bo trong',
+                    }),
+                );
+            } else if (username.length < 5 || username.length > 20) {
+                return next(
+                    res.status(411).json({
+                        err: 'do dai cua username chi tu 5 den 20 ky tu',
+                    }),
+                );
+            } else if (username.match(format).length != username.length) {
+                return next(
+                    res.status(411).json({
+                        err: 'Sai format',
+                    }),
+                );
+            } else {
                 formData.password = `VLU${username.trim().slice(-5)}`;
 
                 const user = new UserModel(formData);
@@ -63,9 +67,11 @@ class UserController {
                 if (data) {
                     res.status(200).json('Dang nhap thanh cong');
                 } else {
-                    return next(res.status(404).json({
-                        err: 'Tai khoan hoac mat khau khong chinh xac',
-                    })); 
+                    return next(
+                        res.status(404).json({
+                            err: 'Tai khoan hoac mat khau khong chinh xac',
+                        }),
+                    );
                 }
             });
         } catch (err) {
@@ -77,14 +83,13 @@ class UserController {
     change_password = async (req, res, next) => {
         try {
             const formData = req.body;
-            if(!formData.password){
-                res.json({err: 'Vui long nhap password'});
+            if (!formData.password) {
+                res.json({ err: 'Vui long nhap password' });
+            } else if (!formData.new_password === formData.re_new_password) {
+                res.json({
+                    err: 'Vui long kiem tra lai password va re-enter password',
+                });
             }
-            else if(!formData.new_password === formData.re_new_password) {
-                res.json({ err: 'Vui long kiem tra lai password va re-enter password'})
-            } 
-            
-
         } catch (err) {
             console.log(err);
         }
