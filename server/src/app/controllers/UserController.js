@@ -32,7 +32,7 @@ class UserController {
                 );
             } else if (username.match(format).length != username.length) {
                 return next(
-                    res.status(411).json({
+                    res.status(412).json({
                         err: 'Sai format',
                     }),
                 );
@@ -90,16 +90,67 @@ class UserController {
         }
     };
 
-    //[POST] http://localhost:5000/user/api/check_account
+    //[PUT] http://localhost:5000/user/api/change_password
     change_password = async (req, res, next) => {
         try {
-            const formData = req.body;
-            if (!formData.password) {
-                res.json({ err: 'Vui long nhap password' });
-            } else if (!formData.new_password === formData.re_new_password) {
-                res.json({
+            const formData = req.body; 
+            const username = formData.username; 
+
+            const user = await UserModel.findOne({username});
+            
+            var password_real = user.password;
+            var data_password = formData.password;
+            var data_new_password = formData.new_password;
+            var data_re_new_password = formData.re_new_password;
+            var password = data_password.replace(/\s+/g, '');
+            var new_password = data_new_password.replace(/\s+/g, '');
+            var re_new_password = data_re_new_password.replace(/\s+/g, '');
+            console.log(password_real,password);
+            const format = /[a-z || A-Z || 0-9]/g;
+            if (password == null || password === '') {
+                return next(
+                    res.status(401).json({
+                        err: 'password khong duoc bo trong',
+                    }),
+                );
+            }else if (!(password === password_real)) {
+                return next(
+                    res.status(412).json({
+                        err: 'Password khong chinh xac',
+                    }),
+                );
+            }else if (   new_password == null || re_new_password == null || 
+                        new_password === '' || re_new_password === ''   ){
+                return next(
+                    res.status(401).json({
+                        err: 'New password va Re-ent Password khong duoc bo trong',
+                    }),
+                );
+            }else if (new_password.length < 5 || new_password.length > 20){
+                return next(
+                    res.status(411).json({
+                        err: 'do dai cua username chi tu 5 den 20 ky tu',
+                    }),
+                );
+            }else if (new_password.match(format).length != new_password.length){
+                return next(
+                    res.status(412).json({
+                        err: 'Sai format',
+                    }),
+                );
+            }else if (!(new_password === re_new_password)) {
+                res.status(412).json({
                     err: 'Vui long kiem tra lai password va re-enter password',
                 });
+            }
+            else{
+                UserModel.findOneAndUpdate({username: username }, {password: new_password})
+                    .then(() => {
+                        res.status(200).json({
+                            Message: 'Thay doi mat khau thanh cong',
+                        });
+                    })
+                    .catch(next);
             }
         } catch (err) {
             console.log(err);
