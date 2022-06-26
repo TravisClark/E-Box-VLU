@@ -6,7 +6,7 @@
   "scripts": {
     "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write src/**/*.{js,json,scss}",
     "start": "nodemon --inspect src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "mongoose-slug-generator": "^1.0.4"
   },
   "devDependencies": {
+    "jest": "^28.1.1",
     "nodemon": "^2.0.18",
     "prettier": "^2.7.1"
   }

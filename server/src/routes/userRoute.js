@@ -4,9 +4,10 @@ const {checkLogin} = require('../middleware/Auth');
 
 const userController = require('../app/controllers/UserController');
 
-router.post('/api/login', userController.login);
-router.post('/api/add_user', userController.add_user);
-router.put('/api/change_password', userController.change_password);
-router.get('/api/list_users', checkLogin, userController.list_users);
+router.post('/login', userController.login);
+router.post('/add_user', userController.add_user);
+router.put('/change_password', userController.change_password);
+router.get('/account_info', checkLogin, userController.account_info);
+router.get('/list_users', userController.list_users);
 
 module.exports = router;
