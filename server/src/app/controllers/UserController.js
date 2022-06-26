@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 class UserController {
-    //[GET] http://localhost:5000/user/api/list_users
+    //[GET] http://localhost:5000/api/user/list_users
     list_users = async (req, res) => {
         try {
             const users = await UserModel.find();
@@ -13,34 +13,38 @@ class UserController {
         }
     };
 
-    //[POST] http://localhost:5000/user/api/add_user
+    //[POST] http://localhost:5000/api/user/add_user
     add_user = async (req, res, next) => {
         try {
+            //Get data from client
             const formData = req.body;
             var data_username = formData.username;
+            //format data_username
             var username = data_username.replace(/\s+/g, '');
             const format = /[a-z || A-Z || 0-9]/g;
-            if (username == null || username === '') {
+
+            if (username == null || username === '') { //check username is null or ''
                 return next(
                     res.status(401).json({
                         err: 'username khong duoc bo trong',
                     }),
                 );
-            } else if (username.length < 5 || username.length > 20) {
+            } else if (username.length < 5 || username.length > 20) { //check length of username
                 return next(
                     res.status(411).json({
                         err: 'do dai cua username chi tu 5 den 20 ky tu',
                     }),
                 );
-            } else if (username.match(format).length != username.length) {
+            } else if (username.match(format).length != username.length) { //check username for correct format
                 return next(
                     res.status(412).json({
                         err: 'Sai format',
                     }),
                 );
             } else {
+                //format password by username
                 formData.password = `VLU${username.trim().slice(-5)}`;
-
+                //Get data add new user
                 const user = new UserModel(formData);
                 await user
                     .save()
@@ -56,15 +60,18 @@ class UserController {
         }
     };
 
-    //[POST] http://localhost:5000/user/api/login
+    //[POST] http://localhost:5000/api/user/login
     login = async (req, res, next) => {
         try {
+            //Get data from client
             const formData = req.body;
             var data_username = formData.username;
             var data_password = formData.password;
+            //format data_username and password
             var username = data_username.replace(/\s+/g, '');
             var password = data_password.replace(/\s+/g, '');
-            if((username == null || username === '') || (password == null || password === '')) {
+            if((username == null || username === '') 
+                || (password == null || password === '')) { //check username and password is null or '' 
                 return next(
                     res.status(401).json({
                         err: 'username va password khong duoc bo trong',
@@ -72,18 +79,20 @@ class UserController {
                 );
             }
             else{
+                //Search user by username and password
                 const user = await UserModel.findOne({
                     username,
                     password,
                 });
                 
-                if(!user){
+                if(!user){ //Check if the user is found
                     return next(
                         res.status(401).json({
                             err: 'Tai khoan hoac mat khau khong chinh xac',
                         }),
                     );
                 }else{
+                    //Return user info and generate token
                     res.status(201).json({
                         username: user.username,
                         role_name: user.role_name,
@@ -96,24 +105,42 @@ class UserController {
         }
     };
 
-    //[PUT] http://localhost:5000/user/api/change_password
+    //[GET] http://localhost:5000/api/user/account_info
+    account_info = async (req, res) => {
+        try {
+            //Search user by token
+            const user = await UserModel.findOne({username: req.user.username});
+            //Return user info
+            res.status(200).json({
+                username: user.username,
+                role_name: user.role_name,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    //[PUT] http://localhost:5000/api/user/change_password
     change_password = async (req, res, next) => {
         try {
-            const formData = req.body; 
-            const username = formData.username; 
-
-            const user = await UserModel.findOne({username});
-            
+            //const username = formData.username; 
+            //Search user by token
+            const user = await UserModel.findOne({username: req.user.username});
+            //Get password of user
             var password_real = user.password;
+
+            //Get data from client
+            const formData = req.body; 
             var data_password = formData.password;
             var data_new_password = formData.new_password;
             var data_re_new_password = formData.re_new_password;
+            //format password, new password and re_new_password
             var password = data_password.replace(/\s+/g, '');
             var new_password = data_new_password.replace(/\s+/g, '');
             var re_new_password = data_re_new_password.replace(/\s+/g, '');
             console.log(password_real,password);
             const format = /[a-z || A-Z || 0-9]/g;
-            if (password == null || password === '') {
+            if (password == null || password === '') { //Check password is null or ''
                 return next(
                     res.status(401).json({
                         err: 'password khong duoc bo trong',
