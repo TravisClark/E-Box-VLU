@@ -9,13 +9,13 @@ const User = new Schema(
         },
         username: {
             type: 'string',
-            maxlength: 255,
+            maxlength: 20,
             required: true,
             unique: true,
         },
         password: {
             type: 'string',
-            maxlength: 255,
+            maxlength: 20,
             required: true,
         },
         role_name: {
