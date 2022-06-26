@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 
-import { Link } from "react-router-dom";
 import classes from "./Navbar.module.css";
 import { useEffect } from "react";
 import Container from "../UI/Container";
 import { useSelector } from "react-redux";
+import BeforeLogin from "./BeforeLogin";
+import AfterLoggedIn from "./AfterLoggedIn";
 
 function Navbar() {
   const [changeBgColor, setChangeBgColor] = useState(false);
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
-  const {isLoggedIn} = useSelector(state => state.auth);
-  const {username} = useSelector(state => state.auth.account);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { username } = useSelector((state) => state.auth.account || '');
 
   const changeNavbarColor = () => {
     if (window.scrollY > 50) {
@@ -28,9 +29,8 @@ function Navbar() {
     setNavbarIsOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {
-  }, []);
-  
+  useEffect(() => {}, []);
+
   return (
     <nav>
       <Container
@@ -58,38 +58,9 @@ function Navbar() {
             E-Box VLU
           </h1>
         </div>
-        <div className="hidden md:flex space-x-6">
-          <a
-            className={`font-medium  transition duration-500 ${
-              changeBgColor
-                ? "text-black hover:font-bold hover:text-black"
-                : "text-gray-400 hover:text-white"
-            }`}
-            href="#services"
-          >
-            {!isLoggedIn ? 'Dịch Vụ' : username}
-          </a>
-          <a
-            className={`font-medium  transition duration-500 ${
-              changeBgColor
-                ? "text-black hover:font-bold hover:text-black"
-                : "text-gray-400 hover:text-white"
-            }`}
-            href="#footer"
-          >
-            Liên Lạc
-          </a>
-          <Link
-            className={`font-medium  transition duration-500 ${
-              changeBgColor
-                ? "text-black hover:font-bold hover:text-black"
-                : "text-gray-400 hover:text-white"
-            }`}
-            to={"E-boxVlu/login"}
-          >
-            {!isLoggedIn ? 'Đăng Nhập' : "Đăng Xuất"}
-          </Link>
-        </div>
+        {!isLoggedIn ? <BeforeLogin openNavHandler={openNavHandler} changeBgColor={changeBgColor} navbarIsOpen={navbarIsOpen}/> : <AfterLoggedIn openNavHandler={openNavHandler} changeBgColor={changeBgColor} navbarIsOpen={navbarIsOpen} username={username}/>}
+        
+        {/* Mobile hamburger */}
         <button className={hamBtnClass} onClick={openNavHandler}>
           <span
             className={`${classes["hamburger-top"]} ${
@@ -107,21 +78,6 @@ function Navbar() {
             }`}
           ></span>
         </button>
-        <div
-          className={`${
-            navbarIsOpen ? classes.mobileNavOpen : classes.mobileNavClose
-          } z-10 absolute left-0 top-0 text-white font-semibold flex-col space-y-6 bg-black w-full h-screen items-center justify-center`}
-        >
-          <a onClick={openNavHandler} href="#footer">
-            Liên Lạc
-          </a>
-          <a onClick={openNavHandler} href="#services">
-            Dịch Vụ
-          </a>
-          <Link onClick={openNavHandler} to={"E-boxVlu/login"}>
-            Đăng Nhập
-          </Link>
-        </div>
       </Container>
     </nav>
   );

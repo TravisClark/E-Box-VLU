@@ -6,6 +6,8 @@ import { useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
 import Container from "../UI/Container";
 import useHttpClient from "../../../shared/hooks/http-hook";
+import Requests from "../../../shared/Api/Requests";
+
 function LoginForm() {
   const usernameRef = useRef();
   const passwordRef = useRef();
@@ -23,15 +25,16 @@ function LoginForm() {
 
     if (!username) {
       setUsernameEmpty(true);
+      password && setPasswordEmpty(false);
       return;
     } else if (!password) {
       setPasswordEmpty(true);
+      username && setUsernameEmpty(false);
       return;
     }
-    const API_KEY = "http://localhost:5000/user/api/login";
     try {
       await sendRequest(
-        API_KEY,
+        Requests.loginRequest,
         "POST",
         JSON.stringify({ username, password }),
         { "Content-Type": "application/json" }
@@ -60,7 +63,7 @@ function LoginForm() {
               />
               {IsUsernameEmpty && (
                 <h3 className="text-red-500 text-sm">
-                  Vui lòng nhập mật khẩu!
+                  Vui lòng nhập tài khoản!
                 </h3>
               )}
             </div>
@@ -73,7 +76,7 @@ function LoginForm() {
               />
               {isPasswordEmpty && (
                 <h3 className="text-red-500 text-sm">
-                  Vui lòng nhập tài khoản!
+                  Vui lòng nhập mật khẩu!
                 </h3>
               )}
             </div>
