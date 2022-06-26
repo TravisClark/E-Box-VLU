@@ -1,13 +1,14 @@
 const UserModel = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
+const { count } = require('../models/UserModel');
 require('dotenv').config();
 
 class UserController {
     //[GET] http://localhost:5000/api/user/list_users
     list_users = async (req, res) => {
         try {
-            const users = await UserModel.find();
-            res.json(users);
+            const users = await UserModel.find({});
+            res.status(200).json(users);
         } catch (err) {
             console.log(err);
         }
@@ -22,7 +23,8 @@ class UserController {
             //format data_username
             var username = data_username.replace(/\s+/g, '');
             const format = /[a-z || A-Z || 0-9]/g;
-
+            //Search and check username unique
+            const user = await UserModel.findOne({username});
             if (username == null || username === '') { //check username is null or ''
                 return next(
                     res.status(401).json({
@@ -41,7 +43,13 @@ class UserController {
                         err: 'Sai format',
                     }),
                 );
-            } else {
+            }else if (user) { //check username unique
+                return next(
+                    res.status(500).json({
+                        err: 'Username da ton tai', //field
+                    }),
+                );
+            }else {
                 //format password by username
                 formData.password = `VLU${username.trim().slice(-5)}`;
                 //Get data add new user
@@ -49,7 +57,7 @@ class UserController {
                 await user
                     .save()
                     .then(() => {
-                        res.status(200).json({
+                        res.status(201).json({
                             Message: 'Tao tai khoan thanh cong',
                         });
                     })
