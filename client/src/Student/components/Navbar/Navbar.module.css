@@ -57,6 +57,12 @@
     animation: navClose 0.5s forwards;
   }
   
+  .hamburger-top .active,
+  .hamburger-middle .active,
+  .hamburger-bottom .active{
+    background: #000 !important;
+  }
+  
   @keyframes navClose {
     from {
       transform: translateX(0%);
