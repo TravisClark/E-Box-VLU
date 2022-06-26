@@ -18,16 +18,6 @@ function AfterLoggedIn({
     <>
       {/* Desktop nav */}
       <div className="hidden md:flex space-x-6">
-        <a
-          className={`font-medium  transition duration-500 ${
-            changeBgColor
-              ? "text-black hover:font-bold hover:text-black"
-              : "text-gray-400 hover:text-white"
-          }`}
-          href="#services"
-        >
-          Câu Hỏi
-        </a>
         <span
           className={`font-medium  transition duration-500 ${
             changeBgColor
@@ -37,6 +27,16 @@ function AfterLoggedIn({
         >
           {username}
         </span>
+        <Link
+          className={`font-medium  transition duration-500 ${
+            changeBgColor
+              ? "text-black hover:font-bold hover:text-black"
+              : "text-gray-400 hover:text-white"
+          }`}
+          to='/E-boxVLU/change-password'
+        >
+          Đổi mật khẩu
+        </Link>
         <span
           className={`font-medium  transition duration-500 ${
             changeBgColor
@@ -57,9 +57,9 @@ function AfterLoggedIn({
         <span onClick={openNavHandler} to={"E-boxVlu/login"}>
           {username}
         </span>
-        <a onClick={openNavHandler} href="#footer">
-          Câu Hỏi
-        </a>
+        <Link to='/E-boxVLU/change-password' onClick={openNavHandler} href="#footer">
+          Đổi mật khẩu
+        </Link>
         <button onClick={logoutHandler}>Đăng Xuất</button>
       </div>
     </>

@@ -29,7 +29,11 @@ function Navbar() {
     setNavbarIsOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    return ()=>{
+      setNavbarIsOpen(false)
+    }
+  }, []);
 
   return (
     <nav>
