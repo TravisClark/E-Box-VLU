@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import IntroContent from "../components/IntroContent/IntroContent";
 import IntroductionBanner from "../components/IntroductionBanner/IntroductionBanner";
 import likeIcon from "../../assets/like (1).png";
@@ -6,8 +6,15 @@ import teamIcon from "../../assets/team.png";
 import clockIcon from "../../assets/clock (1).png";
 import Container from "../components/UI/Container";
 import descriptionIcon from "../../assets/description.jpg";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Ebox() {
+  const history = useHistory();
+  const {isLoggedIn} = useSelector(state => state.auth) 
+  useEffect(() => {
+    isLoggedIn && history.push('/E-boxVLU/Home')
+  }, [isLoggedIn, history]);
   return (
     <>
       <IntroductionBanner>
