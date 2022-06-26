@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
 import Layout from "./Student/components/Layout/Layout";
+import ChangePassword from "./Student/pages/ChangePassword";
 // import Ebox from "./Student/pages/Ebox";
 // import Login from "./Student/pages/Login";
 // import PageNotFound from "./Student/pages/PageNotFound";
@@ -34,6 +35,9 @@ function App() {
           </Route>
           <Route path="/E-boxVLU/Home">
             <ViewQuestions />
+          </Route>
+          <Route path="/E-boxVLU/change-password">
+            <ChangePassword />
           </Route>
           <Route path="*">
             <PageNotFound />
