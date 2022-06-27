@@ -2,20 +2,29 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const authSlice = createSlice({
     name: 'auth',
-    initialState: {isLoggedIn: false, account: {}},
+    initialState: {isLoggedIn: false, account: {}, token: ''},
     reducers:{
         loginHandler(state, action) {
-            localStorage.setItem('account', JSON.stringify(action.payload))
+            localStorage.setItem('token', JSON.stringify(action.payload.token))
             state.isLoggedIn = true;
+            state.token = action.payload
+        },
+        saveUserHandler(state, action) {
             state.account = action.payload
         },
         autoLoginHandler(state) {
-            state.account = JSON.parse(localStorage.getItem('account'));
-            state.account ? (state.isLoggedIn = true) : (state.isLoggedIn = false);
+            state.token = JSON.parse(localStorage.getItem('token'));
+            state.token ? (state.isLoggedIn = true) : (state.isLoggedIn = false);
         },
         logoutHandler(state) {
-            localStorage.removeItem('account');
+            state.account = {}
+            localStorage.removeItem('token')
             state.isLoggedIn = false;
+        },
+        changePasswordHandler(state, action) {
+            const {username, password} = action.payload;
+            localStorage.clear();
+            localStorage.setItem('account', JSON.stringify(username, password));
         }
     }
 })

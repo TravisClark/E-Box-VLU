@@ -1,17 +1,17 @@
 import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
-import Layout from "./Student/components/Layout/Layout";
-import ChangePassword from "./Student/pages/ChangePassword";
+import Layout from "./student/components/Layout/Layout";
+import ChangePassword from "./student/pages/ChangePassword";
 // import Ebox from "./Student/pages/Ebox";
 // import Login from "./Student/pages/Login";
 // import PageNotFound from "./Student/pages/PageNotFound";
 // import ViewQuestions from "./Student/pages/ViewQuestions";
 
-const Login = React.lazy(() => import("./Student/pages/Login"));
-const Ebox = React.lazy(() => import("./Student/pages/Ebox"));
-const PageNotFound = React.lazy(() => import("./Student/pages/PageNotFound"));
-const ViewQuestions = React.lazy(() => import("./Student/pages/ViewQuestions"));
+const Login = React.lazy(() => import("./student/pages/Login"));
+const Ebox = React.lazy(() => import("./student/pages/Ebox"));
+const PageNotFound = React.lazy(() => import("./student/pages/PageNotFound"));
+const ViewQuestions = React.lazy(() => import("./student/pages/ViewQuestions"));
 
 function App() {
   return (

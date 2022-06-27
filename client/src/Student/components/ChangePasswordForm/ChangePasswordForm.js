@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Button from "../UI/Button";
 import Container from "../UI/Container";
 import useHttpClient from "../../../shared/hooks/http-hook";
-import Requests from "../../../shared/Api/Requests";
+import Requests from "../../../shared/api/Requests";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
@@ -14,24 +14,35 @@ function ChangePasswordForm() {
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
   const history = useHistory();
-  const account = useSelector(state => state.auth.account);
+  const account = useSelector((state) => state.auth.account);
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const oldPw = oldPwRef.current.value.trim();
     const newPw = newPwRef.current.value.trim();
     const confirmNewPw = confirmNewPwRef.current.value.trim();
+    
     try {
       if (oldPw === "" || newPw === "" || confirmNewPw === "") {
         throw new Error("Please enter information");
       }
       await sendRequest(
         Requests.changePwRequest,
-        "POST",
-        JSON.stringify({ oldPw, newPw, confirmNewPw }),
-        { "Content-Type": "application/json" }
+        "PATCH",
+        JSON.stringify({
+          password: oldPw,
+          new_password: newPw,
+          re_new_password: confirmNewPw,
+
+        }),
+        { "Content-Type": "application/json",
+          Authentication: 'Bearer ' + account.token }
       );
-      await dispatch(authActions.loginHandler({username: account.username, newPw}))
-      history.push('/E-boxVLU/Home')
+      console.log('passed!')
+      await dispatch(
+        authActions.changePasswordHandler({ username: account.username, password: newPw })
+      );
+      history.push("/E-boxVLU/Home");
     } catch (error) {
       alert(error);
     }
@@ -44,9 +55,7 @@ function ChangePasswordForm() {
         >
           <div className="absolute top-0 bg-black w-full h-full opacity-70 lg:rounded"></div>
           <div className="flex flex-col space-y-8 w-2/3 z-10 lg:w-96 lg:px-10 lg:py-10">
-            <h1 className="text-2xl text-white font-bold z-10">
-              Đổi mật khẩu
-            </h1>
+            <h1 className="text-2xl text-white font-bold z-10">Đổi mật khẩu</h1>
             <div className="flex flex-col space-y-2">
               <input
                 type="password"
