@@ -77,6 +77,7 @@ class UserController {
             var data_password = formData.password;
             //format data_username and password
             var username = data_username.replace(/\s+/g, '');
+            console.log(username);
             var password = data_password.replace(/\s+/g, '');
             if((username == null || username === '') 
                 || (password == null || password === '')) { //check username and password is null or '' 
@@ -104,7 +105,7 @@ class UserController {
                     res.status(201).json({
                         username: user.username,
                         role_name: user.role_name,
-                        token: generateToken(user.username,user.role_name),
+                        token: generateToken(user.username, user.role_name),
                     });
                 }
             }
@@ -117,6 +118,7 @@ class UserController {
     account_info = async (req, res) => {
         try {
             //Search user by token
+            // console.log(req.user.username)
             const user = await UserModel.findOne({username: req.user.username});
             //Return user info
             res.status(200).json({
@@ -199,7 +201,7 @@ class UserController {
     };
 }
 
-const generateToken = (username,role_name) => {
+const generateToken = (username, role_name) => {
     return jwt.sign({ username, role_name }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '1d',
     });
