@@ -9,7 +9,7 @@ const PORT = process.env.PORT;
 
 const route = require('./routes');
 
-const URI_DATABASE = process.env.URI_DATABASE;
+const URI_DATABASE = process.env.URI_DATABASE || 8080;
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,6 +37,8 @@ app.use(cors());
 
 //Connecting router
 route(app);
+
+module.exports = app;
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);

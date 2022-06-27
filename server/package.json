@@ -6,7 +6,8 @@
   "scripts": {
     "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write src/**/*.{js,json,scss}",
     "start": "nodemon --inspect src/index.js",
-    "test": "jest"
+    "test": "jest --watch --runInBand --detectOpenHandles",
+    "dev": "node-dev --inspect src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,11 +21,13 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.0",
     "mongoose-sequence": "^5.3.1",
-    "mongoose-slug-generator": "^1.0.4"
+    "mongoose-slug-generator": "^1.0.4",
+    "supertest": "^6.2.3"
   },
   "devDependencies": {
     "jest": "^28.1.1",
     "nodemon": "^2.0.18",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5"
   }
 }
