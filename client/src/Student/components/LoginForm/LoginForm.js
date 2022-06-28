@@ -15,8 +15,10 @@ function LoginForm() {
   const history = useHistory();
   const [IsUsernameEmpty, setUsernameEmpty] = useState(false);
   const [isPasswordEmpty, setPasswordEmpty] = useState(false);
-  const [account, setAccount] = useState()
-  const { sendRequest } = useHttpClient();
+  // const [error, setError] = useState()
+  const [account, setAccount] = useState();
+  const { sendRequest, error } = useHttpClient();
+  console.log(error);
   // const [errorSubmitted, setErrorSubmitted] = useState(false);
 
   const onSubmitHandler = async (e) => {
@@ -33,7 +35,9 @@ function LoginForm() {
       username && setUsernameEmpty(false);
       return;
     }
-    const fetchData = async ()=> {
+    setUsernameEmpty(false);
+    setPasswordEmpty(false);
+    const fetchData = async () => {
       try {
         const requestData = await sendRequest(
           Requests.loginRequest,
@@ -41,23 +45,23 @@ function LoginForm() {
           JSON.stringify({ username, password }),
           { "Content-Type": "application/json" }
         );
-        setAccount(requestData)
-        console.log(requestData)
+        setAccount(requestData);
       } catch (error) {
-        alert(error);
+        // setError(error);
       }
-    }
-    await fetchData()
+    };
+    await fetchData();
   };
+
   useEffect(() => {
-    const storeData = async () => {
-      if(account){
+    if (account) {
+      const storeData = async () => {
         await dispatch(authActions.loginHandler(account));
         await history.push("/E-boxVLU/Home");
-      } 
+      };
+      storeData();
     }
-    storeData();
-  }, [account,dispatch, history]);
+  }, [account, dispatch, history]);
   return (
     <form onSubmit={onSubmitHandler}>
       <Container className="absolute min-w-full min-h-full p-0 top-0 flex items-center justify-center">
@@ -92,6 +96,7 @@ function LoginForm() {
                   Vui lòng nhập mật khẩu!
                 </h3>
               )}
+              {error && <h3 className="text-red-500 text-sm">{error.replace('Error:', '')}</h3>}
             </div>
             <Button title="Đăng Nhập" className={` text-white bg-heavyBlue`} />
             <span className="text-gray-500 italic">

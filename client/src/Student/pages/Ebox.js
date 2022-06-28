@@ -8,6 +8,7 @@ import Container from "../components/UI/Container";
 import descriptionIcon from "../../assets/description.jpg";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import TriangleIcon from "../components/UI/TriangleIcon";
 
 function Ebox() {
   const history = useHistory();
@@ -22,7 +23,9 @@ function Ebox() {
       </IntroductionBanner>
       <section id="services">
         <Container className="flex flex-col relative items-center min-w-full p-0 mb-20 space-y-6">
-          <div className="absolute top-0 h-full w-full bg-heavyBlue xl:h-80 xl:-top-20 xl:rounded-xl xl:w-10/12"></div>
+          <div className="absolute top-0 h-full w-full bg-heavyBlue xl:h-80 xl:-top-20 xl:rounded-xl xl:w-10/12">
+            <TriangleIcon/>
+          </div>
           <div className="flex flex-col space-y-6 mx-auto text-center text-white z-10">
             <h1 className="font-semibold">DỊCH VỤ</h1>
             <h1 className="font-bold text-2xl max-w-md">

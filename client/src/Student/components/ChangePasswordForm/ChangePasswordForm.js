@@ -28,15 +28,14 @@ function ChangePasswordForm() {
       }
       await sendRequest(
         Requests.changePwRequest,
-        "PATCH",
+        "PUT",
         JSON.stringify({
+          username: account.username,
           password: oldPw,
           new_password: newPw,
           re_new_password: confirmNewPw,
-
         }),
-        { "Content-Type": "application/json",
-          Authentication: 'Bearer ' + account.token }
+        { "Content-Type": "application/json"}
       );
       console.log('passed!')
       await dispatch(

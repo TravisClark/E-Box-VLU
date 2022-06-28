@@ -40,32 +40,33 @@ function Layout(props) {
   // }, [dispatch]);
 
   useEffect(() => {
-    // dispatch(authActions.autoLoginHandler());
+    dispatch(authActions.autoLoginHandler());
     !isLoggedIn && history.push("/");
   }, [dispatch, isLoggedIn, history]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      const token = localStorage.getItem("token");
-      const fetchData = async () => {
-        try {
-          const response = await sendRequest(
-            Requests.fetchAccount,
-            "GET",
-            null,
-            {
-              "Content-Type": "application/json",
-              authorization: "Bearer " + token,
-            }
-          );
-          console.log(response.json());
-        } catch (error) {
-          alert(error)
-        }
-      };
-      fetchData()
-    }
-  }, [dispatch, isLoggedIn, sendRequest]);
+  // ! autoFetch user data
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     const token = localStorage.getItem("token");
+  //     const fetchData = async () => {
+  //       try {
+  //         const response = await sendRequest(
+  //           Requests.fetchAccount,
+  //           "GET",
+  //           null,
+  //           {
+  //             "Content-Type": "application/json",
+  //             authorization: "Bearer " + token,
+  //           }
+  //         );
+  //         console.log(response.json());
+  //       } catch (error) {
+  //         alert(error)
+  //       }
+  //     };
+  //     fetchData()
+  //   }
+  // }, [dispatch, isLoggedIn, sendRequest]);
 
   // useEffect(() => {
 
