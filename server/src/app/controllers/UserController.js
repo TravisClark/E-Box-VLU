@@ -106,7 +106,7 @@ class UserController {
                     );
                 }else{
                     //Return user info and generate token
-                    res.status(201).json({
+                    res.status(200).json({
                         username: user.username,
                         role_name: user.role_name,
                         token: generateToken(user.username, user.role_name),
@@ -190,13 +190,13 @@ class UserController {
                 );
             }else if (new_password.match(format).length != new_password.length){ //Check the new password for correct format
                 return next(
-                    res.status(412).json({
+                    res.status(405).json({
                         err: 'Mật khẩu mới chỉ chứa định dạng chữ Alphabet và chữ số',
                         field: 'new_password',
                     }),
                 );
             }else if (!(new_password === re_new_password)) { //check if new password matches re-enter password
-                res.status(412).json({
+                res.status(405).json({
                     err: 'Mật khẩu mới và xác minh mật khẩu không trùng khớp. Vui lòng kiểm tra lại',
                     field: 're_new_password',
                 });

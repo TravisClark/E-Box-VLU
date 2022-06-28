@@ -6,7 +6,7 @@
   "scripts": {
     "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write src/**/*.{js,json,scss}",
     "start": "nodemon --inspect src/index.js",
-    "test": "jest --watch --runInBand --detectOpenHandles",
+    "test": "jest --watch --detectOpenHandles",
     "dev": "node-dev --inspect src/index.js"
   },
   "keywords": [],
