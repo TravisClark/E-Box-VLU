@@ -29,24 +29,28 @@ class UserController {
                 return next(
                     res.status(401).json({
                         err: 'username khong duoc bo trong',
+                        field: 'username'
                     }),
                 );
             } else if (username.length < 5 || username.length > 20) { //check length of username
                 return next(
                     res.status(411).json({
                         err: 'do dai cua username chi tu 5 den 20 ky tu',
+                        field: 'username'
                     }),
                 );
             } else if (username.match(format).length != username.length) { //check username for correct format
                 return next(
                     res.status(412).json({
                         err: 'Sai format',
+                        field: 'username'
                     }),
                 );
             }else if (user) { //check username unique
                 return next(
                     res.status(500).json({
-                        err: 'Username da ton tai', //field
+                        err: 'Username da ton tai', 
+                        field: 'username'
                     }),
                 );
             }else {
@@ -132,6 +136,7 @@ class UserController {
 
     //[PUT] http://localhost:5000/api/user/change_password
     change_password = async (req, res, next) => {
+
         try {
             const formData = req.body; 
             const username = formData.username; 
@@ -140,7 +145,6 @@ class UserController {
             //Get password of user
             var password_real = user.password;
             //Get data from client
-            
             var data_password = formData.password;
             var data_new_password = formData.new_password;
             var data_re_new_password = formData.re_new_password;
@@ -153,36 +157,48 @@ class UserController {
                 return next(
                     res.status(401).json({
                         err: 'password khong duoc bo trong',
+                        field: 'password',
                     }),
                 );
             }else if (!(password === password_real)) { //Check if the password is correct or not
                 return next(
                     res.status(412).json({
                         err: 'Password khong chinh xac',
+                        field: 'password',
                     }),
                 );
-            }else if (   new_password == null || re_new_password == null || 
-                        new_password === '' || re_new_password === ''   ){ //Check if the new password and re_new_password is null or ''
+            }else if ( new_password == null || new_password === '' ){ //Check if the new password is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'New password va Re-ent Password khong duoc bo trong',
+                        err: 'New password khong duoc bo trong',
+                        field: 'new_password',
+                    }),
+                );
+            }else if ( re_new_password == null || re_new_password === ''   ){ //Check if the re_new_password is null or ''
+                return next(
+                    res.status(401).json({
+                        err: 'New password khong duoc bo trong',
+                        field: 're_new_password',
                     }),
                 );
             }else if (new_password.length < 5 || new_password.length > 20){ //Check if the new password length is more than 5 and less than 20
                 return next(
                     res.status(411).json({
                         err: 'do dai cua username chi tu 5 den 20 ky tu',
+                        field: 'new_password',
                     }),
                 );
             }else if (new_password.match(format).length != new_password.length){ //Check the new password for correct format
                 return next(
                     res.status(412).json({
                         err: 'Sai format',
+                        field: 'new_password',
                     }),
                 );
             }else if (!(new_password === re_new_password)) { //check if new password matches re-enter password
                 res.status(412).json({
                     err: 'Vui long kiem tra lai password va re-enter password',
+                    field: 'new_password',
                 });
             }
             else{
@@ -198,6 +214,7 @@ class UserController {
         } catch (err) {
             console.log(err);
         }
+
     };
 }
 
