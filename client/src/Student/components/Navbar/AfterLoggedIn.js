@@ -12,6 +12,7 @@ function AfterLoggedIn({
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
+    navbarIsOpen && openNavHandler()
     dispatch(authActions.logoutHandler());
   };
   return (
@@ -60,7 +61,7 @@ function AfterLoggedIn({
         <Link to='/E-boxVLU/change-password' onClick={openNavHandler} href="#footer">
           Đổi mật khẩu
         </Link>
-        <button onClick={logoutHandler}>Đăng Xuất</button>
+        <button onClick={logoutHandler} className='cursor-pointer'>Đăng Xuất</button>
       </div>
     </>
   );

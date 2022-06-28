@@ -30,9 +30,9 @@ function Navbar() {
   };
 
   useEffect(() => {
-    return ()=>{
-      setNavbarIsOpen(false)
-    }
+    // return ()=>{
+    //   setNavbarIsOpen(false)
+    // }
   }, []);
 
   return (
@@ -62,7 +62,7 @@ function Navbar() {
             E-Box VLU
           </h1>
         </div>
-        {!isLoggedIn ? <BeforeLogin openNavHandler={openNavHandler} changeBgColor={changeBgColor} navbarIsOpen={navbarIsOpen}/> : <AfterLoggedIn openNavHandler={openNavHandler} changeBgColor={changeBgColor} navbarIsOpen={navbarIsOpen} username={username}/>}
+        {!isLoggedIn ? <BeforeLogin navbarIsOpen={navbarIsOpen} openNavHandler={openNavHandler} changeBgColor={changeBgColor}/> : <AfterLoggedIn openNavHandler={openNavHandler} changeBgColor={changeBgColor} navbarIsOpen={navbarIsOpen} username={username}/>}
         
         {/* Mobile hamburger */}
         <button className={hamBtnClass} onClick={openNavHandler}>

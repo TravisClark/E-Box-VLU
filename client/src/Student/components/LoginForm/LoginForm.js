@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import Button from "../UI/Button";
 import { useDispatch } from "react-redux";
@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
 import Container from "../UI/Container";
 import useHttpClient from "../../../shared/hooks/http-hook";
-import Requests from "../../../shared/Api/Requests";
+import Requests from "../../../shared/api/Requests";
 
 function LoginForm() {
   const usernameRef = useRef();
@@ -15,7 +15,8 @@ function LoginForm() {
   const history = useHistory();
   const [IsUsernameEmpty, setUsernameEmpty] = useState(false);
   const [isPasswordEmpty, setPasswordEmpty] = useState(false);
-  const {  sendRequest } = useHttpClient();
+  const [account, setAccount] = useState()
+  const { sendRequest } = useHttpClient();
   // const [errorSubmitted, setErrorSubmitted] = useState(false);
 
   const onSubmitHandler = async (e) => {
@@ -32,19 +33,31 @@ function LoginForm() {
       username && setUsernameEmpty(false);
       return;
     }
-    try {
-      await sendRequest(
-        Requests.loginRequest,
-        "POST",
-        JSON.stringify({ username, password }),
-        { "Content-Type": "application/json" }
-      );
-      await dispatch(authActions.loginHandler({ username, password }));
-      history.push("/E-boxVLU/Home");
-    } catch (error) {
-      alert(error);
+    const fetchData = async ()=> {
+      try {
+        const requestData = await sendRequest(
+          Requests.loginRequest,
+          "POST",
+          JSON.stringify({ username, password }),
+          { "Content-Type": "application/json" }
+        );
+        setAccount(requestData)
+        console.log(requestData)
+      } catch (error) {
+        alert(error);
+      }
     }
+    await fetchData()
   };
+  useEffect(() => {
+    const storeData = async () => {
+      if(account){
+        await dispatch(authActions.loginHandler(account));
+        await history.push("/E-boxVLU/Home");
+      } 
+    }
+    storeData();
+  }, [account,dispatch, history]);
   return (
     <form onSubmit={onSubmitHandler}>
       <Container className="absolute min-w-full min-h-full p-0 top-0 flex items-center justify-center">
