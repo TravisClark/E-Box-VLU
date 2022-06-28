@@ -184,7 +184,7 @@ class UserController {
             }else if (new_password.length < 5 || new_password.length > 20){ //Check if the new password length is more than 5 and less than 20
                 return next(
                     res.status(411).json({
-                        err: 'do dai cua username chi tu 5 den 20 ky tu',
+                        err: 'do dai cua mat khau moi chi tu 5 den 20 ky tu',
                         field: 'new_password',
                     }),
                 );
@@ -197,8 +197,8 @@ class UserController {
                 );
             }else if (!(new_password === re_new_password)) { //check if new password matches re-enter password
                 res.status(412).json({
-                    err: 'Vui long kiem tra lai password va re-enter password',
-                    field: 'new_password',
+                    err: 'Vui long kiem tra lai mat khau moi va xac nhan mat khau moi',
+                    field: 're_new_password',
                 });
             }
             else{
