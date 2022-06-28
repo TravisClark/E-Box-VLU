@@ -28,28 +28,28 @@ class UserController {
             if (username == null || username === '') { //check username is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'username khong duoc bo trong',
+                        err: 'Tài khoản không được bỏ trống',
                         field: 'username'
                     }),
                 );
             } else if (username.length < 5 || username.length > 20) { //check length of username
                 return next(
                     res.status(411).json({
-                        err: 'do dai cua username chi tu 5 den 20 ky tu',
+                        err: 'Độ dài tài khoản từ 5 đến 20 ký tự',
                         field: 'username'
                     }),
                 );
             } else if (username.match(format).length != username.length) { //check username for correct format
                 return next(
                     res.status(412).json({
-                        err: 'Sai format',
+                        err: 'Tài khoản chỉ chứa định dạng chữ Alphabet và chữ số',
                         field: 'username'
                     }),
                 );
             }else if (user) { //check username unique
                 return next(
                     res.status(500).json({
-                        err: 'Username da ton tai', 
+                        err: 'Tài khoản đã tồn tại', 
                         field: 'username'
                     }),
                 );
@@ -62,7 +62,7 @@ class UserController {
                     .save()
                     .then(() => {
                         res.status(201).json({
-                            Message: 'Tao tai khoan thanh cong',
+                            Message: 'Tạo tài khoản thành công',
                         });
                     })
                     .catch(next);
@@ -87,7 +87,7 @@ class UserController {
                 || (password == null || password === '')) { //check username and password is null or '' 
                 return next(
                     res.status(401).json({
-                        err: 'username va password khong duoc bo trong',
+                        err: 'Tài khoản và mật khẩu không được bỏ trống',
                     }),
                 );
             }
@@ -101,7 +101,7 @@ class UserController {
                 if(!user){ //Check if the user is found
                     return next(
                         res.status(401).json({
-                            err: 'Tai khoan hoac mat khau khong chinh xac',
+                            err: 'Tài khoản hoặc mật khẩu không chính xác',
                         }),
                     );
                 }else{
@@ -156,48 +156,48 @@ class UserController {
             if (password == null || password === '') { //Check password is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'password khong duoc bo trong',
+                        err: 'Mật khẩu cũ không được bỏ trống',
                         field: 'password',
                     }),
                 );
             }else if (!(password === password_real)) { //Check if the password is correct or not
                 return next(
                     res.status(412).json({
-                        err: 'Password khong chinh xac',
+                        err: 'Mật khẩu cũ không chính xác',
                         field: 'password',
                     }),
                 );
             }else if ( new_password == null || new_password === '' ){ //Check if the new password is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'New password khong duoc bo trong',
+                        err: 'Mật khẩu mới không được bỏ trống',
                         field: 'new_password',
                     }),
                 );
             }else if ( re_new_password == null || re_new_password === ''   ){ //Check if the re_new_password is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'New password khong duoc bo trong',
+                        err: 'Xác nhận mật khẩu mới không được bỏ trống',
                         field: 're_new_password',
                     }),
                 );
             }else if (new_password.length < 5 || new_password.length > 20){ //Check if the new password length is more than 5 and less than 20
                 return next(
                     res.status(411).json({
-                        err: 'do dai cua mat khau moi chi tu 5 den 20 ky tu',
+                        err: 'Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự',
                         field: 'new_password',
                     }),
                 );
             }else if (new_password.match(format).length != new_password.length){ //Check the new password for correct format
                 return next(
                     res.status(412).json({
-                        err: 'Sai format',
+                        err: 'Mật khẩu mới chỉ chứa định dạng chữ Alphabet và chữ số',
                         field: 'new_password',
                     }),
                 );
             }else if (!(new_password === re_new_password)) { //check if new password matches re-enter password
                 res.status(412).json({
-                    err: 'Vui long kiem tra lai mat khau moi va xac nhan mat khau moi',
+                    err: 'Mật khẩu mới và xác minh mật khẩu không trùng khớp. Vui lòng kiểm tra lại',
                     field: 're_new_password',
                 });
             }
@@ -205,8 +205,8 @@ class UserController {
                 // Search and change_password by username
                 UserModel.findOneAndUpdate({ username }, {password: new_password})
                     .then(() => {
-                        res.status(200).json({
-                            Message: 'Thay doi mat khau thanh cong',
+                        res.status(201).json({
+                            Message: 'Thay đổi mật khẩu thành công',
                         });
                     })
                     .catch(next);
