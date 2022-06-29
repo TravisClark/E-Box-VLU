@@ -48,18 +48,18 @@ function AfterLoggedIn({
           </svg>
         </div>
         <div
-          className={`flex-col space-y-6 bg-black items-center p-4 absolute mt-12 rounded-sm w-52 ${
+          className={`flex-col space-y-6 bg-transparent items-center p-4 absolute mt-8 rounded-sm w-52 ${
             isMenuOpen ? "flex" : "hidden"
           }`}
         >
           <Link
-            className={`font-medium  transition duration-500 text-gray-400 hover:font-bold hover:text-white `}
+            className={`font-medium  transition duration-500 text-gray-300 hover:font-bold hover:text-white `}
             to="/E-boxVLU/change-password"
           >
             Đổi mật khẩu
           </Link>
           <span
-            className={`font-medium  transition duration-500 cursor-pointer text-gray-400 hover:font-bold hover:text-white `}
+            className={`font-medium  transition duration-500 cursor-pointer text-gray-300 hover:font-bold hover:text-white `}
             onClick={logoutHandler}
           >
             Đăng Xuất
