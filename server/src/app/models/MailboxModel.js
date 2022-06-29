@@ -30,7 +30,7 @@ const Mailbox = new Schema(
             maxlength: 20,
             required: true,
         },
-        user_name_censorship: {
+        user_name_censor: {
             type: 'string',
             maxlength: 20,
         },
@@ -44,6 +44,6 @@ const Mailbox = new Schema(
     },
 );
 
-User.plugin(AutoIncrement, { inc_field: 'id_question' });
+Mailbox.plugin(AutoIncrement, { inc_field: 'id_question' });
 
 module.exports = mongoose.model('Mailbox', Mailbox);
