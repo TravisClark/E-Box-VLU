@@ -1,5 +1,5 @@
 import React from "react";
-import classes from './Triangle.module.css'
+import classes from './IconAnimation.module.css'
 function TriangleIcon() {
   return (
     <svg
@@ -9,8 +9,9 @@ function TriangleIcon() {
       x="0px"
       y="0px"
       viewBox="0 0 512.055 512.055"
-      width="100"
-      className={`${classes.triangle}  mt-30 opacity-75`}
+      width="80"
+      height="80"
+      className={`${classes.icon} relative m-20 opacity-50`}
     >
       <g>
         <g>

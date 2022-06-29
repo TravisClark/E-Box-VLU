@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
@@ -10,44 +10,61 @@ function AfterLoggedIn({
   username,
 }) {
   const dispatch = useDispatch();
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const logoutHandler = () => {
-    navbarIsOpen && openNavHandler()
+    navbarIsOpen && openNavHandler();
     dispatch(authActions.logoutHandler());
   };
+
+  const toggleMenuHandler = () => {
+    setIsMenuOpen((prevState) => !prevState);
+  };
+
   return (
     <>
       {/* Desktop nav */}
-      <div className="hidden md:flex space-x-6">
-        <span
-          className={`font-medium  transition duration-500 ${
-            changeBgColor
-              ? "text-black hover:font-bold hover:text-black"
-              : "text-gray-400 hover:text-white"
+      <div className="hidden md:flex md:flex-col md:items-center md:w-52">
+        <div
+          className={`flex space-x-2 cursor-pointer`}
+          onClick={toggleMenuHandler}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+            <path
+              fill="#D1D5DB"
+              d="M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10 10-4.579 10-10S17.421 2 12 2zm0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3zm-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228z"
+            ></path>
+          </svg>
+          <span
+            className={`font-medium  transition duration-500 ${
+              changeBgColor
+                ? "text-black hover:font-bold hover:text-black"
+                : "text-gray-300 hover:text-white"
+            }`}
+          >
+            {username}
+          </span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+            <path fill="#fff" d="m11.998 17 7-8h-14z"></path>
+          </svg>
+        </div>
+        <div
+          className={`flex-col space-y-6 bg-black items-center p-4 absolute mt-12 rounded-sm w-52 ${
+            isMenuOpen ? "flex" : "hidden"
           }`}
         >
-          {username}
-        </span>
-        <Link
-          className={`font-medium  transition duration-500 ${
-            changeBgColor
-              ? "text-black hover:font-bold hover:text-black"
-              : "text-gray-400 hover:text-white"
-          }`}
-          to='/E-boxVLU/change-password'
-        >
-          Đổi mật khẩu
-        </Link>
-        <span
-          className={`font-medium  transition duration-500 ${
-            changeBgColor
-              ? "text-black hover:font-bold hover:text-black"
-              : "text-gray-400 hover:text-white"
-          }`}
-          onClick={logoutHandler}
-        >
-          Đăng Xuất
-        </span>
+          <Link
+            className={`font-medium  transition duration-500 text-gray-400 hover:font-bold hover:text-white `}
+            to="/E-boxVLU/change-password"
+          >
+            Đổi mật khẩu
+          </Link>
+          <span
+            className={`font-medium  transition duration-500 cursor-pointer text-gray-400 hover:font-bold hover:text-white `}
+            onClick={logoutHandler}
+          >
+            Đăng Xuất
+          </span>
+        </div>
       </div>
       {/* Mobile nav */}
       <div
@@ -58,10 +75,14 @@ function AfterLoggedIn({
         <span onClick={openNavHandler} to={"E-boxVlu/login"}>
           {username}
         </span>
-        <Link to='/E-boxVLU/change-password' onClick={openNavHandler} href="#footer">
+        <Link
+          to="/E-boxVLU/change-password"
+          onClick={openNavHandler}
+          href="#footer"
+        >
           Đổi mật khẩu
         </Link>
-        <button onClick={logoutHandler} className='cursor-pointer'>Đăng Xuất</button>
+        <button onClick={logoutHandler}>Đăng Xuất</button>
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Button from "../UI/Button";
 import Container from "../UI/Container";
 import useHttpClient from "../../../shared/hooks/http-hook";
@@ -11,7 +11,7 @@ function ChangePasswordForm() {
   const oldPwRef = useRef();
   const newPwRef = useRef();
   const confirmNewPwRef = useRef();
-  const { sendRequest } = useHttpClient();
+  const { sendRequest, error } = useHttpClient();
   const dispatch = useDispatch();
   const history = useHistory();
   const account = useSelector((state) => state.auth.account);
@@ -23,9 +23,6 @@ function ChangePasswordForm() {
     const confirmNewPw = confirmNewPwRef.current.value.trim();
     
     try {
-      if (oldPw === "" || newPw === "" || confirmNewPw === "") {
-        throw new Error("Please enter information");
-      }
       await sendRequest(
         Requests.changePwRequest,
         "PUT",
@@ -43,7 +40,6 @@ function ChangePasswordForm() {
       );
       history.push("/E-boxVLU/Home");
     } catch (error) {
-      alert(error);
     }
   };
   return (
@@ -62,11 +58,6 @@ function ChangePasswordForm() {
                 placeholder="Nhập mật khẩu cũ"
                 ref={oldPwRef}
               />
-              {/* {IsUsernameEmpty && (
-                <h3 className="text-red-500 text-sm">
-                  Vui lòng nhập tài khoản!
-                </h3>
-              )} */}
             </div>
             <div className="flex flex-col space-y-2">
               <input
@@ -75,11 +66,6 @@ function ChangePasswordForm() {
                 placeholder="Nhập mật khẩu"
                 ref={newPwRef}
               />
-              {/* {isPasswordEmpty && (
-                <h3 className="text-red-500 text-sm">
-                  Vui lòng nhập mật khẩu!
-                </h3>
-              )} */}
             </div>
             <div className="flex flex-col space-y-2">
               <input
@@ -88,11 +74,11 @@ function ChangePasswordForm() {
                 placeholder="Nhập lại mật khẩu"
                 ref={confirmNewPwRef}
               />
-              {/* {isPasswordEmpty && (
+              {error && (
                 <h3 className="text-red-500 text-sm">
-                  Vui lòng nhập mật khẩu!
+                  {error}
                 </h3>
-              )} */}
+              )}
             </div>
             <Button title="Submit" className={` text-white bg-heavyBlue`} />
             <span className="text-gray-500 italic">

@@ -30,5 +30,10 @@ module.exports = {
       // => @media (min-width: 1280px) { ... }
     },
   },
+  variants: {
+    extend: {
+      visibility: ["group-hover"],
+    },
+  },
   plugins: [],
 };
