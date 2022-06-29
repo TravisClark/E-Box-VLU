@@ -45,8 +45,17 @@ class MailboxController {
     //[GET] http://localhost:5000/api/mailbox/list_questions
     list_questions = async (req, res) => {
         try {
-            const mailbox = await Mailbox.find({});
-            res.status(200).json(mailbox);
+            if(req.query.hasOwnProperty('status')){
+                const mailbox = await Mailbox.find({status: req.query.status}).sort({ 
+                    createdAt: 'asc'
+                });
+                res.status(200).json(mailbox);
+            }else{
+                const mailbox = await Mailbox.find({}).sort({ 
+                    createdAt: 'asc'
+                });
+                res.status(200).json(mailbox);
+            } 
         } catch (err) {
             console.log(err);
         }
