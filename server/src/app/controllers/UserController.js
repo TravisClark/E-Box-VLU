@@ -144,7 +144,7 @@ class UserController {
         }
     };
 
-    //[PUT] http://localhost:5000/api/user/change_password
+    //[PATCH] http://localhost:5000/api/user/change_password
     change_password = async (req, res, next) => {
         try {
             const formData = req.body;
