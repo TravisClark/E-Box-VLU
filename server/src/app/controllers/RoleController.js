@@ -16,8 +16,9 @@ class RoleController {
         try {
             const formData = req.body;
             const role = new RoleModel(formData);
-            await role.save()
-                .then(() => res.json(`them thanh cong ${req.body.role_name}`))
+            await role
+                .save()
+                .then(() => res.json(`Thêm thành công ${req.body.role_name}`));
         } catch (err) {
             console.log(err);
         }
