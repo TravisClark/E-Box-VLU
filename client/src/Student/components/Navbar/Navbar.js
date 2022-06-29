@@ -11,7 +11,7 @@ function Navbar() {
   const [changeBgColor, setChangeBgColor] = useState(false);
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { username } = useSelector((state) => state.auth.account || '');
+  const { username } = useSelector((state) => state.auth.account || "");
 
   const changeNavbarColor = () => {
     if (window.scrollY > 50) {
@@ -39,7 +39,7 @@ function Navbar() {
     <nav>
       <Container
         className={`fixed flex z-20 justify-between px-20  bg-transparent min-w-full p-4 items-center transition duration-500 ${
-          changeBgColor ? "bg-white" : ""
+          changeBgColor && "bg-white"
         } md:justify-around md:px-0`}
       >
         <div className="flex space-x-4 items-center z-20">
@@ -62,24 +62,37 @@ function Navbar() {
             E-Box VLU
           </h1>
         </div>
-        {!isLoggedIn ? <BeforeLogin navbarIsOpen={navbarIsOpen} openNavHandler={openNavHandler} changeBgColor={changeBgColor}/> : <AfterLoggedIn openNavHandler={openNavHandler} changeBgColor={changeBgColor} navbarIsOpen={navbarIsOpen} username={username}/>}
-        
+        {!isLoggedIn ? (
+          <BeforeLogin
+            navbarIsOpen={navbarIsOpen}
+            openNavHandler={openNavHandler}
+            changeBgColor={changeBgColor}
+          />
+        ) : (
+          <AfterLoggedIn
+            openNavHandler={openNavHandler}
+            changeBgColor={changeBgColor}
+            navbarIsOpen={navbarIsOpen}
+            username={username}
+          />
+        )}
+
         {/* Mobile hamburger */}
         <button className={hamBtnClass} onClick={openNavHandler}>
           <span
             className={`${classes["hamburger-top"]} ${
-              changeBgColor && "bg-black"
-            }`}
+              changeBgColor ? "bg-black" : "bg-white"
+            } ${navbarIsOpen && "bg-white"}`}
           ></span>
           <span
             className={`${classes["hamburger-middle"]} ${
-              changeBgColor && "bg-black"
-            }`}
+              changeBgColor ? "bg-black" : "bg-white"
+            } ${navbarIsOpen && "bg-white"}`}
           ></span>
           <span
             className={`${classes["hamburger-bottom"]} ${
-              changeBgColor && "bg-black"
-            }`}
+              changeBgColor ? "bg-black" : "bg-white"
+            } ${navbarIsOpen && "bg-white"}`}
           ></span>
         </button>
       </Container>

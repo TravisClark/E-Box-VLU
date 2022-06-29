@@ -5,20 +5,20 @@ const authSlice = createSlice({
     initialState: {isLoggedIn: false, account: {}, token: ''},
     reducers:{
         loginHandler(state, action) {
-            localStorage.setItem('token', JSON.stringify(action.payload.token))
+            localStorage.setItem('account', JSON.stringify(action.payload))
             state.isLoggedIn = true;
-            state.token = action.payload
+            state.account = action.payload
         },
         saveUserHandler(state, action) {
             state.account = action.payload
         },
         autoLoginHandler(state) {
-            state.token = JSON.parse(localStorage.getItem('token'));
-            state.token ? (state.isLoggedIn = true) : (state.isLoggedIn = false);
+            state.account = JSON.parse(localStorage.getItem('account'));
+            state.account ? (state.isLoggedIn = true) : (state.isLoggedIn = false);
         },
         logoutHandler(state) {
             state.account = {}
-            localStorage.removeItem('token')
+            localStorage.removeItem('account')
             state.isLoggedIn = false;
         },
         changePasswordHandler(state, action) {

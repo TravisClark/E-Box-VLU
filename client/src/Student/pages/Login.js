@@ -10,7 +10,7 @@ function Login() {
   return (
     <IntroductionBanner>
         <LoginForm/>
-        {isLoading && <LoadingSpinner/>}
+        {isLoading && <div className="min-w-full min-h-full absolute"><LoadingSpinner/></div>}
     </IntroductionBanner>
   )
 }

@@ -31,7 +31,7 @@ const useHttpClient = () => {
         setIsLoading(false);
         return responseData;
       } catch (error) {
-        setError(error);
+        setError(error.toString().replace('Error:', ''));
         throw error;
       }
     },
