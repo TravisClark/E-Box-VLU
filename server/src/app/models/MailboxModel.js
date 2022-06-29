@@ -33,12 +33,10 @@ const Mailbox = new Schema(
         user_name_censorship: {
             type: 'string',
             maxlength: 20,
-            required: true,
         },
         user_name_answer: {
             type: 'string',
             maxlength: 20,
-            required: true,
         },
     },
     {
