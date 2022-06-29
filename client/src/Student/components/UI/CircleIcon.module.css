@@ -1,0 +1,13 @@
+.icon {
+    animation: spinner 10s linear infinite alternate;
+  }
+  @keyframes spinner {
+    0% {
+      transform: translateX(0);
+      
+    }
+    100% {
+      transform: translateX(30%);
+    }
+  }
+  

@@ -9,12 +9,14 @@ import descriptionIcon from "../../assets/description.jpg";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import TriangleIcon from "../components/UI/TriangleIcon";
+import SquareIcon from "../components/UI/SquareIcon";
+import CircleIcon from "../components/UI/CircleIcon";
 
 function Ebox() {
   const history = useHistory();
-  const {isLoggedIn} = useSelector(state => state.auth) 
+  const { isLoggedIn } = useSelector((state) => state.auth);
   useEffect(() => {
-    isLoggedIn && history.push('/E-boxVLU/Home')
+    isLoggedIn && history.push("/E-boxVLU/Home");
   }, [isLoggedIn, history]);
   return (
     <>
@@ -23,8 +25,12 @@ function Ebox() {
       </IntroductionBanner>
       <section id="services">
         <Container className="flex flex-col relative items-center min-w-full p-0 mb-20 space-y-6">
-          <div className="absolute top-0 h-full w-full bg-heavyBlue xl:h-80 xl:-top-20 xl:rounded-xl xl:w-10/12">
-            <TriangleIcon/>
+          <div className="absolute flex overflow-hidden justify-center top-0 h-full w-full bg-heavyBlue xl:h-80 xl:-top-20 xl:rounded-xl xl:w-10/12">
+            <CircleIcon/>
+            <div className=" relative flex justify-between min-w-full min-h-full">
+              <TriangleIcon />
+              <SquareIcon />
+            </div>
           </div>
           <div className="flex flex-col space-y-6 mx-auto text-center text-white z-10">
             <h1 className="font-semibold">DỊCH VỤ</h1>
