@@ -1,6 +1,5 @@
 const UserModel = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
-const { count } = require('../models/UserModel');
 require('dotenv').config();
 
 class UserController {
