@@ -3,7 +3,7 @@ const Mailbox = require('../models/MailboxModel');
 class MailboxController {
 
     //[GET] http://localhost:5000/api/mailbox/list_questions
-    list_questions = async (req, res) => {
+    list_questions = async (req, res, next) => {
         try {
             if(req.query.hasOwnProperty('status')){
                 const mailbox = await Mailbox.find({status: req.query.status}).sort({ 
@@ -25,9 +25,8 @@ class MailboxController {
     publish_question = async (req, res, next) => {
         try {
             //Get data from client
-            const formData = req.body;
-            const data_username = formData.username;
-            const data_question = formData.question;
+            const data_username = req.body.username;
+            const data_question = req.body.question;
             if(data_question == null || data_question === ''){ //check question is null or ''
                 return next(
                     res.status(401).json({
@@ -63,9 +62,22 @@ class MailboxController {
     };
 
     //[PATCH] http://localhost:5000/api/mailbox/approve_question
-    approve_question = async (req, res) => {
+    approve_question = async (req, res, next) => {
         try {
-             
+            //Get data from client
+            const data_username = req.body.username;
+            const data_id_question = req.body.id_question;
+            var status = 'Đã được duyệt';
+            Mailbox.findOneAndUpdate(
+                { id_question: data_id_question},
+                {status: status,
+                user_name_censor: data_username},
+                ).then(() => {
+                    res.status(201).json({
+                        Message: 'Duyệt câu hỏi thành công',
+                    });
+                })
+                .catch(next);
         } catch (err) {
             console.log(err);
         }

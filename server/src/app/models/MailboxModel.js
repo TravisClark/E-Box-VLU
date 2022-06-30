@@ -9,21 +9,17 @@ const Mailbox = new Schema(
         },
         question: {
             type: 'string',
-            maxlength: 255,
             required: true,
         },
         answer: {
             type: 'string',
-            maxlength: 255,
         },
         status: {
             type: 'string',
-            maxlength: 255,
             required: true,
         },
         type_name: {
             type: 'string',
-            maxlength: 255,
         },
         user_name_question: {
             type: 'string',
