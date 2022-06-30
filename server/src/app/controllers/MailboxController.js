@@ -70,7 +70,7 @@ class MailboxController {
             const data_id_question = req.body.id_question;
             //update question status to MongoDB
             var status = 'Đã được duyệt';
-            Mailbox.findOneAndUpdate(
+            await Mailbox.findOneAndUpdate(
                 { id_question: data_id_question},
                 {status: status,
                 user_name_censor: data_username
@@ -80,7 +80,6 @@ class MailboxController {
             const info_notification= {
                 question: info_mailbox.question,
                 notification: status,
-                type_name: '',
                 username_sender: data_username,
                 username_receiver: info_mailbox.user_name_question,
             };
@@ -98,6 +97,43 @@ class MailboxController {
             console.log(err);
         }
     };
+
+    //[PATCH] http://localhost:5000/api/mailbox/refuse_question
+    refuse_question = async (req, res, next) => {
+    try {
+        //Get data from client
+        const data_username = req.body.username;
+        const data_id_question = req.body.id_question;
+        //update question status to MongoDB
+        var status = 'Đã bị từ chối';
+        await Mailbox.findOneAndUpdate(
+            { id_question: data_id_question},
+            {status: status,
+            user_name_censor: data_username
+            })
+        //create informational data for the notification
+        const info_mailbox = await Mailbox.findOne({id_question: data_id_question});
+        const info_notification= {
+            question: info_mailbox.question,
+            notification: status,
+            username_sender: data_username,
+            username_receiver: info_mailbox.user_name_question,
+        };
+        //create notifications for students
+        const notification = new Notification(info_notification);
+        notification.save()
+            .then(() => {
+                res.status(201).json({
+                    Message: 'Từ chối câu hỏi thành công',
+                });
+            })
+            .catch(next);
+
+    } catch (err) {
+        console.log(err);
+    }
+};
+    
 }
 
 module.exports = new MailboxController();
