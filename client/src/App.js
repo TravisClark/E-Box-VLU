@@ -1,7 +1,9 @@
 import React, { Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Home from "./admin/pages/Home";
+import AddUser from "./admin/pages/AddUser";
+import Dashboard from "./admin/pages/Dashboard";
+import Users from "./admin/pages/Users";
 import Layout from "./shared/components/Layout/Layout";
 import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
 import ChangePassword from "./student/pages/ChangePassword";
@@ -48,8 +50,11 @@ function App() {
               </Route>
               {account.role_name === "Quản Trị Viên" && (
                 <>
-                  <Route path="/E-boxVLU/Admin/Home">
-                    <Home />
+                  <Route path="/E-boxVLU/admin/home">
+                    <Users />
+                  </Route>
+                  <Route path="/E-boxVLU/admin/users/add">
+                    <AddUser/>
                   </Route>
                 </>
               )}
