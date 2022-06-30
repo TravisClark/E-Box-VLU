@@ -1,6 +1,26 @@
 const Mailbox = require('../models/MailboxModel');
 
 class MailboxController {
+
+    //[GET] http://localhost:5000/api/mailbox/list_questions
+    list_questions = async (req, res) => {
+        try {
+            if(req.query.hasOwnProperty('status')){
+                const mailbox = await Mailbox.find({status: req.query.status}).sort({ 
+                    createdAt: 'asc'
+                });
+                res.status(200).json(mailbox);
+            }else{
+                const mailbox = await Mailbox.find({}).sort({ 
+                    createdAt: 'asc'
+                });
+                res.status(200).json(mailbox);
+            } 
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     //[POST] http://localhost:5000/api/mailbox/publish_question
     publish_question = async (req, res, next) => {
         try {
@@ -42,20 +62,10 @@ class MailboxController {
         }
     };
 
-    //[GET] http://localhost:5000/api/mailbox/list_questions
-    list_questions = async (req, res) => {
+    //[PATCH] http://localhost:5000/api/mailbox/approve_question
+    approve_question = async (req, res) => {
         try {
-            if(req.query.hasOwnProperty('status')){
-                const mailbox = await Mailbox.find({status: req.query.status}).sort({ 
-                    createdAt: 'asc'
-                });
-                res.status(200).json(mailbox);
-            }else{
-                const mailbox = await Mailbox.find({}).sort({ 
-                    createdAt: 'asc'
-                });
-                res.status(200).json(mailbox);
-            } 
+             
         } catch (err) {
             console.log(err);
         }

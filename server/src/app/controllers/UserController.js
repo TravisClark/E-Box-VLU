@@ -144,24 +144,6 @@ class UserController {
         }
     };
 
-    //[GET] http://localhost:5000/api/user/account_info
-    account_info = async (req, res) => {
-        try {
-            //Search user by token
-            // console.log(req.user.username)
-            const user = await UserModel.findOne({
-                username: req.user.username,
-            });
-            //Return user info
-            res.status(200).json({
-                username: user.username,
-                role_name: user.role_name,
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
     //[PATCH] http://localhost:5000/api/user/change_password
     change_password = async (req, res, next) => {
         try {
