@@ -15,11 +15,8 @@ function LoginForm() {
   const history = useHistory();
   const [IsUsernameEmpty, setUsernameEmpty] = useState(false);
   const [isPasswordEmpty, setPasswordEmpty] = useState(false);
-  // const [error, setError] = useState()
   const [account, setAccount] = useState();
   const { sendRequest, error } = useHttpClient();
-  console.log(error);
-  // const [errorSubmitted, setErrorSubmitted] = useState(false);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -47,7 +44,6 @@ function LoginForm() {
         );
         setAccount(requestData);
       } catch (error) {
-        // setError(error);
       }
     };
     await fetchData();
@@ -96,7 +92,7 @@ function LoginForm() {
                   Vui lòng nhập mật khẩu!
                 </h3>
               )}
-              {error && <h3 className="text-red-500 text-sm">{error.replace('Error:', '')}</h3>}
+              {error && <h3 className="text-red-500 text-sm">{error}</h3>}
             </div>
             <Button title="Đăng Nhập" className={` text-white bg-heavyBlue`} />
             <span className="text-gray-500 italic">
