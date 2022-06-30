@@ -1,4 +1,5 @@
 const Mailbox = require('../models/MailboxModel');
+const Notification = require('../models/NotificationModel');
 
 class MailboxController {
 
@@ -67,17 +68,32 @@ class MailboxController {
             //Get data from client
             const data_username = req.body.username;
             const data_id_question = req.body.id_question;
+            //update question status to MongoDB
             var status = 'Đã được duyệt';
             Mailbox.findOneAndUpdate(
                 { id_question: data_id_question},
                 {status: status,
-                user_name_censor: data_username},
-                ).then(() => {
+                user_name_censor: data_username
+                })
+            //create informational data for the notification
+            const info_mailbox = await Mailbox.findOne({id_question: data_id_question});
+            const info_notification= {
+                question: info_mailbox.question,
+                notification: status,
+                type_name: '',
+                username_sender: data_username,
+                username_receiver: info_mailbox.user_name_question,
+            };
+            //create notifications for students
+            const notification = new Notification(info_notification);
+            notification.save()
+                .then(() => {
                     res.status(201).json({
                         Message: 'Duyệt câu hỏi thành công',
                     });
                 })
                 .catch(next);
+
         } catch (err) {
             console.log(err);
         }
