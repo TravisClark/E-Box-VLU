@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import classes from "./Navbar.module.css";
+import classes from "./NavStyles.module.css";
 function BeforeLogin({ changeBgColor, openNavHandler, navbarIsOpen }) {
   return (
     <>

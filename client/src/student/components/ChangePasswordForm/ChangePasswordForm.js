@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef} from "react";
 import Button from "../UI/Button";
 import Container from "../UI/Container";
 import useHttpClient from "../../../shared/hooks/http-hook";
@@ -25,7 +25,7 @@ function ChangePasswordForm() {
     try {
       await sendRequest(
         Requests.changePwRequest,
-        "PUT",
+        "PATCH",
         JSON.stringify({
           username: account.username,
           password: oldPw,

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
-import classes from "./Navbar.module.css";
+import { uiActions } from "../../../shared/store/ui-slice";
+import classes from "./NavStyles.module.css";
 function AfterLoggedIn({
   changeBgColor,
   openNavHandler,
@@ -11,15 +12,23 @@ function AfterLoggedIn({
 }) {
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {account} = useSelector((state) => state.auth);
+  const history = useHistory();
   const logoutHandler = () => {
     navbarIsOpen && openNavHandler();
     dispatch(authActions.logoutHandler());
+    history.replace('/E-boxVLU')
   };
 
   const toggleMenuHandler = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
 
+  const runAdminModeHandler = () => {
+    dispatch(uiActions.runAdminMode())
+    history.push('/E-boxVLU/Admin/Home')
+  }
+  
   return (
     <>
       {/* Desktop nav */}
@@ -52,18 +61,24 @@ function AfterLoggedIn({
             isMenuOpen ? "flex" : "hidden"
           }`}
         >
+          {account.role_name === 'Quản Trị Viên' && <button
+            className={`font-medium  transition duration-500 text-gray-300 hover:font-bold hover:text-white `}
+            onClick={runAdminModeHandler}
+          >
+            Chế độ admin
+          </button>}
           <Link
             className={`font-medium  transition duration-500 text-gray-300 hover:font-bold hover:text-white `}
-            to="/E-boxVLU/change-password"
+            to='/E-boxVLU/change-password'
           >
             Đổi mật khẩu
           </Link>
-          <span
+          <button
             className={`font-medium  transition duration-500 cursor-pointer text-gray-300 hover:font-bold hover:text-white `}
             onClick={logoutHandler}
           >
             Đăng Xuất
-          </span>
+          </button>
         </div>
       </div>
       {/* Mobile nav */}
