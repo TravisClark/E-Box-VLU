@@ -26,7 +26,7 @@ function IntroContent() {
       </svg>
       <Link
         className="bg-black text-white py-4 px-8 font-bold rounded-md hover:bg-white hover:text-black transition"
-        to='E-boxVlu/login'
+        to='E-boxVLU/login'
       >Đăng Nhập</Link>
     </div>
   );

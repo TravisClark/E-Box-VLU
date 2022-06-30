@@ -32,7 +32,7 @@ function BeforeLogin({ changeBgColor, openNavHandler, navbarIsOpen }) {
               ? "text-black hover:font-bold hover:text-black"
               : "text-gray-400 hover:text-white"
           }`}
-          to={"E-boxVlu/login"}
+          to={"E-boxVLU/login"}
         >
           Đăng Nhập
         </Link>
@@ -49,7 +49,7 @@ function BeforeLogin({ changeBgColor, openNavHandler, navbarIsOpen }) {
         <a onClick={openNavHandler} href="#services">
           Dịch Vụ
         </a>
-        <Link onClick={openNavHandler} to={"E-boxVlu/login"}>
+        <Link onClick={openNavHandler} to={"E-boxVLU/login"}>
           Đăng Nhập
         </Link>
       </div>
