@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
+import Home from "./admin/pages/Home";
+import Layout from "./shared/components/Layout/Layout";
 import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
-import Layout from "./student/components/Layout/Layout";
 import ChangePassword from "./student/pages/ChangePassword";
 
 const Login = React.lazy(() => import("./student/pages/Login"));
@@ -12,6 +13,12 @@ const ViewQuestions = React.lazy(() => import("./student/pages/ViewQuestions"));
 
 function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { account } = useSelector((state) => state.auth);
+  console.count();
+
+  // const { role_name } = useSelector((state) => state.auth.account);
+  // console.log(role_name);
+  // console.count();
   return (
     <Layout>
       <Suspense
@@ -39,12 +46,18 @@ function App() {
               <Route path="/E-boxVLU/change-password" exact>
                 <ChangePassword />
               </Route>
-              <Route path="*">
-                <PageNotFound />
-              </Route>
+              {account.role_name === "Quản Trị Viên" && (
+                <>
+                  <Route path="/E-boxVLU/Admin/Home">
+                    <Home />
+                  </Route>
+                </>
+              )}
             </>
           )}
-          {/* {!isLoggedIn && <Redirect to="/"/>} */}
+          <Route path="*">
+            <PageNotFound />
+          </Route>
         </Switch>
       </Suspense>
     </Layout>
