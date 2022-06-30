@@ -23,7 +23,7 @@ function Layout(props) {
     <>
       {!isInAdminMode ? <StudentNavbar /> : <AdminNav/>}
       {props.children}
-      {!isInAdminMode && <StudentFooter />}
+      {!isInAdminMode ? <StudentFooter /> : <AdminFooter />}
     </>
   );
 }

@@ -15,7 +15,7 @@ function SideNav() {
   return (
     <nav>
       <Container
-        className={`flex flex-col w-20 h-screen px-4 items-center bg-white self-start z-30 transition duration-1000 ${
+        className={`flex flex-col w-20 h-screen px-4 items-center bg-white z-30 transition duration-1000 ${
           navbarIsOpen && "w-56"
         }`}
       >
