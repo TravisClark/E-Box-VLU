@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const Mailbox = new Schema(
     {
-        id_question : {
+        id_question: {
             type: Number,
         },
         question: {
