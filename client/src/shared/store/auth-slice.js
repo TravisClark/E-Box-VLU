@@ -14,7 +14,7 @@ const authSlice = createSlice({
         },
         autoLoginHandler(state) {
             state.account = JSON.parse(localStorage.getItem('account'));
-            state.account ? (state.isLoggedIn = true) : (state.isLoggedIn = false);
+            state.account && (state.isLoggedIn = true) ;
         },
         logoutHandler(state) {
             state.account = {}
