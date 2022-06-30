@@ -2,44 +2,35 @@ const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 const Schema = mongoose.Schema;
 
-const Mailbox = new Schema(
+const Notification = Schema(
     {
-        id_question : {
+        id_notification : {
             type: Number,
         },
         question: {
             type: 'string',
             required: true,
         },
-        answer: {
-            type: 'string',
-        },
-        status: {
+        notification: {
             type: 'string',
             required: true,
         },
-        type_name: {
-            type: 'string',
-        },
-        user_name_question: {
+        username_sender: {
             type: 'string',
             maxlength: 20,
             required: true,
         },
-        user_name_censor: {
+        username_receiver: {
             type: 'string',
             maxlength: 20,
         },
-        user_name_answer: {
-            type: 'string',
-            maxlength: 20,
+        createdAt: {
+            type: 'Date',
+            default: Date.now,
         },
-    },
-    {
-        timestamps: true,
     },
 );
 
-Mailbox.plugin(AutoIncrement, { inc_field: 'id_question' });
+Notification.plugin(AutoIncrement, { inc_field: 'id_notification' });
 
-module.exports = mongoose.model('Mailbox', Mailbox);
+module.exports = mongoose.model('Notification', Notification);
