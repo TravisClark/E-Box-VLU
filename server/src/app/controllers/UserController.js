@@ -60,7 +60,8 @@ class UserController {
                 //check username for correct format
                 return next(
                     res.status(412).json({
-                        Message: 'Tài khoản chỉ chứa định dạng chữ Alphabet và chữ số',
+                        Message:
+                            'Tài khoản chỉ chứa định dạng chữ Alphabet và chữ số',
                     }),
                 );
             } else if (user) {
@@ -190,7 +191,8 @@ class UserController {
                 //Check if the new password length is more than 5 and less than 20
                 return next(
                     res.status(411).json({
-                        Message: 'Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự',
+                        Message:
+                            'Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự',
                     }),
                 );
             } else if (
@@ -199,13 +201,15 @@ class UserController {
                 //Check the new password for correct format
                 return next(
                     res.status(405).json({
-                        Message: 'Mật khẩu mới chỉ chứa định dạng chữ Alphabet và chữ số',
+                        Message:
+                            'Mật khẩu mới chỉ chứa định dạng chữ Alphabet và chữ số',
                     }),
                 );
             } else if (!(new_password === re_new_password)) {
                 //check if new password matches re-enter password
                 res.status(405).json({
-                    Message: 'Mật khẩu mới và xác minh mật khẩu không trùng khớp. Vui lòng kiểm tra lại',
+                    Message:
+                        'Mật khẩu mới và xác minh mật khẩu không trùng khớp. Vui lòng kiểm tra lại',
                 });
             } else {
                 // Search and change_password by username
