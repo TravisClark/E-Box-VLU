@@ -22,7 +22,6 @@ const User = new Schema(
         },
         status: {
             type: 'string',
-            maxlength: 20,
         },
         role_name: {
             type: 'string',
