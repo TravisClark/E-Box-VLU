@@ -2,8 +2,8 @@ const Mailbox = require('../models/MailboxModel');
 const Notification = require('../models/NotificationModel');
 
 class MailboxController {
-    //[GET] http://localhost:5000/api/mailbox/list_questions
-    list_questions = async (req, res, next) => {
+    //[GET] http://localhost:5000/api/mailbox/list_questions_admin
+    list_questions_admin = async (req, res, next) => {
         try {
             if (req.query.hasOwnProperty('status')) {
                 const mailbox = await Mailbox.find({
