@@ -16,12 +16,11 @@ const Notification = Schema({
     },
     username_sender: {
         type: 'string',
-        maxlength: 20,
         required: true,
     },
     username_receiver: {
         type: 'string',
-        maxlength: 20,
+        required: true,
     },
     createdAt: {
         type: 'Date',
