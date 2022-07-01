@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-import classes from "./Navbar.module.css";
-import { useEffect } from "react";
+import classes from "./NavStyles.module.css";
 import Container from "../UI/Container";
 import { useSelector } from "react-redux";
 import BeforeLogin from "./BeforeLogin";
@@ -11,7 +10,7 @@ function Navbar() {
   const [changeBgColor, setChangeBgColor] = useState(false);
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { username } = useSelector((state) => state.auth.account || "");
+  const { account } = useSelector((state) => state.auth);
 
   const changeNavbarColor = () => {
     if (window.scrollY > 50) {
@@ -29,11 +28,6 @@ function Navbar() {
     setNavbarIsOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    // return ()=>{
-    //   setNavbarIsOpen(false)
-    // }
-  }, []);
 
   return (
     <nav>
@@ -73,7 +67,7 @@ function Navbar() {
             openNavHandler={openNavHandler}
             changeBgColor={changeBgColor}
             navbarIsOpen={navbarIsOpen}
-            username={username}
+            username={account.username}
           />
         )}
 
