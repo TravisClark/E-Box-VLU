@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import AdminFooter from "../../../admin/components/AdminFooter/AdminFooter";
 import AdminNav from "../../../admin/components/AdminNav/AdminNav";
+import SideNav from "../../../admin/components/AdminNav/SideNav/SideNav";
+import Background from "../../../admin/components/Background/Background";
 import StudentFooter from "../../../student/components/Footer/Footer";
 import StudentNavbar from "../../../student/components/StudentNav/StudentNav";
 import { authActions } from "../../store/auth-slice";
@@ -22,7 +24,8 @@ function Layout(props) {
   return (
     <>
       {!isInAdminMode ? <StudentNavbar /> : <AdminNav/>}
-      {props.children}
+      {isInAdminMode && <SideNav/>}
+      {isInAdminMode ? <Background>{props.children}</Background> : props.children}
       {!isInAdminMode ? <StudentFooter /> : <AdminFooter />}
     </>
   );
