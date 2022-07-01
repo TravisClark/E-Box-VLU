@@ -2,8 +2,8 @@ const Mailbox = require('../models/MailboxModel');
 const Notification = require('../models/NotificationModel');
 
 class MailboxController {
-    //[GET] http://localhost:5000/api/mailbox/list_questions
-    list_questions = async (req, res, next) => {
+    //[GET] http://localhost:5000/api/mailbox/list_questions_admin
+    list_questions_admin = async (req, res, next) => {
         try {
             if (req.query.hasOwnProperty('status')) {
                 const mailbox = await Mailbox.find({
@@ -18,6 +18,21 @@ class MailboxController {
                 });
                 res.status(200).json(mailbox);
             }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    //[GET] http://localhost:5000/api/mailbox/list_questions_user/:type
+    list_questions_user = async (req, res, next) => {
+        try {
+            Mailbox.find({ type_name: req.params.type }).sort({
+                    createdAt: 'desc',
+                })
+                .then(data => {
+                    res.json(data);
+                })
+                .catch(next);
         } catch (err) {
             console.log(err);
         }
