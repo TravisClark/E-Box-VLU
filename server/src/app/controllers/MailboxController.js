@@ -33,8 +33,7 @@ class MailboxController {
                 //check question is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'Vui lòng nhập câu hỏi',
-                        field: 'question',
+                        Message: 'Vui lòng nhập câu hỏi',
                     }),
                 );
             } else {
