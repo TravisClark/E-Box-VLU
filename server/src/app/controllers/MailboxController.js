@@ -23,6 +23,21 @@ class MailboxController {
         }
     };
 
+    //[GET] http://localhost:5000/api/mailbox/list_questions_user/:type
+    list_questions_user = async (req, res, next) => {
+        try {
+            Mailbox.find({ type_name: req.params.type }).sort({
+                    createdAt: 'desc',
+                })
+                .then(data => {
+                    res.json(data);
+                })
+                .catch(next);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     //[POST] http://localhost:5000/api/mailbox/publish_question
     publish_question = async (req, res, next) => {
         try {
