@@ -147,18 +147,26 @@ class MailboxController {
             const data_type_name = req.body.type_name;
             //format answer
             var answer = data_answer.replace(/\s+/g, '');
-            if (answer == null || answer === '') {
+            const format = /[a-z || A-Z || 0-9]/g;
+            if (data_type_name == null || data_type_name === '') {
+                //check type name is null or ''
+                return next(
+                    res.status(401).json({
+                        Message: 'Vui lòng chọn thể loại câu hỏi',
+                    }),
+                );
+            } else if (answer == null || answer === '') {
                 //check answer is null or ''
                 return next(
                     res.status(401).json({
                         Message: 'Vui lòng nhập câu trả lời',
                     }),
                 );
-            } else if (data_type_name == null || data_type_name === '') {
-                //check type name is null or ''
+            } else if (answer.match(format).length != answer.length) {
+                //check answer is null or ''
                 return next(
                     res.status(401).json({
-                        Message: 'Vui lòng chọn thể loại câu hỏi',
+                        Message: 'Vui lòng nhập câu trả lời',
                     }),
                 );
             } else {
