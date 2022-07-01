@@ -4,6 +4,7 @@
     height: 20px;
     transition: all 0.25s;
     position: relative;
+    display: block;
   }
   
   .hamburger-top,
