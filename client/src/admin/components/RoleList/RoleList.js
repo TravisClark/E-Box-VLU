@@ -15,9 +15,9 @@ export default function BasicSelect(props) {
   const [roles, setRoles] = useState();
   const {sendRequest} = useHttpClient()
 
-  // const handleChange = (event) => {
-  //   setAge(event.target.value);
-  // };
+  const handleChange = (event) => {
+    console.log(event.target);
+  };
   useEffect(() => {
     const fetchRoles = async ()=>{
       try {
@@ -42,7 +42,8 @@ export default function BasicSelect(props) {
               id="demo-simple-select"
               // value={age}
               label="Role"
-              // onChange={handleChange}
+              onChange={e => console.log(e)}
+              
               {...field}
             >
               {roles}
@@ -50,6 +51,7 @@ export default function BasicSelect(props) {
           )}
           control={props.control}
           name={props.name}
+          onChange={e => console.log(e)}
         />
       </FormControl>
     </Box>

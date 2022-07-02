@@ -63,7 +63,7 @@ function SideNav() {
         </NavLink>
         <NavLink
           to="/E-boxVLU/admin/questions"
-          className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer transition duration-300 ${
+          className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer transition duration-300 visited:bg-slate-200 ${
             navbarIsOpen && "px-8"
           }`}
           // activeClassName="bg-slate-200"
@@ -105,7 +105,7 @@ function SideNav() {
           )}
         </NavLink>
         <NavLink
-          to="/#sadasdasd"
+          to="/E-boxVLU/admin/chat"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer transition duration-300 ${
             navbarIsOpen && "px-8"
           }`}
@@ -121,7 +121,7 @@ function SideNav() {
             <path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"></path>
           </svg>
           {navbarIsOpen && (
-            <h1 className="font-medium text-gray-400 w-2/3">
+            <h1 className="font-medium text-gray-400 w-2/3 visited:text-black">
               Chat
             </h1>
           )}
