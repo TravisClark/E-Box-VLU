@@ -177,13 +177,6 @@ class MailboxController {
                         Message: 'Vui lòng nhập câu trả lời',
                     }),
                 );
-            } else if (answer.match(format).length != answer.length) {
-                //check answer is null or ''
-                return next(
-                    res.status(401).json({
-                        Message: 'Vui lòng nhập câu trả lời',
-                    }),
-                );
             } else {
                 //update answer status to MongoDB
                 var status = 'Đã được trả lời';
