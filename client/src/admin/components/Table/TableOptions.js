@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 export default function TableList({onChangeSelectedTable, selectedTable}) {
-  const [age, setAge] = React.useState('');
+  // const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
     onChangeSelectedTable(event.target.value);
@@ -18,7 +18,7 @@ export default function TableList({onChangeSelectedTable, selectedTable}) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value=''
           label="Age"
           onChange={handleChange}
           
