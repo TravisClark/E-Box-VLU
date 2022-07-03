@@ -34,7 +34,6 @@ function ChangePasswordForm() {
         }),
         { "Content-Type": "application/json"}
       );
-      console.log('passed!')
       await dispatch(
         authActions.changePasswordHandler({ username: account.username, password: newPw })
       );
