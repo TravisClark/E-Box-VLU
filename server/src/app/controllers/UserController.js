@@ -90,7 +90,7 @@ class UserController {
         }
     };
 
-    //[POST] http://localhost:5000/api/user/login
+    //[POST] http://localhost:5000/api/user/user/login
     login = async (req, res, next) => {
         try {
             //Get data from client
