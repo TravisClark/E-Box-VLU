@@ -49,7 +49,7 @@ class MailboxController {
                 //check question is null or ''
                 return next(
                     res.status(401).json({
-                        Message: 'Vui lòng nhập câu hỏi',
+                        message: 'Vui lòng nhập câu hỏi',
                     }),
                 );
             } else {
