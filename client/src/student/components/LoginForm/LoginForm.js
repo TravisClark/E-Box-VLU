@@ -94,7 +94,7 @@ function LoginForm() {
               )}
               {error && <h3 className="text-red-500 text-sm">{error}</h3>}
             </div>
-            <Button title="Đăng Nhập" className={` text-white bg-heavyBlue`} />
+            <Button className={` text-white bg-heavyBlue`}>Đăng Nhập</Button>
             <span className="text-gray-500 italic">
               *Lưu ý: Chỉ sinh viên khoa CNTT được đăng nhập vào hệ thống!
             </span>
