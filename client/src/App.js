@@ -19,10 +19,7 @@ function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { account } = useSelector((state) => state.auth);
   console.count();
-
-  // const { role_name } = useSelector((state) => state.auth.account);
-  // console.log(role_name);
-  // console.count();
+  
   return (
     <Layout>
       <Suspense
