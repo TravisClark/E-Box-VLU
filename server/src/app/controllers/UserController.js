@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 class UserController {
-    //[GET] http://localhost:5000/api/user/list_users
+    //[GET] http://localhost:5000/api/admin/user/list_users
     list_users = async (req, res) => {
         try {
             const users = await UserModel.find({});
@@ -13,7 +13,7 @@ class UserController {
         }
     };
 
-    //[GET] http://localhost:5000/api/user/account_info
+    //[GET] http://localhost:5000/api/user/user/user/account_info
     account_info = async (req, res) => {
         try {
             //Search user by token
@@ -31,7 +31,7 @@ class UserController {
         }
     };
 
-    //[POST] http://localhost:5000/api/user/add_user
+    //[POST] http://localhost:5000/api/admin/user/add_user
     add_user = async (req, res, next) => {
         try {
             //Get data from client
@@ -141,7 +141,7 @@ class UserController {
         }
     };
 
-    //[PATCH] http://localhost:5000/api/user/change_password
+    //[PATCH] http://localhost:5000/api/user/user/change_password
     change_password = async (req, res, next) => {
         try {
             const formData = req.body;
