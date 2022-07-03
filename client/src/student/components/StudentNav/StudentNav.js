@@ -5,6 +5,7 @@ import Container from "../UI/Container";
 import { useSelector } from "react-redux";
 import BeforeLogin from "./BeforeLogin";
 import AfterLoggedIn from "./AfterLoggedIn";
+import logo from "../../../assets/logo.png";
 
 function Navbar() {
   const [changeBgColor, setChangeBgColor] = useState();
@@ -14,7 +15,7 @@ function Navbar() {
 
   const changeNavbarColor = () => {
     if (window.scrollY > 50) {
-      setChangeBgColor('bg-white');
+      setChangeBgColor("bg-white");
     } else {
       setChangeBgColor();
     }
@@ -28,7 +29,6 @@ function Navbar() {
     setNavbarIsOpen((prevState) => !prevState);
   };
 
-
   return (
     <nav>
       <Container
@@ -37,16 +37,10 @@ function Navbar() {
         } md:justify-around md:px-0`}
       >
         <div className="flex space-x-4 items-center z-20">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            className={`transition duration-300 ${changeBgColor ? 'fill-black' : 'fill-white'}`}
-          >
-            <path
-              d="M12.74 2.32a1 1 0 0 0-1.48 0l-9 10A1 1 0 0 0 3 14h2v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7h2a1 1 0 0 0 1-1 1 1 0 0 0-.26-.68z"
-            ></path>
-          </svg>
+          <div
+            className="bg-cover bg-no-repeat bg-left-top w-9 h-12"
+            style={{ backgroundImage: `url(${logo})` }}
+          />
           <h1
             className={`font-bold text-2xl transition duration-500 ${
               changeBgColor ? "text-black" : "text-white"
