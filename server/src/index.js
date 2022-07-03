@@ -7,7 +7,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT;
 
-const route = require('./routes');
+const route = require('./routes/index');
 
 const URI_DATABASE = process.env.URI_DATABASE || 8080;
 
@@ -38,8 +38,8 @@ app.use(cors());
 //Connecting router
 route(app);
 
-module.exports = app;
-
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 });
+
+module.exports = app;
