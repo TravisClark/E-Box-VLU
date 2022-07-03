@@ -7,16 +7,16 @@ import BeforeLogin from "./BeforeLogin";
 import AfterLoggedIn from "./AfterLoggedIn";
 
 function Navbar() {
-  const [changeBgColor, setChangeBgColor] = useState();
+  const [changeBgColor, setChangeBgColor] = useState(false);
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { account } = useSelector((state) => state.auth);
 
   const changeNavbarColor = () => {
     if (window.scrollY > 50) {
-      setChangeBgColor('bg-white');
+      setChangeBgColor(true);
     } else {
-      setChangeBgColor();
+      setChangeBgColor(false);
     }
   };
   window.addEventListener("scroll", changeNavbarColor);
@@ -32,7 +32,7 @@ function Navbar() {
   return (
     <nav>
       <Container
-        className={`fixed flex z-20 justify-between px-20  min-w-full p-4 items-center transition duration-500 ${
+        className={`fixed flex z-20 justify-between px-20  bg-transparent min-w-full p-4 items-center transition duration-500 ${
           changeBgColor && "bg-white"
         } md:justify-around md:px-0`}
       >
@@ -41,9 +41,10 @@ function Navbar() {
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            className={`transition duration-300 ${changeBgColor ? 'fill-black' : 'fill-white'}`}
+            // className='transition duration-300'
           >
             <path
+              fill={`${changeBgColor ? "#000" : "#fff"}`}
               d="M12.74 2.32a1 1 0 0 0-1.48 0l-9 10A1 1 0 0 0 3 14h2v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7h2a1 1 0 0 0 1-1 1 1 0 0 0-.26-.68z"
             ></path>
           </svg>

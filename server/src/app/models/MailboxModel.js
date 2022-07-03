@@ -4,32 +4,39 @@ const Schema = mongoose.Schema;
 
 const Mailbox = new Schema(
     {
-        id_question: {
+        id_question : {
             type: Number,
         },
         question: {
             type: 'string',
+            maxlength: 255,
             required: true,
         },
         answer: {
             type: 'string',
+            maxlength: 255,
         },
         status: {
             type: 'string',
+            maxlength: 255,
             required: true,
         },
         type_name: {
             type: 'string',
+            maxlength: 255,
         },
-        username_question: {
+        user_name_question: {
             type: 'string',
+            maxlength: 20,
             required: true,
         },
-        username_censor: {
+        user_name_censor: {
             type: 'string',
+            maxlength: 20,
         },
-        username_reply: {
+        user_name_answer: {
             type: 'string',
+            maxlength: 20,
         },
     },
     {

@@ -6,7 +6,7 @@ const uiSlice = createSlice({
     initialState: {isInAdminMode: false},
     reducers:{
         runAdminMode (state){
-            state.isInAdminMode = !state.isInAdminMode;
+            state.isInAdminMode = true;
         }
     }
 })

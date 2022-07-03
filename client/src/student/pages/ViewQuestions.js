@@ -1,17 +1,10 @@
 import React from "react";
-import { useState } from "react";
 import IntroductionBanner from "../components/IntroductionBanner/IntroductionBanner";
-import QuestionForm from "../components/QuestionSection/QuestionForm";
 import QuestionList from "../components/QuestionSection/QuestionList/QuestionList";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
 
 function ViewQuestions() {
-  const [isQFormOpen, setIsQFormOpen] = useState(false);
-  console.log(isQFormOpen)
-  const onToggleFormHandler = ()=> {
-    setIsQFormOpen((prevState) => !prevState);
-  }
   return (
     <>
       <IntroductionBanner>
@@ -25,15 +18,16 @@ function ViewQuestions() {
                 type="text"
                 className="bg-transparent text-white outline-none rounded-md p-4 w-full  border border-gray-300 md:rounded-none"
               />
-              <Button className="bg-black text-white mx-auto px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2">
-                Tìm kiếm
-              </Button>
+              <Button
+                title="Tìm kiếm"
+                className="bg-black text-white mx-auto px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2"
+              />
             </div>
           </div>
         </form>
       </IntroductionBanner>
       <section id="question">
-        <Container className="min-w-full relative flex flex-col">
+        <Container className="min-w-full relative">
           {/* <div className={`${classes.spacer} ${classes.layer1}`}></div> */}
           <svg
             id="visual"
@@ -42,6 +36,7 @@ function ViewQuestions() {
             height="540"
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
+            
           >
             <rect x="0" y="0" width="100%" height="540" fill="#0060FF"></rect>
             <path
@@ -52,13 +47,6 @@ function ViewQuestions() {
             ></path>
           </svg>
           <QuestionList />
-          <button
-            className="bg-black text-white px-4 mb-10 mx-auto  py-3 font-semibold rounded"
-            onClick={onToggleFormHandler}
-          >
-            Đặt câu hỏi
-          </button>
-          {isQFormOpen && <QuestionForm onCloseForm={onToggleFormHandler}/>}
         </Container>
       </section>
     </>
