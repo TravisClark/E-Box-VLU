@@ -3,7 +3,8 @@ import { Controller, useForm } from "react-hook-form";
 import Requests from "../../shared/api/Requests";
 import useHttpClient from "../../shared/hooks/http-hook";
 import Container from "../../student/components/UI/Container";
-import Select from "../components/Ui/Select";
+import Select from "../components/RoleList/RoleList";
+import { useHistory } from "react-router-dom";
 
 const defaultValues = {
   role: "",
@@ -12,14 +13,17 @@ const defaultValues = {
 function AddUser() {
   const { handleSubmit, control } = useForm({ defaultValues });
   const { sendRequest, error } = useHttpClient();
+  const history = useHistory();
   const onSubmitHandler = async (inputData) => {
+    const {role, username} = inputData;
     try {
       await sendRequest(
         Requests.addUserRequest,
         "POST",
-        JSON.stringify(inputData),
+        JSON.stringify({ username, role_name: role }),
         { "Content-Type": "application/json" }
       );
+      history.push('/E-boxVLU/admin/users')
     } catch (error) {}
   };
   return (

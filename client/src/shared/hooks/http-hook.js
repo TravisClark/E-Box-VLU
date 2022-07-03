@@ -20,7 +20,7 @@ const useHttpClient = () => {
           signal: httpAbortCtrl.signal,
         });
         const responseData = await response.json();
-        console.log(responseData)
+        // console.log(responseData)
         activeHttpRequests.current = activeHttpRequests.current.filter(
           (reqCtrl) => reqCtrl !== httpAbortCtrl
         );
