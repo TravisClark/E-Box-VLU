@@ -2,7 +2,7 @@ const Mailbox = require('../models/MailboxModel');
 const Notification = require('../models/NotificationModel');
 
 class MailboxController {
-    //[GET] http://localhost:5000/api/mailbox/list_questions_admin
+    //[GET] http://localhost:5000/api/admin/mailbox/list_questions_admin
     list_questions_admin = async (req, res, next) => {
         try {
             if (req.query.hasOwnProperty('status')) {
@@ -23,13 +23,14 @@ class MailboxController {
         }
     };
 
-    //[GET] http://localhost:5000/api/mailbox/list_questions_user/:type
+    //[GET] http://localhost:5000/api/user/mailbox/list_questions_user/:type
     list_questions_user = async (req, res, next) => {
         try {
-            Mailbox.find({ type_name: req.params.type }).sort({
+            Mailbox.find({ type_name: req.params.type })
+                .sort({
                     createdAt: 'desc',
                 })
-                .then(data => {
+                .then((data) => {
                     res.json(data);
                 })
                 .catch(next);
@@ -38,7 +39,7 @@ class MailboxController {
         }
     };
 
-    //[POST] http://localhost:5000/api/mailbox/publish_question
+    //[POST] http://localhost:5000/api/user/mailbox/publish_question
     publish_question = async (req, res, next) => {
         try {
             //Get data from client
@@ -78,7 +79,7 @@ class MailboxController {
         }
     };
 
-    //[PATCH] http://localhost:5000/api/mailbox/approve_question
+    //[PATCH] http://localhost:5000/api/admin/mailbox/approve_question
     approve_question = async (req, res, next) => {
         try {
             //Get data from client
@@ -115,7 +116,7 @@ class MailboxController {
         }
     };
 
-    //[PATCH] http://localhost:5000/api/mailbox/refuse_question
+    //[PATCH] http://localhost:5000/api/admin/mailbox/refuse_question
     refuse_question = async (req, res, next) => {
         try {
             //Get data from client
@@ -152,7 +153,7 @@ class MailboxController {
         }
     };
 
-    //[PATCH] http://localhost:5000/api/mailbox/reply_question
+    //[PATCH] http://localhost:5000/api/admin/mailbox/reply_question
     reply_question = async (req, res, next) => {
         try {
             //Get data from client
@@ -171,13 +172,6 @@ class MailboxController {
                     }),
                 );
             } else if (answer == null || answer === '') {
-                //check answer is null or ''
-                return next(
-                    res.status(401).json({
-                        Message: 'Vui lòng nhập câu trả lời',
-                    }),
-                );
-            } else if (answer.match(format).length != answer.length) {
                 //check answer is null or ''
                 return next(
                     res.status(401).json({
