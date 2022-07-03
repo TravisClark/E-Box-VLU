@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import Requests from "../../../shared/api/Requests";
 import useHttpClient from "../../../shared/hooks/http-hook";
 import Container from "../UI/Container";
@@ -9,6 +8,7 @@ function QuestionForm(props) {
   const { sendRequest, error } = useHttpClient();
   const questionInputRef = useRef();
   const { account } = useSelector((state) => state.auth);
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const question = questionInputRef.current.value;
@@ -20,8 +20,10 @@ function QuestionForm(props) {
         { "Content-Type": "application/json" }
       );
       props.onCloseForm()
+      props.onShowNotification()
     } catch (error) {}
   };
+
   return (
     <Container className="min-w-full h-full flex absolute justify-center items-center top-0 left-0 z-30">
       <form
