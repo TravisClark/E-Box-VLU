@@ -39,7 +39,6 @@ function QuestionManagement() {
   } else {
     table = <RepliedQuestionsTable questions={questions}/>;
   }
-  // console.log(selectedTable)
 
   return (
     <Container className="m-auto w-11/12 h-full py-24 px-20 space-y-6">
