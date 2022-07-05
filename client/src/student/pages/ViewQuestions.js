@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Notification } from "../../shared/components/UI/Notification";
 import IntroductionBanner from "../components/IntroductionBanner/IntroductionBanner";
 import QuestionForm from "../components/QuestionSection/QuestionForm";
@@ -9,23 +10,11 @@ import Container from "../components/UI/Container";
 
 function ViewQuestions() {
   const [isQFormOpen, setIsQFormOpen] = useState(false);
-  const [isShowingNotification, setIsShowingNotification] = useState(false);
+  const { successNotification } = useSelector((state) => state.ui);
 
   const onToggleFormHandler = () => {
     setIsQFormOpen((prevState) => !prevState);
   };
-
-  const onShowNotificationHandler = () => {
-    setIsShowingNotification(true);
-  };
-
-  useEffect(() => {
-    if (isShowingNotification) {
-      setTimeout(() => {
-        setIsShowingNotification(false);
-      }, 3000);
-    }
-  }, [isShowingNotification]);
 
   return (
     <>
@@ -73,10 +62,9 @@ function ViewQuestions() {
           >
             Đặt câu hỏi
           </button>
-          {isQFormOpen && <QuestionForm onCloseForm={onToggleFormHandler} onShowNotification={onShowNotificationHandler} />}
-          {isShowingNotification && (
+          {isQFormOpen && <QuestionForm onCloseForm={onToggleFormHandler} />}
+          {successNotification.isShowing && (
             <Notification
-              message="Đặt câu hỏi thành công"
               className="w-full h-full"
             />
           )}
