@@ -45,7 +45,15 @@ class MailboxController {
             //Get data from client
             const data_username = req.body.username;
             const data_question = req.body.question;
-            if (data_question == null || data_question === '') {
+            const data_type_name = req.body.type_name;
+            if(data_type_name == null || data_type_name === ''){
+                //check type_name is null or ''
+                return next(
+                    res.status(401).json({
+                        message: 'Vui lòng chọn loại câu hỏi',
+                    }),
+                );
+            }else if (data_question == null || data_question === '') {
                 //check question is null or ''
                 return next(
                     res.status(401).json({
@@ -58,7 +66,7 @@ class MailboxController {
                     question: data_question,
                     answer: '',
                     status: 'Chưa được duyệt',
-                    type_name: '',
+                    type_name: data_type_name,
                     username_question: data_username,
                     username_censor: '',
                     username_reply: '',
@@ -85,11 +93,12 @@ class MailboxController {
             //Get data from client
             const data_username = req.body.username;
             const data_id_question = req.body.id_question;
+            const data_type_name = req.body.type_name;
             //update question status to MongoDB
             var status = 'Đã được duyệt';
             await Mailbox.findOneAndUpdate(
                 { id_question: data_id_question },
-                { status: status, username_censor: data_username },
+                { status: status, username_censor: data_username, type_name: data_type_name},
             );
             //create informational data for the notification
             const info_mailbox = await Mailbox.findOne({
