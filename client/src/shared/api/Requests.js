@@ -1,15 +1,16 @@
 
 const Requests = {
-    loginRequest: "http://localhost:5000/api/user/login",
+    loginRequest: "http://localhost:5000/api/user/user/login",
     changePwRequest: 'http://localhost:5000/api/user/change_password',
     addUserRequest: 'http://localhost:5000/api/user/add_user', 
-    publishQuestion: 'http://localhost:5000/api/mailbox/publish_question',
-    approveQuestion: 'http://localhost:5000/api/mailbox/approve_question',
+    publishQuestion: 'http://localhost:5000/api/user/mailbox/publish_question',
+    approveQuestion: 'http://localhost:5000/api/admin/mailbox/approve_question',
     refuseQuestion: 'http://localhost:5000/api/mailbox/refuse_question',
+    replyQuestion: 'http://localhost:5000/api/admin/mailbox/reply_question',
     fetchAccount: 'http://localhost:5000/api/user/account_info', 
     fetchRoleList: 'http://localhost:5000/api/role/list_roles', 
     fetchUsersList: 'http://localhost:5000/api/user/list_users',
-    fetchQuestionList: 'http://localhost:5000/api/mailbox/list_questions',
+    fetchQuestionList: 'http://localhost:5000/api/admin/mailbox/list_questions_admin',
     fetchQuestionBasedOnStatus: 'http://localhost:5000/api/mailbox/list_questions?status=',
 }
 

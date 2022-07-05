@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Notification } from "../../shared/components/UI/Notification";
 import IntroductionBanner from "../components/IntroductionBanner/IntroductionBanner";
 import QuestionForm from "../components/QuestionSection/QuestionForm";
 import QuestionList from "../components/QuestionSection/QuestionList/QuestionList";
@@ -8,10 +10,12 @@ import Container from "../components/UI/Container";
 
 function ViewQuestions() {
   const [isQFormOpen, setIsQFormOpen] = useState(false);
-  console.log(isQFormOpen)
-  const onToggleFormHandler = ()=> {
+  const { successNotification } = useSelector((state) => state.ui);
+
+  const onToggleFormHandler = () => {
     setIsQFormOpen((prevState) => !prevState);
-  }
+  };
+
   return (
     <>
       <IntroductionBanner>
@@ -58,7 +62,12 @@ function ViewQuestions() {
           >
             Đặt câu hỏi
           </button>
-          {isQFormOpen && <QuestionForm onCloseForm={onToggleFormHandler}/>}
+          {isQFormOpen && <QuestionForm onCloseForm={onToggleFormHandler} />}
+          {successNotification.isShowing && (
+            <Notification
+              className="w-full h-full"
+            />
+          )}
         </Container>
       </section>
     </>
