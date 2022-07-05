@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RepliedQuestionForm } from "../../../admin/components/Table/RepliedQuestionsTable/RepliedQuestionForm";
+import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { uiActions } from "../../store/ui-slice";
@@ -39,7 +39,7 @@ export const ConfirmNotification = (props) => {
       <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10 ">
         <span className="text-2xl font-bold">Xác nhận duyệt</span>
         {type === "Reply form" ? (
-          <RepliedQuestionForm data={data} />
+          <ReplyForm data={data} />
         ) : (
           type === "Approve form" && <h1>{message}</h1>
         )}

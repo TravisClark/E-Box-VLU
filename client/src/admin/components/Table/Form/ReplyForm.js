@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const RepliedQuestionForm = ({data}) => {
+export const ReplyForm = ({data}) => {
   return (
     <div className="flex flex-col space-y-6">
         <div className="flex w-full py-2 px-10 space-x-20 bg-gray-200 rounded-md">
