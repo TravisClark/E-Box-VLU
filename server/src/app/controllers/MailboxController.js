@@ -45,7 +45,15 @@ class MailboxController {
             //Get data from client
             const data_username = req.body.username;
             const data_question = req.body.question;
-            if (data_question == null || data_question === '') {
+            const data_type_name = req.body.type_name;
+            if(data_type_name == null || data_type_name === ''){
+                //check type_name is null or ''
+                return next(
+                    res.status(401).json({
+                        message: 'Vui lòng chọn loại câu hỏi',
+                    }),
+                );
+            }else if (data_question == null || data_question === '') {
                 //check question is null or ''
                 return next(
                     res.status(401).json({
@@ -58,7 +66,7 @@ class MailboxController {
                     question: data_question,
                     answer: '',
                     status: 'Chưa được duyệt',
-                    type_name: '',
+                    type_name: data_type_name,
                     username_question: data_username,
                     username_censor: '',
                     username_reply: '',
@@ -69,7 +77,7 @@ class MailboxController {
                     .save()
                     .then(() => {
                         res.status(201).json({
-                            Message: 'Đặt câu hỏi thành công',
+                            message: 'Đặt câu hỏi thành công',
                         });
                     })
                     .catch(next);
@@ -85,11 +93,12 @@ class MailboxController {
             //Get data from client
             const data_username = req.body.username;
             const data_id_question = req.body.id_question;
+            const data_type_name = req.body.type_name;
             //update question status to MongoDB
             var status = 'Đã được duyệt';
             await Mailbox.findOneAndUpdate(
                 { id_question: data_id_question },
-                { status: status, username_censor: data_username },
+                { status: status, username_censor: data_username, type_name: data_type_name},
             );
             //create informational data for the notification
             const info_mailbox = await Mailbox.findOne({
@@ -107,7 +116,7 @@ class MailboxController {
                 .save()
                 .then(() => {
                     res.status(201).json({
-                        Message: 'Duyệt câu hỏi thành công',
+                        message: 'Duyệt câu hỏi thành công',
                     });
                 })
                 .catch(next);
@@ -144,7 +153,7 @@ class MailboxController {
                 .save()
                 .then(() => {
                     res.status(201).json({
-                        Message: 'Từ chối câu hỏi thành công',
+                        message: 'Từ chối câu hỏi thành công',
                     });
                 })
                 .catch(next);
@@ -163,19 +172,18 @@ class MailboxController {
             const data_type_name = req.body.type_name;
             //format answer
             var answer = data_answer.replace(/\s+/g, '');
-            const format = /[a-z || A-Z || 0-9]/g;
             if (data_type_name == null || data_type_name === '') {
                 //check type name is null or ''
                 return next(
                     res.status(401).json({
-                        Message: 'Vui lòng chọn thể loại câu hỏi',
+                        message: 'Vui lòng chọn thể loại câu hỏi',
                     }),
                 );
             } else if (answer == null || answer === '') {
                 //check answer is null or ''
                 return next(
                     res.status(401).json({
-                        Message: 'Vui lòng nhập câu trả lời',
+                        message: 'Vui lòng nhập câu trả lời',
                     }),
                 );
             } else {
@@ -206,7 +214,7 @@ class MailboxController {
                     .save()
                     .then(() => {
                         res.status(201).json({
-                            Message: 'Trả lời câu hỏi thành công',
+                            message: 'Trả lời câu hỏi thành công',
                         });
                     })
                     .catch(next);
