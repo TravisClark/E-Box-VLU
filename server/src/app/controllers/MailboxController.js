@@ -77,7 +77,7 @@ class MailboxController {
                     .save()
                     .then(() => {
                         res.status(201).json({
-                            Message: 'Đặt câu hỏi thành công',
+                            message: 'Đặt câu hỏi thành công',
                         });
                     })
                     .catch(next);
@@ -116,7 +116,7 @@ class MailboxController {
                 .save()
                 .then(() => {
                     res.status(201).json({
-                        Message: 'Duyệt câu hỏi thành công',
+                        message: 'Duyệt câu hỏi thành công',
                     });
                 })
                 .catch(next);
@@ -153,7 +153,7 @@ class MailboxController {
                 .save()
                 .then(() => {
                     res.status(201).json({
-                        Message: 'Từ chối câu hỏi thành công',
+                        message: 'Từ chối câu hỏi thành công',
                     });
                 })
                 .catch(next);
@@ -177,14 +177,14 @@ class MailboxController {
                 //check type name is null or ''
                 return next(
                     res.status(401).json({
-                        Message: 'Vui lòng chọn thể loại câu hỏi',
+                        message: 'Vui lòng chọn thể loại câu hỏi',
                     }),
                 );
             } else if (answer == null || answer === '') {
                 //check answer is null or ''
                 return next(
                     res.status(401).json({
-                        Message: 'Vui lòng nhập câu trả lời',
+                        message: 'Vui lòng nhập câu trả lời',
                     }),
                 );
             } else {
@@ -215,7 +215,7 @@ class MailboxController {
                     .save()
                     .then(() => {
                         res.status(201).json({
-                            Message: 'Trả lời câu hỏi thành công',
+                            message: 'Trả lời câu hỏi thành công',
                         });
                     })
                     .catch(next);

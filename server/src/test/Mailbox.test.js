@@ -32,7 +32,7 @@ const Mailbox = require('../app/models/MailboxModel');
     });
 });*/
 
-/*describe('Unit test of publish question when leave the question type or question blank', () => {
+describe('Unit test of publish question when leave the question type or question blank', () => {
     //Unit test of check type_name is null or ''
     test('Status is 401 when type_name is null', async () => {
         const response = await request(app).post('/api/user/mailbox/publish_question').send({
@@ -89,9 +89,9 @@ const Mailbox = require('../app/models/MailboxModel');
 
         expect(response.text).toMatch('Vui lòng nhập câu hỏi');
     });
-});*/
+});
 
-/*describe('Unit test of view questions list function', () => {
+describe('Unit test of view questions list function', () => {
     test('Status is 200', async () => {
         const response = await request(app).get('/api/admin/mailbox/list_questions_admin').query({status: 'Đã được duyệt'})
 
@@ -102,7 +102,7 @@ const Mailbox = require('../app/models/MailboxModel');
 
         expect(response.type).toEqual('application/json');
     });
-});*/
+});
 
 /*describe('Unit Tests of Approve question function', () => {
     test('Status is 201', async () => {
@@ -136,30 +136,33 @@ const Mailbox = require('../app/models/MailboxModel');
 
 describe('Unit Tests of Reply question function when entering complete information', () => {
     test('Status is 201', async () => {
-        const response = await request(app).post('/api/user/mailbox/publish_question').send({
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
             username: '197pm11111',
+            answer: 'Có nha em',
             type_name: 'Môn học',
-            question: 'Cho em hỏi danh sách môn tương đương em có thể xem ở đâu ạ',
+            id_question: 9,
         });
 
         expect(response.statusCode).toBe(201);
     });
     test('Return format json', async () => {
-        const response = await request(app).post('/api/user/mailbox/publish_question').send({
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
             username: '197pm11111',
+            answer: 'Có nha em',
             type_name: 'Môn học',
-            question: 'Cho em hỏi danh sách môn tương đương em có thể xem ở đâu ạ',
+            id_question: 9,
         });
 
         expect(response.type).toEqual('application/json');
     });
     test('Return message', async () => {
-        const response = await request(app).post('/api/user/mailbox/publish_question').send({
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
             username: '197pm11111',
+            answer: 'Có nha em',
             type_name: 'Môn học',
-            question: 'Cho em hỏi danh sách môn tương đương em có thể xem ở đâu ạ',
+            id_question: 9,
         });
 
-        expect(response.text).toMatch('Đặt câu hỏi thành công');
+        expect(response.body).toEqual({message: 'Trả lời câu hỏi thành công'});
     });
 });
