@@ -6,7 +6,7 @@ const headItem = ["No", "Câu hỏi", "Duyệt", "Từ chối"];
 
 function TableQuestionList(props) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage] = useState(2);
+  const [questionsPerPage] = useState(10);
   const questions = props.questions.filter(
     (question) => question.status === "Chưa được duyệt"
   );
