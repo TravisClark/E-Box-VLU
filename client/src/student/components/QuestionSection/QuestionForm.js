@@ -1,13 +1,15 @@
 import React, { useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../shared/api/Requests";
 import useHttpClient from "../../../shared/hooks/http-hook";
+import { uiActions } from "../../../shared/store/ui-slice";
 import Container from "../UI/Container";
 
 function QuestionForm(props) {
   const { sendRequest, error } = useHttpClient();
   const questionInputRef = useRef();
   const { account } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -19,8 +21,11 @@ function QuestionForm(props) {
         JSON.stringify({ username: account.username, question }),
         { "Content-Type": "application/json" }
       );
-      props.onCloseForm()
-      props.onShowNotification()
+      props.onCloseForm();
+      dispatch(uiActions.showSuccessNotification("Đặt câu hỏi thành công"));
+      setTimeout(() => {
+        dispatch(uiActions.closeSuccessNotification());
+      }, 3000);
     } catch (error) {}
   };
 
