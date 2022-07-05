@@ -172,7 +172,6 @@ class MailboxController {
             const data_type_name = req.body.type_name;
             //format answer
             var answer = data_answer.replace(/\s+/g, '');
-            const format = /[a-z || A-Z || 0-9]/g;
             if (data_type_name == null || data_type_name === '') {
                 //check type name is null or ''
                 return next(
