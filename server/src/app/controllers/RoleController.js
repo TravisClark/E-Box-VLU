@@ -11,11 +11,10 @@ class RoleController {
         }
     };
 
-    //[POST] http://localhost:5000/admin/api/role/add_role
+    //[POST] http://localhost:5000/api/admin/role/add_role
     add_role = async (req, res) => {
         try {
-            const formData = req.body;
-            const role = new RoleModel(formData);
+            const role = new RoleModel(req.body.role_name);
             await role
                 .save()
                 .then(() => res.json(`Thêm thành công ${req.body.role_name}`));
