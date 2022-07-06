@@ -1,10 +1,14 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-
+import selectStyles from '../../../../shared/components/UI/Select.module.css'
 export const ReplyForm = (props) => {
   const inputRef = useRef();
   const [selected, setSelected] = useState("");
   const { account } = useSelector((state) => state.auth);
+
+  const date = new Date(props.data.createdAt)
+  console.log(date.getDay())
+  
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const body = JSON.stringify({
@@ -15,12 +19,9 @@ export const ReplyForm = (props) => {
     });
     props.onSubmitHandler(body)
   };
-  // const onChange = (value) => {
 
-  // }
   return (
     <>
-      
       <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10 ">
         <span className="text-2xl font-bold">Xác nhận duyệt</span>
         <form onSubmit={onSubmitHandler}>
@@ -44,7 +45,7 @@ export const ReplyForm = (props) => {
             <select
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
-              className="w-fit px-4 py-2 rounded-md"
+              className={`w-fit px-4 py-2 rounded-md ${selectStyles} outline-none`}
             >
               <option value="grapefruit">Grapefruit</option>
               <option value="lime">Lime</option>
