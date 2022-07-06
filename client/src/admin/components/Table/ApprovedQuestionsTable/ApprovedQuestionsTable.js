@@ -7,7 +7,7 @@ const headItem = ["No", "Câu hỏi", "Trả lời"];
 
 export const ApprovedQuestionsTable = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage] = useState(2);
+  const [questionsPerPage] = useState(10);
   const questions = props.questions.filter(
     (question) => question.status === "Đã được duyệt"
   );
