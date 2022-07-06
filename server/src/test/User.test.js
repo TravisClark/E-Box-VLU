@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../index');
-
+/*
 describe('Unit test of login when entering complete information', () => {
     test('Status is 200', async () => {
         const response = await request(app).post('/api/user/user/login').send({
@@ -446,5 +446,38 @@ describe('Unit test of change password when the new password and re-entering the
         expect(response.text).toMatch(
             'Mật khẩu mới và xác minh mật khẩu không trùng khớp. Vui lòng kiểm tra lại',
         );
+    });
+});
+*/
+describe('Unit test of Generate account when entering complete information', () => {
+    test('Status is 200', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '197pm77757',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.statusCode).toBe(201);
+    });
+    test('Return format json', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '197pm74777',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message"Tạo tài khoản thành công"', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '197pm77877',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.body).toEqual({message: 'Tạo tài khoản thành công'});
     });
 });
