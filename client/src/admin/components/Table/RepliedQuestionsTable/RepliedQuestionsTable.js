@@ -7,7 +7,7 @@ const headItem = ["No", "Câu hỏi", "Người trả lời", 'Thao tác'];
 
 export const RepliedQuestionsTable = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage] = useState(2);
+  const [questionsPerPage] = useState(10);
   const questions = props.questions.filter(
     (question) => question.status === "Đã được trả lời"
   );

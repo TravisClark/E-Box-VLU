@@ -7,7 +7,7 @@ const headItem = ["No", "Câu hỏi", "Người từ chối", 'Thao tác'];
 
 export const DisapprovedQuestionsTable = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage] = useState(2);
+  const [questionsPerPage] = useState(10);
   const questions = props.questions.filter(
     (question) => question.status === "Đã bị từ chối"
   );
