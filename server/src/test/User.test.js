@@ -203,7 +203,7 @@ describe('Unit test of change password when entering the wrong request of the ol
     });
 });
 
-describe('Unit test of change password when new password data or re-enter password is empty when new password data or re-enter password is empty ', () => {
+describe('Unit test of change password when new password data or re-enter password is empty', () => {
     //Unit test of check if the new password is null or ''
     test('Status is 401 when new password is null', async () => {
         const response = await request(app)
@@ -449,35 +449,69 @@ describe('Unit test of change password when the new password and re-entering the
     });
 });
 */
-describe('Unit test of Generate account when entering complete information', () => {
-    test('Status is 200', async () => {
+
+// describe('Unit test of Generate account when entering complete information', () => {
+//     test('Status is 200', async () => {
+//         const response = await request(app)
+//             .post('/api/admin/user/add_user')
+//             .send({
+//                 username: '197pm77757',
+//                 role_name: 'Sinh viên',
+//             });
+
+//         expect(response.statusCode).toBe(201);
+//     });
+//     test('Return format json', async () => {
+//         const response = await request(app)
+//             .post('/api/admin/user/add_user')
+//             .send({
+//                 username: '197pm74777',
+//                 role_name: 'Sinh viên',
+//             });
+
+//         expect(response.type).toEqual('application/json');
+//     });
+//     test('Return message"Tạo tài khoản thành công"', async () => {
+//         const response = await request(app)
+//             .post('/api/admin/user/add_user')
+//             .send({
+//                 username: '197pm77877',
+//                 role_name: 'Sinh viên',
+//             });
+
+//         expect(response.body).toEqual({message: 'Tạo tài khoản thành công'});
+//     });
+// });
+
+describe('Unit test of Generate account when the username data is empty', () => {
+    test('Status is 401', async () => {
         const response = await request(app)
             .post('/api/admin/user/add_user')
             .send({
-                username: '197pm77757',
+                username: '',
                 role_name: 'Sinh viên',
             });
 
-        expect(response.statusCode).toBe(201);
+        expect(response.statusCode).toBe(401);
     });
     test('Return format json', async () => {
         const response = await request(app)
             .post('/api/admin/user/add_user')
             .send({
-                username: '197pm74777',
+                username: '',
                 role_name: 'Sinh viên',
             });
 
         expect(response.type).toEqual('application/json');
     });
-    test('Return message"Tạo tài khoản thành công"', async () => {
+    test('Return message"Tài khoản không được bỏ trống"', async () => {
         const response = await request(app)
             .post('/api/admin/user/add_user')
             .send({
-                username: '197pm77877',
+                username: '',
                 role_name: 'Sinh viên',
             });
 
-        expect(response.body).toEqual({message: 'Tạo tài khoản thành công'});
+        expect(response.body).toEqual({message: 'Tài khoản không được bỏ trống'});
     });
 });
