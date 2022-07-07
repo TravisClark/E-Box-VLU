@@ -17,7 +17,6 @@ function QuestionManagement() {
   const [selectedTable, setSelectedTable] = useState("New Question List");
   const { sendRequest, isLoading, error } = useHttpClient();
   const [questions, setQuestions] = useState([]);
-  const { isShowing } = useSelector((state) => state.ui.notification);
   const { successNotification } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 

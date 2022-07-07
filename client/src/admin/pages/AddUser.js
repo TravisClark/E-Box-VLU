@@ -5,6 +5,8 @@ import useHttpClient from "../../shared/hooks/http-hook";
 import Container from "../../student/components/UI/Container";
 import Select from "../components/RoleList/RoleList";
 import { useHistory } from "react-router-dom";
+import { uiActions } from "../../shared/store/ui-slice";
+import { useDispatch } from "react-redux";
 
 const defaultValues = {
   role: "",
@@ -14,6 +16,7 @@ function AddUser() {
   const { handleSubmit, control } = useForm({ defaultValues });
   const { sendRequest, error } = useHttpClient();
   const history = useHistory();
+  const dispatch = useDispatch();
   const onSubmitHandler = async (inputData) => {
     const {role, username} = inputData;
     try {
@@ -23,7 +26,9 @@ function AddUser() {
         JSON.stringify({ username, role_name: role }),
         { "Content-Type": "application/json" }
       );
+      dispatch(uiActions.showSuccessNotification('Thêm tài khoản thành công!'))
       history.push('/E-boxVLU/admin/users')
+      setTimeout(() => {dispatch(uiActions.closeSuccessNotification())},2000)
     } catch (error) {}
   };
   return (

@@ -5,7 +5,7 @@ import { Pagination } from '../../../../shared/components/Pagination/Pagination'
 import { pageActions } from '../../../../shared/store/page-slice';
 import { RepliedQuestionList } from './RepliedQuestionList';
 
-const headItem = ["No", "Câu hỏi", "Người trả lời", 'Thao tác'];
+const headItem = ["No", "Câu hỏi","Ngày trả lời", "Người trả lời", 'Thao tác'];
 
 export const RepliedQuestionsTable = (props) => {
   const dispatch = useDispatch();

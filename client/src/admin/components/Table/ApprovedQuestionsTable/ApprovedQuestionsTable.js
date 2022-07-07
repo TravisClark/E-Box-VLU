@@ -19,7 +19,7 @@ export const ApprovedQuestionsTable = (props) => {
     dispatch(
       pageActions.setCurrentItems({
         items: questions,
-        itemsPerPage: 1,
+        itemsPerPage: 10,
         currentPage: 1,
       })
     );
