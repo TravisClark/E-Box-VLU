@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Pagination } from "../../Ui/Pagination";
 import NewQuestionList from "./NewQuestionList";
 
-const headItem = ["No", "Câu hỏi", "Duyệt", "Từ chối"];
+const headItem = ["No", "Câu hỏi", "Thời gian tạo", "Danh mục", "Duyệt", "Từ chối"];
 
 function TableQuestionList(props) {
   const [currentPage, setCurrentPage] = useState(1);

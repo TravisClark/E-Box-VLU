@@ -14,18 +14,14 @@ export default function BasicSelect(props) {
   // const [age, setAge] = React.useState("");
   const [roles, setRoles] = useState();
   const {sendRequest} = useHttpClient()
-
-  const handleChange = (event) => {
-    console.log(event.target);
-  };
+  
   useEffect(() => {
     const fetchRoles = async ()=>{
       try {
         const response = await sendRequest(Requests.fetchRoleList)
-        const roleMap = response.map(role =>  <MenuItem value={role.role_name} key={role.id_role}>{role.role_name}</MenuItem>);
+        const roleMap = response.map(role =><MenuItem value={role.role_name} key={role.id_role}>{role.role_name}</MenuItem>);
         setRoles(roleMap);
       } catch (error) {
-        console.log(error)
       }
     }
     fetchRoles();
@@ -40,10 +36,9 @@ export default function BasicSelect(props) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              // value={age}
+              value={'Sinh vien'}
               label="Role"
               onChange={e => console.log(e)}
-              
               {...field}
             >
               {roles}

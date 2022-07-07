@@ -19,6 +19,7 @@ function NewQuestionList(props) {
           body: JSON.stringify({
             username: account.username,
             id_question: value.id_question,
+            type_name: value.type_name
           }),
           headers: { "Content-Type": "application/json" },
         },
@@ -43,6 +44,8 @@ function NewQuestionList(props) {
     <tr key={question._id}>
       <td className="py-2 px-4">{++index}</td>
       <td className="py-2 px-4">{question.question}</td>
+      <td className="py-2 px-4">{question.createdAt}</td>
+      <td className="py-2 px-4">{question.type_name}</td>
       <td className="py-2 px-4">
         <button onClick={onApproveHandler.bind(null, question)}>Duyệt</button>
       </td>
