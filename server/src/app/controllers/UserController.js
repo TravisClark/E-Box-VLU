@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 class UserController {
-    //[GET] http://localhost:5000/api/user/list_users
+    //[GET] http://localhost:5000/api/admin/user/list_users
     list_users = async (req, res) => {
         try {
             const users = await UserModel.find({});
@@ -13,7 +13,7 @@ class UserController {
         }
     };
 
-    //[GET] http://localhost:5000/api/user/account_info
+    //[GET] http://localhost:5000/api/user/user/user/account_info
     account_info = async (req, res) => {
         try {
             //Search user by token
@@ -31,7 +31,7 @@ class UserController {
         }
     };
 
-    //[POST] http://localhost:5000/api/user/add_user
+    //[POST] http://localhost:5000/api/admin/user/add_user
     add_user = async (req, res, next) => {
         try {
             //Get data from client
@@ -46,32 +46,29 @@ class UserController {
                 //check username is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'Tài khoản không được bỏ trống',
-                        field: 'username',
+                        message: 'Tài khoản không được bỏ trống',
                     }),
                 );
             } else if (username.length < 5 || username.length > 20) {
                 //check length of username
                 return next(
                     res.status(411).json({
-                        err: 'Độ dài tài khoản từ 5 đến 20 ký tự',
-                        field: 'username',
+                        message: 'Độ dài tài khoản từ 5 đến 20 ký tự',
                     }),
                 );
             } else if (username.match(format).length != username.length) {
                 //check username for correct format
                 return next(
                     res.status(412).json({
-                        err: 'Tài khoản chỉ chứa định dạng chữ Alphabet và chữ số',
-                        field: 'username',
+                        message:
+                            'Tài khoản chỉ chứa định dạng chữ Alphabet và chữ số',
                     }),
                 );
             } else if (user) {
                 //check username unique
                 return next(
                     res.status(500).json({
-                        err: 'Tài khoản đã tồn tại',
-                        field: 'username',
+                        message: 'Tài khoản đã tồn tại',
                     }),
                 );
             } else {
@@ -83,7 +80,7 @@ class UserController {
                     .save()
                     .then(() => {
                         res.status(201).json({
-                            Message: 'Tạo tài khoản thành công',
+                            message: 'Tạo tài khoản thành công',
                         });
                     })
                     .catch(next);
@@ -93,7 +90,7 @@ class UserController {
         }
     };
 
-    //[POST] http://localhost:5000/api/user/login
+    //[POST] http://localhost:5000/api/user/user/login
     login = async (req, res, next) => {
         try {
             //Get data from client
@@ -113,7 +110,7 @@ class UserController {
                 //check username and password is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'Tài khoản và mật khẩu không được bỏ trống',
+                        message: 'Tài khoản và mật khẩu không được bỏ trống',
                     }),
                 );
             } else {
@@ -127,7 +124,7 @@ class UserController {
                     //Check if the user is found
                     return next(
                         res.status(401).json({
-                            err: 'Tài khoản hoặc mật khẩu không chính xác',
+                            message: 'Tài khoản hoặc mật khẩu không chính xác',
                         }),
                     );
                 } else {
@@ -144,7 +141,7 @@ class UserController {
         }
     };
 
-    //[PATCH] http://localhost:5000/api/user/change_password
+    //[PATCH] http://localhost:5000/api/user/user/change_password
     change_password = async (req, res, next) => {
         try {
             const formData = req.body;
@@ -166,40 +163,36 @@ class UserController {
                 //Check password is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'Mật khẩu cũ không được bỏ trống',
-                        field: 'password',
+                        message: 'Mật khẩu cũ không được bỏ trống',
                     }),
                 );
             } else if (!(password === password_real)) {
                 //Check if the password is correct or not
                 return next(
                     res.status(412).json({
-                        err: 'Mật khẩu cũ không chính xác',
-                        field: 'password',
+                        message: 'Mật khẩu cũ không chính xác',
                     }),
                 );
             } else if (new_password == null || new_password === '') {
                 //Check if the new password is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'Mật khẩu mới không được bỏ trống',
-                        field: 'new_password',
+                        message: 'Mật khẩu mới không được bỏ trống',
                     }),
                 );
             } else if (re_new_password == null || re_new_password === '') {
                 //Check if the re_new_password is null or ''
                 return next(
                     res.status(401).json({
-                        err: 'Xác nhận mật khẩu mới không được bỏ trống',
-                        field: 're_new_password',
+                        message: 'Xác nhận mật khẩu mới không được bỏ trống',
                     }),
                 );
             } else if (new_password.length < 5 || new_password.length > 20) {
                 //Check if the new password length is more than 5 and less than 20
                 return next(
                     res.status(411).json({
-                        err: 'Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự',
-                        field: 'new_password',
+                        message:
+                            'Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự',
                     }),
                 );
             } else if (
@@ -208,15 +201,15 @@ class UserController {
                 //Check the new password for correct format
                 return next(
                     res.status(405).json({
-                        err: 'Mật khẩu mới chỉ chứa định dạng chữ Alphabet và chữ số',
-                        field: 'new_password',
+                        message:
+                            'Mật khẩu mới chỉ chứa định dạng chữ Alphabet và chữ số',
                     }),
                 );
             } else if (!(new_password === re_new_password)) {
                 //check if new password matches re-enter password
                 res.status(405).json({
-                    err: 'Mật khẩu mới và xác minh mật khẩu không trùng khớp. Vui lòng kiểm tra lại',
-                    field: 're_new_password',
+                    message:
+                        'Mật khẩu mới và xác minh mật khẩu không trùng khớp. Vui lòng kiểm tra lại',
                 });
             } else {
                 // Search and change_password by username
@@ -226,7 +219,7 @@ class UserController {
                 )
                     .then(() => {
                         res.status(201).json({
-                            Message: 'Thay đổi mật khẩu thành công',
+                            message: 'Thay đổi mật khẩu thành công',
                         });
                     })
                     .catch(next);

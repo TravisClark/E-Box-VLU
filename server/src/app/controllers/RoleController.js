@@ -1,7 +1,7 @@
 const RoleModel = require('../models/RoleModel');
 
 class RoleController {
-    //[GET] http://localhost:5000/role/api/list_roles
+    //[GET] http://localhost:5000/api/admin/role/list_roles
     list_roles = async (req, res) => {
         try {
             const roles = await RoleModel.find();
@@ -11,11 +11,10 @@ class RoleController {
         }
     };
 
-    //[POST] http://localhost:5000/role/api/add_role
+    //[POST] http://localhost:5000/api/admin/role/add_role
     add_role = async (req, res) => {
         try {
-            const formData = req.body;
-            const role = new RoleModel(formData);
+            const role = new RoleModel(req.body.role_name);
             await role
                 .save()
                 .then(() => res.json(`Thêm thành công ${req.body.role_name}`));

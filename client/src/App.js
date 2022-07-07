@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 import AddUser from "./admin/pages/AddUser";
+import { Chat } from "./admin/pages/Chat";
 import Dashboard from "./admin/pages/Dashboard";
 import QuestionManagement from "./admin/pages/QuestionManagement";
 import Users from "./admin/pages/Users";
@@ -18,10 +19,7 @@ function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { account } = useSelector((state) => state.auth);
   console.count();
-
-  // const { role_name } = useSelector((state) => state.auth.account);
-  // console.log(role_name);
-  // console.count();
+  
   return (
     <Layout>
       <Suspense
@@ -62,6 +60,9 @@ function App() {
                   </Route>
                   <Route path="/E-boxVLU/admin/questions">
                     <QuestionManagement/>
+                  </Route>
+                  <Route path="/E-boxVLU/admin/chat">
+                    <Chat/>
                   </Route>
                 </>
               )}

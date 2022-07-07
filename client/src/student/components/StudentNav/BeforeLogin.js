@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import classes from "./NavStyles.module.css";
 function BeforeLogin({ changeBgColor, openNavHandler, navbarIsOpen }) {
   return (
@@ -26,16 +26,17 @@ function BeforeLogin({ changeBgColor, openNavHandler, navbarIsOpen }) {
         >
           Liên Lạc
         </a>
-        <Link
-          className={`font-medium  transition duration-500 ${
+        <NavLink
+          className={`font-medium transition duration-500 ${
             changeBgColor
               ? "text-black hover:font-bold hover:text-black"
               : "text-gray-400 hover:text-white"
           }`}
+          activeClassName="text-white"
           to={"E-boxVLU/login"}
         >
           Đăng Nhập
-        </Link>
+        </NavLink>
       </div>
       {/* Mobile nav */}
       <div
@@ -49,9 +50,9 @@ function BeforeLogin({ changeBgColor, openNavHandler, navbarIsOpen }) {
         <a onClick={openNavHandler} href="#services">
           Dịch Vụ
         </a>
-        <Link onClick={openNavHandler} to={"E-boxVLU/login"}>
+        <NavLink onClick={openNavHandler} to={"E-boxVLU/login"} activeClassName="text-white">
           Đăng Nhập
-        </Link>
+        </NavLink>
       </div>
     </>
   );

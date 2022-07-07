@@ -34,7 +34,6 @@ function ChangePasswordForm() {
         }),
         { "Content-Type": "application/json"}
       );
-      console.log('passed!')
       await dispatch(
         authActions.changePasswordHandler({ username: account.username, password: newPw })
       );
@@ -80,7 +79,7 @@ function ChangePasswordForm() {
                 </h3>
               )}
             </div>
-            <Button title="Submit" className={` text-white bg-heavyBlue`} />
+            <Button title="Submit" className={` text-white bg-heavyBlue`} >Đổi mật khẩu</Button>
             <span className="text-gray-500 italic">
               *Lưu ý: Chỉ sinh viên khoa CNTT được đăng nhập vào hệ thống!
             </span>
