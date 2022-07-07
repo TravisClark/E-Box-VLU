@@ -1,26 +1,31 @@
-import React, { useState } from "react";
-import { Pagination } from "../../Ui/Pagination";
+import React, { useEffect} from "react";
 import NewQuestionList from "./NewQuestionList";
-
-const headItem = ["No", "Câu hỏi", "Thời gian tạo", "Danh mục", "Duyệt", "Từ chối"];
+import { useDispatch, useSelector } from "react-redux";
+import { pageActions } from "../../../../shared/store/page-slice";
+import { Pagination } from "../../../../shared/components/Pagination/Pagination";
+const headItem = [
+  "No",
+  "Câu hỏi",
+  "Thời gian tạo",
+  "Danh mục",
+  "Duyệt",
+  "Từ chối",
+];
 
 function TableQuestionList(props) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage] = useState(10);
-  const questions = props.questions.filter(
-    (question) => question.status === "Chưa được duyệt"
-  );
-
-  // Get current posts
-  const indexOfLastQuestion = currentPage * questionsPerPage;
-  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-  const currentQuestions = questions.slice(
-    indexOfFirstQuestion,
-    indexOfLastQuestion
-  );
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const questions = props.questions.filter(
+      (question) => question.status === "Chưa được duyệt"
+    );
+    dispatch(
+      pageActions.setCurrentItems({
+        items: questions,
+        itemsPerPage: 1,
+        currentPage: 1,
+      })
+    );
+  }, [dispatch, props.questions])
 
   return (
     <>
@@ -34,13 +39,9 @@ function TableQuestionList(props) {
             </tr>
           </thead>
           {/* <div className="border min-w-full"></div> */}
-          <NewQuestionList questions={currentQuestions} />
+          <NewQuestionList/>
         </table>
-        <Pagination
-          questionsPerPage={questionsPerPage}
-          totalQuestions={questions.length}
-          paginate={paginate}
-        />
+        <Pagination/>
       </div>
     </>
   );

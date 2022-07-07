@@ -1,10 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 export const DisapprovedQuestionList = (props) => {
-  const questions = props.questions.map((question, index) => (
+  const {currentItems} = useSelector((state) => state.page.pagination)
+  const questions = currentItems.map((question, index) => (
     <tr key={question._id}>
       <td className="py-2 px-4">{++index}</td>
-      <td className="py-2 px-4">{question.question}</td>
+      <td className="py-2 px-4"><div className="truncate w-96">{question.question}</div></td>
       <td className="py-2 px-4">{question.user_name_answer}</td>
       <td className="py-2 px-4 underline">Khôi phục</td>
     </tr>
