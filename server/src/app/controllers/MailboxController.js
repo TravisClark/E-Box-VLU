@@ -60,6 +60,13 @@ class MailboxController {
                         message: 'Vui lòng nhập câu hỏi',
                     }),
                 );
+            }else if (data_question.length > 200) {
+                //check length of question
+                return next(
+                    res.status(411).json({
+                        message: 'Độ dài của câu hỏi quá dài. Chỉ có phép độ dài từ dưới 200 ký tự',
+                    }),
+                );
             } else {
                 //create mailbox information data
                 const info_mailbox = {
