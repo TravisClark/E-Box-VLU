@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../shared/api/Requests";
+import { QuestionType } from "../../../shared/components/QuestionType/QuestionType";
 import useHttpClient from "../../../shared/hooks/http-hook";
 import { uiActions } from "../../../shared/store/ui-slice";
 import Container from "../UI/Container";
@@ -9,8 +10,13 @@ function QuestionForm(props) {
   const { sendRequest, error } = useHttpClient();
   const questionInputRef = useRef();
   const { account } = useSelector((state) => state.auth);
+  const {selectedType} = useSelector((state) => state.question)
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    
+  }, []);
+  
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const question = questionInputRef.current.value;
@@ -18,7 +24,7 @@ function QuestionForm(props) {
       await sendRequest(
         Requests.publishQuestion,
         "POST",
-        JSON.stringify({ username: account.username, question }),
+        JSON.stringify({ username: account.username, question, type_name: selectedType }),
         { "Content-Type": "application/json" }
       );
       props.onCloseForm();
@@ -50,6 +56,7 @@ function QuestionForm(props) {
             <label className="text-sm text-black italic">
               *Lưu ý: sau khi đặt câu hỏi vui lòng đợi duyệt
             </label>
+            <QuestionType/>
             <textarea
               type="text"
               className="p-4 text-sm border text-start rounded-md border-gray-300 h-32 outline-none"
