@@ -93,12 +93,12 @@ describe('Unit test of publish question when leave the question type or question
 
 describe('Unit test of view questions list function', () => {
     test('Status is 200', async () => {
-        const response = await request(app).get('/api/admin/mailbox/list_questions_admin').query({status: 'Đã được duyệt'})
+        const response = await request(app).get('/api/admin/mailbox/list_questions_admin')
 
         expect(response.statusCode).toBe(200);
     });
     test('Return format json', async () => {
-        const response = await request(app).get('/api/admin/mailbox/list_questions_admin').query({status: 'Đã được duyệt'})
+        const response = await request(app).get('/api/admin/mailbox/list_questions_admin')
 
         expect(response.type).toEqual('application/json');
     });
@@ -228,5 +228,18 @@ describe('Unit Tests of Reply question function when when leaving type name or a
         });
 
         expect(response.body).toEqual({message: 'Vui lòng nhập câu trả lời'});
+    });
+});
+
+describe('Unit Tests of View approval question list function', () => {
+    test('Status is 200', async () => {
+        const response = await request(app).get('/api/admin/mailbox/list_questions_admin').query({status: 'Đã được duyệt'})
+
+        expect(response.statusCode).toBe(200);
+    });
+    test('Return format json', async () => {
+        const response = await request(app).get('/api/admin/mailbox/list_questions_admin').query({status: 'Đã được duyệt'})
+
+        expect(response.type).toEqual('application/json');
     });
 });
