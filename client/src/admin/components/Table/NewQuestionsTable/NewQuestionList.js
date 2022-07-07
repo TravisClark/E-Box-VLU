@@ -1,12 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../../shared/api/Requests";
-import useHttpClient from "../../../../shared/hooks/http-hook";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
-function NewQuestionList(props) {
+function NewQuestionList() {
   const { account } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const {currentItems} = useSelector((state) => state.page.pagination)
 
   const onApproveHandler = async (value) => {
     dispatch(
@@ -40,10 +40,10 @@ function NewQuestionList(props) {
     // console.log('pass')
   };
 
-  const questions = props.questions.map((question, index) => (
+  const questions = currentItems.map((question, index) => (
     <tr key={question._id}>
       <td className="py-2 px-4">{++index}</td>
-      <td className="py-2 px-4">{question.question}</td>
+      <td className="py-2 px-4"><div className="truncate w-96">{question.question}</div></td>
       <td className="py-2 px-4">{question.createdAt}</td>
       <td className="py-2 px-4">{question.type_name}</td>
       <td className="py-2 px-4">
