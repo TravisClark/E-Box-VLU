@@ -1,27 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { Pagination } from '../../Ui/Pagination';
+import { useDispatch } from 'react-redux';
+import { Pagination } from '../../../../shared/components/Pagination/Pagination';
+import { pageActions } from '../../../../shared/store/page-slice';
 import { RepliedQuestionList } from './RepliedQuestionList';
 
 const headItem = ["No", "Câu hỏi", "Người trả lời", 'Thao tác'];
 
 export const RepliedQuestionsTable = (props) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage] = useState(10);
-  const questions = props.questions.filter(
-    (question) => question.status === "Đã được trả lời"
-  );
-
-  // Get current posts
-  const indexOfLastQuestion = currentPage * questionsPerPage;
-  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-  const currentQuestions = questions.slice(
-    indexOfFirstQuestion,
-    indexOfLastQuestion
-  );
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const questions = props.questions.filter(
+      (question) => question.status === "Đã được trả lời"
+    );
+    dispatch(
+      pageActions.setCurrentItems({
+        items: questions,
+        itemsPerPage: 1,
+        currentPage: 1,
+      })
+    );
+  }, [dispatch, props.questions]);
 
   return (
     <>
@@ -34,13 +33,9 @@ export const RepliedQuestionsTable = (props) => {
               ))}
             </tr>
           </thead>
-          <RepliedQuestionList questions={currentQuestions}/>
+          <RepliedQuestionList/>
         </table>
-        <Pagination
-          questionsPerPage={questionsPerPage}
-          totalQuestions={questions.length}
-          paginate={paginate}
-        />
+        <Pagination/>
       </div>
     </>
   );

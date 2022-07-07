@@ -43,7 +43,7 @@ export const ReplyForm = (props) => {
               <span className="text-xl font-semibold w-32">
                 {props.data.username_question}
               </span>
-              <span className="text-xl font-semibold w-72">
+              <span className="text-xl font-semibold w-72 break-all">
                 {props.data.question}
               </span>
               <span className="text-xl font-semibold w-52">
