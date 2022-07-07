@@ -515,3 +515,137 @@ describe('Unit test of Generate account when the username data is empty', () => 
         expect(response.body).toEqual({message: 'Tài khoản không được bỏ trống'});
     });
 });
+
+describe('Unit test of Generate account when entering the incorrect length of username', () => {
+    //Unit test of check if the username length is less than 5
+    test('Status is 411 when username is less than 5', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '1234',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.statusCode).toBe(411);
+    });
+    test('Return format json when username is less than 5', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '1234',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message:"Độ dài tài khoản từ 5 đến 20 ký tự" when username is less than 5', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '1234',
+                role_name: 'Sinh viên',
+            });
+
+            expect(response.body).toEqual({message: 'Độ dài tài khoản từ 5 đến 20 ký tự'});
+    });
+
+    //Unit test check if the new password length is more than 20
+    test('Status is 411 when the username length is more than 20', async () => {
+        const response = await request(app)
+        .post('/api/admin/user/add_user')
+        .send({
+            username: 'VLU012345678910111213141516',
+            role_name: 'Sinh viên',
+        });
+
+        expect(response.statusCode).toBe(411);
+    });
+    test('Return format json when the username length is more than 20', async () => {
+        const response = await request(app)
+        .post('/api/admin/user/add_user')
+        .send({
+            username: 'VLU012345678910111213141516',
+            role_name: 'Sinh viên',
+        });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return err:"Độ dài tài khoản từ 5 đến 20 ký tự" when the username length is more than 20', async () => {
+        const response = await request(app)
+        .post('/api/admin/user/add_user')
+        .send({
+            username: 'VLU012345678910111213141516',
+            role_name: 'Sinh viên',
+        });
+
+        expect(response.body).toEqual({message: 'Độ dài tài khoản từ 5 đến 20 ký tự'});
+    });
+});
+
+describe('Unit test of Generate account when entering the wrong format of the username', () => {
+    //Unit test of check username for correct format
+    test('Status is 412', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '1234ac&&',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.statusCode).toBe(412);
+    });
+    test('Return format json', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '1234ac&&',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message:"Tài khoản chỉ chứa định dạng chữ Alphabet và chữ số"', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '1234ac&&',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.body).toEqual({message: 'Tài khoản chỉ chứa định dạng chữ Alphabet và chữ số'});
+    });
+});
+
+describe('Unit test of Generate account when entering an existing account name', () => {
+    //Unit test of check username unique
+    test('Status is 405', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '197pm33529',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.statusCode).toBe(405);
+    });
+    test('Return format json', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '197pm33529',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message:"Tài khoản đã tồn tại"', async () => {
+        const response = await request(app)
+            .post('/api/admin/user/add_user')
+            .send({
+                username: '197pm33529',
+                role_name: 'Sinh viên',
+            });
+
+        expect(response.body).toEqual({message: 'Tài khoản đã tồn tại'});
+    });
+});
