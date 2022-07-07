@@ -67,7 +67,7 @@ class UserController {
             } else if (user) {
                 //check username unique
                 return next(
-                    res.status(500).json({
+                    res.status(405).json({
                         message: 'Tài khoản đã tồn tại',
                     }),
                 );
