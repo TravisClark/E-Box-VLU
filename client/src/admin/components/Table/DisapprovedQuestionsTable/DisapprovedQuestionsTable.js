@@ -1,27 +1,25 @@
-import React from 'react'
-import { useState } from 'react';
-import { Pagination } from '../../Ui/Pagination';
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { Pagination } from '../../../../shared/components/Pagination/Pagination';
+import { pageActions } from '../../../../shared/store/page-slice';
 import { DisapprovedQuestionList } from './DisapprovedQuestionsList';
 
-const headItem = ["No", "Câu hỏi", "Người từ chối", 'Thao tác'];
+const headItem = ["No", "Câu hỏi","Ngày từ chối", "Người từ chối", 'Thao tác'];
 
 export const DisapprovedQuestionsTable = (props) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage] = useState(10);
-  const questions = props.questions.filter(
-    (question) => question.status === "Đã bị từ chối"
-  );
-
-  // Get current posts
-  const indexOfLastQuestion = currentPage * questionsPerPage;
-  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
-  const currentQuestions = questions.slice(
-    indexOfFirstQuestion,
-    indexOfLastQuestion
-  );
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const questions = props.questions.filter(
+      (question) => question.status === "Đã bị từ chối"
+    );
+    dispatch(
+      pageActions.setCurrentItems({
+        items: questions,
+        itemsPerPage: 1,
+        currentPage: 1,
+      })
+    );
+  }, [dispatch, props.questions]);
 
   return (
     <>
@@ -34,13 +32,9 @@ export const DisapprovedQuestionsTable = (props) => {
               ))}
             </tr>
           </thead>
-          <DisapprovedQuestionList questions={currentQuestions}/>
+          <DisapprovedQuestionList/>
         </table>
-        <Pagination
-          questionsPerPage={questionsPerPage}
-          totalQuestions={questions.length}
-          paginate={paginate}
-        />
+        <Pagination/>
       </div>
     </>
   );

@@ -4,7 +4,7 @@ import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { questionActions } from "../../store/question-slice";
 import selectStyles from "../UI/Select.module.css";
-export const QuestionType = ({selected}) => {
+export const QuestionType = ({selected, className}) => {
   const [options, setOptions] = useState([]);
   const { sendRequest } = useHttpClient();
   const {selectedType} = useSelector((state) => state.question)
@@ -28,7 +28,7 @@ export const QuestionType = ({selected}) => {
     <select
       value={selectedType}
       onChange={(e) => onChangeHandler(e)}
-      className={`w-fit px-4 py-2 rounded-md ${selectStyles} outline-none`}
+      className={`w-fit px-4 py-2 rounded-md ${selectStyles} outline-none ${className}`}
     >
       {options}
     </select>
