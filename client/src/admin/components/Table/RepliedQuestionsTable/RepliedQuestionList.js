@@ -1,9 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useHttpClient from "../../../../shared/hooks/http-hook";
 
 export const RepliedQuestionList = () => {
   // const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
+  const { isLoading } = useHttpClient();
 
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.createdAt);
@@ -27,7 +29,11 @@ export const RepliedQuestionList = () => {
   });
   return (
     <tbody>
-      {questions.length > 0 ? (
+      {isLoading ? (
+        <tr>
+          <td>Loading...</td>
+        </tr>
+      ) : questions.length > 0 ? (
         questions
       ) : (
         <tr>

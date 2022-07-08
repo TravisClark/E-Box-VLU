@@ -1,19 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { QuestionType } from "../../shared/components/QuestionType/QuestionType";
 import { Notification } from "../../shared/components/UI/Notification";
+import { questionActions } from "../../shared/store/question-slice";
 import IntroductionBanner from "../components/IntroductionBanner/IntroductionBanner";
+import MenuType from "../components/QuestionSection/MenuType/MenuType";
 import QuestionForm from "../components/QuestionSection/QuestionForm";
 import QuestionList from "../components/QuestionSection/QuestionList/QuestionList";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
 
 function ViewQuestions() {
+  const searchInputRef = useRef();
   const [isQFormOpen, setIsQFormOpen] = useState(false);
   const { successNotification } = useSelector((state) => state.ui);
-
+  const dispatch = useDispatch();
   const onToggleFormHandler = () => {
     setIsQFormOpen((prevState) => !prevState);
+  };
+
+  const searchItemHandler = () => {
+    dispatch(
+      questionActions.searchItem({ item: searchInputRef.current.value })
+    );
   };
 
   return (
@@ -27,17 +37,22 @@ function ViewQuestions() {
             <div className="flex flex-col space-y-8 w-full max-w-3xl p-14 md:flex-row md:space-y-0 md:w-full">
               <input
                 type="text"
+                ref={searchInputRef}
                 className="bg-transparent text-white outline-none rounded-md p-4 w-full  border border-gray-300 md:rounded-none"
+                onChange={searchItemHandler}
               />
-              <Button className="bg-black text-white mx-auto px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2">
-                Tìm kiếm
-              </Button>
+              <button
+                className="bg-black text-white mx-auto py-4 px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2"
+                onClick={searchItemHandler}
+              >
+                <a href="#questions">Tìm kiếm</a>
+              </button>
             </div>
           </div>
         </form>
       </IntroductionBanner>
       <section id="question">
-        <Container className="min-w-full relative flex flex-col">
+        <Container className="min-w-full relative flex flex-col items-center">
           {/* <div className={`${classes.spacer} ${classes.layer1}`}></div> */}
           <svg
             id="visual"
@@ -55,18 +70,19 @@ function ViewQuestions() {
               strokeLinejoin="miter"
             ></path>
           </svg>
-          <QuestionList />
+          <div className="flex flex-col min-w-full space-y-6 items-center absolute top-0 left-1/2 -translate-x-1/2 pt-10 md:space-x-20 md:flex-row md:space-y-0 md:w-1/2 md:justify-center md:items-start">
+            <MenuType />
+            <QuestionList />
+          </div>
           <button
-            className="bg-black text-white px-4 mb-10 mx-auto  py-3 font-semibold rounded"
+            className="bg-black text-white px-4 mb-10 mx-auto py-3 font-semibold rounded"
             onClick={onToggleFormHandler}
           >
             Đặt câu hỏi
           </button>
           {isQFormOpen && <QuestionForm onCloseForm={onToggleFormHandler} />}
           {successNotification.isShowing && (
-            <Notification
-              className="w-full h-full"
-            />
+            <Notification className="w-full h-full" />
           )}
         </Container>
       </section>
