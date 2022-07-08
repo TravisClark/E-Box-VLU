@@ -31,7 +31,6 @@ export const ConfirmNotification = (props) => {
     setTimeout(() => {
       dispatch(uiActions.closeSuccessNotification());
     }, 3000);
-    // console.log(notification.data)
   };
 
   let form;
@@ -49,6 +48,7 @@ export const ConfirmNotification = (props) => {
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
         message={message}
+        data={data}
       />
     );
   }
