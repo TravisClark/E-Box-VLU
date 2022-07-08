@@ -8,6 +8,7 @@ import Background from "../../../admin/components/Background/Background";
 import StudentFooter from "../../../student/components/Footer/Footer";
 import StudentNavbar from "../../../student/components/StudentNav/StudentNav";
 import { authActions } from "../../store/auth-slice";
+import { uiActions } from "../../store/ui-slice";
 
 function Layout(props) {
   const dispatch = useDispatch();
@@ -18,8 +19,9 @@ function Layout(props) {
 
   useEffect(() => {
     dispatch(authActions.autoLoginHandler());
-    // !isLoggedIn && history.push("/");
-  }, [dispatch, isLoggedIn, history]);
+    dispatch(uiActions.runAdminMode({type:'REFRESH_ADMIN_PAGE'}))
+    isInAdminMode && history.replace('/E-boxVLU/admin/dashboard')
+  }, [dispatch, isLoggedIn, history, isInAdminMode]);
 
   return (
     <>
