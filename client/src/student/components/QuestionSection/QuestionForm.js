@@ -12,10 +12,6 @@ function QuestionForm(props) {
   const { account } = useSelector((state) => state.auth);
   const {selectedType} = useSelector((state) => state.question)
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    
-  }, []);
   
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -41,7 +37,7 @@ function QuestionForm(props) {
         className="min-w-full flex justify-center"
         onSubmit={onSubmitHandler}
       >
-        <div className=" bg-white relative rounded-lg items-center z-20 p-4 w-1/3 space-y-4 flex flex-col">
+        <div className=" bg-white relative rounded-lg items-center z-20 p-4 space-y-4 flex flex-col w-full md:w-2/3 lg:w-1/3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

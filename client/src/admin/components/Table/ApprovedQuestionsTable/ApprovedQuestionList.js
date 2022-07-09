@@ -1,12 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../../shared/api/Requests";
+import useHttpClient from "../../../../shared/hooks/http-hook";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
 export const ApprovedQuestionList = (props) => {
   const dispatch = useDispatch();
   const {currentItems} = useSelector((state) => state.page.pagination)
-  
+  const { isLoading } = useHttpClient();
+
   const onRepliedHandler = async (value) => {
     dispatch(
       uiActions.showNotification({
@@ -35,12 +37,16 @@ export const ApprovedQuestionList = (props) => {
       <td className="py-2 px-4">{++index}</td>
       <td className="py-2 px-4"><div className="truncate w-96">{question.question}</div></td>
       <td className="py-2 px-4">{formatDate}</td>
-      <td className="py-2 px-4 px-10">{question.type_name}</td>
+      <td className="py-2 px-10">{question.type_name}</td>
       <td className="py-2 px-4"><button onClick={onRepliedHandler.bind(null, question)}>Trả lời</button></td>
     </tr>)
   });
   return <tbody>
-  {questions.length > 0 ? (
+  {isLoading ? (
+        <tr>
+          <td>Loading...</td>
+        </tr>
+      ) : questions.length > 0 ? (
     questions
   ) : (
     <tr>

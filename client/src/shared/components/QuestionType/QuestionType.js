@@ -24,6 +24,7 @@ export const QuestionType = ({selected, className}) => {
     };
     request();
   }, [sendRequest, dispatch, selected]);
+  
   return (
     <select
       value={selectedType}

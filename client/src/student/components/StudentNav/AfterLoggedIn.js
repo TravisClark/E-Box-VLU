@@ -25,7 +25,7 @@ function AfterLoggedIn({
   };
 
   const runAdminModeHandler = () => {
-    dispatch(uiActions.runAdminMode())
+    dispatch(uiActions.runAdminMode({type: "RUN_ADMIN_MODE"}))
     history.push('/E-boxVLU/admin/dashboard')
   }
   

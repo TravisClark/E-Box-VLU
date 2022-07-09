@@ -19,8 +19,18 @@ const uiSlice = createSlice({
     },
   },
   reducers: {
-    runAdminMode(state) {
-      state.isInAdminMode = !state.isInAdminMode;
+    runAdminMode(state, action) {
+      if(action.payload.type === 'RUN_ADMIN_MODE'){
+        state.isInAdminMode = true;
+        localStorage.setItem('isInAdminMode', state.isInAdminMode);
+      }
+      else if(action.payload.type === 'REFRESH_ADMIN_PAGE'){
+        state.isInAdminMode = JSON.parse(localStorage.getItem('isInAdminMode'))
+      }
+    },
+    runStudentMode(state) {
+      state.isInAdminMode = false;
+      localStorage.removeItem('isInAdminMode');
     },
     showNotification(state, action) {
       state.notification.isShowing = true;

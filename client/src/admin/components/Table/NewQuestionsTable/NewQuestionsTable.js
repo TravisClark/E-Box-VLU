@@ -14,6 +14,7 @@ const headItem = [
 
 function TableQuestionList(props) {
   const dispatch = useDispatch();
+  
   useEffect(() => {
     const questions = props.questions.filter(
       (question) => question.status === "Chưa được duyệt"
@@ -39,6 +40,7 @@ function TableQuestionList(props) {
             </tr>
           </thead>
           {/* <div className="border min-w-full"></div> */}
+
           <NewQuestionList/>
         </table>
         <Pagination/>
