@@ -13,7 +13,6 @@ function QuestionList() {
   const { selectedType, isSearching, itemSearching } = useSelector(
     (state) => state.question
   );
-  console.log("1");
   useEffect(() => {
     try {
       const request = async () => {
@@ -39,7 +38,7 @@ function QuestionList() {
 
   const typeList = currentItems.map((item, index) => (
     <li
-      className={`bg-lightBlue px-6 py-3 text-white truncate break-all max-w-xs sm:max-w-md md:max-w-lg`}
+      className={`bg-lightBlue px-6 py-3 text-white truncate rounded-md break-all max-w-xs sm:max-w-md md:max-w-lg`}
       value={item.question}
       key={item.id_question}
     >
@@ -50,10 +49,12 @@ function QuestionList() {
   return (
     <section id="questions">
       <div className="flex flex-col space-y-6 items-center">
-        <h1 className="text-white font-semibold uppercase rounded-sm">
+        <h1 className=" font-semibold uppercase rounded-sm text-white">
           Câu Hỏi Theo Danh Mục
         </h1>
-        <ul className="flex flex-col space-y-0.5 w-full">{typeList}</ul>
+        <ul className="flex flex-col space-y-0.5 w-full bg-white p-4 rounded-md drop-shadow-lg">
+          {typeList.length > 0 ? typeList : <div className="w-72 h-40"><h1>Không tìm thấy câu hỏi!</h1></div>}
+        </ul>
         <Pagination prevBtn="" nextBtn="" />
       </div>
     </section>
