@@ -15,7 +15,7 @@ import { uiActions } from "../../shared/store/ui-slice";
 
 function QuestionManagement() {
   const [selectedTable, setSelectedTable] = useState("New Question List");
-  const { sendRequest, isLoading, error } = useHttpClient();
+  const { sendRequest, error } = useHttpClient();
   const [questions, setQuestions] = useState([]);
   const { successNotification } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ function QuestionManagement() {
           />
         </div>
         <div className="border w-full"></div>
-        {isLoading && <h3>Loading...</h3>}
+        
         {error && <h3 className="text-red-500 text-sm">{error}</h3>}
         {table && table}
         {successNotification.isShowing && (
