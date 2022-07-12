@@ -2,11 +2,11 @@ import React, { useRef, } from "react";
 import { useSelector } from "react-redux";
 import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
 
-export const ReplyForm = (props) => {
+export const ModifyAnswerForm = (props) => {
   const inputRef = useRef();
   const { account } = useSelector((state) => state.auth);
   const {selectedType} = useSelector((state) => state.question)
-  
+
   const date = new Date(props.data.createdAt);
   const dateTranslate = {
     min: date.getMinutes(),
@@ -31,7 +31,7 @@ export const ReplyForm = (props) => {
   return (
     <>
       <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10 ">
-        <span className="text-2xl font-bold">Trả lời câu hỏi</span>
+        <span className="text-2xl font-bold">Chỉnh sửa câu trả lời</span>
         <form onSubmit={onSubmitHandler} className="table-auto">
           <div className="flex flex-col space-y-6">
             <div className="flex w-full py-2 px-10 space-x-10 bg-gray-200 rounded-md">
@@ -54,7 +54,7 @@ export const ReplyForm = (props) => {
             <textarea
               className="w-full border px-4 py-2 rounded-lg h-28 outline-none"
               ref={inputRef}
-            />
+            >{props.data.answer}</textarea>
           </div>
           <div className="flex w-full space-x-8 justify-center mt-10">
             <button
