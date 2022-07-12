@@ -21,7 +21,7 @@ function NewQuestionList() {
           headers: { "Content-Type": "application/json" },
         },
         successMessage: "Duyệt thành công!",
-        type: "Approve form",
+        type: "APPROVE_FORM",
       })
     );
   };
