@@ -75,7 +75,7 @@ function Ebox() {
             <h1 className="font-bold text-xl">HỘP THƯ GÓP Ý KHOA CNTT</h1>
             <h1 className="text-md max-w-md">
               Dùng Kênh
-              <span className="font-bold">HỘP THƯ GÓP Ý KHOA CNTT</span> trực
+              <span className="font-bold"> HỘP THƯ GÓP Ý KHOA CNTT</span> trực
               tuyến là cách nhanh và đơn giản nhất để tìm câu trả lời cũng như
               kết nối với đội ngũ hỗ trợ. Sinh viên có thể tìm câu trả lời cho
               các vấn đề thường gặp; gửi câu hỏi đến VHUB.

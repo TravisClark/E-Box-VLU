@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from '../../../../shared/components/Pagination/Pagination';
 import { pageActions } from '../../../../shared/store/page-slice';
 import { DisapprovedQuestionList } from './DisapprovedQuestionsList';
@@ -8,6 +8,7 @@ const headItem = ["No", "Câu hỏi","Ngày từ chối", "Người từ chối"
 
 export const DisapprovedQuestionsTable = (props) => {
   const dispatch = useDispatch();
+  const {currentItems} = useSelector((state) => state.page.pagination)
   useEffect(() => {
     const questions = props.questions.filter(
       (question) => question.status === "Đã bị từ chối"
@@ -34,7 +35,7 @@ export const DisapprovedQuestionsTable = (props) => {
           </thead>
           <DisapprovedQuestionList/>
         </table>
-        <Pagination/>
+        {currentItems.length > 0 && <Pagination/>}
       </div>
     </>
   );
