@@ -6,7 +6,7 @@ import { ConfirmNotification } from "../../../shared/components/UI/ConfirmNotifi
 function Background(props) {
   const { isShowing } = useSelector((state) => state.ui.notification);
   return (
-    <div className="w-full h-screen bg-slate-200 flex">
+    <div className="w-full h-full bg-slate-200 flex">
       {props.children}
       {isShowing && (
         <div className="w-full h-screen absolute top-0 left-0">

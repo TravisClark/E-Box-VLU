@@ -35,7 +35,7 @@ export const DisapprovedQuestionList = (props) => {
         questions
       ) : (
         <tr>
-          <td>There is no question in this list</td>
+          <td className="py-2 px-4">There is no question in this list</td>
         </tr>
       )}
     </tbody>

@@ -7,20 +7,20 @@
 
 .paginationBtn a {
   margin: 8px;
-  color: black;
+  /* color: gray; */
   cursor: pointer;
 }
 
 .paginationActive a {
-  color: black;
-  font-weight: bold;
+  /* color: black; */
+  /* font-weight: bold; */
 }
 
 .paginationBtn a:hover {
   color: black;
-  font-weight: bold;
 }
 
-.paginationDisabled a {
-  color: grey;
+.paginationDisabled a:hover {
+  color: rgb(149, 149, 149);
+  cursor: none;
 }

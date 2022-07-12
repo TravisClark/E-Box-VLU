@@ -12,11 +12,12 @@ function SideNav() {
   }
   const openNavHandler = () => {
     setNavbarIsOpen((prevState) => !prevState);
+    console.log('trigger')
   };
   return (
     <nav>
       <Container
-        className={`flex flex-col absolute w-20 h-screen px-4 items-center bg-white z-40 transition duration-1000 ${
+        className={`flex flex-col relative w-20 px-4 items-center bg-white z-20 transition duration-1000 ${
           navbarIsOpen && "w-64"
         }`}
       >

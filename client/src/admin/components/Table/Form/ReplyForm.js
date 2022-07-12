@@ -6,7 +6,7 @@ export const ReplyForm = (props) => {
   const inputRef = useRef();
   const { account } = useSelector((state) => state.auth);
   const {selectedType} = useSelector((state) => state.question)
-
+  console.log(selectedType)
   const date = new Date(props.data.createdAt);
   const dateTranslate = {
     min: date.getMinutes(),
@@ -31,7 +31,7 @@ export const ReplyForm = (props) => {
   return (
     <>
       <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10 ">
-        <span className="text-2xl font-bold">Xác nhận duyệt</span>
+        <span className="text-2xl font-bold">Trả lời câu hỏi</span>
         <form onSubmit={onSubmitHandler} className="table-auto">
           <div className="flex flex-col space-y-6">
             <div className="flex w-full py-2 px-10 space-x-10 bg-gray-200 rounded-md">
@@ -39,18 +39,18 @@ export const ReplyForm = (props) => {
               <span className="text-xl font-semibold w-72">Câu hỏi</span>
               <span className="text-xl font-semibold w-52">Gửi vào lúc</span>
             </div>
-            <div className="flex w-full py-2 px-10 space-x-10 ">
+            <div className="flex w-full py-2 px-10 space-x-10 border">
               <span className="text-xl font-semibold w-32">
                 {props.data.username_question}
               </span>
-              <span className="text-xl font-semibold w-72 break-all">
+              <span className="text-xl font-semibold w-72 break-words">
                 {props.data.question}
               </span>
               <span className="text-xl font-semibold w-52">
                 {formatDate}
               </span>
             </div>
-            <QuestionType selected={props.data.type_name}/>
+            <QuestionType selected={props.data.type_name} className="border"/>
             <textarea
               className="w-full border px-4 py-2 rounded-lg h-28 outline-none"
               ref={inputRef}

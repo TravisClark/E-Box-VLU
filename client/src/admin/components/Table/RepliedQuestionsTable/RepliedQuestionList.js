@@ -22,7 +22,7 @@ export const RepliedQuestionList = () => {
           <div className="truncate w-96">{question.question}</div>
         </td>
         <td className="py-2 px-4">{formatDate}</td>
-        <td className="py-2 px-4">{question.user_name_answer}</td>
+        <td className="py-2 px-4">{question.username_reply}</td>
         <td className="py-2 px-4 underline">Chỉnh sửa</td>
       </tr>
     );
