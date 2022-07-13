@@ -36,12 +36,24 @@ class MailboxController {
                     });
                 res.status(201).json(mailbox);
             } else {
-                const mailbox = await Mailbox.find({ type_name: 'Học phí' }).sort({
+                const mailbox = await Mailbox.find({}).sort({
                     createdAt: 'desc',
                 });
                 res.status(200).json(mailbox);
             }
         
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    //[GET] http://localhost:5000/api/user/mailbox/details_question?id_question=123
+    details_question = async (req, res, next) => {
+        try {
+            const mailbox = await Mailbox.findOne({ 
+                id_question: req.query.id_question,
+                })
+            res.status(200).json(mailbox);
         } catch (err) {
             console.log(err);
         }
