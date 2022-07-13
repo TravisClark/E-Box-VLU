@@ -8,7 +8,9 @@ import QuestionManagement from "./admin/pages/QuestionManagement";
 import Users from "./admin/pages/Users";
 import Layout from "./shared/components/Layout/Layout";
 import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
+// import { QuestionDetail } from ";
 import ChangePassword from "./student/pages/ChangePassword";
+import { QuestionDetail } from "./student/pages/QuestionDetail";
 
 const Login = React.lazy(() => import("./student/pages/Login"));
 const Ebox = React.lazy(() => import("./student/pages/Ebox"));
@@ -19,7 +21,7 @@ function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { account } = useSelector((state) => state.auth);
   console.count();
-  
+
   return (
     <Layout>
       <Suspense
@@ -44,25 +46,29 @@ function App() {
               <Route path="/E-boxVLU/Home" exact>
                 <ViewQuestions />
               </Route>
+              <Route path="/E-boxVLU/Home/question/:questionId">
+                <QuestionDetail />
+              </Route>
               <Route path="/E-boxVLU/change-password" exact>
                 <ChangePassword />
               </Route>
+
               {account.role_name === "Quản Trị Viên" && (
                 <>
                   <Route path="/E-boxVLU/admin/dashboard">
-                    <Dashboard/>
+                    <Dashboard />
                   </Route>
                   <Route path="/E-boxVLU/admin/users" exact>
-                    <Users/>
+                    <Users />
                   </Route>
                   <Route path="/E-boxVLU/admin/users/add">
-                    <AddUser/>
+                    <AddUser />
                   </Route>
                   <Route path="/E-boxVLU/admin/questions">
-                    <QuestionManagement/>
+                    <QuestionManagement />
                   </Route>
                   <Route path="/E-boxVLU/admin/chat">
-                    <Chat/>
+                    <Chat />
                   </Route>
                 </>
               )}

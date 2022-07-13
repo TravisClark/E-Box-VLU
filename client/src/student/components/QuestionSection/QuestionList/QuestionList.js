@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Requests from "../../../../shared/api/Requests";
 import { Pagination } from "../../../../shared/components/Pagination/Pagination";
 import useHttpClient from "../../../../shared/hooks/http-hook";
@@ -10,6 +11,7 @@ function QuestionList() {
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
+  const history = useHistory();
   const { selectedType, isSearching, itemSearching } = useSelector(
     (state) => state.question
   );
@@ -22,7 +24,7 @@ function QuestionList() {
             question.question
               .toLowerCase()
               .includes(itemSearching.toLowerCase()) &&
-            question.type_name === selectedType
+            question.type_name === selectedType && question.status === 'Đã được trả lời'
         );
         dispatch(
           pageActions.setCurrentItems({
@@ -36,11 +38,17 @@ function QuestionList() {
     } catch (error) {}
   }, [sendRequest, dispatch, selectedType, isSearching, itemSearching]);
 
+  const onStoreSelectedItem = (selectedItem) =>{
+    dispatch(pageActions.storeItemSelected(selectedItem))
+    history.push(`/E-boxVLU/Home/question/${selectedItem.id_question}`)
+  }
+  
   const typeList = currentItems.map((item, index) => (
     <li
       className={`bg-lightBlue px-6 py-3 text-white truncate break-all `}
       value={item.question}
       key={item.id_question}
+      onClick={onStoreSelectedItem.bind(null, item)}
     >
       {`${index + 1}. ${item.question}`}
     </li>
