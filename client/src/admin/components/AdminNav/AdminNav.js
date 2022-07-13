@@ -54,7 +54,7 @@ function AdminNav() {
           </svg>
         </div>
         <div
-          className={`flex-col space-y-3 bg-white items-start py-4 absolute mt-8 rounded-xl w-52 ${
+          className={`flex-col space-y-3 bg-white items-start py-4 absolute mt-8 rounded-xl w-52 drop-shadow-lg ${
             isMenuOpen ? "flex" : "hidden"
           }`}
         >

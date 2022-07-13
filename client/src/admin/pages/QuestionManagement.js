@@ -59,7 +59,7 @@ function QuestionManagement() {
   }
 
   return (
-    <Container className="m-auto w-11/12 h-full py-24 px-20 space-y-6 relative">
+    <Container className="m-auto w-11/12 h-full py-14 px-20 space-y-6 relative">
       <h1 className="text-2xl font-semibold">Question Management</h1>
       <div className="flex flex-col bg-white py-6 px-10 rounded-md items-center space-y-5 relative">
         <div className="flex justify-between w-full">

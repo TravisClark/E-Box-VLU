@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./Pagination.module.css";
 import { pageActions } from "../../store/page-slice";
-export const Pagination = ({prevBtn = "Previous", nextBtn = "Next"}) => {
+export const Pagination = ({prevBtn = "Previous", nextBtn = "Next", activeBtnStyle, containerStyle, disabledBtnStyle}) => {
     const dispatch = useDispatch();
     const {items, itemsPerPage,} = useSelector((state)=> state.page.pagination)
 
@@ -18,11 +18,11 @@ export const Pagination = ({prevBtn = "Previous", nextBtn = "Next"}) => {
       nextLabel={nextBtn}
       pageCount={itemCount}
       onPageChange={changePage}
-      containerClassName={`${classes.paginationBtn} mt-10 flex space-x-4`}
+      containerClassName={`${classes.paginationBtn} mt-10 flex space-x-4 ${containerStyle}  `}
       previousLinkClassName={""}
       nextLinkClassName={""}
-      disabledClassName={`${classes.paginationDisabled}`}
-      activeClassName={`${classes.paginationActive} underline-offset-1 underline`}
+      disabledClassName={`${classes.paginationDisabled} ${disabledBtnStyle}`}
+      activeClassName={`${classes.paginationActive} ${activeBtnStyle}`}
     />
   );
 };

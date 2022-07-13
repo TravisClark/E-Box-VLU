@@ -3,11 +3,35 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 class UserController {
-    //[GET] http://localhost:5000/api/admin/user/list_users
+    //[GET] http://localhost:5000/api/admin/user/list_users?username=???
     list_users = async (req, res) => {
         try {
-            const users = await UserModel.find({});
-            res.status(200).json(users);
+            if (req.query.hasOwnProperty('username')) {
+                //Lấy dang sách user
+                const users = await UserModel.find({});
+                //Tạo 2 biến để sử lý mảng
+                const list_users = [];
+                const list_users_draft = [];
+                //Lọc các username theo ký tự được nhận
+                for(var i = 0; i < users.length; i++) {
+                    if(users[i].username.indexOf(req.query.username) !== -1) {
+                        list_users[i] = users[i];
+                        list_users_draft[i] = users[i];
+                    }
+                }
+                //Xóa các mảng bị null
+                var dem = 0;
+                for(var i = 0; i < list_users_draft.length; i++) { 
+                    if(list_users_draft[i] === null ||list_users_draft[i] === undefined){
+                        await list_users.splice(i-dem,1);
+                        dem = dem + 1;
+                    }
+                }
+                res.status(201).json(list_users);
+            }else{
+                const users = await UserModel.find({});
+                res.status(200).json(users);
+            }         
         } catch (err) {
             console.log(err);
         }

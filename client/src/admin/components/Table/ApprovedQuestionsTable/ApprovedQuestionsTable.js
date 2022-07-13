@@ -12,6 +12,7 @@ const headItem = ["No", "Câu hỏi", "Thời gian duyệt", "Danh mục", "Tr�
 
 export const ApprovedQuestionsTable = (props) => {
   const dispatch = useDispatch();
+  const {currentItems} = useSelector((state) => state.page.pagination)
   useEffect(() => {
     const questions = props.questions.filter(
       (question) => question.status === "Đã được duyệt"
@@ -48,7 +49,7 @@ export const ApprovedQuestionsTable = (props) => {
           </thead>
           <ApprovedQuestionList/>
         </table>
-        <Pagination/>
+        {currentItems.length > 0 && <Pagination/>}
       </div>
     </>
   );

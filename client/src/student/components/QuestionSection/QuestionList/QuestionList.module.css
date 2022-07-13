@@ -1,0 +1,14 @@
+.item{
+    width: 300px;
+}
+
+@media (min-width:480px){
+    .item{
+        width: 400px;
+    }
+}
+@media (min-width:1024px){
+    .item{
+        width: 600px;
+    }
+}

@@ -5,12 +5,11 @@ import useHttpClient from "../../../../shared/hooks/http-hook";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
 function NewQuestionList() {
-  const { account } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
   const { isLoading } = useHttpClient();
 
-  const onApproveHandler = async (value) => {
+  const onApproveHandler = (value) => {
     dispatch(
       uiActions.showNotification({
         message: value.question,
@@ -18,15 +17,11 @@ function NewQuestionList() {
         request: {
           url: Requests.approveQuestion,
           method: "PATCH",
-          body: JSON.stringify({
-            username: account.username,
-            id_question: value.id_question,
-            type_name: value.type_name,
-          }),
+          body: null,
           headers: { "Content-Type": "application/json" },
         },
         successMessage: "Duyệt thành công!",
-        type: "Approve form",
+        type: "APPROVE_FORM",
       })
     );
   };

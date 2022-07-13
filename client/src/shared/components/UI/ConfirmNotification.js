@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApproveForm } from "../../../admin/components/Table/Form/ApproveForm";
+import { ModifyAnswerForm } from "../../../admin/components/Table/Form/ModifyAnswerForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
@@ -34,7 +35,7 @@ export const ConfirmNotification = (props) => {
   };
 
   let form;
-  if (type === "Reply form") {
+  if (type === "REPLY_FORM") {
     form = (
       <ReplyForm
         data={data}
@@ -42,12 +43,20 @@ export const ConfirmNotification = (props) => {
         onSubmitHandler={onSubmitHandler}
       />
     );
-  } else if (type === "Approve form") {
+  } else if (type === "aPPROVE_FORM") {
     form = (
       <ApproveForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
         message={message}
+        data={data}
+      />
+    );
+  } else if (type === "MODIFY_ANSWER_FORM") {
+    form = (
+      <ModifyAnswerForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
         data={data}
       />
     );

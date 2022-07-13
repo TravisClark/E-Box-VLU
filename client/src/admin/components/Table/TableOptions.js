@@ -21,11 +21,10 @@ export default function TableList({onChangeSelectedTable, selectedTable}) {
           value=''
           label="Age"
           onChange={handleChange}
-          
         >
           <MenuItem value={'New Question List'}>New Question List</MenuItem>
-          <MenuItem value={'Disapproved Question List'}>Disapproved Question List</MenuItem>
           <MenuItem value={'Approved Question List'}>Approved Question List</MenuItem>
+          <MenuItem value={'Disapproved Question List'}>Disapproved Question List</MenuItem>
           <MenuItem value={'Replied Question List'}>Replied Question List</MenuItem>
         </Select>
       </FormControl>

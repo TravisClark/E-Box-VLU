@@ -52,7 +52,7 @@ function QuestionForm(props) {
             <label className="text-sm text-black italic">
               *Lưu ý: sau khi đặt câu hỏi vui lòng đợi duyệt
             </label>
-            <QuestionType/>
+            <QuestionType className="border"/>
             <textarea
               type="text"
               className="p-4 text-sm border text-start rounded-md border-gray-300 h-32 outline-none"
