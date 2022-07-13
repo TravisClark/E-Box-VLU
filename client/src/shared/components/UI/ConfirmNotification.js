@@ -43,7 +43,7 @@ export const ConfirmNotification = (props) => {
         onSubmitHandler={onSubmitHandler}
       />
     );
-  } else if (type === "aPPROVE_FORM") {
+  } else if (type === "APPROVE_FORM") {
     form = (
       <ApproveForm
         onClose={onCloseNotificationHandler}

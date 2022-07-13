@@ -13,12 +13,15 @@ function Navbar() {
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { account } = useSelector((state) => state.auth);
+  const [profileBoxStyle, setProfileBoxStyle] = useState()
 
   const changeNavbarColor = () => {
     if (window.scrollY > 50) {
       setChangeBgColor("bg-white");
+      setProfileBoxStyle('translate-y-6')
     } else {
       setChangeBgColor();
+      setProfileBoxStyle()
     }
   };
   window.addEventListener("scroll", changeNavbarColor);
@@ -33,7 +36,7 @@ function Navbar() {
   return (
     <nav>
       <Container
-        className={`fixed flex z-20 justify-between px-20  min-w-full p-4 items-center transition duration-500 ${
+        className={`fixed flex z-20 justify-between px-20  min-w-full p-4 items-center transition duration-500  ${
           changeBgColor && "bg-white"
         } md:justify-around md:px-0`}
       >
@@ -63,6 +66,7 @@ function Navbar() {
             changeBgColor={changeBgColor}
             navbarIsOpen={navbarIsOpen}
             username={account.username}
+            profileBoxStyle={profileBoxStyle}
           />
         )}
 

@@ -9,6 +9,7 @@ function AfterLoggedIn({
   openNavHandler,
   navbarIsOpen,
   username,
+  profileBoxStyle
 }) {
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -57,24 +58,24 @@ function AfterLoggedIn({
           </svg>
         </div>
         <div
-          className={`flex-col space-y-6 bg-transparent items-center p-4 absolute mt-8 rounded-sm w-52 ${
-            isMenuOpen ? "flex" : "hidden"
+          className={`flex-col space-y-6 items-center py-4 px-10 absolute mt-8 bg-white rounded-xl text-gray-500  ${profileBoxStyle} ${
+            isMenuOpen ? ` flex` : "hidden"
           }`}
         >
           {account.role_name === 'Quản Trị Viên' && <button
-            className={`font-medium  transition duration-500 text-gray-300 hover:font-bold hover:text-white `}
+            className={`font-medium  transition duration-500 hover:text-black`}
             onClick={runAdminModeHandler}
           >
             Chế độ admin
           </button>}
           <Link
-            className={`font-medium  transition duration-500 text-gray-300 hover:font-bold hover:text-white `}
+            className={`font-medium  transition duration-500 hover:text-black`}
             to='/E-boxVLU/change-password'
           >
             Đổi mật khẩu
           </Link>
           <button
-            className={`font-medium  transition duration-500 cursor-pointer text-gray-300 hover:font-bold hover:text-white `}
+            className={`font-medium  transition duration-500 cursor-pointer hover:text-black`}
             onClick={logoutHandler}
           >
             Đăng Xuất
