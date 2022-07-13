@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import BeforeLogin from "./BeforeLogin";
 import AfterLoggedIn from "./AfterLoggedIn";
 import logo from "../../../assets/logo.png";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [changeBgColor, setChangeBgColor] = useState();
@@ -41,13 +42,14 @@ function Navbar() {
             className="bg-cover bg-no-repeat bg-left-top w-9 h-12"
             style={{ backgroundImage: `url(${logo})` }}
           />
-          <h1
+          <Link
             className={`font-bold text-2xl transition duration-500 ${
               changeBgColor ? "text-black" : "text-white"
             }`}
+            to={"/E-boxVLU"}
           >
             E-Box VLU
-          </h1>
+          </Link>
         </div>
         {!isLoggedIn ? (
           <BeforeLogin

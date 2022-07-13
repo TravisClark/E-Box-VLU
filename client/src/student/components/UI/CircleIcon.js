@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./CircleIcon.module.css"
-function CircleIcon() {
+function CircleIcon(props) {
   return (
     <svg
       version="1.1"
@@ -11,7 +11,7 @@ function CircleIcon() {
       width="80px"
       height="80px"
       viewBox="0 0 31.424 31.425"
-      className={`${classes.icon} absolute mt-10 opacity-20`}
+      className={`${classes.icon} absolute mt-10 opacity-20 ${props.className}`}
     >
       <g>
         <path
