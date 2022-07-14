@@ -91,12 +91,9 @@ class MailboxController {
                 //create mailbox information data
                 const info_mailbox = {
                     question: data_question,
-                    answer: '',
                     status: 'Chưa được duyệt',
                     type_name: data_type_name,
-                    username_question: data_username,
-                    username_censor: '',
-                    username_reply: '',
+                    username_questioner: data_username,
                 };
                 //Add a new mailbox to the database
                 const mailbox = new Mailbox(info_mailbox);
@@ -125,7 +122,7 @@ class MailboxController {
             var status = 'Đã được duyệt';
             await Mailbox.findOneAndUpdate(
                 { id_question: data_id_question },
-                { status: status, username_censor: data_username, type_name: data_type_name},
+                { status: status, username_approver: data_username, type_name: data_type_name, approvedAt: new Date()},
             );
             //create informational data for the notification
             const info_mailbox = await Mailbox.findOne({
@@ -135,7 +132,7 @@ class MailboxController {
                 question: info_mailbox.question,
                 notification: status,
                 username_sender: data_username,
-                username_receiver: info_mailbox.username_question,
+                username_receiver: info_mailbox.username_questioner,
             };
             //create notifications for students
             const notification = new Notification(info_notification);
@@ -162,7 +159,7 @@ class MailboxController {
             var status = 'Đã bị từ chối';
             await Mailbox.findOneAndUpdate(
                 { id_question: data_id_question },
-                { status: status, username_censor: data_username },
+                { status: status, username_approver: data_username },
             );
             //create informational data for the notification
             const info_mailbox = await Mailbox.findOne({
@@ -172,7 +169,7 @@ class MailboxController {
                 question: info_mailbox.question,
                 notification: status,
                 username_sender: data_username,
-                username_receiver: info_mailbox.username_question,
+                username_receiver: info_mailbox.username_questioner,
             };
             //create notifications for students
             const notification = new Notification(info_notification);
@@ -230,7 +227,8 @@ class MailboxController {
                         status: status,
                         answer: data_answer,
                         type_name: data_type_name,
-                        username_reply: data_username,
+                        username_respondent: data_username,
+                        responsedAt: new Date(),
                     },
                 );
                 //create informational data for the notification
@@ -241,7 +239,7 @@ class MailboxController {
                     question: info_mailbox.question,
                     notification: status,
                     username_sender: data_username,
-                    username_receiver: info_mailbox.username_question,
+                    username_receiver: info_mailbox.username_questioner,
                 };
                 //create notifications for students
                 const notification = new Notification(info_notification);
