@@ -55,6 +55,18 @@ class UserController {
         }
     };
 
+    //[GET] http://localhost:5000/api/admin/user/details_user?username=abc
+    details_user = async (req, res, next) => {
+        try {
+            const information = await UserModel.findOne({ 
+                id_question: req.query.username,
+                })
+            res.status(200).json(information);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     //[POST] http://localhost:5000/api/admin/user/add_user
     add_user = async (req, res, next) => {
         try {
