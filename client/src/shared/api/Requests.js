@@ -10,7 +10,7 @@ const Requests = {
     fetchQuestionTypes: 'http://localhost:5000/api/admin/type/list_types_admin',
     fetchAccount: 'http://localhost:5000/api/user/account_info', 
     fetchRoleList: 'http://localhost:5000/api/admin/role/list_roles', 
-    fetchUsersList: 'http://localhost:5000/api/user/list_users',
+    fetchUsersList: 'http://localhost:5000/api/admin/user/list_users',
     fetchQuestionList: 'http://localhost:5000/api/admin/mailbox/list_questions_admin',
     fetchQuestionBasedOnStatus: 'http://localhost:5000/api/mailbox/list_questions?status=',
 }
