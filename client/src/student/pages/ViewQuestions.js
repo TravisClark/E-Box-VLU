@@ -9,13 +9,17 @@ import MenuType from "../components/QuestionSection/MenuType/MenuType";
 import QuestionForm from "../components/QuestionSection/QuestionForm";
 import QuestionList from "../components/QuestionSection/QuestionList/QuestionList";
 import Button from "../components/UI/Button";
+import CircleIcon from "../components/UI/CircleIcon";
 import Container from "../components/UI/Container";
+import SquareIcon from "../components/UI/SquareIcon";
+import TriangleIcon from "../components/UI/TriangleIcon";
 
 function ViewQuestions() {
   const searchInputRef = useRef();
   const [isQFormOpen, setIsQFormOpen] = useState(false);
   const { successNotification } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
+  const {account} = useSelector((state) => state.auth);
   const onToggleFormHandler = () => {
     setIsQFormOpen((prevState) => !prevState);
   };
@@ -53,7 +57,8 @@ function ViewQuestions() {
       </IntroductionBanner>
       <section id="question">
         <Container className="min-w-full relative flex flex-col items-center">
-          {/* <div className={`${classes.spacer} ${classes.layer1}`}></div> */}
+          <div className="relative w-full flex justify-center overflow-hidden">
+          <CircleIcon className="hidden md:block"/>
           <svg
             id="visual"
             // viewBox="0 0 100% 540"
@@ -70,16 +75,24 @@ function ViewQuestions() {
               strokeLinejoin="miter"
             ></path>
           </svg>
+          <div className=" absolute top-0 left-0 justify-between min-w-full min-h-full hidden md:flex">
+              <TriangleIcon />
+              <SquareIcon />
+            </div>
+          </div>
+          
           <div className="flex flex-col min-w-full space-y-6 items-center absolute top-0 left-1/2 -translate-x-1/2 pt-10 md:space-x-20 md:flex-row md:space-y-0 md:w-1/2 md:justify-center md:items-start">
             <MenuType />
             <QuestionList />
           </div>
-          <button
+          {!(account.role_name === "Quản Trị Viên" ||
+            account.role_name === "Ban Chủ Nhiệm Khoa" ||
+            account.role_name === "Trợ Lý") && (<button
             className="bg-black text-white px-4 mb-10 mx-auto py-3 font-semibold rounded"
             onClick={onToggleFormHandler}
           >
             Đặt câu hỏi
-          </button>
+          </button>)}
           {isQFormOpen && <QuestionForm onCloseForm={onToggleFormHandler} />}
           {successNotification.isShowing && (
             <Notification className="w-full h-full" />

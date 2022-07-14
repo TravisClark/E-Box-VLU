@@ -4,12 +4,12 @@ import Requests from "../../../../shared/api/Requests";
 import useHttpClient from "../../../../shared/hooks/http-hook";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
-export const RepliedQuestionList = () => {
+export const UserList = () => {
   // const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
   const { isLoading } = useHttpClient();
   const dispatch = useDispatch();
-  
+
   const onOpenFormHandler = async (value) => {
     dispatch(
       uiActions.showNotification({
@@ -21,29 +21,23 @@ export const RepliedQuestionList = () => {
           body: null,
           headers: { "Content-Type": "application/json" },
         },
-        successMessage: 'Chỉnh sửa câu trả lời thành công!',
-        type:'MODIFY_ANSWER_FORM'
+        successMessage: "Chỉnh sửa câu trả lời thành công!",
+        type: "MODIFY_ANSWER_FORM",
       })
     );
   };
-  
-  const questions = currentItems.map((question, index) => {
-    const date = new Date(question.createdAt);
-    const dateTranslate = {
-      day: date.getDate(),
-      month: date.getMonth(),
-      year: date.getFullYear(),
-    };
-    const formatDate = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
+
+  const questions = currentItems.map((user, index) => {
     return (
-      <tr key={question._id}>
+      <tr key={user._id}>
         <td className="py-2 px-4">{++index}</td>
-        <td className="py-2 px-4">
-          <div className="truncate w-96">{question.question}</div>
+        <td className="py-2 px-4">{user.username}</td>
+        <td className="py-2 px-4">{user.role_name}</td>
+        <td className="py-2 px-4">{user.role_name}</td>
+        <td className="py-2 px-4">{user.role_name}</td>
+        <td className="py-2 px-4 underline">
+          <button onClick={onOpenFormHandler.bind(null, "")}>Xem</button>
         </td>
-        <td className="py-2 px-4">{formatDate}</td>
-        <td className="py-2 px-4">{question.username_reply}</td>
-        <td className="py-2 px-4 underline"><button onClick={onOpenFormHandler.bind(null, question)}>Chỉnh sửa</button></td>
       </tr>
     );
   });

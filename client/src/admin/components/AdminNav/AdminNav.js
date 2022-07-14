@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
 import { uiActions } from "../../../shared/store/ui-slice";
 import Container from "../../../student/components/UI/Container";
-
+import classes from './AdminNav.module.css'
 function AdminNav() {
   const { account } = useSelector((state) => state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,8 +54,8 @@ function AdminNav() {
           </svg>
         </div>
         <div
-          className={`flex-col space-y-3 bg-white items-start py-4 absolute mt-8 rounded-xl w-52 ${
-            isMenuOpen ? "flex" : "hidden"
+          className={`flex-col space-y-3 bg-white items-start py-4 absolute mt-8 rounded-xl w-52 drop-shadow-lg ${
+            isMenuOpen ? classes.profileBox : "hidden"
           }`}
         >
           <div className="flex min-w-full space-x-2 px-4 group">

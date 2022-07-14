@@ -9,15 +9,16 @@ function AfterLoggedIn({
   openNavHandler,
   navbarIsOpen,
   username,
+  profileBoxStyle,
 }) {
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const {account} = useSelector((state) => state.auth);
+  const { account } = useSelector((state) => state.auth);
   const history = useHistory();
   const logoutHandler = () => {
     navbarIsOpen && openNavHandler();
     dispatch(authActions.logoutHandler());
-    history.replace('/E-boxVLU')
+    history.replace("/E-boxVLU");
   };
 
   const toggleMenuHandler = () => {
@@ -25,10 +26,10 @@ function AfterLoggedIn({
   };
 
   const runAdminModeHandler = () => {
-    dispatch(uiActions.runAdminMode({type: "RUN_ADMIN_MODE"}))
-    history.push('/E-boxVLU/admin/dashboard')
-  }
-  
+    dispatch(uiActions.runAdminMode({ type: "RUN_ADMIN_MODE" }));
+    history.push("/E-boxVLU/admin/dashboard");
+  };
+
   return (
     <>
       {/* Desktop nav */}
@@ -37,11 +38,15 @@ function AfterLoggedIn({
           className={`flex space-x-2 cursor-pointer`}
           onClick={toggleMenuHandler}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" className={`transition duration-300 ${changeBgColor ? 'fill-black' : 'fill-white'}`}>
-            <path
-              
-              d="M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10 10-4.579 10-10S17.421 2 12 2zm0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3zm-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228z"
-            ></path>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            className={`transition duration-300 ${
+              changeBgColor ? "fill-black" : "fill-white"
+            }`}
+          >
+            <path d="M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10 10-4.579 10-10S17.421 2 12 2zm0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3zm-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228z"></path>
           </svg>
           <span
             className={`font-medium  transition duration-500 ${
@@ -52,29 +57,40 @@ function AfterLoggedIn({
           >
             {username}
           </span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className={`transition duration-300 ${changeBgColor ? 'fill-black' : 'fill-white'}`}>
-            <path  d="m11.998 17 7-8h-14z"></path>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            className={`transition duration-300 ${
+              changeBgColor ? "fill-black" : "fill-white"
+            }`}
+          >
+            <path d="m11.998 17 7-8h-14z"></path>
           </svg>
         </div>
         <div
-          className={`flex-col space-y-6 bg-transparent items-center p-4 absolute mt-8 rounded-sm w-52 ${
-            isMenuOpen ? "flex" : "hidden"
+          className={`flex-col space-y-6 items-center py-4 px-10 absolute mt-8 bg-white rounded-xl text-gray-500  ${profileBoxStyle} ${
+            isMenuOpen ? ` flex` : "hidden"
           }`}
         >
-          {account.role_name === 'Quản Trị Viên' && <button
-            className={`font-medium  transition duration-500 text-gray-300 hover:font-bold hover:text-white `}
-            onClick={runAdminModeHandler}
-          >
-            Chế độ admin
-          </button>}
+          {(account.role_name === "Quản Trị Viên" ||
+            account.role_name === "Ban Chủ Nhiệm Khoa" ||
+            account.role_name === "Trợ Lý") && (
+            <button
+              className={`font-medium  transition duration-500 hover:text-black`}
+              onClick={runAdminModeHandler}
+            >
+              Chế độ admin
+            </button>
+          )}
           <Link
-            className={`font-medium  transition duration-500 text-gray-300 hover:font-bold hover:text-white `}
-            to='/E-boxVLU/change-password'
+            className={`font-medium  transition duration-500 hover:text-black`}
+            to="/E-boxVLU/change-password"
           >
             Đổi mật khẩu
           </Link>
           <button
-            className={`font-medium  transition duration-500 cursor-pointer text-gray-300 hover:font-bold hover:text-white `}
+            className={`font-medium  transition duration-500 cursor-pointer hover:text-black`}
             onClick={logoutHandler}
           >
             Đăng Xuất

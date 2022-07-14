@@ -21,7 +21,7 @@ export const ApprovedQuestionList = (props) => {
           headers: { "Content-Type": "application/json" },
         },
         successMessage: 'Trả lời thành công!',
-        type:'Reply form'
+        type:'REPLY_FORM'
       })
     );
   };

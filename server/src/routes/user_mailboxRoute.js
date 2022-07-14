@@ -4,6 +4,7 @@ const router = express.Router();
 const mailboxController = require('../app/controllers/MailboxController');
 
 router.get('/list_questions_user', mailboxController.list_questions_user);
+router.get('/details_question', mailboxController.details_question);
 router.post('/publish_question', mailboxController.publish_question);
 
 module.exports = router;

@@ -1,14 +1,12 @@
-import React, { useRef, } from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
-import useHttpClient from "../../../../shared/hooks/http-hook";
 
-export const ReplyForm = (props) => {
+export const ModifyAnswerForm = (props) => {
   const inputRef = useRef();
   const { account } = useSelector((state) => state.auth);
-  const {selectedType} = useSelector((state) => state.question)
-  const { error } = useSelector((state) => state.ui);
-
+  const { selectedType } = useSelector((state) => state.question);
+  const {error} = useSelector((state) => state.ui)
   const date = new Date(props.data.createdAt);
   const dateTranslate = {
     min: date.getMinutes(),
@@ -29,10 +27,11 @@ export const ReplyForm = (props) => {
     });
     props.onSubmitHandler(body);
   };
+
   return (
     <>
       <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10 ">
-        <span className="text-2xl font-bold">Trả lời câu hỏi</span>
+        <span className="text-2xl font-bold">Chỉnh sửa câu trả lời</span>
         <form onSubmit={onSubmitHandler} className="table-auto">
           <div className="flex flex-col space-y-6">
             <div className="flex w-full py-2 px-10 space-x-10 bg-gray-200 rounded-md">
@@ -47,14 +46,13 @@ export const ReplyForm = (props) => {
               <span className="text-xl font-semibold w-72 break-words">
                 {props.data.question}
               </span>
-              <span className="text-xl font-semibold w-52">
-                {formatDate}
-              </span>
+              <span className="text-xl font-semibold w-52">{formatDate}</span>
             </div>
-            <QuestionType selected={props.data.type_name} className="border"/>
+            <QuestionType selected={props.data.type_name} className="border" />
             <textarea
               className="w-full border px-4 py-2 rounded-lg h-28 outline-none"
               ref={inputRef}
+              defaultValue={props.data.answer}
             />
             {error && <h3 className="text-red-500 text-sm">{error}</h3>}
           </div>

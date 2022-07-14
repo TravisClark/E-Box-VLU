@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApproveForm } from "../../../admin/components/Table/Form/ApproveForm";
+import { ModifyAnswerForm } from "../../../admin/components/Table/Form/ModifyAnswerForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
@@ -20,21 +21,26 @@ export const ConfirmNotification = (props) => {
   };
 
   const onSubmitHandler = async (input) => {
-    await sendRequest(
-      request.url,
-      request.method,
-      request.body ? request.body : input,
-      request.headers
-    );
-    dispatch(uiActions.closeNotification());
-    dispatch(uiActions.showSuccessNotification(successMessage));
-    setTimeout(() => {
-      dispatch(uiActions.closeSuccessNotification());
-    }, 3000);
+    try {
+      await sendRequest(
+        request.url,
+        request.method,
+        request.body ? request.body : input,
+        request.headers
+      );
+      dispatch(uiActions.closeNotification());
+      dispatch(uiActions.showSuccessNotification(successMessage));
+      setTimeout(() => {
+        dispatch(uiActions.closeSuccessNotification());
+      }, 3000);
+    } catch (error) {
+      dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
+    }
+    
   };
 
   let form;
-  if (type === "Reply form") {
+  if (type === "REPLY_FORM") {
     form = (
       <ReplyForm
         data={data}
@@ -42,12 +48,20 @@ export const ConfirmNotification = (props) => {
         onSubmitHandler={onSubmitHandler}
       />
     );
-  } else if (type === "Approve form") {
+  } else if (type === "APPROVE_FORM") {
     form = (
       <ApproveForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
         message={message}
+        data={data}
+      />
+    );
+  } else if (type === "MODIFY_ANSWER_FORM") {
+    form = (
+      <ModifyAnswerForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
         data={data}
       />
     );

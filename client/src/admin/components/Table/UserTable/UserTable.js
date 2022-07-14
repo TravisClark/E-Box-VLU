@@ -1,26 +1,24 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Pagination } from '../../../../shared/components/Pagination/Pagination';
 import { pageActions } from '../../../../shared/store/page-slice';
-import { DisapprovedQuestionList } from './DisapprovedQuestionsList';
+import { UserList } from './UserList';
+// import { RepliedQuestionList } from './RepliedQuestionList';
 
-const headItem = ["No", "Câu hỏi","Ngày từ chối", "Người từ chối", 'Thao tác'];
+const headItem = ["No", "Tài khoản","Vai trò", "Tình trạng", 'Thao tác', 'Chi tiết'];
 
-export const DisapprovedQuestionsTable = (props) => {
+export const UserTable = (props) => {
   const dispatch = useDispatch();
-  const {currentItems} = useSelector((state) => state.page.pagination)
   useEffect(() => {
-    const questions = props.questions.filter(
-      (question) => question.status === "Đã bị từ chối"
-    );
     dispatch(
       pageActions.setCurrentItems({
-        items: questions,
-        itemsPerPage: 1,
+        items: props.users,
+        itemsPerPage: 10,
         currentPage: 1,
       })
     );
-  }, [dispatch, props.questions]);
+  }, [dispatch, props.users]);
 
   return (
     <>
@@ -33,9 +31,9 @@ export const DisapprovedQuestionsTable = (props) => {
               ))}
             </tr>
           </thead>
-          <DisapprovedQuestionList/>
+          <UserList/>
         </table>
-        {currentItems.length > 0 && <Pagination/>}
+        <Pagination/>
       </div>
     </>
   );

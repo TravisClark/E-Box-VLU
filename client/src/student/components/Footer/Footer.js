@@ -6,7 +6,7 @@ import Container from "../UI/Container";
 function Footer() {
   return (
     <footer id='footer'>
-      <Container className="flex flex-col px-10 items-center pt-16 bg-black min-w-full ">
+      <Container className="flex flex-col px-10 items-center pt-16 bg-black min-w-full relative z-20">
         <div className="flex flex-col min-w-sm space-y-8 md:flex-row md:space-y-0 md:space-x-40 md:justify-around">
           <div className="md:mb-20 md:w-1/2">
             <img alt="" src={vluIcon} className="w-60 md:w-80 mx-auto" />

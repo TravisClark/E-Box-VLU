@@ -27,21 +27,31 @@ class MailboxController {
     list_questions_user = async (req, res, next) => {
         try {
             if (req.query.hasOwnProperty('type_name')) {
-                const mailbox = await  Mailbox.find({ 
+                const mailbox = await Mailbox.find({
                     type_name: req.query.type_name,
                     status: 'Đã được trả lời',
-                    })
-                    .sort({
-                        createdAt: 'desc',
-                    });
+                }).sort({
+                    createdAt: 'desc',
+                });
                 res.status(201).json(mailbox);
             } else {
-                const mailbox = await Mailbox.find({ type_name: 'Học phí' }).sort({
+                const mailbox = await Mailbox.find({}).sort({
                     createdAt: 'desc',
                 });
                 res.status(200).json(mailbox);
             }
-        
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    //[GET] http://localhost:5000/api/user/mailbox/details_question?id_question=123
+    details_question = async (req, res, next) => {
+        try {
+            const mailbox = await Mailbox.findOne({
+                id_question: req.query.id_question,
+            });
+            res.status(200).json(mailbox);
         } catch (err) {
             console.log(err);
         }
@@ -54,37 +64,35 @@ class MailboxController {
             const data_username = req.body.username;
             const data_question = req.body.question;
             const data_type_name = req.body.type_name;
-            if(data_type_name == null || data_type_name === ''){
+            if (data_type_name == null || data_type_name === '') {
                 //check type_name is null or ''
                 return next(
                     res.status(401).json({
                         message: 'Vui lòng chọn loại câu hỏi',
                     }),
                 );
-            }else if (data_question == null || data_question === '') {
+            } else if (data_question == null || data_question === '') {
                 //check question is null or ''
                 return next(
                     res.status(401).json({
                         message: 'Vui lòng nhập câu hỏi',
                     }),
                 );
-            }else if (data_question.length > 200) {
+            } else if (data_question.length > 200) {
                 //check length of question
                 return next(
                     res.status(411).json({
-                        message: 'Độ dài của câu hỏi quá dài. Chỉ có phép độ dài từ dưới 200 ký tự',
+                        message:
+                            'Độ dài của câu hỏi quá dài. Chỉ có phép độ dài từ dưới 200 ký tự',
                     }),
                 );
             } else {
                 //create mailbox information data
                 const info_mailbox = {
                     question: data_question,
-                    answer: '',
                     status: 'Chưa được duyệt',
                     type_name: data_type_name,
-                    username_question: data_username,
-                    username_censor: '',
-                    username_reply: '',
+                    username_questioner: data_username,
                 };
                 //Add a new mailbox to the database
                 const mailbox = new Mailbox(info_mailbox);
@@ -113,7 +121,12 @@ class MailboxController {
             var status = 'Đã được duyệt';
             await Mailbox.findOneAndUpdate(
                 { id_question: data_id_question },
-                { status: status, username_censor: data_username, type_name: data_type_name},
+                {
+                    status: status,
+                    username_approver: data_username,
+                    type_name: data_type_name,
+                    approvedAt: new Date(),
+                },
             );
             //create informational data for the notification
             const info_mailbox = await Mailbox.findOne({
@@ -123,7 +136,7 @@ class MailboxController {
                 question: info_mailbox.question,
                 notification: status,
                 username_sender: data_username,
-                username_receiver: info_mailbox.username_question,
+                username_receiver: info_mailbox.username_questioner,
             };
             //create notifications for students
             const notification = new Notification(info_notification);
@@ -150,7 +163,7 @@ class MailboxController {
             var status = 'Đã bị từ chối';
             await Mailbox.findOneAndUpdate(
                 { id_question: data_id_question },
-                { status: status, username_censor: data_username },
+                { status: status, username_approver: data_username },
             );
             //create informational data for the notification
             const info_mailbox = await Mailbox.findOne({
@@ -160,7 +173,7 @@ class MailboxController {
                 question: info_mailbox.question,
                 notification: status,
                 username_sender: data_username,
-                username_receiver: info_mailbox.username_question,
+                username_receiver: info_mailbox.username_questioner,
             };
             //create notifications for students
             const notification = new Notification(info_notification);
@@ -186,6 +199,7 @@ class MailboxController {
             const data_id_question = req.body.id_question;
             const data_type_name = req.body.type_name;
             //format answer
+            const format = /[a-z || A-Z || 0-9]/g;
             var answer = data_answer.replace(/\s+/g, '');
             if (data_type_name == null || data_type_name === '') {
                 //check type name is null or ''
@@ -201,6 +215,13 @@ class MailboxController {
                         message: 'Vui lòng nhập câu trả lời',
                     }),
                 );
+            } else if (answer.match(format) == null) {
+                //check answer for correct format
+                return next(
+                    res.status(412).json({
+                        message: 'Vui lòng nhập thông tin câu trả lời đầy đủ.',
+                    }),
+                );
             } else {
                 //update answer status to MongoDB
                 var status = 'Đã được trả lời';
@@ -210,7 +231,8 @@ class MailboxController {
                         status: status,
                         answer: data_answer,
                         type_name: data_type_name,
-                        username_reply: data_username,
+                        username_respondent: data_username,
+                        responsedAt: new Date(),
                     },
                 );
                 //create informational data for the notification
@@ -221,7 +243,7 @@ class MailboxController {
                     question: info_mailbox.question,
                     notification: status,
                     username_sender: data_username,
-                    username_receiver: info_mailbox.username_question,
+                    username_receiver: info_mailbox.username_questioner,
                 };
                 //create notifications for students
                 const notification = new Notification(info_notification);

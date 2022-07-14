@@ -1,0 +1,16 @@
+.profileBox{
+    animation: appearance 0.5s linear forwards 
+}
+
+@keyframes appearance{
+    from{
+        transform: translateY(5%);
+        opacity: 0;
+        display: none;
+    }
+    to{
+        display: flex;
+        opacity: 100%;
+        transform: translateY(0%);
+    }
+}
