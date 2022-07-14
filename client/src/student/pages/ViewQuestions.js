@@ -19,6 +19,7 @@ function ViewQuestions() {
   const [isQFormOpen, setIsQFormOpen] = useState(false);
   const { successNotification } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
+  const {account} = useSelector((state) => state.auth);
   const onToggleFormHandler = () => {
     setIsQFormOpen((prevState) => !prevState);
   };
@@ -84,12 +85,14 @@ function ViewQuestions() {
             <MenuType />
             <QuestionList />
           </div>
-          <button
+          {!(account.role_name === "Quản Trị Viên" ||
+            account.role_name === "Ban Chủ Nhiệm Khoa" ||
+            account.role_name === "Trợ Lý") && (<button
             className="bg-black text-white px-4 mb-10 mx-auto py-3 font-semibold rounded"
             onClick={onToggleFormHandler}
           >
             Đặt câu hỏi
-          </button>
+          </button>)}
           {isQFormOpen && <QuestionForm onCloseForm={onToggleFormHandler} />}
           {successNotification.isShowing && (
             <Notification className="w-full h-full" />

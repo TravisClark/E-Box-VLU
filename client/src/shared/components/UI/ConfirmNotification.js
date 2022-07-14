@@ -21,17 +21,22 @@ export const ConfirmNotification = (props) => {
   };
 
   const onSubmitHandler = async (input) => {
-    await sendRequest(
-      request.url,
-      request.method,
-      request.body ? request.body : input,
-      request.headers
-    );
-    dispatch(uiActions.closeNotification());
-    dispatch(uiActions.showSuccessNotification(successMessage));
-    setTimeout(() => {
-      dispatch(uiActions.closeSuccessNotification());
-    }, 3000);
+    try {
+      await sendRequest(
+        request.url,
+        request.method,
+        request.body ? request.body : input,
+        request.headers
+      );
+      dispatch(uiActions.closeNotification());
+      dispatch(uiActions.showSuccessNotification(successMessage));
+      setTimeout(() => {
+        dispatch(uiActions.closeSuccessNotification());
+      }, 3000);
+    } catch (error) {
+      dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
+    }
+    
   };
 
   let form;
