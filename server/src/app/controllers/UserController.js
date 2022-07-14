@@ -59,7 +59,7 @@ class UserController {
     details_user = async (req, res, next) => {
         try {
             const information = await UserModel.findOne({ 
-                id_question: req.query.username,
+                username: req.query.username,
                 })
             res.status(200).json(information);
         } catch (err) {
@@ -262,6 +262,22 @@ class UserController {
             }
         } catch (err) {
             console.log(err);
+        }
+    };
+
+    //[PATCH] http://localhost:5000/api/admin/user/deactivate_user
+    deactivate_user = async (req, res, next) => {
+        try {
+            //Get data from client
+            var data_username = req.body.username; 
+
+            UserModel.findOneAndUpdate({username: data_username}, {status: 'Không hoạt động'})
+            .then(() => {
+                res.status(200).json({ message: 'Vô hiệu hóa tài khoản thành công' })
+            })
+            .catch(next);
+        } catch (error) {
+            console.log(error);
         }
     };
 }
