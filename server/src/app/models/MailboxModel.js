@@ -21,19 +21,28 @@ const Mailbox = new Schema(
         type_name: {
             type: 'string',
         },
-        username_question: {
+        username_questioner: {
             type: 'string',
             required: true,
         },
-        username_censor: {
+        username_approver: {
             type: 'string',
         },
-        username_reply: {
+        username_respondent: {
             type: 'string',
         },
-    },
-    {
-        timestamps: true,
+        createdAt: {
+            type: 'Date',
+            default: Date.now,
+        },
+        approvedAt: {
+            type: 'Date',
+            default: Date.now,
+        },
+        responsedAt: {
+            type: 'Date',
+            default: Date.now,
+        },
     },
 );
 

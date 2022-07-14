@@ -22,6 +22,7 @@ const User = new Schema(
         },
         status: {
             type: 'string',
+            default: 'Đang hoạt động',
         },
         role_name: {
             type: 'string',
