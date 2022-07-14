@@ -198,6 +198,7 @@ class MailboxController {
             const data_id_question = req.body.id_question;
             const data_type_name = req.body.type_name;
             //format answer
+            const format = /[a-z || A-Z || 0-9]/g;
             var answer = data_answer.replace(/\s+/g, '');
             if (data_type_name == null || data_type_name === '') {
                 //check type name is null or ''
@@ -211,6 +212,13 @@ class MailboxController {
                 return next(
                     res.status(401).json({
                         message: 'Vui lòng nhập câu trả lời',
+                    }),
+                );
+            }else if (answer.match(format) == null) {
+                //check answer for correct format
+                return next(
+                    res.status(412).json({
+                        message: 'Vui lòng nhập thông tin câu trả lời đầy đủ.',
                     }),
                 );
             } else {
