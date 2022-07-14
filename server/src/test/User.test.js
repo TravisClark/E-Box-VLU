@@ -30,7 +30,7 @@ describe('Unit test of Generate account when entering complete information', () 
                 role_name: 'Sinh viên',
             });
 
-        expect(response.body).toEqual({message: 'Tạo tài khoản thành công'});
+        expect(response.body).toEqual({ message: 'Tạo tài khoản thành công' });
     });
 });
 
@@ -63,7 +63,9 @@ describe('Unit test of Generate account when the username data is empty', () => 
                 role_name: 'Sinh viên',
             });
 
-        expect(response.body).toEqual({message: 'Tài khoản không được bỏ trống'});
+        expect(response.body).toEqual({
+            message: 'Tài khoản không được bỏ trống',
+        });
     });
 });
 
@@ -97,39 +99,43 @@ describe('Unit test of Generate account when entering the incorrect length of us
                 role_name: 'Sinh viên',
             });
 
-            expect(response.body).toEqual({message: 'Độ dài tài khoản từ 5 đến 20 ký tự'});
+        expect(response.body).toEqual({
+            message: 'Độ dài tài khoản từ 5 đến 20 ký tự',
+        });
     });
 
     //Unit test check if the new password length is more than 20
     test('Status is 411 when the username length is more than 20', async () => {
         const response = await request(app)
-        .post('/api/admin/user/add_user')
-        .send({
-            username: 'VLU012345678910111213141516',
-            role_name: 'Sinh viên',
-        });
+            .post('/api/admin/user/add_user')
+            .send({
+                username: 'VLU012345678910111213141516',
+                role_name: 'Sinh viên',
+            });
 
         expect(response.statusCode).toBe(411);
     });
     test('Return format json when the username length is more than 20', async () => {
         const response = await request(app)
-        .post('/api/admin/user/add_user')
-        .send({
-            username: 'VLU012345678910111213141516',
-            role_name: 'Sinh viên',
-        });
+            .post('/api/admin/user/add_user')
+            .send({
+                username: 'VLU012345678910111213141516',
+                role_name: 'Sinh viên',
+            });
 
         expect(response.type).toEqual('application/json');
     });
     test('Return message:"Độ dài tài khoản từ 5 đến 20 ký tự" when the username length is more than 20', async () => {
         const response = await request(app)
-        .post('/api/admin/user/add_user')
-        .send({
-            username: 'VLU012345678910111213141516',
-            role_name: 'Sinh viên',
-        });
+            .post('/api/admin/user/add_user')
+            .send({
+                username: 'VLU012345678910111213141516',
+                role_name: 'Sinh viên',
+            });
 
-        expect(response.body).toEqual({message: 'Độ dài tài khoản từ 5 đến 20 ký tự'});
+        expect(response.body).toEqual({
+            message: 'Độ dài tài khoản từ 5 đến 20 ký tự',
+        });
     });
 });
 
@@ -163,7 +169,9 @@ describe('Unit test of Generate account when entering the wrong format of the us
                 role_name: 'Sinh viên',
             });
 
-        expect(response.body).toEqual({message: 'Tài khoản chỉ chứa định dạng chữ Alphabet và chữ số'});
+        expect(response.body).toEqual({
+            message: 'Tài khoản chỉ chứa định dạng chữ Alphabet và chữ số',
+        });
     });
 });
 
@@ -197,7 +205,7 @@ describe('Unit test of Generate account when entering an existing account name',
                 role_name: 'Sinh viên',
             });
 
-        expect(response.body).toEqual({message: 'Tài khoản đã tồn tại'});
+        expect(response.body).toEqual({ message: 'Tài khoản đã tồn tại' });
     });
 });
 
@@ -252,7 +260,9 @@ describe('Unit test of login when you enter the wrong request', () => {
             password: 'VLU77757',
         });
 
-        expect(response.body).toEqual({message: "Tài khoản và mật khẩu không được bỏ trống"});
+        expect(response.body).toEqual({
+            message: 'Tài khoản và mật khẩu không được bỏ trống',
+        });
     });
     //Unit test of check password is null or ''
     test('Status is 401', async () => {
@@ -277,7 +287,9 @@ describe('Unit test of login when you enter the wrong request', () => {
             password: '',
         });
 
-        expect(response.body).toEqual({message: "Tài khoản và mật khẩu không được bỏ trống"});
+        expect(response.body).toEqual({
+            message: 'Tài khoản và mật khẩu không được bỏ trống',
+        });
     });
 });
 
@@ -304,7 +316,9 @@ describe('Unit test of login when entering wrong account information', () => {
             password: 'VLU70000',
         });
 
-        expect(response.body).toEqual({message: "Tài khoản hoặc mật khẩu không chính xác"});
+        expect(response.body).toEqual({
+            message: 'Tài khoản hoặc mật khẩu không chính xác',
+        });
     });
 });
 
@@ -343,7 +357,9 @@ describe('Unit test of change password when entering complete information', () =
                 re_new_password: 'VLU77777',
             });
 
-        expect(response.body).toEqual({message: "Thay đổi mật khẩu thành công"});
+        expect(response.body).toEqual({
+            message: 'Thay đổi mật khẩu thành công',
+        });
     });
 });
 
@@ -383,7 +399,9 @@ describe('Unit test of change password when entering the wrong request of the ol
                 re_new_password: 'VLU77777',
             });
 
-            expect(response.body).toEqual({message: "Mật khẩu cũ không được bỏ trống"});
+        expect(response.body).toEqual({
+            message: 'Mật khẩu cũ không được bỏ trống',
+        });
     });
 
     //Unit test check if the password is correct or not
@@ -421,7 +439,9 @@ describe('Unit test of change password when entering the wrong request of the ol
                 re_new_password: 'VLU77777',
             });
 
-            expect(response.body).toEqual({message: "Mật khẩu cũ không chính xác"});
+        expect(response.body).toEqual({
+            message: 'Mật khẩu cũ không chính xác',
+        });
     });
 });
 
@@ -461,7 +481,9 @@ describe('Unit test of change password when new password data or re-enter passwo
                 re_new_password: 'VLU77770',
             });
 
-            expect(response.body).toEqual({message: "Mật khẩu mới không được bỏ trống"});
+        expect(response.body).toEqual({
+            message: 'Mật khẩu mới không được bỏ trống',
+        });
     });
 
     //Unit test check if the re_new_password is null or ''
@@ -499,7 +521,9 @@ describe('Unit test of change password when new password data or re-enter passwo
                 re_new_password: '',
             });
 
-        expect(response.body).toEqual({message: "Xác nhận mật khẩu mới không được bỏ trống"});
+        expect(response.body).toEqual({
+            message: 'Xác nhận mật khẩu mới không được bỏ trống',
+        });
     });
 });
 
@@ -539,10 +563,12 @@ describe('Unit test of change password when entering the incorrect length of new
                 re_new_password: 'VLU77757',
             });
 
-        expect(response.body).toEqual({message: "Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự"});
+        expect(response.body).toEqual({
+            message: 'Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự',
+        });
     });
 
-    //Unit test check if the new password length is more than 20 
+    //Unit test check if the new password length is more than 20
     test('Status is 411 when the new password length is more than 20', async () => {
         const response = await request(app)
             .patch('/api/user/user/change_password')
@@ -577,7 +603,9 @@ describe('Unit test of change password when entering the incorrect length of new
                 re_new_password: 'VLU77757',
             });
 
-        expect(response.body).toEqual({message: "Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự"});
+        expect(response.body).toEqual({
+            message: 'Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự',
+        });
     });
 });
 
@@ -617,7 +645,9 @@ describe('Unit test of change password when the new password is not in the corre
                 re_new_password: 'VLU77777',
             });
 
-        expect(response.body).toEqual({message: "Mật khẩu mới chỉ chứa định dạng chữ Alphabet và chữ số"});
+        expect(response.body).toEqual({
+            message: 'Mật khẩu mới chỉ chứa định dạng chữ Alphabet và chữ số',
+        });
     });
 });
 
@@ -657,6 +687,9 @@ describe('Unit test of change password when the new password and re-entering the
                 re_new_password: 'VLU11111',
             });
 
-        expect(response.body).toEqual({message: "Mật khẩu mới và xác minh mật khẩu không trùng khớp. Vui lòng kiểm tra lại"});
+        expect(response.body).toEqual({
+            message:
+                'Mật khẩu mới và xác minh mật khẩu không trùng khớp. Vui lòng kiểm tra lại',
+        });
     });
 });
