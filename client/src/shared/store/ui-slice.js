@@ -17,6 +17,7 @@ const uiSlice = createSlice({
       message: "",
       refresh: false
     },
+    error: ''
   },
   reducers: {
     runAdminMode(state, action) {
@@ -55,6 +56,9 @@ const uiSlice = createSlice({
     closeSuccessNotification(state){
         state.successNotification.isShowing = false;
         state.successNotification.message = ''
+    },
+    catchError (state, action){
+      state.error = action.payload
     }
   },
 });

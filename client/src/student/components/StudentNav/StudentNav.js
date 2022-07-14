@@ -36,7 +36,7 @@ function Navbar() {
   return (
     <nav>
       <Container
-        className={`fixed flex z-20 justify-between px-20  min-w-full p-4 items-center transition duration-500  ${
+        className={`fixed flex z-20 justify-between px-20  min-w-full p-4 items-center transition duration-500 drop-shadow-md ${
           changeBgColor && "bg-white"
         } md:justify-around md:px-0`}
       >

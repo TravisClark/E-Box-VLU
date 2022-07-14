@@ -27,20 +27,11 @@ export const QuestionDetail = () => {
       setCreateDate(dates);
     };
     formatDate();
-    // setCreateDate(() => {
-    //   const date = new Date(selectedItem.createdAt);
-    //   const dateTranslate = {
-    //     day: date.getDate(),
-    //     month: date.getMonth(),
-    //     year: date.getFullYear(),
-    //   };
-    //   return `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
-    // });
   }, [selectedItem.createdAt, selectedItem.updatedAt]);
 
   return (
-    <Container className="min-w-full relative flex flex-col items-center min-h-screen">
-      <div className="absolute w-full hidden justify-center overflow-hidden z-0 md:flex">
+    <Container className="min-w-full relative flex flex-col items-center mb-20 pb-20 min-h-screen">
+      <div className="absolute w-full  justify-center overflow-hidden z-0 flex">
         <CircleIcon className="hidden md:block" />
         <svg
           id="visual"
@@ -63,7 +54,7 @@ export const QuestionDetail = () => {
           <SquareIcon />
         </div>
       </div>
-      <div className="flex relative rounded-lg space-y-8 w-full h-screen flex-col py-6 text-sm px-8 mt-10 bg-white md:drop-shadow-md md:m-auto md:border md:h-fit md:max-w-4xl">
+      <div className="flex relative rounded-lg space-y-8 flex-col w-full py-6 text-sm px-8 translate-y-20 bg-white drop-shadow-md sm:w-10/12 md:m-auto md:border md:h-fit md:max-w-xl lg:max-w-3xl">
         <div className="flex flex-col p-3 space-y-6 border-black rounded-lg md:border md:px-6">
           <div className="flex flex-col space-y-4 ">
             <div className="flex flex-col space-y-4 md:space-y-0">
