@@ -156,7 +156,7 @@ class UserController {
                     password,
                 });
 
-                if (!user) {
+                if (!user || user.status === 'Không hoạt động') {
                     //Check if the user is found
                     return next(
                         res.status(401).json({
