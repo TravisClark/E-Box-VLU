@@ -151,7 +151,7 @@ const app = require('../index');
 //             answer: 'Có nha em',
 //             id_question: 18,
 //         });
-        
+
 //         expect(response.type).toEqual('application/json');
 //     });
 //     test('Return message "Trả lời câu hỏi thành công"', async () => {
@@ -232,12 +232,16 @@ const app = require('../index');
 
 describe('Unit Tests of View approval question list function', () => {
     test('Status is 200', async () => {
-        const response = await request(app).get('/api/admin/mailbox/list_questions_admin').query({status: 'Đã được duyệt'})
+        const response = await request(app)
+            .get('/api/admin/mailbox/list_questions_admin')
+            .query({ status: 'Đã được duyệt' });
 
         expect(response.statusCode).toBe(200);
     });
     test('Return format json', async () => {
-        const response = await request(app).get('/api/admin/mailbox/list_questions_admin').query({status: 'Đã được duyệt'})
+        const response = await request(app)
+            .get('/api/admin/mailbox/list_questions_admin')
+            .query({ status: 'Đã được duyệt' });
 
         expect(response.type).toEqual('application/json');
     });
@@ -245,12 +249,16 @@ describe('Unit Tests of View approval question list function', () => {
 
 describe('Unit Tests of View and search for question which has been replied function', () => {
     test('Status is 201', async () => {
-        const response = await request(app).get('/api/user/mailbox/list_questions_user').query({type_name: 'Điểm số'})
+        const response = await request(app)
+            .get('/api/user/mailbox/list_questions_user')
+            .query({ type_name: 'Điểm số' });
 
         expect(response.statusCode).toBe(201);
     });
     test('Return format json', async () => {
-        const response = await request(app).get('/api/user/mailbox/list_questions_user').query({type_name: 'Điểm số'})
+        const response = await request(app)
+            .get('/api/user/mailbox/list_questions_user')
+            .query({ type_name: 'Điểm số' });
 
         expect(response.type).toEqual('application/json');
     });
