@@ -1,5 +1,6 @@
 const Mailbox = require('../models/MailboxModel');
 const Notification = require('../models/NotificationModel');
+const InboxModel = require('../models/InboxModel');
 
 class MailboxController {
     //[GET] http://localhost:5000/api/admin/mailbox/list_questions_admin?status=???
@@ -159,16 +160,29 @@ class MailboxController {
             //Get data from client
             const data_username = req.body.username;
             const data_id_question = req.body.id_question;
+            const data_message = req.body.message;
             //update question status to MongoDB
             var status = 'Đã bị từ chối';
             await Mailbox.findOneAndUpdate(
                 { id_question: data_id_question },
                 { status: status, username_approver: data_username },
             );
-            //create informational data for the notification
+            //get information of question
             const info_mailbox = await Mailbox.findOne({
                 id_question: data_id_question,
             });
+
+            //create data message
+            const info_inbox = {
+                message: data_message,
+                username_sender: data_username,
+                username_receiver: info_mailbox.username_questioner,
+            };
+            const inbox = new InboxModel(info_inbox);
+            //Send Message to student
+            inbox.save();
+
+            //create data notification
             const info_notification = {
                 question: info_mailbox.question,
                 notification: status,
