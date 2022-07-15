@@ -13,25 +13,28 @@ class UserController {
                 const list_users = [];
                 const list_users_draft = [];
                 //Lọc các username theo ký tự được nhận
-                for(var i = 0; i < users.length; i++) {
-                    if(users[i].username.indexOf(req.query.username) !== -1) {
+                for (var i = 0; i < users.length; i++) {
+                    if (users[i].username.indexOf(req.query.username) !== -1) {
                         list_users[i] = users[i];
                         list_users_draft[i] = users[i];
                     }
                 }
                 //Xóa các mảng bị null
                 var dem = 0;
-                for(var i = 0; i < list_users_draft.length; i++) { 
-                    if(list_users_draft[i] === null ||list_users_draft[i] === undefined){
-                        await list_users.splice(i-dem,1);
+                for (var i = 0; i < list_users_draft.length; i++) {
+                    if (
+                        list_users_draft[i] === null ||
+                        list_users_draft[i] === undefined
+                    ) {
+                        await list_users.splice(i - dem, 1);
                         dem = dem + 1;
                     }
                 }
                 res.status(201).json(list_users);
-            }else{
+            } else {
                 const users = await UserModel.find({});
                 res.status(200).json(users);
-            }         
+            }
         } catch (err) {
             console.log(err);
         }
@@ -50,6 +53,18 @@ class UserController {
                 username: user.username,
                 role_name: user.role_name,
             });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    //[GET] http://localhost:5000/api/admin/user/details_user?username=abc
+    details_user = async (req, res, next) => {
+        try {
+            const information = await UserModel.findOne({
+                username: req.query.username,
+            });
+            res.status(200).json(information);
         } catch (err) {
             console.log(err);
         }
@@ -144,7 +159,7 @@ class UserController {
                     password,
                 });
 
-                if (!user) {
+                if (!user || user.status === 'Không hoạt động') {
                     //Check if the user is found
                     return next(
                         res.status(401).json({
@@ -250,6 +265,43 @@ class UserController {
             }
         } catch (err) {
             console.log(err);
+        }
+    };
+
+    //[PATCH] http://localhost:5000/api/admin/user/deactivate_user
+    deactivate_user = async (req, res, next) => {
+        try {
+            UserModel.findOneAndUpdate(
+                { username: req.body.username },
+                { status: 'Không hoạt động' },
+            )
+                .then(() => {
+                    res.status(200).json({
+                        message: 'Vô hiệu hóa tài khoản thành công',
+                    });
+                })
+                .catch(next);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    //[PATCH] http://localhost:5000/api/admin/user/reset_password
+    reset_password = async (req, res, next) => {
+        try {
+            var data_password = `VLU${req.body.username.trim().slice(-5)}`;
+            UserModel.findOneAndUpdate(
+                { username: req.body.username },
+                { password: data_password },
+            )
+                .then(() => {
+                    res.status(200).json({
+                        message: 'Đặt lại mật khẩu cho tài khoản thành công',
+                    });
+                })
+                .catch(next);
+        } catch (error) {
+            console.log(error);
         }
     };
 }

@@ -1,12 +1,14 @@
 import React, { useRef, } from "react";
 import { useSelector } from "react-redux";
 import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
+import useHttpClient from "../../../../shared/hooks/http-hook";
 
 export const ReplyForm = (props) => {
   const inputRef = useRef();
   const { account } = useSelector((state) => state.auth);
   const {selectedType} = useSelector((state) => state.question)
-  
+  const { error } = useSelector((state) => state.ui);
+
   const date = new Date(props.data.createdAt);
   const dateTranslate = {
     min: date.getMinutes(),
@@ -27,7 +29,6 @@ export const ReplyForm = (props) => {
     });
     props.onSubmitHandler(body);
   };
-
   return (
     <>
       <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10 ">
@@ -55,6 +56,7 @@ export const ReplyForm = (props) => {
               className="w-full border px-4 py-2 rounded-lg h-28 outline-none"
               ref={inputRef}
             />
+            {error && <h3 className="text-red-500 text-sm">{error}</h3>}
           </div>
           <div className="flex w-full space-x-8 justify-center mt-10">
             <button
