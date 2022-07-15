@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+
 import { useParams } from "react-router-dom";
+import Requests from "../../shared/api/Requests";
+import useHttpClient from "../../shared/hooks/http-hook";
 import CircleIcon from "../components/UI/CircleIcon";
 import Container from "../components/UI/Container";
 import SquareIcon from "../components/UI/SquareIcon";
@@ -8,30 +10,35 @@ import TriangleIcon from "../components/UI/TriangleIcon";
 
 export const QuestionDetail = () => {
   const params = useParams();
-  const { currentItems } = useSelector((state) => state.page.pagination);
-  const { selectedItem } = useSelector((state) => state.page);
+  const [question, setQuestion] = useState({})
   const [createDate, setCreateDate] = useState([]);
+  const {sendRequest, error} = useHttpClient()
 
   useEffect(() => {
-    const formatDate = () => {
-      let dates = [selectedItem.createdAt, selectedItem.updatedAt];
-      for (let index = 0; index < dates.length; index++) {
-        const date = new Date(dates[index]);
-        const dateTranslate = {
-          day: date.getDate(),
-          month: date.getMonth(),
-          year: date.getFullYear(),
-        };
-        dates[index] = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
-      }
-      setCreateDate(dates);
-    };
-    formatDate();
-  }, [selectedItem.createdAt, selectedItem.updatedAt]);
+    const fetchData = async () => {
+      const response = await sendRequest(`${Requests.fetchQuestionDetail}${params.questionId}`)
+      setQuestion(response)
+      const formatDate = () => {
+        let dates = [response.createdAt, response.updatedAt];
+        for (let index = 0; index < dates.length; index++) {
+          const date = new Date(dates[index]);
+          const dateTranslate = {
+            day: date.getDate(),
+            month: date.getMonth(),
+            year: date.getFullYear(),
+          };
+          dates[index] = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
+        }
+        setCreateDate(dates);
+      };
+      formatDate();
+    } 
+    fetchData()
+  }, [params.questionId, sendRequest]);
 
   return (
     <Container className="min-w-full relative flex flex-col items-center mb-20 pb-20 min-h-screen">
-      <div className="absolute w-full  justify-center overflow-hidden z-0 flex">
+      <div className="absolute w-full justify-center overflow-hidden z-0 flex">
         <CircleIcon className="hidden md:block" />
         <svg
           id="visual"
@@ -40,6 +47,7 @@ export const QuestionDetail = () => {
           height="540"
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
+          
         >
           <rect x="0" y="0" width="100%" height="540" fill="#0060FF"></rect>
           <path
@@ -59,7 +67,7 @@ export const QuestionDetail = () => {
           <div className="flex flex-col space-y-4 ">
             <div className="flex flex-col space-y-4 md:space-y-0">
               <span className="text-xl break-words">
-                {selectedItem.question}
+                {question.question}
               </span>
               <span className="text-md break-words text-gray-500">
                 Đã hỏi vào {createDate[0]}
@@ -67,24 +75,24 @@ export const QuestionDetail = () => {
             </div>
             <div className="h-full">
               <span className="text-blue-500 p-2 bg-blue-200 w-fit rounded-lg">
-                {selectedItem.username_question}
+                {question.username_question}
               </span>
             </div>
           </div>
           <div className="border"></div>
           <div className="bg-gray-200 p-4 text-black rounded-sm">
-            {selectedItem.answer}
+            {question.answer}
           </div>
           <div className="flex flex-col items-end space-y-4 text-sm md:flex-row md:space-x-4 md:space-y-0 md:justify-end">
             <div className="flex flex-col text-left p-2 rounded">
               <span className="text-blue-500">
-                {selectedItem.username_censor}
+                {question.username_censor}
               </span>
               <span>Trả lời, {createDate[0]}</span>
             </div>
             <div className="flex flex-col text-left p-2 rounded bg-blue-200">
               <span className="text-blue-500">
-                {selectedItem.username_reply}
+                {question.username_reply}
               </span>
               <span>Duyệt, {createDate[0]}</span>
             </div>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { QuestionType } from "../../shared/components/QuestionType/QuestionType";
 import { Notification } from "../../shared/components/UI/Notification";
-import { questionActions } from "../../shared/store/question-slice";
+import { itemActions } from "../../shared/store/item-slice";
 import IntroductionBanner from "../components/IntroductionBanner/IntroductionBanner";
 import MenuType from "../components/QuestionSection/MenuType/MenuType";
 import QuestionForm from "../components/QuestionSection/QuestionForm";
@@ -26,7 +26,7 @@ function ViewQuestions() {
 
   const searchItemHandler = () => {
     dispatch(
-      questionActions.searchItem({ item: searchInputRef.current.value })
+      itemActions.searchItem({ item: searchInputRef.current.value })
     );
   };
 
