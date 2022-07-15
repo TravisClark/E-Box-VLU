@@ -179,7 +179,7 @@ describe('Unit test of view questions list function', () => {
 //     });
 // });
 
-describe('Unit Tests of Reply question function when when leaving type name or answer blank', () => {
+describe('Unit Tests of Reply question function when leaving type name or answer blank', () => {
     //Unit test of check type name is null or ''
     test('Status is 401 when type name is blank', async () => {
         const response = await request(app)
@@ -255,6 +255,48 @@ describe('Unit Tests of Reply question function when when leaving type name or a
             });
 
         expect(response.body).toEqual({ message: 'Vui lòng nhập câu trả lời' });
+    });
+});
+
+describe('Unit Tests of Reply question function when the user enters the wrong request', () => {
+    //Unit test of check answer for correct format
+    test('Status is 412', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: 'Môn học',
+                answer: '.',
+                id_question: 1,
+            });
+
+        expect(response.statusCode).toBe(412);
+    });
+    test('Return format json when type name is blank', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: 'Môn học',
+                answer: '.',
+                id_question: 1,
+            });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message "Vui lòng nhập thông tin câu trả lời đầy đủ" when type name is blank', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: 'Môn học',
+                answer: '.',
+                id_question: 1,
+            });
+
+        expect(response.body).toEqual({
+            message: 'Vui lòng nhập thông tin câu trả lời đầy đủ',
+        });
     });
 });
 

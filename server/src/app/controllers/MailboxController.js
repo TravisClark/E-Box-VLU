@@ -242,7 +242,7 @@ class MailboxController {
                 //check answer for correct format
                 return next(
                     res.status(412).json({
-                        message: 'Vui lòng nhập thông tin câu trả lời đầy đủ.',
+                        message: 'Vui lòng nhập thông tin câu trả lời đầy đủ',
                     }),
                 );
             } else {
