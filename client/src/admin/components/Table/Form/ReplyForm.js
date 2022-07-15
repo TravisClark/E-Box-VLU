@@ -6,7 +6,7 @@ import useHttpClient from "../../../../shared/hooks/http-hook";
 export const ReplyForm = (props) => {
   const inputRef = useRef();
   const { account } = useSelector((state) => state.auth);
-  const {selectedType} = useSelector((state) => state.question)
+  const {selectedType} = useSelector((state) => state.item)
   const { error } = useSelector((state) => state.ui);
 
   const date = new Date(props.data.createdAt);
