@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const questionSlice = createSlice({
-    name: 'auth',
+const itemSlice = createSlice({
+    name: 'item',
     initialState: {selectedType: '', itemSearching: ''},
     reducers:{
         getSelected(state, action){
@@ -12,5 +12,5 @@ const questionSlice = createSlice({
         }
     }
 })
-export const questionActions = questionSlice.actions;
-export default questionSlice.reducer;
+export const itemActions = itemSlice.actions;
+export default itemSlice.reducer;

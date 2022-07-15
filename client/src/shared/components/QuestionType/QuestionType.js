@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
-import { questionActions } from "../../store/question-slice";
+import { itemActions } from "../../store/item-slice";
 import selectStyles from "../UI/Select.module.css";
 export const QuestionType = ({selected, className}) => {
   const [options, setOptions] = useState([]);
   const { sendRequest } = useHttpClient();
-  const {selectedType} = useSelector((state) => state.question)
+  const {selectedType} = useSelector((state) => state.item)
   const dispatch = useDispatch();
 
   const onChangeHandler = (input)=>{
-    dispatch(questionActions.getSelected(input.target.value));
+    dispatch(itemActions.getSelected(input.target.value));
   }
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export const QuestionType = ({selected, className}) => {
       try {
         const response = await sendRequest(Requests.fetchQuestionTypes);
         setOptions(response.map(res => <option value={res.type_name} key={res.id_type}>{res.type_name}</option>));
-        dispatch(questionActions.getSelected(selected ? selected : response[0].type_name))
+        dispatch(itemActions.getSelected(selected ? selected : response[0].type_name))
       } catch (error) {}
     };
     request();

@@ -13,7 +13,7 @@ function QuestionList() {
   const { currentItems } = useSelector((state) => state.page.pagination);
   const history = useHistory();
   const { selectedType, isSearching, itemSearching } = useSelector(
-    (state) => state.question
+    (state) => state.item
   );
   useEffect(() => {
     try {

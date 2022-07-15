@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ApproveForm } from "../../../admin/components/Table/Form/ApproveForm";
 import { ModifyAnswerForm } from "../../../admin/components/Table/Form/ModifyAnswerForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
+import { UserDetailForm } from "../../../admin/components/Table/Form/UserDetailForm";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { uiActions } from "../../store/ui-slice";
@@ -60,6 +61,15 @@ export const ConfirmNotification = (props) => {
   } else if (type === "MODIFY_ANSWER_FORM") {
     form = (
       <ModifyAnswerForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+        data={data}
+      />
+    );
+  }
+  else if (type === "USER_DETAIL_FORM") {
+    form = (
+      <UserDetailForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
         data={data}
