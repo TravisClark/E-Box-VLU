@@ -782,26 +782,50 @@ describe('Unit Tests of View account detail function', () => {
     });
 });
 
-describe('Unit Tests of Deactivate account function', () => {
+// describe('Unit Tests of Deactivate account function', () => {
+//     test('Status is 200', async () => {
+//         const response = await request(app)
+//             .patch('/api/admin/user/deactivate_user')
+//             .send({ username: '197pm33529' });
+
+//         expect(response.statusCode).toBe(200);
+//     });
+//     test('Return format json', async () => {
+//         const response = await request(app)
+//             .patch('/api/admin/user/deactivate_user')
+//             .send({ username: '197pm33529' });
+
+//         expect(response.type).toEqual('application/json');
+//     });
+//     test('Return message:"Vô hiệu hóa tài khoản thành công"', async () => {
+//         const response = await request(app)
+//             .patch('/api/admin/user/deactivate_user')
+//             .send({ username: '197pm33529' });
+
+//         expect(response.body).toEqual({message: 'Vô hiệu hóa tài khoản thành công'});
+//     });
+// });
+
+describe('Unit Tests of change account information function', () => {
     test('Status is 200', async () => {
         const response = await request(app)
-            .patch('/api/admin/user/deactivate_user')
-            .send({ username: '197pm33529' });
+            .patch('/api/admin/user/change_user_information')
+            .send({ username: '197pm33529', password: 'VLU33529', role: 'Sinh viên' });
 
         expect(response.statusCode).toBe(200);
     });
     test('Return format json', async () => {
         const response = await request(app)
-            .patch('/api/admin/user/deactivate_user')
-            .send({ username: '197pm33529' });
+            .patch('/api/admin/user/change_user_information')
+            .send({ username: '197pm33529', password: 'VLU33529', role: 'Sinh viên' });
 
         expect(response.type).toEqual('application/json');
     });
-    test('Return message:"Vô hiệu hóa tài khoản thành công"', async () => {
+    test('Return message:"Chỉnh sửa thông tin tài khoản thành công"', async () => {
         const response = await request(app)
-            .patch('/api/admin/user/deactivate_user')
-            .send({ username: '197pm33529' });
+            .patch('/api/admin/user/change_user_information')
+            .send({ username: '197pm33529', password: 'VLU33529', role: 'Sinh viên' });
 
-        expect(response.body).toEqual({message: 'Vô hiệu hóa tài khoản thành công'});
+        expect(response.body).toEqual({message: 'Chỉnh sửa thông tin tài khoản thành công'});
     });
 });
