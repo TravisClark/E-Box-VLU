@@ -781,3 +781,27 @@ describe('Unit Tests of View account detail function', () => {
         expect(response.body.username).toEqual(information.username);
     });
 });
+
+describe('Unit Tests of Deactivate account function', () => {
+    test('Status is 200', async () => {
+        const response = await request(app)
+            .patch('/api/admin/user/deactivate_user')
+            .send({ username: '197pm33529' });
+
+        expect(response.statusCode).toBe(200);
+    });
+    test('Return format json', async () => {
+        const response = await request(app)
+            .patch('/api/admin/user/deactivate_user')
+            .send({ username: '197pm33529' });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message:"Vô hiệu hóa tài khoản thành công"', async () => {
+        const response = await request(app)
+            .patch('/api/admin/user/deactivate_user')
+            .send({ username: '197pm33529' });
+
+        expect(response.body).toEqual({message: 'Vô hiệu hóa tài khoản thành công'});
+    });
+});
