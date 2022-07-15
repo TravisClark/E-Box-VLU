@@ -698,20 +698,17 @@ describe('Unit test of change password when the new password and re-entering the
 
 describe('Unit Tests of View and search accounts function when the user does not pass the query', () => {
     test('Status is 200', async () => {
-        const response = await request(app)
-            .get('/api/admin/user/list_users');
+        const response = await request(app).get('/api/admin/user/list_users');
 
         expect(response.statusCode).toBe(200);
     });
     test('Return format json', async () => {
-        const response = await request(app)
-            .get('/api/admin/user/list_users');
+        const response = await request(app).get('/api/admin/user/list_users');
 
         expect(response.type).toEqual('application/json');
     });
     test('Number of questions returned', async () => {
-        const response = await request(app)
-            .get('/api/admin/user/list_users');
+        const response = await request(app).get('/api/admin/user/list_users');
         const users = await UserModel.find({});
         expect(response.body.length).toEqual(users.length);
     });
@@ -721,21 +718,21 @@ describe('Unit Tests of View and search accounts function when the user passes t
     test('Status is 201', async () => {
         const response = await request(app)
             .get('/api/admin/user/list_users')
-            .query({username: '197'});
+            .query({ username: '197' });
 
         expect(response.statusCode).toBe(201);
     });
     test('Return format json', async () => {
         const response = await request(app)
             .get('/api/admin/user/list_users')
-            .query({username: '197'});
+            .query({ username: '197' });
 
         expect(response.type).toEqual('application/json');
     });
     test('Number of questions returned', async () => {
         const response = await request(app)
             .get('/api/admin/user/list_users')
-            .query({username: '197'});
+            .query({ username: '197' });
 
         const users = await UserModel.find({});
         //Tạo 2 biến để sử lý mảng
@@ -749,14 +746,38 @@ describe('Unit Tests of View and search accounts function when the user passes t
         //Xóa các mảng bị null
         var dem = 0;
         for (var i = 0; i < list_users.length; i++) {
-            if (
-                list_users[i] === null ||
-                list_users[i] === undefined
-            ) {
+            if (list_users[i] === null || list_users[i] === undefined) {
                 await list_users.splice(i - dem, 1);
                 dem = dem + 1;
             }
         }
         expect(response.body.length).toEqual(list_users.length);
+    });
+});
+
+describe('Unit Tests of View account detail function', () => {
+    test('Status is 200', async () => {
+        const response = await request(app)
+            .get('/api/admin/user/details_user')
+            .query({ username: '197pm33529' });
+
+        expect(response.statusCode).toBe(200);
+    });
+    test('Return format json', async () => {
+        const response = await request(app)
+            .get('/api/admin/user/details_user')
+            .query({ username: '197pm33529' });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return selected username', async () => {
+        const response = await request(app)
+            .get('/api/admin/user/details_user')
+            .query({ username: '197pm33529' });
+
+        const information = await UserModel.findOne({
+            username: '197pm33529',
+        });
+        expect(response.body.username).toEqual(information.username);
     });
 });

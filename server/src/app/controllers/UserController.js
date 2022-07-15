@@ -20,10 +20,7 @@ class UserController {
                 //Xóa các mảng bị null
                 var dem = 0;
                 for (var i = 0; i < list_users.length; i++) {
-                    if (
-                        list_users[i] === null ||
-                        list_users[i] === undefined
-                    ) {
+                    if (list_users[i] === null || list_users[i] === undefined) {
                         await list_users.splice(i - dem, 1);
                         dem = dem + 1;
                     }
