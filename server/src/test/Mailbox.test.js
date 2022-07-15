@@ -108,7 +108,7 @@ const app = require('../index');
 //         const response = await request(app).patch('/api/admin/mailbox/approve_question').send({
 //             username: '197pm11111',
 //             type_name: 'Môn học',
-//             id_question: 9
+//             id_question: 1
 //         });
 
 //         expect(response.statusCode).toBe(201);
@@ -117,7 +117,7 @@ const app = require('../index');
 //         const response = await request(app).patch('/api/admin/mailbox/approve_question').send({
 //             username: '197pm11111',
 //             type_name: 'Môn học',
-//             id_question: 9
+//             id_question: 1
 //         });
 
 //         expect(response.type).toEqual('application/json');
@@ -126,7 +126,7 @@ const app = require('../index');
 //         const response = await request(app).patch('/api/admin/mailbox/approve_question').send({
 //             username: '197pm11111',
 //             type_name: 'Môn học',
-//             id_question: 9
+//             id_question: 1
 //         });
 
 //         expect(response.text).toMatch('Duyệt câu hỏi thành công');
@@ -140,7 +140,7 @@ const app = require('../index');
 //             username: '197pm11111',
 //             type_name: 'Môn học',
 //             answer: 'Có nha em',
-//             id_question: 18,
+//             id_question: 1,
 //         });
 //         expect(response.statusCode).toBe(201);
 //     });
@@ -149,7 +149,7 @@ const app = require('../index');
 //             username: '197pm11111',
 //             type_name: 'Môn học',
 //             answer: 'Có nha em',
-//             id_question: 18,
+//             id_question: 1,
 //         });
 
 //         expect(response.type).toEqual('application/json');
@@ -159,7 +159,7 @@ const app = require('../index');
 //             username: '197pm11111',
 //             type_name: 'Môn học',
 //             answer: 'Có nha em',
-//             id_question: 18,
+//             id_question: 1,
 //         });
 //         expect(response.body).toEqual({message: 'Trả lời câu hỏi thành công'});
 //     });
@@ -172,7 +172,7 @@ const app = require('../index');
 //             username: '197pm11111',
 //             type_name: '',
 //             answer: 'Có nha em',
-//             id_question: 10,
+//             id_question: 1,
 //         });
 
 //         expect(response.statusCode).toBe(401);
@@ -182,7 +182,7 @@ const app = require('../index');
 //             username: '197pm11111',
 //             answer: 'Có nha em',
 //             type_name: '',
-//             id_question: 10,
+//             id_question: 1,
 //         });
 
 //         expect(response.type).toEqual('application/json');
@@ -192,7 +192,7 @@ const app = require('../index');
 //             username: '197pm11111',
 //             answer: 'Có nha em',
 //             type_name: '',
-//             id_question: 10,
+//             id_question: 1,
 //         });
 
 //         expect(response.body).toEqual({message: 'Vui lòng chọn thể loại câu hỏi'});
@@ -203,7 +203,7 @@ const app = require('../index');
 //             username: '197pm11111',
 //             type_name: 'Lịch Học',
 //             answer: '',
-//             id_question: 10,
+//             id_question: 1,
 //         });
 
 //         expect(response.statusCode).toBe(401);
@@ -213,7 +213,7 @@ const app = require('../index');
 //             username: '197pm11111',
 //             type_name: 'Lịch Học',
 //             answer: '',
-//             id_question: 10,
+//             id_question: 1,
 //         });
 
 //         expect(response.type).toEqual('application/json');
@@ -223,7 +223,7 @@ const app = require('../index');
 //             username: '197pm11111',
 //             type_name: 'Lịch Học',
 //             answer: '',
-//             id_question: 10,
+//             id_question: 1,
 //         });
 
 //         expect(response.body).toEqual({message: 'Vui lòng nhập câu trả lời'});
@@ -251,15 +251,113 @@ describe('Unit Tests of View and search for question which has been replied func
     test('Status is 201', async () => {
         const response = await request(app)
             .get('/api/user/mailbox/list_questions_user')
-            .query({ type_name: 'Điểm số' });
+            .query({ type_name: 'Môn học' });
 
         expect(response.statusCode).toBe(201);
     });
     test('Return format json', async () => {
         const response = await request(app)
             .get('/api/user/mailbox/list_questions_user')
-            .query({ type_name: 'Điểm số' });
+            .query({ type_name: 'Môn học' });
 
         expect(response.type).toEqual('application/json');
     });
 });
+
+describe('Unit Tests of edit answer function when entering complete information', () => {
+    jest.setTimeout(3000);
+    test('Status is 201', async () => {
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
+            username: '197pm11111',
+            type_name: 'Môn học',
+            answer: 'Có nha em',
+            id_question: 1,
+        });
+        expect(response.statusCode).toBe(201);
+    });
+    test('Return format json', async () => {
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
+            username: '197pm11111',
+            type_name: 'Môn học',
+            answer: 'Có nha em',
+            id_question: 1,
+        });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message "Trả lời câu hỏi thành công"', async () => {
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
+            username: '197pm11111',
+            type_name: 'Môn học',
+            answer: 'Có nha em',
+            id_question: 1,
+        });
+        expect(response.body).toEqual({message: 'Trả lời câu hỏi thành công'});
+    });
+});
+
+describe('Unit Tests of edit answer function when when leaving type name or answer blank', () => {
+    //Unit test of check type name is null or ''
+    test('Status is 401 when type name is blank', async () => {
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
+            username: '197pm11111',
+            type_name: '',
+            answer: 'Có nha em',
+            id_question: 1,
+        });
+
+        expect(response.statusCode).toBe(401);
+    });
+    test('Return format json when type name is blank', async () => {
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
+            username: '197pm11111',
+            answer: 'Có nha em',
+            type_name: '',
+            id_question: 1,
+        });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message "Vui lòng chọn thể loại câu hỏi" when type name is blank', async () => {
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
+            username: '197pm11111',
+            answer: 'Có nha em',
+            type_name: '',
+            id_question: 1,
+        });
+
+        expect(response.body).toEqual({message: 'Vui lòng chọn thể loại câu hỏi'});
+    });
+    //Unit test of check answer is null or ''
+    test('Status is 401 when answer is blank', async () => {
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
+            username: '197pm11111',
+            type_name: 'Lịch Học',
+            answer: '',
+            id_question: 1,
+        });
+
+        expect(response.statusCode).toBe(401);
+    });
+    test('Return format json when answer is blank', async () => {
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
+            username: '197pm11111',
+            type_name: 'Lịch Học',
+            answer: '',
+            id_question: 1,
+        });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message "Vui lòng nhập câu trả lời" when answer is blank', async () => {
+        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
+            username: '197pm11111',
+            type_name: 'Lịch Học',
+            answer: '',
+            id_question: 1,
+        });
+
+        expect(response.body).toEqual({message: 'Vui lòng nhập câu trả lời'});
+    });
+});
+
