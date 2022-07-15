@@ -291,8 +291,7 @@ class UserController {
         try {
             UserModel.findOneAndUpdate(
                 { username: req.body.username },
-                { password: req.body.password ,
-                role_name: req.body.role_name }
+                { password: req.body.password, role_name: req.body.role_name },
             )
                 .then(() => {
                     res.status(200).json({
