@@ -515,21 +515,21 @@ describe('Unit Tests of View question details function', () => {
     test('Status is 200', async () => {
         const response = await request(app)
             .get('/api/user/mailbox/details_question')
-            .query({ id_question: 1});
+            .query({ id_question: 1 });
 
         expect(response.statusCode).toBe(200);
     });
     test('Return format json', async () => {
         const response = await request(app)
             .get('/api/user/mailbox/details_question')
-            .query({ id_question: 1});
+            .query({ id_question: 1 });
 
         expect(response.type).toEqual('application/json');
     });
     test('Return selected question', async () => {
         const response = await request(app)
             .get('/api/user/mailbox/details_question')
-            .query({ id_question: 1});
+            .query({ id_question: 1 });
         const mailbox = await Mailbox.findOne({
             id_question: 1,
         });
