@@ -11,20 +11,18 @@ class UserController {
                 const users = await UserModel.find({});
                 //Tạo 2 biến để sử lý mảng
                 const list_users = [];
-                const list_users_draft = [];
                 //Lọc các username theo ký tự được nhận
                 for (var i = 0; i < users.length; i++) {
                     if (users[i].username.indexOf(req.query.username) !== -1) {
                         list_users[i] = users[i];
-                        list_users_draft[i] = users[i];
                     }
                 }
                 //Xóa các mảng bị null
                 var dem = 0;
-                for (var i = 0; i < list_users_draft.length; i++) {
+                for (var i = 0; i < list_users.length; i++) {
                     if (
-                        list_users_draft[i] === null ||
-                        list_users_draft[i] === undefined
+                        list_users[i] === null ||
+                        list_users[i] === undefined
                     ) {
                         await list_users.splice(i - dem, 1);
                         dem = dem + 1;
@@ -44,7 +42,6 @@ class UserController {
     account_info = async (req, res) => {
         try {
             //Search user by token
-            // console.log(req.user.username)
             const user = await UserModel.findOne({
                 username: req.user.username,
             });
@@ -138,7 +135,6 @@ class UserController {
             var data_password = formData.password;
             //format data_username and password
             var username = data_username.replace(/\s+/g, '');
-            console.log(username);
             var password = data_password.replace(/\s+/g, '');
             if (
                 username == null ||
