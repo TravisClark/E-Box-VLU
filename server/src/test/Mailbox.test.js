@@ -482,3 +482,31 @@ describe('Unit Tests of refuse question function when leaving message blank', ()
         });
     });
 });
+
+describe('Unit Tests of View rejected questions function', () => {
+    test('Status is 200', async () => {
+        const response = await request(app)
+            .get('/api/admin/mailbox/list_questions_admin')
+            .query({ status: 'Đã bị từ chối' });
+
+        expect(response.statusCode).toBe(200);
+    });
+    test('Return format json', async () => {
+        const response = await request(app)
+            .get('/api/admin/mailbox/list_questions_admin')
+            .query({ status: 'Đã bị từ chối' });
+
+        expect(response.type).toEqual('application/json');
+    });
+    test('Number of questions returned', async () => {
+        const response = await request(app)
+            .get('/api/admin/mailbox/list_questions_admin')
+            .query({ status: 'Đã bị từ chối' });
+        const mailbox = await Mailbox.find({
+            status: 'Đã bị từ chối',
+        }).sort({
+            createdAt: 'asc',
+        });
+        expect(response.body.length).toEqual(mailbox.length);
+    });
+});
