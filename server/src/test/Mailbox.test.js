@@ -91,18 +91,31 @@ const Mailbox = require('../app/models/MailboxModel');
 //     });
 // });
 
-// describe('Unit test of view questions list function', () => {
-//     test('Status is 200', async () => {
-//         const response = await request(app).get('/api/admin/mailbox/list_questions_admin')
+describe('Unit test of view questions list function', () => {
+    test('Status is 200', async () => {
+        const response = await request(app).get(
+            '/api/admin/mailbox/list_questions_admin',
+        );
 
-//         expect(response.statusCode).toBe(200);
-//     });
-//     test('Return format json', async () => {
-//         const response = await request(app).get('/api/admin/mailbox/list_questions_admin')
+        expect(response.statusCode).toBe(200);
+    });
+    test('Return format json', async () => {
+        const response = await request(app).get(
+            '/api/admin/mailbox/list_questions_admin',
+        );
 
-//         expect(response.type).toEqual('application/json');
-//     });
-// });
+        expect(response.type).toEqual('application/json');
+    });
+    test('Number of questions returned', async () => {
+        const response = await request(app).get(
+            '/api/admin/mailbox/list_questions_admin',
+        );
+        const mailbox = await Mailbox.find({}).sort({
+            createdAt: 'asc',
+        });
+        expect(response.body.length).toEqual(mailbox.length);
+    });
+});
 
 // describe('Unit Tests of Approve question function', () => {
 //     test('Status is 201', async () => {
@@ -166,70 +179,84 @@ const Mailbox = require('../app/models/MailboxModel');
 //     });
 // });
 
-// describe('Unit Tests of Reply question function when when leaving type name or answer blank', () => {
-//     //Unit test of check type name is null or ''
-//     test('Status is 401 when type name is blank', async () => {
-//         const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-//             username: '197pm11111',
-//             type_name: '',
-//             answer: 'Có nha em',
-//             id_question: 1,
-//         });
+describe('Unit Tests of Reply question function when when leaving type name or answer blank', () => {
+    //Unit test of check type name is null or ''
+    test('Status is 401 when type name is blank', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: '',
+                answer: 'Có nha em',
+                id_question: 1,
+            });
 
-//         expect(response.statusCode).toBe(401);
-//     });
-//     test('Return format json when type name is blank', async () => {
-//         const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-//             username: '197pm11111',
-//             answer: 'Có nha em',
-//             type_name: '',
-//             id_question: 1,
-//         });
+        expect(response.statusCode).toBe(401);
+    });
+    test('Return format json when type name is blank', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                answer: 'Có nha em',
+                type_name: '',
+                id_question: 1,
+            });
 
-//         expect(response.type).toEqual('application/json');
-//     });
-//     test('Return message "Vui lòng chọn thể loại câu hỏi" when type name is blank', async () => {
-//         const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-//             username: '197pm11111',
-//             answer: 'Có nha em',
-//             type_name: '',
-//             id_question: 1,
-//         });
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message "Vui lòng chọn thể loại câu hỏi" when type name is blank', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                answer: 'Có nha em',
+                type_name: '',
+                id_question: 1,
+            });
 
-//         expect(response.body).toEqual({message: 'Vui lòng chọn thể loại câu hỏi'});
-//     });
-//     //Unit test of check answer is null or ''
-//     test('Status is 401 when answer is blank', async () => {
-//         const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-//             username: '197pm11111',
-//             type_name: 'Lịch Học',
-//             answer: '',
-//             id_question: 1,
-//         });
+        expect(response.body).toEqual({
+            message: 'Vui lòng chọn thể loại câu hỏi',
+        });
+    });
+    //Unit test of check answer is null or ''
+    test('Status is 401 when answer is blank', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: 'Lịch Học',
+                answer: '',
+                id_question: 1,
+            });
 
-//         expect(response.statusCode).toBe(401);
-//     });
-//     test('Return format json when answer is blank', async () => {
-//         const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-//             username: '197pm11111',
-//             type_name: 'Lịch Học',
-//             answer: '',
-//             id_question: 1,
-//         });
+        expect(response.statusCode).toBe(401);
+    });
+    test('Return format json when answer is blank', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: 'Lịch Học',
+                answer: '',
+                id_question: 1,
+            });
 
-//         expect(response.type).toEqual('application/json');
-//     });
-//     test('Return message "Vui lòng nhập câu trả lời" when answer is blank', async () => {
-//         const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-//             username: '197pm11111',
-//             type_name: 'Lịch Học',
-//             answer: '',
-//             id_question: 1,
-//         });
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return message "Vui lòng nhập câu trả lời" when answer is blank', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: 'Lịch Học',
+                answer: '',
+                id_question: 1,
+            });
 
-//         expect(response.body).toEqual({message: 'Vui lòng nhập câu trả lời'});
-//     });
-// });
+        expect(response.body).toEqual({ message: 'Vui lòng nhập câu trả lời' });
+    });
+});
 
 describe('Unit Tests of View approval question list function', () => {
     test('Status is 200', async () => {
@@ -323,125 +350,135 @@ describe('Unit Tests of View and search for question which has been replied func
 describe('Unit Tests of edit answer function when leaving type name or answer blank', () => {
     //Unit test of check type name is null or ''
     test('Status is 401 when type name is blank', async () => {
-        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-            username: '197pm11111',
-            type_name: '',
-            answer: 'Có nha em',
-            id_question: 1,
-        });
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: '',
+                answer: 'Có nha em',
+                id_question: 1,
+            });
 
         expect(response.statusCode).toBe(401);
     });
     test('Return format json when type name is blank', async () => {
-        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-            username: '197pm11111',
-            answer: 'Có nha em',
-            type_name: '',
-            id_question: 1,
-        });
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                answer: 'Có nha em',
+                type_name: '',
+                id_question: 1,
+            });
 
         expect(response.type).toEqual('application/json');
     });
     test('Return message "Vui lòng chọn thể loại câu hỏi" when type name is blank', async () => {
-        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-            username: '197pm11111',
-            answer: 'Có nha em',
-            type_name: '',
-            id_question: 1,
-        });
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                answer: 'Có nha em',
+                type_name: '',
+                id_question: 1,
+            });
 
-        expect(response.body).toEqual({message: 'Vui lòng chọn thể loại câu hỏi'});
+        expect(response.body).toEqual({
+            message: 'Vui lòng chọn thể loại câu hỏi',
+        });
     });
     //Unit test of check answer is null or ''
     test('Status is 401 when answer is blank', async () => {
-        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-            username: '197pm11111',
-            type_name: 'Lịch Học',
-            answer: '',
-            id_question: 1,
-        });
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: 'Lịch Học',
+                answer: '',
+                id_question: 1,
+            });
 
         expect(response.statusCode).toBe(401);
     });
     test('Return format json when answer is blank', async () => {
-        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-            username: '197pm11111',
-            type_name: 'Lịch Học',
-            answer: '',
-            id_question: 1,
-        });
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: 'Lịch Học',
+                answer: '',
+                id_question: 1,
+            });
 
         expect(response.type).toEqual('application/json');
     });
     test('Return message "Vui lòng nhập câu trả lời" when answer is blank', async () => {
-        const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-            username: '197pm11111',
-            type_name: 'Lịch Học',
-            answer: '',
-            id_question: 1,
-        });
+        const response = await request(app)
+            .patch('/api/admin/mailbox/reply_question')
+            .send({
+                username: '197pm11111',
+                type_name: 'Lịch Học',
+                answer: '',
+                id_question: 1,
+            });
 
-        expect(response.body).toEqual({message: 'Vui lòng nhập câu trả lời'});
+        expect(response.body).toEqual({ message: 'Vui lòng nhập câu trả lời' });
     });
 });
 
-describe('Unit Tests of refuse question function when entering complete information', () => {
-    test('Status is 201', async () => {
-        const response = await request(app)
-            .patch('/api/admin/mailbox/refuse_question')
-            .send({ username: '197pm33529',
-                    id_question: 3,
-                    message: 'Đã được trả lời rồi nha em'});
+// describe('Unit Tests of refuse question function when entering complete information', () => {
+//     test('Status is 201', async () => {
+//         const response = await request(app)
+//             .patch('/api/admin/mailbox/refuse_question')
+//             .send({ username: '197pm33529',
+//                     id_question: 3,
+//                     message: 'Đã được trả lời rồi nha em'});
 
-        expect(response.statusCode).toBe(201);
-    });
-    test('Return format json', async () => {
-        const response = await request(app)
-            .patch('/api/admin/mailbox/refuse_question')
-            .send({ username: '197pm33529',
-                    id_question: 3,
-                    message: 'Đã được trả lời rồi nha em'});
+//         expect(response.statusCode).toBe(201);
+//     });
+//     test('Return format json', async () => {
+//         const response = await request(app)
+//             .patch('/api/admin/mailbox/refuse_question')
+//             .send({ username: '197pm33529',
+//                     id_question: 3,
+//                     message: 'Đã được trả lời rồi nha em'});
 
-        expect(response.type).toEqual('application/json');
-    });
-    test('Return message "Từ chối câu hỏi thành công"', async () => {
-        const response = await request(app)
-            .patch('/api/admin/mailbox/refuse_question')
-            .send({ username: '197pm33529',
-                    id_question: 3,
-                    message: 'Đã được trả lời rồi nha em'});
+//         expect(response.type).toEqual('application/json');
+//     });
+//     test('Return message "Từ chối câu hỏi thành công"', async () => {
+//         const response = await request(app)
+//             .patch('/api/admin/mailbox/refuse_question')
+//             .send({ username: '197pm33529',
+//                     id_question: 3,
+//                     message: 'Đã được trả lời rồi nha em'});
 
-        expect(response.body).toEqual({message: 'Từ chối câu hỏi thành công'});
-    });
-});
+//         expect(response.body).toEqual({message: 'Từ chối câu hỏi thành công'});
+//     });
+// });
 
 describe('Unit Tests of refuse question function when leaving message blank', () => {
     //Unit test of check message is null or ''
     test('Status is 401 when message is blank', async () => {
         const response = await request(app)
             .patch('/api/admin/mailbox/refuse_question')
-            .send({ username: '197pm33529',
-                    id_question: 3,
-                    message: ''});
+            .send({ username: '197pm33529', id_question: 3, message: '' });
 
         expect(response.statusCode).toBe(401);
     });
     test('Return format json when message is blank', async () => {
         const response = await request(app)
             .patch('/api/admin/mailbox/refuse_question')
-            .send({ username: '197pm33529',
-                    id_question: 3,
-                    message: ''});
+            .send({ username: '197pm33529', id_question: 3, message: '' });
 
         expect(response.type).toEqual('application/json');
     });
     test('Return message "Vui lòng nhập lý do từ chối" when message is blank', async () => {
         const response = await request(app)
             .patch('/api/admin/mailbox/refuse_question')
-            .send({ username: '197pm33529',
-                    id_question: 3,
-                    message: ''});
+            .send({ username: '197pm33529', id_question: 3, message: '' });
 
-        expect(response.body).toEqual({ message: 'Vui lòng nhập lý do từ chối' });
+        expect(response.body).toEqual({
+            message: 'Vui lòng nhập lý do từ chối',
+        });
     });
 });
