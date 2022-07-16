@@ -16,7 +16,7 @@ export const UserList = () => {
         message: value.question,
         data: value,
         request: {
-          url: Requests.replyQuestion,
+          url: Requests.changeUserInfo,
           method: "PATCH",
           body: null,
           headers: { "Content-Type": "application/json" },
@@ -27,7 +27,7 @@ export const UserList = () => {
     );
   };
 
-  const questions = currentItems.map((user, index) => {
+  const users = currentItems.map((user, index) => {
     return (
       <tr key={user._id}>
         <td className="py-2 px-4">{++index}</td>
@@ -46,7 +46,7 @@ export const UserList = () => {
               <path d="M18.649 16H5.352l-1.06 3H2v2h20v-2h-2.292zM6.057 14h11.886l-1.412-4H7.469zM13 2h-2a1 1 0 0 0-.943.667L8.175 8h7.65l-1.882-5.333A1 1 0 0 0 13 2z"></path>
             </svg>
           </button>
-          <button onClick={onOpenFormHandler.bind(null, "")}>
+          <button onClick={onOpenFormHandler.bind(null, user)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -67,8 +67,8 @@ export const UserList = () => {
         <tr>
           <td>Loading...</td>
         </tr>
-      ) : questions.length > 0 ? (
-        questions
+      ) : users.length > 0 ? (
+        users
       ) : (
         <tr>
           <td>There is no question in this list</td>

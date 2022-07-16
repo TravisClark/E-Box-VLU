@@ -35,15 +35,11 @@ export const ModifyAnswerForm = (props) => {
         <form onSubmit={onSubmitHandler} className="table-auto">
           <div className="flex flex-col space-y-6">
             <div className="flex w-full py-2 px-10 space-x-10 bg-gray-200 rounded-md">
-              <span className="text-xl font-semibold w-32">Tên</span>
-              <span className="text-xl font-semibold w-72">Câu hỏi</span>
+              <span className="text-xl font-semibold w-96">Câu hỏi</span>
               <span className="text-xl font-semibold w-52">Gửi vào lúc</span>
             </div>
             <div className="flex w-full py-2 px-10 space-x-10 border">
-              <span className="text-xl font-semibold w-32">
-                {props.data.username_question}
-              </span>
-              <span className="text-xl font-semibold w-72 break-words">
+              <span className="text-xl font-semibold w-96 break-words">
                 {props.data.question}
               </span>
               <span className="text-xl font-semibold w-52">{formatDate}</span>
