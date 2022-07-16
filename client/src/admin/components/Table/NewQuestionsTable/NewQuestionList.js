@@ -26,15 +26,21 @@ function NewQuestionList() {
     );
   };
 
-  const onRejectHandler = async (value) => {
-    // const {id_question} = value;
-    // await sendRequest(
-    //   Requests.approveQuestion,
-    //   "PATCH",
-    //   JSON.stringify({ username: account.username, id_question }),
-    //   { "Content-Type": "application/json"}
-    // );
-    // console.log('pass')
+  const onOpenRejectFormHandler = async (value) => {
+    dispatch(
+      uiActions.showNotification({
+        message: value.question,
+        data: value,
+        request: {
+          url: Requests.refuseQuestion,
+          method: "PATCH",
+          body: null,
+          headers: { "Content-Type": "application/json" },
+        },
+        successMessage: "Từ chối thành công!",
+        type: "REJECT_FORM",
+      })
+    );
   };
 
   const questions = currentItems.map((question, index) => {
@@ -66,7 +72,7 @@ function NewQuestionList() {
           </button>
         </td>
         <td className="py-2 px-4 ">
-          <button onClick={() => onRejectHandler(question)}>
+          <button onClick={() => onOpenRejectFormHandler(question)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

@@ -86,7 +86,7 @@ export const UserDetailForm = (props) => {
         </div>
         <div className="flex space-x-8 text-sm items-center">
           <span className="w-28">Vai trò</span>
-          <RoleList className="w-80 border" onShowWarning={onShowWarningHandler}/>
+          <RoleList className="w-80 border" onShowWarning={onShowWarningHandler} selected={data.role_name}/>
         </div>
         <div className="flex flex-col text-sm space-y-2 w-96">
           <input
