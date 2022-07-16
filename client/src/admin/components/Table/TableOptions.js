@@ -23,14 +23,14 @@ export default function TableList({ onChangeSelectedTable, selectedTable }) {
           label="Age"
           onChange={handleChange}
         >
-          {account.role_name === "Quản Trị Viên" &&
-            <>
-              <MenuItem value={"New Question List"}>New Question List</MenuItem>
-              <MenuItem value={"Approved Question List"}>
-                Approved Question List
-              </MenuItem>
-            </>
-          }
+          {account.role_name === "Quản Trị Viên" && (
+            <MenuItem value={"New Question List"}>New Question List</MenuItem>
+          )}
+          {account.role_name === "Quản Trị Viên" && (
+            <MenuItem value={"Approved Question List"}>
+              Approved Question List
+            </MenuItem>
+          )}
           <MenuItem value={"Disapproved Question List"}>
             Disapproved Question List
           </MenuItem>

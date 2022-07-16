@@ -1,7 +1,9 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApproveForm } from "../../../admin/components/Table/Form/ApproveForm";
+import { DeactivateForm } from "../../../admin/components/Table/Form/DeactivateForm";
 import { ModifyAnswerForm } from "../../../admin/components/Table/Form/ModifyAnswerForm";
+import { RejectForm } from "../../../admin/components/Table/Form/RejectForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
 import { UserDetailForm } from "../../../admin/components/Table/Form/UserDetailForm";
 import Requests from "../../api/Requests";
@@ -70,6 +72,24 @@ export const ConfirmNotification = (props) => {
   else if (type === "USER_DETAIL_FORM") {
     form = (
       <UserDetailForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+        data={data}
+      />
+    );
+  }
+  else if(type === "REJECT_FORM"){
+    form = (
+      <RejectForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+        data={data}
+      />
+    );
+  }
+  else if(type === "DEACTIVATE_FORM"){
+    form = (
+      <DeactivateForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
         data={data}
