@@ -7,6 +7,7 @@ const Requests = {
     approveQuestion: 'http://localhost:5000/api/admin/mailbox/approve_question',
     refuseQuestion: 'http://localhost:5000/api/mailbox/refuse_question',
     replyQuestion: 'http://localhost:5000/api/admin/mailbox/reply_question',
+    changeUserInfo: 'http://localhost:5000/api/admin/user/change_user_information',
     fetchQuestionTypes: 'http://localhost:5000/api/admin/type/list_types_admin',
     fetchAccount: 'http://localhost:5000/api/user/account_info', 
     fetchRoleList: 'http://localhost:5000/api/admin/role/list_roles', 
