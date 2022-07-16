@@ -286,17 +286,16 @@ class UserController {
         }
     };
 
-    //[PATCH] http://localhost:5000/api/admin/user/reset_password
-    reset_password = async (req, res, next) => {
+    //[PATCH] http://localhost:5000/api/admin/user/change_user_information
+    change_user_information = async (req, res, next) => {
         try {
-            var data_password = `VLU${req.body.username.trim().slice(-5)}`;
             UserModel.findOneAndUpdate(
                 { username: req.body.username },
-                { password: data_password },
+                { password: req.body.password, role_name: req.body.role_name },
             )
                 .then(() => {
                     res.status(200).json({
-                        message: 'Đặt lại mật khẩu cho tài khoản thành công',
+                        message: 'Chỉnh sửa thông tin tài khoản thành công',
                     });
                 })
                 .catch(next);
