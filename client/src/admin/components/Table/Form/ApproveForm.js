@@ -4,7 +4,7 @@ import { QuestionType } from "../../../../shared/components/QuestionType/Questio
 
 export const ApproveForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
-  const { selectedType } = useSelector((state) => state.question);
+  const { selectedType } = useSelector((state) => state.item);
   const { account } = useSelector((state) => state.auth);
   const onSubmitHandler = (e) => {
     e.preventDefault();
