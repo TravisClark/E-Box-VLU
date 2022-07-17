@@ -48,7 +48,7 @@ function AdminNav() {
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            className="fill-black"
+            className="fill-black scale-75"
           >
             <path d="m11.998 17 7-8h-14z"></path>
           </svg>

@@ -28,7 +28,7 @@ export const RepliedQuestionList = () => {
   };
 
   const questions = currentItems.map((question, index) => {
-    const date = new Date(question.createdAt);
+    const date = new Date(question.responsedAt);
     const dateTranslate = {
       day: date.getDate(),
       month: date.getMonth(),

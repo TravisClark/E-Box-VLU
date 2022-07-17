@@ -10,7 +10,7 @@ function QuestionForm(props) {
   const { sendRequest, error } = useHttpClient();
   const questionInputRef = useRef();
   const { account } = useSelector((state) => state.auth);
-  const {selectedType} = useSelector((state) => state.question)
+  const {selectedType} = useSelector((state) => state.item)
   const dispatch = useDispatch();
   
   const onSubmitHandler = async (e) => {
@@ -25,9 +25,6 @@ function QuestionForm(props) {
       );
       props.onCloseForm();
       dispatch(uiActions.showSuccessNotification("Đặt câu hỏi thành công"));
-      setTimeout(() => {
-        dispatch(uiActions.closeSuccessNotification());
-      }, 3000);
     } catch (error) {}
   };
 

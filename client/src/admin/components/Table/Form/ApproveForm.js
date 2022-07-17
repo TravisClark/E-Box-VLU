@@ -22,7 +22,7 @@ export const ApproveForm = (props) => {
         <h1 className="max-w-lg break-all">{props.message}</h1>
         <QuestionType
           className="self-start border"
-          selected={props.data.type_name}
+          selected={data.type_name}
         />
         <div className="flex w-full space-x-8 justify-center mt-10">
           <button
