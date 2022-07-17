@@ -1,9 +1,9 @@
 import React from "react";
 
 export const UpArrow = (props) => {
-    
+  
   return (
-    <button onClick={() => console.log("click")}>
+    <button onClick={() => props.onSort('ASC')}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="18"

@@ -12,7 +12,7 @@ function Users() {
   const { successNotification } = useSelector((state) => state.ui);
   const { itemSearching } = useSelector((state) => state.item);
   const [users, setUsers] = useState([]);
-  const { sendRequest, error } = useHttpClient();
+  const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
   const inputRef = useRef();
   useEffect(() => {
@@ -28,12 +28,11 @@ function Users() {
   }, [sendRequest, successNotification.refresh, itemSearching]);
 
   const onSearchItemHandler = () => {
-    // const item = inputRef.current.value;
     dispatch(itemActions.searchItem({ item: inputRef.current.value }));
   };
 
   return (
-    <Container className="m-auto w-11/12 h-full py-24 px-20 space-y-6 relative ">
+    <Container className="m-auto w-11/12 h-full py-14 px-20 space-y-6 relative">
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold ">Users Management</h1>
       </div>

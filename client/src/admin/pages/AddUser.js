@@ -46,7 +46,7 @@ function AddUser() {
               ref={inputRef}
             />
           </div>
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 w-full">
             {/* <span className="">Role</span> */}
             <Select className="border w-full"/>
             {error && <h3 className="text-red-500 text-sm">{error}</h3>}

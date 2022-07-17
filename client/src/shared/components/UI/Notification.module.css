@@ -1,5 +1,5 @@
 .notification{
-    animation: popup 3s ease-in-out forwards;
+    animation: popup 1.1s ease-in-out forwards;
 }
 
 @keyframes popup {
@@ -13,6 +13,5 @@
     }
     100%{
         opacity: 0;
-        /* transform: translateY(-10%); */
     }
 }

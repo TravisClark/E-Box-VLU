@@ -16,8 +16,6 @@ export const ConfirmNotification = (props) => {
   );
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
-  const { account } = useSelector((state) => state.auth);
-  const dataFromField = useRef();
 
   const onCloseNotificationHandler = () => {
     dispatch(uiActions.closeNotification());
@@ -33,9 +31,6 @@ export const ConfirmNotification = (props) => {
       );
       dispatch(uiActions.closeNotification());
       dispatch(uiActions.showSuccessNotification(successMessage));
-      setTimeout(() => {
-        dispatch(uiActions.closeSuccessNotification());
-      }, 3000);
     } catch (error) {
       dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
     }
@@ -57,7 +52,6 @@ export const ConfirmNotification = (props) => {
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
         message={message}
-        data={data}
       />
     );
   } else if (type === "MODIFY_ANSWER_FORM") {
