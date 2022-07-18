@@ -1,7 +1,9 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApproveForm } from "../../../admin/components/Table/Form/ApproveForm";
+import { DeactivateForm } from "../../../admin/components/Table/Form/DeactivateForm";
 import { ModifyAnswerForm } from "../../../admin/components/Table/Form/ModifyAnswerForm";
+import { RejectForm } from "../../../admin/components/Table/Form/RejectForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
 import { UserDetailForm } from "../../../admin/components/Table/Form/UserDetailForm";
 import Requests from "../../api/Requests";
@@ -14,8 +16,6 @@ export const ConfirmNotification = (props) => {
   );
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
-  const { account } = useSelector((state) => state.auth);
-  const dataFromField = useRef();
 
   const onCloseNotificationHandler = () => {
     dispatch(uiActions.closeNotification());
@@ -31,9 +31,6 @@ export const ConfirmNotification = (props) => {
       );
       dispatch(uiActions.closeNotification());
       dispatch(uiActions.showSuccessNotification(successMessage));
-      setTimeout(() => {
-        dispatch(uiActions.closeSuccessNotification());
-      }, 3000);
     } catch (error) {
       dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
     }
@@ -55,7 +52,6 @@ export const ConfirmNotification = (props) => {
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
         message={message}
-        data={data}
       />
     );
   } else if (type === "MODIFY_ANSWER_FORM") {
@@ -70,6 +66,24 @@ export const ConfirmNotification = (props) => {
   else if (type === "USER_DETAIL_FORM") {
     form = (
       <UserDetailForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+        data={data}
+      />
+    );
+  }
+  else if(type === "REJECT_FORM"){
+    form = (
+      <RejectForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+        data={data}
+      />
+    );
+  }
+  else if(type === "DEACTIVATE_FORM"){
+    form = (
+      <DeactivateForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
         data={data}
