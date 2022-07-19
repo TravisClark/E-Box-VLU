@@ -28,7 +28,7 @@ export const RepliedQuestionList = () => {
   };
 
   const questions = currentItems.map((question, index) => {
-    const date = new Date(question.createdAt);
+    const date = new Date(question.responsedAt);
     const dateTranslate = {
       day: date.getDate(),
       month: date.getMonth(),
@@ -42,7 +42,7 @@ export const RepliedQuestionList = () => {
           <div className="truncate w-96">{question.question}</div>
         </td>
         <td className="py-2 px-4">{formatDate}</td>
-        <td className="py-2 px-4">{question.username_reply}</td>
+        <td className="py-2 px-4">{question.username_respondent}</td>
         <td className="py-2 px-4 underline flex justify-center">
           <button onClick={onOpenFormHandler.bind(null, question)}>
             <svg

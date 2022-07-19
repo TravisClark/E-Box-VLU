@@ -53,7 +53,9 @@ function App() {
                 <ChangePassword />
               </Route>
 
-              {account.role_name === "Quản Trị Viên" && (
+              {(account.role_name === "Quản Trị Viên" ||
+                account.role_name === "Ban Chủ Nhiệm Khoa" ||
+                account.role_name === "Trợ lý") && (
                 <>
                   <Route path="/E-boxVLU/admin/dashboard">
                     <Dashboard />

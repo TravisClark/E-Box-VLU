@@ -2,40 +2,35 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
 
-export const ApproveForm = (props) => {
+export const DeactivateForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
-  const { selectedType } = useSelector((state) => state.item);
-  const { account } = useSelector((state) => state.auth);
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const body = JSON.stringify({
-      type_name: selectedType,
-      id_question: data.id_question,
-      username: account.username,
+      username: data.username,
     });
     props.onSubmitHandler(body);
   };
   return (
     <>
       <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10">
-        <span className="text-2xl font-bold">Xác nhận duyệt</span>
-        <h1 className="max-w-lg break-all">{props.message}</h1>
-        <QuestionType
-          className="self-start border"
-          selected={data.type_name}
-        />
+        <span className="text-2xl font-bold">Vô hiệu hóa tài khoản</span>
+        <h1 className="max-w-lg break-words">
+          Xác nhận vô hiệu hóa tài khoản <span className="font-bold">{data.username} </span>
+           đang có quyền <span className="font-bold">{data.role_name}</span> ?
+        </h1>
         <div className="flex w-full space-x-8 justify-center mt-10">
           <button
             className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
             onClick={onSubmitHandler}
           >
-            Submit
+            Xác nhận
           </button>
           <button
-            className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
+            className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm w-16"
             onClick={props.onClose}
           >
-            Cancel
+            Hủy
           </button>
         </div>
       </div>

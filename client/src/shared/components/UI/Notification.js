@@ -1,9 +1,19 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import notificationIcon from "../../../assets/check (1).png";
-import classes from './Notification.module.css'
+import { uiActions } from "../../store/ui-slice";
+import classes from "./Notification.module.css";
 export const Notification = (props) => {
-  const {message} = useSelector(state=> state.ui.successNotification)
+  const { message } = useSelector((state) => state.ui.successNotification);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const closeNotification = setTimeout(() => {
+      dispatch(uiActions.closeSuccessNotification());
+    },1100);
+    return ()=>{
+      clearTimeout(closeNotification)
+    }
+  }, [dispatch]);
   return (
     <div
       className={`${props.className} absolute flex items-center ${classes.notification}`}
