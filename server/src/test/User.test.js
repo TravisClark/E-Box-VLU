@@ -810,22 +810,36 @@ describe('Unit Tests of change account information function', () => {
     test('Status is 200', async () => {
         const response = await request(app)
             .patch('/api/admin/user/change_user_information')
-            .send({ username: '197pm33529', password: 'VLU33529', role: 'Sinh viên' });
+            .send({
+                username: '197pm33529',
+                password: 'VLU33529',
+                role: 'Sinh viên',
+            });
 
         expect(response.statusCode).toBe(200);
     });
     test('Return format json', async () => {
         const response = await request(app)
             .patch('/api/admin/user/change_user_information')
-            .send({ username: '197pm33529', password: 'VLU33529', role: 'Sinh viên' });
+            .send({
+                username: '197pm33529',
+                password: 'VLU33529',
+                role: 'Sinh viên',
+            });
 
         expect(response.type).toEqual('application/json');
     });
     test('Return message:"Chỉnh sửa thông tin tài khoản thành công"', async () => {
         const response = await request(app)
             .patch('/api/admin/user/change_user_information')
-            .send({ username: '197pm33529', password: 'VLU33529', role: 'Sinh viên' });
+            .send({
+                username: '197pm33529',
+                password: 'VLU33529',
+                role: 'Sinh viên',
+            });
 
-        expect(response.body).toEqual({message: 'Chỉnh sửa thông tin tài khoản thành công'});
+        expect(response.body).toEqual({
+            message: 'Chỉnh sửa thông tin tài khoản thành công',
+        });
     });
 });

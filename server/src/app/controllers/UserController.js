@@ -279,6 +279,24 @@ class UserController {
         }
     };
 
+    //[PATCH] http://localhost:5000/api/admin/user/restore_user
+    restore_user = async (req, res, next) => {
+        try {
+            UserModel.findOneAndUpdate(
+                { username: req.body.username },
+                { status: 'Đang hoạt động' },
+            )
+                .then(() => {
+                    res.status(200).json({
+                        message: 'Khôi phục tài khoản thành công',
+                    });
+                })
+                .catch(next);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     //[PATCH] http://localhost:5000/api/admin/user/change_user_information
     change_user_information = async (req, res, next) => {
         try {
