@@ -1,4 +1,4 @@
-import React, { useRef, } from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
 import useHttpClient from "../../../../shared/hooks/http-hook";
@@ -6,7 +6,7 @@ import useHttpClient from "../../../../shared/hooks/http-hook";
 export const ReplyForm = (props) => {
   const inputRef = useRef();
   const { account } = useSelector((state) => state.auth);
-  const {selectedType} = useSelector((state) => state.question)
+  const { selectedType } = useSelector((state) => state.item);
   const { error } = useSelector((state) => state.ui);
 
   const date = new Date(props.data.createdAt);
@@ -47,11 +47,9 @@ export const ReplyForm = (props) => {
               <span className="text-xl font-semibold w-72 break-words">
                 {props.data.question}
               </span>
-              <span className="text-xl font-semibold w-52">
-                {formatDate}
-              </span>
+              <span className="text-xl font-semibold w-52">{formatDate}</span>
             </div>
-            <QuestionType selected={props.data.type_name} className="border"/>
+            <QuestionType selected={props.data.type_name} className="border" />
             <textarea
               className="w-full border px-4 py-2 rounded-lg h-28 outline-none"
               ref={inputRef}

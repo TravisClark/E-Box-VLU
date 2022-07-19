@@ -75,7 +75,7 @@ function AfterLoggedIn({
         >
           {(account.role_name === "Quản Trị Viên" ||
             account.role_name === "Ban Chủ Nhiệm Khoa" ||
-            account.role_name === "Trợ Lý") && (
+            account.role_name === "Trợ lý") && (
             <button
               className={`font-medium  transition duration-500 hover:text-black`}
               onClick={runAdminModeHandler}

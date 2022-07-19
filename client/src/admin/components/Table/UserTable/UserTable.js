@@ -6,7 +6,7 @@ import { pageActions } from '../../../../shared/store/page-slice';
 import { UserList } from './UserList';
 // import { RepliedQuestionList } from './RepliedQuestionList';
 
-const headItem = ["No", "Tài khoản","Vai trò", "Tình trạng", 'Thao tác', 'Chi tiết'];
+const headItem = ["No", "Tài khoản","Vai trò", "Tình trạng", 'Thao tác'];
 
 export const UserTable = (props) => {
   const dispatch = useDispatch();

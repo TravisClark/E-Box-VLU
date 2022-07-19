@@ -26,15 +26,21 @@ function NewQuestionList() {
     );
   };
 
-  const onRejectHandler = async (value) => {
-    // const {id_question} = value;
-    // await sendRequest(
-    //   Requests.approveQuestion,
-    //   "PATCH",
-    //   JSON.stringify({ username: account.username, id_question }),
-    //   { "Content-Type": "application/json"}
-    // );
-    // console.log('pass')
+  const onOpenRejectFormHandler = async (value) => {
+    dispatch(
+      uiActions.showNotification({
+        message: value.question,
+        data: value,
+        request: {
+          url: Requests.refuseQuestion,
+          method: "PATCH",
+          body: null,
+          headers: { "Content-Type": "application/json" },
+        },
+        successMessage: "Từ chối thành công!",
+        type: "REJECT_FORM",
+      })
+    );
   };
 
   const questions = currentItems.map((question, index) => {
@@ -53,11 +59,30 @@ function NewQuestionList() {
         </td>
         <td className="py-2 px-4">{formatDate}</td>
         <td className="py-2 px-4">{question.type_name}</td>
-        <td className="py-2 px-4">
-          <button onClick={onApproveHandler.bind(null, question)}>Duyệt</button>
+        <td className="py-2 px-4 flex justify-center">
+          <button onClick={onApproveHandler.bind(null, question)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              className="fill-blue-500 scale-75"
+            >
+              <path d="m2.394 13.742 4.743 3.62 7.616-8.704-1.506-1.316-6.384 7.296-3.257-2.486zm19.359-5.084-1.506-1.316-6.369 7.279-.753-.602-1.25 1.562 2.247 1.798z"></path>
+            </svg>
+          </button>
         </td>
-        <td className="py-2 px-4">
-          <button onClick={() => onRejectHandler(question)}>Từ chối</button>
+        <td className="py-2 px-4 ">
+          <button onClick={() => onOpenRejectFormHandler(question)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              className="fill-orange-600 scale-75 translate-x-1/2"
+            >
+              <path d="M8.586 18 12 21.414 15.414 18H19c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2H5c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h3.586zM5 4h14v12h-4.414L12 18.586 9.414 16H5V4z"></path>
+              <path d="M9.707 13.707 12 11.414l2.293 2.293 1.414-1.414L13.414 10l2.293-2.293-1.414-1.414L12 8.586 9.707 6.293 8.293 7.707 10.586 10l-2.293 2.293z"></path>
+            </svg>
+          </button>
         </td>
       </tr>
     );
