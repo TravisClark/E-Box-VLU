@@ -231,21 +231,7 @@ class MailboxController {
                 username_approver: data_username,
                 approvedAt: new Date(),
             },
-        );
-        //create informational data for the notification
-        const info_mailbox = await Mailbox.findOne({
-            id_question: data_id_question,
-        });
-        const info_notification = {
-            question: info_mailbox.question,
-            notification: status,
-            username_sender: data_username,
-            username_receiver: info_mailbox.username_questioner,
-        };
-        //create notifications for students
-        const notification = new Notification(info_notification);
-        notification
-            .save()
+        )
             .then(() => {
                 res.status(201).json({
                     message: 'Khôi phục câu hỏi thành công',
