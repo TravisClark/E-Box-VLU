@@ -173,7 +173,11 @@ class MailboxController {
                 var status = 'Đã bị từ chối';
                 await Mailbox.findOneAndUpdate(
                     { id_question: data_id_question },
-                    { status: status, username_approver: data_username },
+                    {
+                        status: status,
+                        username_approver: data_username,
+                        approvedAt: new Date(),
+                    },
                 );
                 //get information of question
                 const info_mailbox = await Mailbox.findOne({
@@ -211,6 +215,43 @@ class MailboxController {
         } catch (err) {
             console.log(err);
         }
+    };
+
+    //[PATCH] http://localhost:5000/api/admin/mailbox/restore_question
+    restore_question = async (req, res, next) => {
+        //Get data from client
+        const data_username = req.body.username;
+        const data_id_question = req.body.id_question;
+        //update question status to MongoDB
+        var status = 'Chưa được duyệt';
+        await Mailbox.findOneAndUpdate(
+            { id_question: data_id_question },
+            {
+                status: status,
+                username_approver: data_username,
+                approvedAt: new Date(),
+            },
+        );
+        //create informational data for the notification
+        const info_mailbox = await Mailbox.findOne({
+            id_question: data_id_question,
+        });
+        const info_notification = {
+            question: info_mailbox.question,
+            notification: status,
+            username_sender: data_username,
+            username_receiver: info_mailbox.username_questioner,
+        };
+        //create notifications for students
+        const notification = new Notification(info_notification);
+        notification
+            .save()
+            .then(() => {
+                res.status(201).json({
+                    message: 'Khôi phục câu hỏi thành công',
+                });
+            })
+            .catch(next);
     };
 
     //[PATCH] http://localhost:5000/api/admin/mailbox/reply_question
