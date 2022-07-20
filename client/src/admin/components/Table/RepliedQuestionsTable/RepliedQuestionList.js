@@ -5,7 +5,6 @@ import useHttpClient from "../../../../shared/hooks/http-hook";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
 export const RepliedQuestionList = () => {
-  // const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
   const { isLoading } = useHttpClient();
   const dispatch = useDispatch();

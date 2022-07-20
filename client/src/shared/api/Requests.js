@@ -17,5 +17,4 @@ const Requests = {
     fetchQuestionDetail: 'http://localhost:5000/api/user/mailbox/details_question?id_question=',
     fetchQuestionBasedOnStatus: 'http://localhost:5000/api/mailbox/list_questions?status=',
 }
-
 export default Requests;

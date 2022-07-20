@@ -11,7 +11,7 @@ import useHttpClient from "../../hooks/http-hook";
 import { uiActions } from "../../store/ui-slice";
 
 export const ConfirmNotification = (props) => {
-  const { request, data, message, successMessage, type } = useSelector(
+  const { request, message, successMessage, type } = useSelector(
     (state) => state.ui.notification
   );
   const { sendRequest } = useHttpClient();
@@ -41,7 +41,7 @@ export const ConfirmNotification = (props) => {
   if (type === "REPLY_FORM") {
     form = (
       <ReplyForm
-        data={data}
+        
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
       />
@@ -59,7 +59,7 @@ export const ConfirmNotification = (props) => {
       <ModifyAnswerForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        data={data}
+        
       />
     );
   }
@@ -68,7 +68,7 @@ export const ConfirmNotification = (props) => {
       <UserDetailForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        data={data}
+        
       />
     );
   }
@@ -77,7 +77,7 @@ export const ConfirmNotification = (props) => {
       <RejectForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        data={data}
+        
       />
     );
   }
@@ -86,7 +86,6 @@ export const ConfirmNotification = (props) => {
       <DeactivateForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        data={data}
       />
     );
   }

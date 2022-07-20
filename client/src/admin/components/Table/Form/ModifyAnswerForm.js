@@ -1,13 +1,20 @@
-import React, { useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
+import { itemActions } from "../../../../shared/store/item-slice";
 
 export const ModifyAnswerForm = (props) => {
   const inputRef = useRef();
   const { account } = useSelector((state) => state.auth);
-  const { selectedType } = useSelector((state) => state.item);
+  const { selectedType, selectedTypeChanged} = useSelector((state) => state.item);
+  const { data } = useSelector((state) => state.ui.notification);
   const {error} = useSelector((state) => state.ui)
-  const date = new Date(props.data.createdAt);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(itemActions.getSelected({type: data.type_name}))
+  }, [dispatch, data]);
+  
+  const date = new Date(data.createdAt);
   const dateTranslate = {
     min: date.getMinutes(),
     hour: date.getHours(),
@@ -21,8 +28,8 @@ export const ModifyAnswerForm = (props) => {
     e.preventDefault();
     const body = JSON.stringify({
       answer: inputRef.current.value,
-      type_name: selectedType,
-      id_question: props.data.id_question,
+      type_name: selectedTypeChanged ? selectedTypeChanged : selectedType,
+      id_question: data.id_question,
       username: account.username,
     });
     props.onSubmitHandler(body);
@@ -40,15 +47,16 @@ export const ModifyAnswerForm = (props) => {
             </div>
             <div className="flex w-full py-2 px-10 space-x-10 border">
               <span className="text-xl font-semibold w-96 break-words">
-                {props.data.question}
+                {data.question}
               </span>
               <span className="text-xl font-semibold w-52">{formatDate}</span>
             </div>
-            <QuestionType selected={props.data.type_name} className="border" />
+            <QuestionType selected={data.type_name} className="border" />
             <textarea
               className="w-full border px-4 py-2 rounded-lg h-28 outline-none"
               ref={inputRef}
-              defaultValue={props.data.answer}
+              defaultValue={data.answer}
+              placeholder='Nhập câu trả lời...'
             />
             {error && <h3 className="text-red-500 text-sm">{error}</h3>}
           </div>

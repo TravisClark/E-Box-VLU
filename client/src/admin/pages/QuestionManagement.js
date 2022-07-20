@@ -16,7 +16,8 @@ function QuestionManagement() {
   const [selectedTable, setSelectedTable] = useState("New Question List");
   const { sendRequest, error } = useHttpClient();
   const { successNotification } = useSelector((state) => state.ui);
-  const {selectedType} = useSelector((state) => state.item)
+  const { selectedType, newSortType } = useSelector((state) => state.item);
+  const { isSortingItems } = useSelector((state) => state.page);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,12 +25,24 @@ function QuestionManagement() {
       const fetchQuestionList = async () => {
         const response = await sendRequest(Requests.fetchQuestionList);
         let questions = response;
-        selectedType !== 'Tất cả' && (questions = response.filter(res => res.type_name === selectedType));
-        dispatch(itemActions.fetchItems({items: questions}))
+        newSortType &&
+          (questions = response.filter((res) => res.type_name === newSortType));
+        dispatch(
+          itemActions.fetchItems({
+            items: newSortType === "Tất cả" ? response : questions,
+          })
+        );
       };
       fetchQuestionList();
     } catch (error) {}
-  }, [sendRequest,successNotification.refresh, dispatch, selectedType]);
+  }, [
+    sendRequest,
+    successNotification.refresh,
+    dispatch,
+    selectedType,
+    isSortingItems,
+    newSortType,
+  ]);
 
   const onChangeSelectedTable = (selected) => {
     setSelectedTable(selected);
@@ -37,11 +50,7 @@ function QuestionManagement() {
 
   let table;
   if (selectedTable === "New Question List") {
-    table = (
-      <NewQuestionsTable
-      
-      />
-    );
+    table = <NewQuestionsTable />;
   } else if (selectedTable === "Disapproved Question List") {
     table = <DisapprovedQuestionsTable />;
   } else if (selectedTable === "Approved Question List") {
@@ -64,7 +73,7 @@ function QuestionManagement() {
           />
         </div>
         <div className="border w-full"></div>
-        
+
         {error && <h3 className="text-red-500 text-sm">{error}</h3>}
         {table && table}
         {successNotification.isShowing && (
