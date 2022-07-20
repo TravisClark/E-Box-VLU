@@ -10,7 +10,7 @@ function QuestionForm(props) {
   const { sendRequest, error } = useHttpClient();
   const questionInputRef = useRef();
   const { account } = useSelector((state) => state.auth);
-  const {selectedType} = useSelector((state) => state.item)
+  const {selectedTypeChanged} = useSelector((state) => state.item)
   const dispatch = useDispatch();
   
   const onSubmitHandler = async (e) => {
@@ -20,7 +20,7 @@ function QuestionForm(props) {
       await sendRequest(
         Requests.publishQuestion,
         "POST",
-        JSON.stringify({ username: account.username, question, type_name: selectedType }),
+        JSON.stringify({ username: account.username, question, type_name: selectedTypeChanged   }),
         { "Content-Type": "application/json" }
       );
       props.onCloseForm();

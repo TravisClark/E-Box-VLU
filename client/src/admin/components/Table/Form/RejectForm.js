@@ -4,9 +4,9 @@ import { QuestionType } from "../../../../shared/components/QuestionType/Questio
 
 export const RejectForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
-  const { selectedType } = useSelector((state) => state.item);
   const { account } = useSelector((state) => state.auth);
   const inputRef = useRef();
+  
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const body = JSON.stringify({

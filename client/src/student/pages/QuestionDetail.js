@@ -75,7 +75,7 @@ export const QuestionDetail = () => {
             </div>
             <div className="h-full">
               <span className="text-blue-500 p-2 bg-blue-200 w-fit rounded-lg">
-                {question.username_question}
+                {question.username_questioner}
               </span>
             </div>
           </div>
@@ -86,15 +86,15 @@ export const QuestionDetail = () => {
           <div className="flex flex-col items-end space-y-4 text-sm md:flex-row md:space-x-4 md:space-y-0 md:justify-end">
             <div className="flex flex-col text-left p-2 rounded">
               <span className="text-blue-500">
-                {question.username_censor}
+                {question.username_approver}
               </span>
-              <span>Trả lời, {createDate[0]}</span>
+              <span>Duyệt, {createDate[0]}</span>
             </div>
             <div className="flex flex-col text-left p-2 rounded bg-blue-200">
               <span className="text-blue-500">
-                {question.username_reply}
+                {question.username_respondent}
               </span>
-              <span>Duyệt, {createDate[0]}</span>
+              <span>Trả lời, {createDate[0]}</span>
             </div>
           </div>
         </div>
