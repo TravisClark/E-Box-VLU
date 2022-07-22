@@ -29,6 +29,12 @@ const itemSlice = createSlice({
     storeTypes(state, action) {
       state.typeList = action.payload.typeList;
     },
+    clearItems(state) {
+      state.itemSearching =''
+      state.newSortType =''
+      state.selectedTypeChanged =''
+      state.selectedType =''
+    }
   },
 });
 export const itemActions = itemSlice.actions;

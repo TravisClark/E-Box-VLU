@@ -8,7 +8,7 @@ export const AdminLayout = (props) => {
   return (
     <div className="flex flex-col min-w-full h-screen">
       <AdminNav />
-      <div className="flex w-full h-full">
+      <div className="flex w-full h-fit">
         <SideNav />
         <Background>{props.children}</Background>
       </div>

@@ -37,7 +37,7 @@ export const ApprovedQuestionList = (props) => {
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>
         <td className="py-2 px-4">
-          <div className="truncate w-96">{question.question}</div>
+          <div className=" w-96">{question.question}</div>
         </td>
         <td className="py-2 px-4">{formatDate}</td>
         <td className="py-2 px-10">{question.type_name}</td>

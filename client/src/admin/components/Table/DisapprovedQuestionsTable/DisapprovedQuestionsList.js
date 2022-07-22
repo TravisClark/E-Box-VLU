@@ -17,10 +17,11 @@ export const DisapprovedQuestionList = (props) => {
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>
         <td className="py-2 px-4">
-          <div className="truncate w-96">{question.question}</div>
+          <div className="break-words w-96">{question.question}</div>
         </td>
         <td className="py-2 px-4">{formatDate}</td>
         <td className="py-2 px-4">{question.username_approver}</td>
+        <td className="py-2 px-4">{question.type_name}</td>
         <td className="py-2 px-4 underline">Khôi phục</td>
       </tr>
     );
