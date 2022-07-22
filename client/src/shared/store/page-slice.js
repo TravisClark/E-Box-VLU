@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { set } from "react-hook-form";
 
 const pageSlice = createSlice({
   name: "ui",
   initialState: {
-    pagination: { currentPage: "", itemsPerPage: '', currentItems:[], items:[] },
+    pagination: { currentPage: "", itemsPerPage: '', currentItems:[], items:[], isSortingItems: false},
     selectedItem: {}
   },
   reducers: {
@@ -24,6 +23,9 @@ const pageSlice = createSlice({
     },
     storeItemSelected(state, action){
       state.selectedItem = action.payload
+    },
+    SortItemsByType(state, action){
+      state.isSortingItems = true;
     }
   },
 });

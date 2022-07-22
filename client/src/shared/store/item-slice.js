@@ -2,10 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const itemSlice = createSlice({
   name: "item",
-  initialState: { selectedType: "", itemSearching: "", items: [] },
+  initialState: {
+    typeList: [],
+    selectedType: "",
+    selectedTypeChanged: "",
+    newSortType: "",
+    itemSearching: "",
+    items: [],
+  },
   reducers: {
     getSelected(state, action) {
-      state.selectedType = action.payload;
+      state.selectedType = action.payload.type;
     },
     searchItem(state, action) {
       state.itemSearching = action.payload.item;
@@ -13,15 +20,14 @@ const itemSlice = createSlice({
     fetchItems(state, action) {
       state.items = action.payload.items;
     },
-    sortItemsByDate(state, action) {
-      const sorted = state.items.sort((a, b) =>
-        new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
-          ? 1
-          : -1
-      );
-      state.items = [...sorted]
-      // if (action.payload.type === "ASC") {
-      // }
+    changeSortType(state, action) {
+      state.newSortType = action.payload.type;
+    },
+    changeSelectedType(state, action) {
+      state.selectedTypeChanged = action.payload.type;
+    },
+    storeTypes(state, action) {
+      state.typeList = action.payload.typeList;
     },
   },
 });

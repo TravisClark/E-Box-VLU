@@ -22,7 +22,7 @@ export const Table = ({ conditionFilter, tableHeader, children }) => {
   }, [dispatch, items, conditionFilter]);
 
   return (
-    <div className="flex flex-col w-full table-auto">
+    <div className="flex flex-col w-full">
       <table className="table-auto">
         <thead>
           <tr className="font-bold bg-gray-100">{tableHeader}</tr>

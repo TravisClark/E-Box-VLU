@@ -12,23 +12,24 @@ function QuestionList() {
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
   const history = useHistory();
-  const { selectedType, isSearching, itemSearching } = useSelector(
+  const { selectedType, isSearching, itemSearching, newSortType } = useSelector(
     (state) => state.item
   );
   useEffect(() => {
     try {
       const request = async () => {
         const response = await sendRequest(Requests.fetchQuestionList);
-        const questions = response.filter(
+        const repliedQuestions = response.filter(res => res.status === 'Đã được trả lời')
+        const sortedQuestions = repliedQuestions.filter(
           (question) =>
             question.question
               .toLowerCase()
               .includes(itemSearching.toLowerCase()) &&
-            question.type_name === selectedType && question.status === 'Đã được trả lời'
+            question.type_name.includes(newSortType)
         );
         dispatch(
           pageActions.setCurrentItems({
-            items: questions,
+            items: newSortType === 'Tất cả' ? repliedQuestions : sortedQuestions,
             itemsPerPage: 5,
             currentPage: 1,
           })
@@ -36,7 +37,7 @@ function QuestionList() {
       };
       request();
     } catch (error) {}
-  }, [sendRequest, dispatch, selectedType, isSearching, itemSearching]);
+  }, [sendRequest, dispatch, selectedType, isSearching, itemSearching, newSortType]);
 
   const onStoreSelectedItem = (selectedItem) =>{
     dispatch(pageActions.storeItemSelected(selectedItem))
