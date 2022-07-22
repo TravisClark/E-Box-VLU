@@ -1,15 +1,22 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
+import { itemActions } from "../../../../shared/store/item-slice";
 
 export const ApproveForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
-  const { selectedType } = useSelector((state) => state.item);
+  const { selectedType, selectedTypeChanged } = useSelector((state) => state.item);
   const { account } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(itemActions.getSelected({type: data.type_name}))
+  }, [dispatch, data]);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const body = JSON.stringify({
-      type_name: selectedType,
+      type_name: selectedTypeChanged ? selectedTypeChanged : selectedType,
       id_question: data.id_question,
       username: account.username,
     });

@@ -5,7 +5,6 @@ import RoleList from "../../RoleList/RoleList"
 export const UserDetailForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
   const { selectedType } = useSelector((state) => state.item);
-  const { account } = useSelector((state) => state.auth);
   const [newPassword, setNewPassword]= useState('')
   const [isShowWarning, setIsShowWarning] = useState(false)
   const [isAbleToSubmit, setIsAbleToSubmit] = useState(false)
