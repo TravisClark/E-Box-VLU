@@ -42,6 +42,7 @@ export const RepliedQuestionList = () => {
         </td>
         <td className="py-2 px-4">{formatDate}</td>
         <td className="py-2 px-4">{question.username_respondent}</td>
+        <td className="py-2 px-4">{question.type_name}</td>
         <td className="py-2 px-4 underline flex justify-center">
           <button onClick={onOpenFormHandler.bind(null, question)}>
             <svg

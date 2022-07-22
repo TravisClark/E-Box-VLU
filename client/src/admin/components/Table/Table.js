@@ -1,16 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Pagination } from "../../../shared/components/Pagination/Pagination";
+import { itemActions } from "../../../shared/store/item-slice";
 import { pageActions } from "../../../shared/store/page-slice";
 
 export const Table = ({ conditionFilter, tableHeader, children }) => {
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
-  const {items} = useSelector((state) => state.item)
+  const { items, itemSearching } = useSelector((state) => state.item);
 
   useEffect(() => {
     const questions = items.filter(
-      (question) => question.status === conditionFilter
+      (question) =>
+        question.status === conditionFilter &&
+        question.question.includes(itemSearching)
     );
     dispatch(
       pageActions.setCurrentItems({
@@ -19,7 +22,13 @@ export const Table = ({ conditionFilter, tableHeader, children }) => {
         currentPage: 1,
       })
     );
-  }, [dispatch, items, conditionFilter]);
+  }, [dispatch, items, conditionFilter, itemSearching]);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(dispatch(itemActions.clearItems()));
+    };
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col w-full">
@@ -29,7 +38,15 @@ export const Table = ({ conditionFilter, tableHeader, children }) => {
         </thead>
         {children}
       </table>
-      {currentItems.length > 0 && <Pagination />}
+      {currentItems.length > 0 && (
+        <Pagination
+          prevBtn="Previous"
+          nextBtn="Next"
+          activeBtnStyle="bg-lightBlue text-white rounded"
+          containerStyle="bg-white py-2 px-6 rounded mx-auto text-gray-400 lg:w-fit"
+          disabledBtnStyle="opacity-50"
+        />
+      )}
     </div>
   );
 };
