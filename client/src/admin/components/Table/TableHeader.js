@@ -12,7 +12,6 @@ export const TableHeader = {
     "No",
     "Câu hỏi",
     "Ngày tạo",
-    "Danh mục",
     "Duyệt",
     "Từ chối",
   ],

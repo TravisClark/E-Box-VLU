@@ -161,47 +161,83 @@ class MailboxController {
             const data_username = req.body.username;
             const data_id_question = req.body.id_question;
             const data_message = req.body.message;
-            //update question status to MongoDB
-            var status = 'Đã bị từ chối';
-            await Mailbox.findOneAndUpdate(
-                { id_question: data_id_question },
-                { status: status, username_approver: data_username },
-            );
-            //get information of question
-            const info_mailbox = await Mailbox.findOne({
-                id_question: data_id_question,
-            });
+            if (data_message === undefined || data_message === '') {
+                //check message is null or ''
+                return next(
+                    res.status(401).json({
+                        message: 'Vui lòng nhập lý do từ chối',
+                    }),
+                );
+            } else {
+                //update question status to MongoDB
+                var status = 'Đã bị từ chối';
+                await Mailbox.findOneAndUpdate(
+                    { id_question: data_id_question },
+                    {
+                        status: status,
+                        username_approver: data_username,
+                        approvedAt: new Date(),
+                    },
+                );
+                //get information of question
+                const info_mailbox = await Mailbox.findOne({
+                    id_question: data_id_question,
+                });
 
-            //create data message
-            const info_inbox = {
-                message: data_message,
-                username_sender: data_username,
-                username_receiver: info_mailbox.username_questioner,
-            };
-            const inbox = new InboxModel(info_inbox);
-            //Send Message to student
-            inbox.save();
+                //create data message
+                const info_inbox = {
+                    message: data_message,
+                    username_sender: data_username,
+                    username_receiver: info_mailbox.username_questioner,
+                };
+                const inbox = new InboxModel(info_inbox);
+                //Send Message to student
+                inbox.save();
 
-            //create data notification
-            const info_notification = {
-                question: info_mailbox.question,
-                notification: status,
-                username_sender: data_username,
-                username_receiver: info_mailbox.username_questioner,
-            };
-            //create notifications for students
-            const notification = new Notification(info_notification);
-            notification
-                .save()
-                .then(() => {
-                    res.status(201).json({
-                        message: 'Từ chối câu hỏi thành công',
-                    });
-                })
-                .catch(next);
+                //create data notification
+                const info_notification = {
+                    question: info_mailbox.question,
+                    notification: status,
+                    username_sender: data_username,
+                    username_receiver: info_mailbox.username_questioner,
+                };
+                //create notifications for students
+                const notification = new Notification(info_notification);
+                notification
+                    .save()
+                    .then(() => {
+                        res.status(201).json({
+                            message: 'Từ chối câu hỏi thành công',
+                        });
+                    })
+                    .catch(next);
+            }
         } catch (err) {
             console.log(err);
         }
+    };
+
+    //[PATCH] http://localhost:5000/api/admin/mailbox/restore_question
+    restore_question = async (req, res, next) => {
+        //Get data from client
+        const data_username = req.body.username;
+        const data_id_question = req.body.id_question;
+        //update question status to MongoDB
+        var status = 'Chưa được duyệt';
+        await Mailbox.findOneAndUpdate(
+            { id_question: data_id_question },
+            {
+                status: status,
+                username_approver: data_username,
+                approvedAt: new Date(),
+            },
+        )
+            .then(() => {
+                res.status(201).json({
+                    message: 'Khôi phục câu hỏi thành công',
+                });
+            })
+            .catch(next);
     };
 
     //[PATCH] http://localhost:5000/api/admin/mailbox/reply_question
@@ -233,7 +269,7 @@ class MailboxController {
                 //check answer for correct format
                 return next(
                     res.status(412).json({
-                        message: 'Vui lòng nhập thông tin câu trả lời đầy đủ.',
+                        message: 'Vui lòng nhập thông tin câu trả lời đầy đủ',
                     }),
                 );
             } else {
