@@ -227,7 +227,7 @@ class UserController {
                             'Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự',
                     }),
                 );
-            } else if (
+            } else if ( new_password.match(format) == null ||
                 new_password.match(format).length != new_password.length
             ) {
                 //Check the new password for correct format
