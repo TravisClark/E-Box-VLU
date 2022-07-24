@@ -47,7 +47,7 @@ function NewQuestionList() {
     const date = new Date(question.createdAt);
     const dateTranslate = {
       day: date.getDate(),
-      month: date.getMonth(),
+      month: date.getMonth()+1,
       year: date.getFullYear(),
     };
     const formatDate = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
@@ -58,7 +58,7 @@ function NewQuestionList() {
           <div className="w-40 xl:w-96 break-words">{question.question}</div>
         </td>
         <td className="py-2 px-4">{formatDate}</td>
-        <td className="py-2 px-4">{question.type_name}</td>
+        <td className="py-2 px-10">{question.type_name}</td>
         <td className="py-2 px-4">
           <button onClick={onApproveHandler.bind(null, question)}>
             <svg

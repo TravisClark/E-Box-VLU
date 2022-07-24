@@ -46,7 +46,7 @@ function QuestionList() {
   
   const typeList = currentItems.map((item, index) => (
     <li
-      className={`bg-lightBlue px-6 py-3 text-white truncate break-all `}
+      className={`bg-lightBlue px-6 py-3 text-white  break-all `}
       value={item.question}
       key={item.id_question}
       onClick={onStoreSelectedItem.bind(null, item)}

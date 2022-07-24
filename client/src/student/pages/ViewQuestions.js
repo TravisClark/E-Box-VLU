@@ -56,6 +56,7 @@ function ViewQuestions() {
         </form>
       </IntroductionBanner>
       <section id="question">
+        <div className="h-fit mb-20">
         <Container className="min-w-full relative flex flex-col items-center">
           <div className="relative w-full flex justify-center overflow-hidden">
           <CircleIcon className="hidden md:block"/>
@@ -98,6 +99,7 @@ function ViewQuestions() {
             <Notification className="w-full h-full" />
           )}
         </Container>
+        </div>
       </section>
     </>
   );

@@ -10,14 +10,14 @@ export const Sort = () => {
   const onSortItemsHandler = (value) => {
     let sorted;
     if (value === "ASC") {
-      sorted = [...items].sort((a, b) =>
-        new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
+      sorted = [...items].slice().sort((a, b) =>
+        new Date(a.createdAt) < new Date(b.createdAt)
           ? 1
           : -1
       );
     } else {
-      sorted = [...items].sort((a, b) =>
-        new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+      sorted = [...items].slice().sort((a, b) =>
+        new Date(a.createdAt) > new Date(b.createdAt)
           ? 1
           : -1
       );

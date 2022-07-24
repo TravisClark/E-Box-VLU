@@ -25,7 +25,7 @@ export const TableHeader = {
   approvedQuestionTable: [
     "No",
     "Câu hỏi",
-    "Thời gian duyệt",
+    "Ngày duyệt",
     "Danh mục",
     "Trả lời",
   ],

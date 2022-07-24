@@ -1,22 +1,23 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import Button from "../UI/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
 import Container from "../UI/Container";
 import useHttpClient from "../../../shared/hooks/http-hook";
 import Requests from "../../../shared/api/Requests";
+import { uiActions } from "../../../shared/store/ui-slice";
+import { Error } from "../../../shared/components/Error/Error";
 
 function LoginForm() {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [IsUsernameEmpty, setUsernameEmpty] = useState(false);
-  const [isPasswordEmpty, setPasswordEmpty] = useState(false);
   const [account, setAccount] = useState();
-  const { sendRequest, error } = useHttpClient();
+  const {isShowing} = useSelector((state) => state.ui.error)
+  const { sendRequest } = useHttpClient();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -24,16 +25,12 @@ function LoginForm() {
     const password = passwordRef.current.value.trim();
 
     if (!username) {
-      setUsernameEmpty(true);
-      password && setPasswordEmpty(false);
+      dispatch(uiActions.catchError({message: 'Vui lòng nhập tài khoản!'}))
       return;
     } else if (!password) {
-      setPasswordEmpty(true);
-      username && setUsernameEmpty(false);
+      dispatch(uiActions.catchError({message: 'Vui lòng nhập mật khẩu!'}))
       return;
     }
-    setUsernameEmpty(false);
-    setPasswordEmpty(false);
     const fetchData = async () => {
       try {
         const requestData = await sendRequest(
@@ -74,11 +71,6 @@ function LoginForm() {
                 placeholder="Nhập tài khoản"
                 ref={usernameRef}
               />
-              {IsUsernameEmpty && (
-                <h3 className="text-red-500 text-sm">
-                  Vui lòng nhập tài khoản!
-                </h3>
-              )}
             </div>
             <div className="flex flex-col space-y-2">
               <input
@@ -87,12 +79,7 @@ function LoginForm() {
                 placeholder="Nhập mật khẩu"
                 ref={passwordRef}
               />
-              {isPasswordEmpty && (
-                <h3 className="text-red-500 text-sm">
-                  Vui lòng nhập mật khẩu!
-                </h3>
-              )}
-              {error && <h3 className="text-red-500 text-sm">{error}</h3>}
+              {isShowing && <Error/>}
             </div>
             <Button className={` text-white bg-heavyBlue`}>Đăng Nhập</Button>
             <span className="text-gray-500 italic">

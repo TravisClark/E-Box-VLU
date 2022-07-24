@@ -18,6 +18,7 @@ function AfterLoggedIn({
   const logoutHandler = () => {
     navbarIsOpen && openNavHandler();
     dispatch(authActions.logoutHandler());
+    toggleMenuHandler()
     history.replace("/E-boxVLU");
   };
 
@@ -27,6 +28,7 @@ function AfterLoggedIn({
 
   const runAdminModeHandler = () => {
     dispatch(uiActions.runAdminMode({ type: "RUN_ADMIN_MODE" }));
+    toggleMenuHandler()
     history.push("/E-boxVLU/admin/dashboard");
   };
 
@@ -85,6 +87,7 @@ function AfterLoggedIn({
           )}
           <Link
             className={`font-medium  transition duration-500 hover:text-black`}
+            onClick={toggleMenuHandler}
             to="/E-boxVLU/change-password"
           >
             Đổi mật khẩu
