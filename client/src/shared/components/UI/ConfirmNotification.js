@@ -5,9 +5,11 @@ import { DeactivateForm } from "../../../admin/components/Table/Form/DeactivateF
 import { ModifyAnswerForm } from "../../../admin/components/Table/Form/ModifyAnswerForm";
 import { RejectForm } from "../../../admin/components/Table/Form/RejectForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
+import { RestoreQuestionForm } from "../../../admin/components/Table/Form/RestoreQuestionForm";
 import { UserDetailForm } from "../../../admin/components/Table/Form/UserDetailForm";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
+import { pageActions } from "../../store/page-slice";
 import { uiActions } from "../../store/ui-slice";
 
 export const ConfirmNotification = (props) => {
@@ -31,8 +33,9 @@ export const ConfirmNotification = (props) => {
       );
       dispatch(uiActions.closeNotification());
       dispatch(uiActions.showSuccessNotification(successMessage));
+      dispatch(pageActions.setCurrentPage(1))
     } catch (error) {
-      dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
+      // dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
     }
     
   };
@@ -41,7 +44,6 @@ export const ConfirmNotification = (props) => {
   if (type === "REPLY_FORM") {
     form = (
       <ReplyForm
-        
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
       />
@@ -51,7 +53,6 @@ export const ConfirmNotification = (props) => {
       <ApproveForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        message={message}
       />
     );
   } else if (type === "MODIFY_ANSWER_FORM") {
@@ -89,11 +90,20 @@ export const ConfirmNotification = (props) => {
       />
     );
   }
+  else if(type === "RESTORE_QUESTION_FORM"){
+    form = (
+      <RestoreQuestionForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+      />
+    );
+  }
 
   return (
-    <div className={` w-full h-full absolute flex items-center z-50`}>
-      <div className="absolute bg-black opacity-60 w-full h-full top-0 left-0 z-0"></div>
+    <div className={` w-full min-h-full absolute flex items-center z-50`}>
+      <div className="absolute bg-black opacity-80 w-full min-h-full top-0 left-0 z-0"></div>
       {form}
+      
     </div>
   );
 };

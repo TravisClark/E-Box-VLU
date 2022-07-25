@@ -161,7 +161,9 @@ class MailboxController {
             const data_username = req.body.username;
             const data_id_question = req.body.id_question;
             const data_message = req.body.message;
-            if (data_message === undefined || data_message === '') {
+            //format password, new password and re_new_password
+            var message = data_message.replace(/\s+/g, '');
+            if (message == null || message === '') {
                 //check message is null or ''
                 return next(
                     res.status(401).json({

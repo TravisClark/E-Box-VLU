@@ -29,15 +29,15 @@ export const ApprovedQuestionList = (props) => {
     const date = new Date(question.approvedAt);
     const dateTranslate = {
       day: date.getDate(),
-      month: date.getMonth(),
+      month: date.getMonth()+1,
       year: date.getFullYear(),
     };
-    const formatDate = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
+    const formatDate = date.toUTCString();
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>
         <td className="py-2 px-4">
-          <div className="truncate w-96">{question.question}</div>
+          <div className="w-96 truncate">{question.question}</div>
         </td>
         <td className="py-2 px-4">{formatDate}</td>
         <td className="py-2 px-10">{question.type_name}</td>

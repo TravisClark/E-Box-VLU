@@ -6,15 +6,17 @@ import Requests from "../../../shared/api/Requests";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
+import { Error } from "../../../shared/components/Error/Error";
 
 function ChangePasswordForm() {
   const oldPwRef = useRef();
   const newPwRef = useRef();
   const confirmNewPwRef = useRef();
-  const { sendRequest, error } = useHttpClient();
+  const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
   const history = useHistory();
   const account = useSelector((state) => state.auth.account);
+  const {isShowing} = useSelector((state) => state.ui.error)
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -73,11 +75,7 @@ function ChangePasswordForm() {
                 placeholder="Nhập lại mật khẩu"
                 ref={confirmNewPwRef}
               />
-              {error && (
-                <h3 className="text-red-500 text-sm">
-                  {error}
-                </h3>
-              )}
+              {isShowing && <Error/>}
             </div>
             <Button title="Submit" className={` text-white bg-heavyBlue`} >Đổi mật khẩu</Button>
             <span className="text-gray-500 italic">

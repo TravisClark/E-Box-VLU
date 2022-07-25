@@ -4,7 +4,7 @@ import RoleList from "../../RoleList/RoleList"
 // import classes from "./Form.module.css";
 export const UserDetailForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
-  const { selectedType } = useSelector((state) => state.item);
+  const { selectedType, selectedTypeChanged } = useSelector((state) => state.item);
   const [newPassword, setNewPassword]= useState('')
   const [isShowWarning, setIsShowWarning] = useState(false)
   const [isAbleToSubmit, setIsAbleToSubmit] = useState(false)
@@ -15,7 +15,7 @@ export const UserDetailForm = (props) => {
     const body = JSON.stringify({
       username: data.username,
       password: newPassword,
-      role_name: selectedType,
+      role_name: selectedTypeChanged ? selectedTypeChanged : selectedType,
     });
     props.onSubmitHandler(body);
   };

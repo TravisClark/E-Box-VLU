@@ -2,7 +2,7 @@ import React from "react";
 
 export const DownArrow = (props) => {
   return (
-    <button onClick={() => props.onSort('DESC')}>
+    <button onClick={() => props.onSort('ASC')}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="18"
