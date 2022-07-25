@@ -5,7 +5,7 @@ import classes from "./Pagination.module.css";
 import { pageActions } from "../../store/page-slice";
 export const Pagination = ({prevBtn = "Previous", nextBtn = "Next", activeBtnStyle, containerStyle, disabledBtnStyle}) => {
     const dispatch = useDispatch();
-    const {items, itemsPerPage} = useSelector((state)=> state.page.pagination)
+    const {items, itemsPerPage, currentPage} = useSelector((state)=> state.page.pagination)
   // Change page
     const [totalPages, setTotalPages] = useState()
   const changePage = ({ selected }) => {
@@ -25,6 +25,7 @@ export const Pagination = ({prevBtn = "Previous", nextBtn = "Next", activeBtnSty
       nextLinkClassName={""}
       disabledClassName={`${classes.paginationDisabled} ${disabledBtnStyle}`}
       activeClassName={`${classes.paginationActive} ${activeBtnStyle}`}
+      forcePage={currentPage-1}
     />
   );
 };

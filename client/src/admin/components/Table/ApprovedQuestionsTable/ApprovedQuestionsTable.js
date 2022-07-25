@@ -26,4 +26,4 @@ export const ApprovedQuestionsTable = () => {
       <ApprovedQuestionList />
     </Table>
   );
-}
+};

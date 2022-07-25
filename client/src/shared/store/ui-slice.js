@@ -26,15 +26,15 @@ const uiSlice = createSlice({
     runAdminMode(state, action) {
       if(action.payload.type === 'RUN_ADMIN_MODE'){
         state.isInAdminMode = true;
-        localStorage.setItem('isInAdminMode', state.isInAdminMode);
+        sessionStorage.setItem('isInAdminMode', state.isInAdminMode);
       }
       else if(action.payload.type === 'REFRESH_ADMIN_PAGE'){
-        state.isInAdminMode = JSON.parse(localStorage.getItem('isInAdminMode'))
+        state.isInAdminMode = JSON.parse(sessionStorage.getItem('isInAdminMode'))
       }
     },
     runStudentMode(state) {
       state.isInAdminMode = false;
-      localStorage.removeItem('isInAdminMode');
+      sessionStorage.removeItem('isInAdminMode');
     },
     showNotification(state, action) {
       state.notification.isShowing = true;
