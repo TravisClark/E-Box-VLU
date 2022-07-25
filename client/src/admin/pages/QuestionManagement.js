@@ -48,14 +48,22 @@ function QuestionManagement() {
   };
 
   let table;
-  if (selectedTable === "New Question List") {
-    table = <NewQuestionsTable />;
-  } else if (selectedTable === "Disapproved Question List") {
-    table = <DisapprovedQuestionsTable />;
-  } else if (selectedTable === "Approved Question List") {
-    table = <ApprovedQuestionsTable />;
-  } else {
-    table = <RepliedQuestionsTable />;
+  switch (selectedTable) {
+    case "New Question List": {
+      (table = <NewQuestionsTable />)
+      break;
+    }
+    case 'Disapproved Question List':{
+      table = <DisapprovedQuestionsTable />
+      break;
+    }
+    case 'Approved Question List':{
+      table = <ApprovedQuestionsTable />
+      break;
+    }
+    default: {
+      table = <RepliedQuestionsTable />;
+    }
   }
 
   return (
