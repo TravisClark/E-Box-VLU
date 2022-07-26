@@ -20,7 +20,7 @@ export const RejectForm = (props) => {
 
   return (
     <>
-      <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10">
+      <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10 max-w-2xl">
         <span className="text-2xl font-bold">Từ chối câu hỏi</span>
         <h1 className="text-black break-all">{data.question}</h1>
         <div className="flex flex-col w-full">
