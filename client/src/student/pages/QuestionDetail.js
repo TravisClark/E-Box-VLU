@@ -10,30 +10,39 @@ import TriangleIcon from "../components/UI/TriangleIcon";
 
 export const QuestionDetail = () => {
   const params = useParams();
-  const [question, setQuestion] = useState({})
+  const [question, setQuestion] = useState({});
   const [createDate, setCreateDate] = useState([]);
-  const {sendRequest, error} = useHttpClient()
+  const { sendRequest, error } = useHttpClient();
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await sendRequest(`${Requests.fetchQuestionDetail}${params.questionId}`)
-      setQuestion(response)
+      const response = await sendRequest(
+        `${Requests.fetchQuestionDetail}${params.questionId}`
+      );
+      setQuestion(response);
       const formatDate = () => {
         let dates = [response.createdAt, response.updatedAt];
         for (let index = 0; index < dates.length; index++) {
           const date = new Date(dates[index]);
-          const dateTranslate = {
-            day: date.getDate(),
-            month: date.getMonth(),
-            year: date.getFullYear(),
-          };
-          dates[index] = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
+          // const options = { month: "long" };
+          // console.log(new Intl.DateTimeFormat("en-US", options).format(date));
+          // const dateTranslate = {
+          //   day: date.getDate(),
+          //   month: date.getMonth(),
+          //   year: date.getFullYear(),
+          // };
+          // dates[
+          //   index
+          // ] = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
+          dates[
+            index
+          ] = `${date.toDateString()}`;
         }
         setCreateDate(dates);
       };
       formatDate();
-    } 
-    fetchData()
+    };
+    fetchData();
   }, [params.questionId, sendRequest]);
 
   return (
@@ -47,7 +56,6 @@ export const QuestionDetail = () => {
           height="540"
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
-          
         >
           <rect x="0" y="0" width="100%" height="540" fill="#0060FF"></rect>
           <path
@@ -66,9 +74,7 @@ export const QuestionDetail = () => {
         <div className="flex flex-col p-3 space-y-6 border-black rounded-lg md:border md:px-6">
           <div className="flex flex-col space-y-4 ">
             <div className="flex flex-col space-y-4 md:space-y-0">
-              <span className="text-xl break-words">
-                {question.question}
-              </span>
+              <span className="text-xl break-words">{question.question}</span>
               <span className="text-md break-words text-gray-500">
                 Đã hỏi vào {createDate[0]}
               </span>
@@ -99,8 +105,13 @@ export const QuestionDetail = () => {
           </div>
         </div>
         <div className="flex flex-col items-end space-y-4">
-          <textarea className="border p-4 rounded-md h-24 w-full outline-gray-300" placeholder="Nhập bình luận..."/>
-          <button className="p-2 rounded-md bg-blue-500 text-white w-fit">Bình luận</button>
+          <textarea
+            className="border p-4 rounded-md h-24 w-full outline-gray-300"
+            placeholder="Nhập bình luận..."
+          />
+          <button className="p-2 rounded-md bg-blue-500 text-white w-fit">
+            Bình luận
+          </button>
         </div>
         <div className="flex h-44 border"></div>
       </div>

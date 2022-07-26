@@ -17,7 +17,10 @@ const uiSlice = createSlice({
       message: "",
       refresh: false
     },
-    error: ''
+    error: {
+      isShowing: false,
+      message: "",
+    }
   },
   reducers: {
     runAdminMode(state, action) {
@@ -58,7 +61,12 @@ const uiSlice = createSlice({
         state.successNotification.message = ''
     },
     catchError (state, action){
-      state.error = action.payload
+      state.error.isShowing = true;
+      state.error.message = action.payload.message;
+    },
+    clearError(state){
+      state.error.isShowing = false;
+      state.error.message = ''
     }
   },
 });
