@@ -5,6 +5,7 @@ import { DeactivateForm } from "../../../admin/components/Table/Form/DeactivateF
 import { ModifyAnswerForm } from "../../../admin/components/Table/Form/ModifyAnswerForm";
 import { RejectForm } from "../../../admin/components/Table/Form/RejectForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
+import { RestoreQuestionForm } from "../../../admin/components/Table/Form/RestoreQuestionForm";
 import { UserDetailForm } from "../../../admin/components/Table/Form/UserDetailForm";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
@@ -43,7 +44,6 @@ export const ConfirmNotification = (props) => {
   if (type === "REPLY_FORM") {
     form = (
       <ReplyForm
-        
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
       />
@@ -53,7 +53,6 @@ export const ConfirmNotification = (props) => {
       <ApproveForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        message={message}
       />
     );
   } else if (type === "MODIFY_ANSWER_FORM") {
@@ -86,6 +85,14 @@ export const ConfirmNotification = (props) => {
   else if(type === "DEACTIVATE_FORM"){
     form = (
       <DeactivateForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+      />
+    );
+  }
+  else if(type === "RESTORE_QUESTION_FORM"){
+    form = (
+      <RestoreQuestionForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
       />

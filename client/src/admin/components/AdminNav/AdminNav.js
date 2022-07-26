@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
@@ -7,25 +7,34 @@ import Container from "../../../student/components/UI/Container";
 import classes from './AdminNav.module.css'
 function AdminNav() {
   const { account } = useSelector((state) => state.auth);
+  const {isInAdminMode} = useSelector((state) => state.ui)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
+
   const logoutHandler = () => {
     dispatch(authActions.logoutHandler());
     dispatch(uiActions.runStudentMode());
     history.replace("/E-boxVLU");
   };
+
   const toggleMenuHandler = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
+
   const runUserModeHandler = (page) => {
     dispatch(uiActions.runStudentMode());
     if (page === "Home") {
-      history.push("/E-boxVLU/Home");
+      history.replace("/E-boxVLU/Home");
     } else if (page === "Change Password") {
       history.replace("/E-boxVLU/change-password");
     }
   };
+
+  useEffect(() => {
+    !isInAdminMode && history.replace("/E-boxVLU/Home") 
+  }, [isInAdminMode, history]);
+  
   return (
     <nav>
       <Container className="fixed min-w-full flex justify-end p-8 bg-transparent z-10">
