@@ -11,6 +11,7 @@ import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
 // import { QuestionDetail } from ";
 import ChangePassword from "./student/pages/ChangePassword";
 import { QuestionDetail } from "./student/pages/QuestionDetail";
+import jwt_decode from "jwt-decode";
 
 const Login = React.lazy(() => import("./student/pages/Login"));
 const Ebox = React.lazy(() => import("./student/pages/Ebox"));
@@ -20,6 +21,8 @@ const ViewQuestions = React.lazy(() => import("./student/pages/ViewQuestions"));
 function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { account } = useSelector((state) => state.auth);
+  // let decoded = jwt_decode(account.token);
+  // console.log(decoded)
   console.count();
 
   return (
@@ -84,5 +87,4 @@ function App() {
     </Layout>
   );
 }
-
 export default App;
