@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { QuestionType } from "../../shared/components/QuestionType/QuestionType";
+import { SearchItem } from "../../shared/components/SearchItem/SearchItem";
 import { Notification } from "../../shared/components/UI/Notification";
 import { itemActions } from "../../shared/store/item-slice";
 import IntroductionBanner from "../components/IntroductionBanner/IntroductionBanner";
@@ -16,19 +17,19 @@ import TriangleIcon from "../components/UI/TriangleIcon";
 
 function ViewQuestions() {
   const searchInputRef = useRef();
+  const dispatch = useDispatch();
   const [isQFormOpen, setIsQFormOpen] = useState(false);
   const { successNotification } = useSelector((state) => state.ui);
-  const dispatch = useDispatch();
   const {account} = useSelector((state) => state.auth);
   const onToggleFormHandler = () => {
     setIsQFormOpen((prevState) => !prevState);
   };
 
-  const searchItemHandler = () => {
-    dispatch(
-      itemActions.searchItem({ item: searchInputRef.current.value })
-    );
-  };
+  // const searchItemHandler = () => {
+  //   dispatch(
+  //     itemActions.searchItem({ item: searchInputRef.current.value })
+  //   );
+  // };
 
   return (
     <>
@@ -39,18 +40,13 @@ function ViewQuestions() {
               Danh sách câu hỏi
             </h1>
             <div className="flex flex-col space-y-8 w-full max-w-3xl p-14 md:flex-row md:space-y-0 md:w-full">
-              <input
-                type="text"
-                ref={searchInputRef}
-                className="bg-transparent text-white outline-none rounded-md p-4 w-full  border border-gray-300 md:rounded-none"
-                onChange={searchItemHandler}
-              />
-              <button
+              <SearchItem className="bg-transparent text-white outline-none rounded-md p-4 w-full border border-gray-300 md:rounded-none"/>
+              {/* <button
                 className="bg-black text-white mx-auto py-4 px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2"
                 onClick={searchItemHandler}
               >
                 <a href="#questions">Tìm kiếm</a>
-              </button>
+              </button> */}
             </div>
           </div>
         </form>
