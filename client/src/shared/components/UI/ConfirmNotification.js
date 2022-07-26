@@ -8,6 +8,7 @@ import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
 import { UserDetailForm } from "../../../admin/components/Table/Form/UserDetailForm";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
+import { pageActions } from "../../store/page-slice";
 import { uiActions } from "../../store/ui-slice";
 
 export const ConfirmNotification = (props) => {
@@ -31,8 +32,9 @@ export const ConfirmNotification = (props) => {
       );
       dispatch(uiActions.closeNotification());
       dispatch(uiActions.showSuccessNotification(successMessage));
+      dispatch(pageActions.setCurrentPage(1))
     } catch (error) {
-      dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
+      // dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
     }
     
   };
@@ -91,9 +93,10 @@ export const ConfirmNotification = (props) => {
   }
 
   return (
-    <div className={` w-full h-full absolute flex items-center z-50`}>
-      <div className="absolute bg-black opacity-60 w-full h-full top-0 left-0 z-0"></div>
+    <div className={` w-full min-h-full absolute flex items-center z-50`}>
+      <div className="absolute bg-black opacity-80 w-full min-h-full top-0 left-0 z-0"></div>
       {form}
+      
     </div>
   );
 };

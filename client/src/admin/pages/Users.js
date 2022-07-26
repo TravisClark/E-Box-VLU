@@ -13,6 +13,7 @@ function Users() {
   const { itemSearching } = useSelector((state) => state.item);
   const [users, setUsers] = useState([]);
   const { sendRequest } = useHttpClient();
+  const {account} = useSelector((state) => state.auth);
   useEffect(() => {
     try {
       const fetchUserList = async () => {
@@ -37,11 +38,11 @@ function Users() {
           </h1>
           <div className="flex space-x-6 items-center">
             <SearchItem/>
-            <Link to="/E-boxVLU/admin/users/add">
+            {!(account.role_name === "Ban Chủ Nhiệm Khoa") && <Link to="/E-boxVLU/admin/users/add">
               <button className="bg-lightBlue px-4 py-2 rounded-xl font-medium text-white text-sm">
                 Add User
               </button>
-            </Link>
+            </Link>}
           </div>
         </div>
         <div className="border w-full" />

@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { uiActions } from "../store/ui-slice";
 
 const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const dispatch = useDispatch();
 
   const activeHttpRequests = useRef([]);
 
@@ -20,7 +23,6 @@ const useHttpClient = () => {
           signal: httpAbortCtrl.signal,
         });
         const responseData = await response.json();
-        // console.log(responseData)
         activeHttpRequests.current = activeHttpRequests.current.filter(
           (reqCtrl) => reqCtrl !== httpAbortCtrl
         );
@@ -31,11 +33,13 @@ const useHttpClient = () => {
         setIsLoading(false);
         return responseData;
       } catch (error) {
-        setError(error.toString().replace('Error:', ''));
+        const err = error.toString().replace('Error:', '')
+        // setError(err);
+        dispatch(uiActions.catchError({message: err}))
         throw error;
       }
     },
-    []
+    [dispatch]
   );
 
   const clearError = () => {

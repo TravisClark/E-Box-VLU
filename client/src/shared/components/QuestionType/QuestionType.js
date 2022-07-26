@@ -7,8 +7,7 @@ import { pageActions } from "../../store/page-slice";
 import selectStyles from "../UI/Select.module.css";
 export const QuestionType = ({ className, isSorting }) => {
   const { sendRequest } = useHttpClient();
-  const { selectedType, typeList } =
-    useSelector((state) => state.item);
+  const { selectedType, typeList } = useSelector((state) => state.item);
   const dispatch = useDispatch();
 
   const onChangeHandler = (input) => {
@@ -35,26 +34,27 @@ export const QuestionType = ({ className, isSorting }) => {
     };
     request();
   }, [sendRequest, dispatch, isSorting, selectedType]);
-  const options = !isSorting
-    ? typeList
-        .filter((res) => res !== "Tất cả")
-        .map((res, index) => (
-          <option value={res} key={index} selected={selectedType === res}>
+  const opts = (
+    <>
+      {isSorting && (
+        <option value="Tất cả" key={0} selected>
+          Tất cả
+        </option>
+      )}
+      {typeList.map((res, index) => (
+          <option value={res} key={index} selected={selectedType === res && !isSorting}>
             {res}
           </option>
-        ))
-    : typeList.map((res, index) => (
-        <option value={res} key={index} selected={res === 'Tất cả'}>
-          {res}
-        </option>
-      ));
+        ))}
+    </>
+  );
 
   return (
     <select
       onChange={(e) => onChangeHandler(e)}
       className={`w-fit px-4 py-2 rounded-md ${selectStyles} outline-none ${className}`}
     >
-      {options}
+      {opts}
     </select>
   );
 };

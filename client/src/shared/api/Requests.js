@@ -11,6 +11,8 @@ const Requests = {
     replyQuestion: `${URL}/api/admin/mailbox/reply_question`,
     changeUserInfo: `${URL}/api/admin/user/change_user_information`,
     deactivateUser: `${URL}/api/admin/user/deactivate_user`,
+    activateUser: `${URL}/api/admin/user/restore_user`,
+    restoreQuestion:`${URL}/api/admin/mailbox/restore_question`,
     fetchQuestionTypes: `${URL}/api/admin/type/list_types_admin`,
     fetchAccount: `${URL}/api/user/account_info`, 
     fetchRoleList: `${URL}/api/admin/role/list_roles`, 

@@ -30,7 +30,7 @@ export const RepliedQuestionList = () => {
     const date = new Date(question.responsedAt);
     const dateTranslate = {
       day: date.getDate(),
-      month: date.getMonth(),
+      month: date.getMonth()+1,
       year: date.getFullYear(),
     };
     const formatDate = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
@@ -42,7 +42,7 @@ export const RepliedQuestionList = () => {
         </td>
         <td className="py-2 px-4">{formatDate}</td>
         <td className="py-2 px-4">{question.username_respondent}</td>
-        <td className="py-2 px-4">{question.type_name}</td>
+        <td className="py-2 px-10">{question.type_name}</td>
         <td className="py-2 px-4 underline flex justify-center">
           <button onClick={onOpenFormHandler.bind(null, question)}>
             <svg
