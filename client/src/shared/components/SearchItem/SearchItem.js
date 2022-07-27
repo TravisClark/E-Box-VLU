@@ -21,6 +21,7 @@ export const SearchItem = (props) => {
       type="text"
       ref={searchInputRef}
       className={`${props.className}`}
+      placeholder={props.placeholder}
       onChange={searchItemHandler}
     />
   );

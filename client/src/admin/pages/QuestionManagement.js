@@ -11,14 +11,16 @@ import useHttpClient from "../../shared/hooks/http-hook";
 import { Notification } from "../../shared/components/UI/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
+import { Error } from "../../shared/components/Error/Error";
 
 function QuestionManagement() {
   const [selectedTable, setSelectedTable] = useState("New Question List");
-  const { sendRequest, error } = useHttpClient();
+  const { sendRequest } = useHttpClient();
   const { successNotification } = useSelector((state) => state.ui);
   const { newSortType } = useSelector((state) => state.item);
   const { isSortingItems } = useSelector((state) => state.page);
   const dispatch = useDispatch();
+  const { isShowing } = useSelector((state) => state.ui.error);
 
   useEffect(() => {
     try {
@@ -81,7 +83,7 @@ function QuestionManagement() {
         </div>
         <div className="border w-full"></div>
 
-        {error && <h3 className="text-red-500 text-sm">{error}</h3>}
+        {isShowing && <Error />}
         {table && table}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />
