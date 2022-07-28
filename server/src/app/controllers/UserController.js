@@ -162,8 +162,6 @@ class UserController {
                 } else {
                     //Return user info and generate token
                     res.status(200).json({
-                        username: user.username,
-                        role_name: user.role_name,
                         token: generateToken(user.username, user.role_name),
                     });
                 }
