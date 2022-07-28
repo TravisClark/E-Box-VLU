@@ -36,7 +36,9 @@ class MailboxController {
                 });
                 res.status(201).json(mailbox);
             } else {
-                const mailbox = await Mailbox.find({status: 'Đã được trả lời',}).sort({
+                const mailbox = await Mailbox.find({
+                    status: 'Đã được trả lời',
+                }).sort({
                     createdAt: 'desc',
                 });
                 res.status(200).json(mailbox);
