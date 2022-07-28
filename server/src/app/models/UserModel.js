@@ -12,7 +12,7 @@ const User = new Schema(
             minlength: 5,
             maxlength: 20,
             required: true,
-            unique: true,
+            unique: [true, 'Tài khoản đã tồn tại!!!'],
         },
         password: {
             type: 'string',
