@@ -10,7 +10,7 @@ class MailboxController {
                 const mailbox = await Mailbox.find({
                     status: req.query.status,
                 }).sort({
-                    createdAt: 'asc',
+                    approvedAt: 'desc',
                 });
                 res.status(200).json(mailbox);
             } else {
@@ -36,7 +36,7 @@ class MailboxController {
                 });
                 res.status(201).json(mailbox);
             } else {
-                const mailbox = await Mailbox.find({}).sort({
+                const mailbox = await Mailbox.find({status: 'Đã được trả lời',}).sort({
                     createdAt: 'desc',
                 });
                 res.status(200).json(mailbox);
