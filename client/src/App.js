@@ -36,7 +36,7 @@ function App() {
       >
         <Switch>
           <Route path="/" exact>
-            <Redirect to="/E-boxVLU" />
+            <Redirect to="/E-boxVLU"/>
           </Route>
           <Route path="/E-boxVLU" exact>
             <Ebox />
