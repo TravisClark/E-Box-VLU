@@ -6,7 +6,7 @@ const Status = new NewSchema({
     id_status: { type: Number },
     status_name: {
         type: 'string',
-        required: true,
+        required: [true, 'Loại câu hỏi không được bỏ trống'],
         default: 'Đang hoạt động',
     },
 });
