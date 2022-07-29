@@ -321,7 +321,10 @@ describe('Unit Tests of View question details function', () => {
         const response = await request(app)
             .get('/api/user/mailbox/details_question')
             .query({ id_question: 1 })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA',
+            });
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -330,7 +333,10 @@ describe('Unit Tests of View question details function', () => {
         const response = await request(app)
             .get('/api/user/mailbox/details_question')
             .query({ id_question: 1 })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA',
+            });
 
         const mailbox = await Mailbox.findOne({
             id_question: 1,

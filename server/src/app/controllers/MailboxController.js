@@ -130,12 +130,13 @@ class MailboxController {
                     type_name: data_type_name,
                     approvedAt: new Date(),
                 },
-            ).then(() => {
-                res.status(201).json({
-                    message: 'Duyệt câu hỏi thành công',
-                });
-            })
-            .catch(next);
+            )
+                .then(() => {
+                    res.status(201).json({
+                        message: 'Duyệt câu hỏi thành công',
+                    });
+                })
+                .catch(next);
         } catch (err) {
             console.log(err);
         }

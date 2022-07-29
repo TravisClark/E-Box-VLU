@@ -3,7 +3,7 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const Schema = mongoose.Schema;
 
 const Star = Schema({
-    id_start : {
+    id_start: {
         type: Number,
         required: true,
     },
@@ -11,7 +11,7 @@ const Star = Schema({
         type: 'string',
         required: true,
     },
-    id_question : {
+    id_question: {
         type: Number,
         required: true,
     },
