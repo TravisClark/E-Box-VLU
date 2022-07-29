@@ -10,7 +10,7 @@ const Comment = Schema({
         type: 'string',
         required: true,
     },
-    id_question : {
+    id_question: {
         type: Number,
         required: true,
     },
