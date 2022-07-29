@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const { checkLogin } = require('../middleware/Auth');
 const roleController = require('../app/controllers/RoleController');
 
 router.get('/list_roles', roleController.list_roles);

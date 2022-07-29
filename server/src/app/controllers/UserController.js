@@ -162,8 +162,6 @@ class UserController {
                 } else {
                     //Return user info and generate token
                     res.status(200).json({
-                        username: user.username,
-                        role_name: user.role_name,
                         token: generateToken(user.username, user.role_name),
                     });
                 }
@@ -227,7 +225,8 @@ class UserController {
                             'Độ dài của mật khẩu mới phải từ 5 đến 20 ký tự',
                     }),
                 );
-            } else if ( new_password.match(format) == null ||
+            } else if (
+                new_password.match(format) == null ||
                 new_password.match(format).length != new_password.length
             ) {
                 //Check the new password for correct format
@@ -302,7 +301,7 @@ class UserController {
         try {
             UserModel.findOneAndUpdate(
                 { username: req.body.username },
-                { password: req.body.password, role_name: req.body.role_name },
+                { password: req.body.password, role_name: req.body.role_name, status_name: req.body.status_name },
             )
                 .then(() => {
                     res.status(200).json({
