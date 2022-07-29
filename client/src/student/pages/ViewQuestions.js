@@ -11,6 +11,7 @@ import IntroductionBanner from "../components/IntroductionBanner/IntroductionBan
 import MenuType from "../components/QuestionSection/MenuType/MenuType";
 import QuestionForm from "../components/QuestionSection/QuestionForm";
 import QuestionList from "../components/QuestionSection/QuestionList/QuestionList";
+import { SearchingBackground } from "../components/SearchingBackground/SearchingBackground";
 import Button from "../components/UI/Button";
 import CircleIcon from "../components/UI/CircleIcon";
 import Container from "../components/UI/Container";
@@ -38,24 +39,22 @@ function ViewQuestions() {
 
   return (
     <>
-      <IntroductionBanner>
-        <form>
-          <div className="absolute flex flex-col min-w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center items-center  md:max-w-4xl sm:max-w-xl">
-            <h1 className="text-white font-bold text-2xl md:text-4xl">
+      <SearchingBackground>
+          <div className="absolute flex flex-col min-w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center items-center -space-y-6 md:max-w-4xl sm:max-w-xl">
+            <h1 className="text-white font-bold text-2xl mt-10 md:text-4xl">
               Danh sách câu hỏi
             </h1>
             <div className="flex flex-col space-y-8 w-full max-w-3xl p-14 md:flex-row md:space-y-0 md:w-full">
               <SearchItem className="bg-transparent text-white outline-none rounded-md p-4 w-full border border-gray-300 md:rounded-none"/>
               <button
-                className="bg-black text-white mx-auto py-4 px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2"
+                className="bg-slate-800 text-white mx-auto py-4 px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2"
                
               >
                 <a href="#questions">Tìm kiếm</a>
               </button>
             </div>
           </div>
-        </form>
-      </IntroductionBanner>
+      </SearchingBackground>
       <section id="question">
         <div className="h-fit mb-20">
         <Container className="min-w-full relative flex flex-col items-center">

@@ -36,7 +36,7 @@ export const ApproveForm = (props) => {
             className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
             onClick={onSubmitHandler}
           >
-            Submit
+            Duyệt
           </button>
           <button
             className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"

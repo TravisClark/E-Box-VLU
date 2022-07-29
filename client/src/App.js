@@ -21,9 +21,10 @@ const ViewQuestions = React.lazy(() => import("./student/pages/ViewQuestions"));
 function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { account } = useSelector((state) => state.auth);
-  // let decoded = jwt_decode(account.token);
-  // console.log(decoded)
-  console.count();
+  const accessConditions =
+    account?.role_name === "Quản Trị Viên" ||
+    account?.role_name === "Ban Chủ Nhiệm Khoa" ||
+    account?.role_name === "Trợ Lý";
 
   return (
     <Layout>
@@ -36,7 +37,7 @@ function App() {
       >
         <Switch>
           <Route path="/" exact>
-            <Redirect to="/E-boxVLU"/>
+            <Redirect to="/E-boxVLU" />
           </Route>
           <Route path="/E-boxVLU" exact>
             <Ebox />
@@ -56,9 +57,7 @@ function App() {
                 <ChangePassword />
               </Route>
 
-              {(account.role_name === "Quản Trị Viên" ||
-                account.role_name === "Ban Chủ Nhiệm Khoa" ||
-                account.role_name === "Trợ lý") && (
+              {accessConditions && (
                 <>
                   <Route path="/E-boxVLU/admin/dashboard">
                     <Dashboard />

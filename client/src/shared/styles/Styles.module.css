@@ -3,6 +3,6 @@
     background: #d3d3d3;
     cursor: none;
 }
-.min-width {
-    width: 800px;
+.form-control {
+    min-width: 800px;
 }
