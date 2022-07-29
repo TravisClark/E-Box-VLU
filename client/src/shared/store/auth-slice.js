@@ -5,7 +5,7 @@ const authSlice = createSlice({
     initialState: {isLoggedIn: false, account: {}, token: ''},
     reducers:{
         loginHandler(state, action) {
-            localStorage.setItem('account', JSON.stringify(action.payload))
+            sessionStorage.setItem('account', JSON.stringify(action.payload))
             state.isLoggedIn = true;
             state.account = action.payload
         },
@@ -13,18 +13,18 @@ const authSlice = createSlice({
             state.account = action.payload
         },
         autoLoginHandler(state) {
-            state.account = JSON.parse(localStorage.getItem('account'));
+            state.account = JSON.parse(sessionStorage.getItem('account'));
             state.account && (state.isLoggedIn = true) ;
         },
         logoutHandler(state) {
             state.account = {}
-            localStorage.removeItem('account')
+            sessionStorage.removeItem('account')
             state.isLoggedIn = false;
         },
         changePasswordHandler(state, action) {
             const {username, password} = action.payload;
-            localStorage.clear();
-            localStorage.setItem('account', JSON.stringify(username, password));
+            sessionStorage.clear();
+            sessionStorage.setItem('account', JSON.stringify(username, password));
         }
     }
 })

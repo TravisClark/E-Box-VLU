@@ -53,7 +53,7 @@ function QuestionForm(props) {
             <textarea
               type="text"
               className="p-4 text-sm border text-start rounded-md border-gray-300 h-32 outline-none"
-              placeholder="Nhập câu hỏi"
+              placeholder="Nội dung câu hỏi.."
               ref={questionInputRef}
             />
             {error && <h3 className="text-red-500 text-sm">{error}</h3>}

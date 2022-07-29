@@ -76,7 +76,7 @@ export const ModifyAnswerForm = (props) => {
               className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
               // onClick={props.onSubmitHandler}
             >
-              Submit
+              Xác nhận
             </button>
             <button
               className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
