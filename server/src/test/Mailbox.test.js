@@ -7,7 +7,7 @@ describe('Unit test of publish question when entering complete information', () 
         const response = await request(app).post('/api/user/mailbox/publish_question').send({
             username: '197pm11111',
             type_name: 'Học phần',
-            question: 'Cho em hỏi danh sách môn tương đương em có thể xem ở đâu ạ',
+            question: 'Cho em hỏi cần bao nhiêu điểm để qua môn Lập trình mobile ạ',
         }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
         
         expect(response.statusCode).toBe(201);
@@ -17,7 +17,6 @@ describe('Unit test of publish question when entering complete information', () 
         });
     });
 });
-
 
 describe('Unit test of publish question when leave the question type or question blank', () => {
     //Unit test of check type_name is null or ''
