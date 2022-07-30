@@ -22,7 +22,6 @@ function AddUser() {
         Requests.addUserRequest,
         "POST",
         JSON.stringify({ username, role_name: selectedType }),
-        { "Content-Type": "application/json" }
       );
       console.log(selectedType)
       dispatch(uiActions.showSuccessNotification("Thêm tài khoản thành công!"));

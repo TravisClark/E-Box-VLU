@@ -21,7 +21,7 @@ function QuestionForm(props) {
         Requests.publishQuestion,
         "POST",
         JSON.stringify({ username: account.username, question, type_name: selectedTypeChanged   }),
-        { "Content-Type": "application/json" }
+
       );
       props.onClose();
       dispatch(uiActions.showSuccessNotification("Đặt câu hỏi thành công"));
@@ -49,7 +49,12 @@ function QuestionForm(props) {
             <label className="text-sm text-black italic">
               *Lưu ý: sau khi đặt câu hỏi vui lòng đợi duyệt
             </label>
+            <div className='flex space-x-3'>
+            <label className="text-md text-black self-center">
+              Loại:
+            </label>
             <QuestionType className="border"/>
+            </div>
             <textarea
               type="text"
               className="p-4 text-sm border text-start rounded-md border-gray-300 h-32 outline-none"

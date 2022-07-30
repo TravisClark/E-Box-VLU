@@ -36,7 +36,6 @@ function LoginForm() {
           Requests.loginRequest,
           "POST",
           JSON.stringify({ username, password }),
-          { "Content-Type": "application/json" }
         );
         // setAccount(requestData);
         dispatch(authActions.loginHandler({token: requestData}));
