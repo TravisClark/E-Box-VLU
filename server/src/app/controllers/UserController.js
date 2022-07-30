@@ -47,7 +47,6 @@ class UserController {
                 username: user.username,
                 role_name: user.role_name,
             });
-            
         } catch (err) {
             console.log(err);
         }
@@ -306,10 +305,13 @@ class UserController {
             var data_status_name = req.body.status_name;
 
             var password = data_password.replace(/\s+/g, '');
-            if(password == null || password === ''
-                || data_role_name == null
-                || data_status_name == null){
-                const user = UserModel.findOne({username: req.body.username});
+            if (
+                password == null ||
+                password === '' ||
+                data_role_name == null ||
+                data_status_name == null
+            ) {
+                const user = UserModel.findOne({ username: req.body.username });
                 password = user.password;
                 data_role_name = user.role_name;
                 data_status_name = user.status_name;

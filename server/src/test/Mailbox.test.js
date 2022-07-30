@@ -5,7 +5,7 @@ const Mailbox = require('../app/models/MailboxModel');
 describe('Unit test of publish question when entering complete information', () => {
     test('Status is 201 and format json and return message "Đặt câu hỏi thành công"', async () => {
         const response = await request(app).post('/api/user/mailbox/publish_question').send({
-            username: '197pm11111',
+            username: '197pm33529',
             type_name: 'Học phần',
             question: 'Cho em hỏi cần bao nhiêu điểm để qua môn Lập trình mobile ạ',
         }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
@@ -22,7 +22,7 @@ describe('Unit test of publish question when leave the question type or question
     //Unit test of check type_name is null or ''
     test('Status is 401, format json and return message "Vui lòng chọn loại câu hỏi" when type name is back', async () => {
         const response = await request(app).post('/api/user/mailbox/publish_question').send({
-            username: '197pm11111',
+            username: '197pm33529',
             type_name: '',
             question: 'Cho em hỏi danh sách môn tương đương em có thể xem ở đâu ạ',
         }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
@@ -36,7 +36,7 @@ describe('Unit test of publish question when leave the question type or question
     //Unit test of check question is null or ''
     test('Status is 401, format json and return message "Vui lòng nhập câu hỏi" when question is null', async () => {
         const response = await request(app).post('/api/user/mailbox/publish_question').send({
-            username: '197pm11111',
+            username: '197pm33529',
             type_name: 'Học phần',
             question: '',
         }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
@@ -73,7 +73,7 @@ describe('Unit test of view questions list function', () => {
 describe('Unit Tests of Approve question function', () => {
     test('Status is 201, format json and return message "Duyệt câu hỏi thành công"', async () => {
         const response = await request(app).patch('/api/admin/mailbox/approve_question').send({
-            username: '197pm11111',
+            username: '197pm33529',
             type_name: 'Học phần',
             id_question: 1
         }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
@@ -89,7 +89,7 @@ describe('Unit Tests of Approve question function', () => {
 describe('Unit Tests of Reply question function when entering complete information', () => {
     test('Status is 201, format json and return message "Trả lời câu hỏi thành công"', async () => {
         const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-            username: '197pm11111',
+            username: '197pm33529',
             type_name: 'Học phần',
             answer: 'Có nha em',
             id_question: 1,
@@ -106,7 +106,7 @@ describe('Unit Tests of Reply question function when leaving type name or answer
         const response = await request(app)
             .patch('/api/admin/mailbox/reply_question')
             .send({
-                username: '197pm11111',
+                username: '197pm33529',
                 type_name: '',
                 answer: 'Có nha em',
                 id_question: 1,
@@ -123,7 +123,7 @@ describe('Unit Tests of Reply question function when leaving type name or answer
         const response = await request(app)
             .patch('/api/admin/mailbox/reply_question')
             .send({
-                username: '197pm11111',
+                username: '197pm33529',
                 type_name: 'Học phần',
                 answer: '',
                 id_question: 1,
@@ -141,7 +141,7 @@ describe('Unit Tests of Reply question function when the user enters the wrong r
         const response = await request(app)
             .patch('/api/admin/mailbox/reply_question')
             .send({
-                username: '197pm11111',
+                username: '197pm33529',
                 type_name: 'Học phần',
                 answer: '.',
                 id_question: 1,
@@ -209,7 +209,7 @@ describe('Unit Tests of edit answer function when entering complete information'
     jest.setTimeout(3000);
     test('Status is 201, format json and return message "Trả lời câu hỏi thành công"', async () => {
         const response = await request(app).patch('/api/admin/mailbox/reply_question').send({
-            username: '197pm11111',
+            username: '197pm33529',
             type_name: 'Học phần',
             answer: 'Có nha em',
             id_question: 1,
@@ -228,7 +228,7 @@ describe('Unit Tests of edit answer function when leaving type name or answer bl
         const response = await request(app)
             .patch('/api/admin/mailbox/reply_question')
             .send({
-                username: '197pm11111',
+                username: '197pm33529',
                 type_name: '',
                 answer: 'Có nha em',
                 id_question: 1,
@@ -246,7 +246,7 @@ describe('Unit Tests of edit answer function when leaving type name or answer bl
         const response = await request(app)
             .patch('/api/admin/mailbox/reply_question')
             .send({
-                username: '197pm11111',
+                username: '197pm33529',
                 type_name: 'Học phần',
                 answer: '',
                 id_question: 1,

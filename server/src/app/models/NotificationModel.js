@@ -6,9 +6,9 @@ const Notification = Schema({
     id_notification: {
         type: Number,
     },
-    question: {
-        type: 'string',
-        required: true,
+    id_question: {
+        type: Number,
+        required: [true, 'cần có id_question'],
     },
     notification: {
         type: 'string',
