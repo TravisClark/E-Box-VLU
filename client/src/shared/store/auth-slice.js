@@ -16,7 +16,7 @@ const authSlice = createSlice({
         autoLoginHandler(state) {
             state.token = JSON.parse(sessionStorage.getItem('token'));
             state.token && (state.account = jwt_decode(state.token))
-            state.account && (state.isLoggedIn = true) ;
+            state.account.username && (state.isLoggedIn = true) ;
         },
         logoutHandler(state) {
             state.account = {}

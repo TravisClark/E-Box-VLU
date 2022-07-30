@@ -18,7 +18,6 @@ export const RepliedQuestionList = () => {
           url: Requests.replyQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Chỉnh sửa câu trả lời thành công!",
         type: "MODIFY_ANSWER_FORM",

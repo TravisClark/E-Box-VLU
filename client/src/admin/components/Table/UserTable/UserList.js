@@ -20,7 +20,6 @@ export const UserList = () => {
           url: Requests.changeUserInfo,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Chỉnh sửa thông tin tài khoản thành công!",
         type: "USER_DETAIL_FORM",
@@ -71,10 +70,10 @@ export const UserList = () => {
         <td className={`py-2 px-4 `}>
           <div
             className={` rounded-lg text-center w-28 text-xs py-1 font-medium ${
-              user.status === "Đang hoạt động" ? activeStyle : deactivateStyle
+              user.status_name === "Đang hoạt động" ? activeStyle : deactivateStyle
             }`}
           >
-            {user.status}
+            {user.status_name}
           </div>
         </td>
         <td className="py-2 px-10 ">

@@ -73,7 +73,7 @@ function QuestionList() {
         <h1 className=" font-semibold uppercase text-white">
           Câu Hỏi Theo Danh Mục
         </h1>
-        <div className={`max-h-64 overflow-hidden ${currentItems.length > 5 && 'hover:overflow-y-scroll'}`}>
+        <div className={``}>
           <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
             {typeList.length > 0 ? (
               typeList

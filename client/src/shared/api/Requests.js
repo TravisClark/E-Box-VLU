@@ -20,6 +20,7 @@ const Requests = {
     fetchQuestionList: `${URL}/api/admin/mailbox/list_questions_admin`,
     fetchQuestionDetail: `${URL}/api/user/mailbox/details_question?id_question=`,
     fetchQuestionBasedOnStatus: `${URL}/api/mailbox/list_questions?status=`,
-    fetchQuestionListUser: `${URL}/api/user/mailbox/list_questions_user`
+    fetchQuestionListUser: `${URL}/api/user/mailbox/list_questions_user`,
+    fetchAccountStatus: `${URL}/api/admin/status/list_status`
 }
 export default Requests;

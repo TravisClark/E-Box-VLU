@@ -14,7 +14,7 @@ function Layout(props) {
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    // dispatch(authActions.autoLoginHandler());
+    dispatch(authActions.autoLoginHandler());
     dispatch(uiActions.runAdminMode({ type: "REFRESH_ADMIN_PAGE" }));
     // isInAdminMode && history.replace("/E-boxVLU/admin/dashboard");
   }, [dispatch, isLoggedIn, history, isInAdminMode]);

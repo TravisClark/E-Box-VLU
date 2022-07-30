@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import RoleList from "../../RoleList/RoleList"
+import StatusList from "../../StatusList/StatusList";
 // import classes from "./Form.module.css";
 export const UserDetailForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
@@ -8,6 +9,7 @@ export const UserDetailForm = (props) => {
   const [newPassword, setNewPassword]= useState('')
   const [isShowWarning, setIsShowWarning] = useState(false)
   const [isAbleToSubmit, setIsAbleToSubmit] = useState(false)
+  const [status, setStatus] = useState(data.status)
   const inputRef = useRef();
 
   const onSubmitHandler = (e) => {
@@ -15,6 +17,7 @@ export const UserDetailForm = (props) => {
     const body = JSON.stringify({
       username: data.username,
       password: newPassword,
+      status_name: status,
       role_name: selectedTypeChanged ? selectedTypeChanged : selectedType,
     });
     props.onSubmitHandler(body);
@@ -38,6 +41,11 @@ export const UserDetailForm = (props) => {
       setIsShowWarning(true)
       setIsAbleToSubmit(false)
     }
+  }
+
+  const onChangeStatus = (input) => {
+    setStatus(input.target.value)
+    onShowWarningHandler()
   }
   
   return (
@@ -76,12 +84,13 @@ export const UserDetailForm = (props) => {
         </div>
         <div className="flex space-x-8 text-sm items-center">
           <span className="w-28">Trạng thái</span>
-          <input
+          {/* <input
             type="text"
             className="py-2 px-4 border rounded-lg outline-gray-300 w-80 text-gray-300"
             value={data.status}
             disabled
-          />
+          /> */}
+          <StatusList status={status} onChangeStatus={onChangeStatus}/>
         </div>
         <div className="flex space-x-8 text-sm items-center">
           <span className="w-28">Vai trò</span>

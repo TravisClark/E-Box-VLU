@@ -18,13 +18,6 @@ export const ModifyAnswerForm = (props) => {
   }, [dispatch, data]);
 
   const date = new Date(data.createdAt);
-  const dateTranslate = {
-    min: date.getMinutes(),
-    hour: date.getHours(),
-    day: date.getDate(),
-    month: date.getMonth(),
-    year: date.getFullYear(),
-  };
   const formatDate = date.toUTCString();
 
   const onSubmitHandler = (e) => {

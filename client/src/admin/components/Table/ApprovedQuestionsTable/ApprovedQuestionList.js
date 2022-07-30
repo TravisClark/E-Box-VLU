@@ -18,7 +18,6 @@ export const ApprovedQuestionList = (props) => {
           url: Requests.replyQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Trả lời thành công!",
         type: "REPLY_FORM",
