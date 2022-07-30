@@ -187,7 +187,7 @@ class MailboxController {
                 //create data notification
                 const info_notification = {
                     id_question: data_id_question,
-                    status_question: status_question,
+                    status_notification: status_question,
                     username_sender: data_username,
                     username_receiver: info_mailbox.username_questioner,
                 };
@@ -281,7 +281,7 @@ class MailboxController {
                 });
                 const info_notification = {
                     id_question: data_id_question,
-                    notification: status_question,
+                    status_notification: status_question,
                     username_sender: data_username,
                     username_receiver: info_mailbox.username_questioner,
                 };
