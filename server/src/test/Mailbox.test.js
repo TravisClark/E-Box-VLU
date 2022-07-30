@@ -159,7 +159,7 @@ describe('Unit Tests of View approval question list function', () => {
     test('Status is 200 and format json', async () => {
         const response = await request(app)
             .get('/api/admin/mailbox/list_questions_admin')
-            .query({ status: 'Đã được duyệt' })
+            .query({ status_question: 'Đã được duyệt' })
             .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
 
         expect(response.statusCode).toBe(200);
@@ -168,10 +168,10 @@ describe('Unit Tests of View approval question list function', () => {
     test('Number of questions returned', async () => {
         const response = await request(app)
             .get('/api/admin/mailbox/list_questions_admin')
-            .query({ status: 'Đã được duyệt' })
+            .query({ status_question: 'Đã được duyệt' })
             .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});;
         const mailbox = await Mailbox.find({
-            status: 'Đã được duyệt',
+            status_question: 'Đã được duyệt',
         }).sort({
             createdAt: 'asc',
         });
@@ -197,7 +197,7 @@ describe('Unit Tests of View and search for question which has been replied func
         
         const mailbox = await Mailbox.find({
             type_name: 'Học phần',
-            status: 'Đã được trả lời',
+            status_question: 'Đã được trả lời',
         }).sort({
             createdAt: 'desc',
         });
@@ -294,7 +294,7 @@ describe('Unit Tests of View rejected questions function', () => {
     test('Status is 200 and format json', async () => {
         const response = await request(app)
             .get('/api/admin/mailbox/list_questions_admin')
-            .query({ status: 'Đã bị từ chối' })
+            .query({ status_question: 'Đã bị từ chối' })
             .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
 
         expect(response.statusCode).toBe(200);
@@ -303,11 +303,11 @@ describe('Unit Tests of View rejected questions function', () => {
     test('Number of questions returned', async () => {
         const response = await request(app)
             .get('/api/admin/mailbox/list_questions_admin')
-            .query({ status: 'Đã bị từ chối' })
+            .query({ status_question: 'Đã bị từ chối' })
             .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
 
         const mailbox = await Mailbox.find({
-            status: 'Đã bị từ chối',
+            status_question: 'Đã bị từ chối',
         }).sort({
             createdAt: 'asc',
         });
