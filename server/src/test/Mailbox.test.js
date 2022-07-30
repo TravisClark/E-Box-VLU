@@ -8,7 +8,7 @@ describe('Unit test of publish question when entering complete information', () 
             username: '197pm33529',
             type_name: 'Học phần',
             question: 'Cho em hỏi cần bao nhiêu điểm để qua môn Lập trình mobile ạ',
-        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
         
         expect(response.statusCode).toBe(201);
         expect(response.type).toEqual('application/json');
@@ -25,7 +25,7 @@ describe('Unit test of publish question when leave the question type or question
             username: '197pm33529',
             type_name: '',
             question: 'Cho em hỏi danh sách môn tương đương em có thể xem ở đâu ạ',
-        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -39,7 +39,7 @@ describe('Unit test of publish question when leave the question type or question
             username: '197pm33529',
             type_name: 'Học phần',
             question: '',
-        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -53,7 +53,7 @@ describe('Unit test of view questions list function', () => {
     test('Status is 200 and format json', async () => {
         const response = await request(app).get(
             '/api/admin/mailbox/list_questions_admin',
-        ).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+        ).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -61,7 +61,7 @@ describe('Unit test of view questions list function', () => {
     test('Number of questions returned', async () => {
         const response = await request(app).get(
             '/api/admin/mailbox/list_questions_admin',
-        ).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+        ).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
         
         const mailbox = await Mailbox.find({}).sort({
             createdAt: 'asc',
@@ -76,7 +76,7 @@ describe('Unit Tests of Approve question function', () => {
             username: '197pm33529',
             type_name: 'Học phần',
             id_question: 1
-        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(201);
         expect(response.type).toEqual('application/json');
@@ -93,7 +93,7 @@ describe('Unit Tests of Reply question function when entering complete informati
             type_name: 'Học phần',
             answer: 'Có nha em',
             id_question: 1,
-        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+        }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
         expect(response.statusCode).toBe(201);
         expect(response.type).toEqual('application/json');
         expect(response.body).toEqual({message: 'Trả lời câu hỏi thành công'});
@@ -110,7 +110,7 @@ describe('Unit Tests of Reply question function when leaving type name or answer
                 type_name: '',
                 answer: 'Có nha em',
                 id_question: 1,
-            }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -127,7 +127,7 @@ describe('Unit Tests of Reply question function when leaving type name or answer
                 type_name: 'Học phần',
                 answer: '',
                 id_question: 1,
-            }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -145,7 +145,7 @@ describe('Unit Tests of Reply question function when the user enters the wrong r
                 type_name: 'Học phần',
                 answer: '.',
                 id_question: 1,
-            }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            }).set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(412);
         expect(response.type).toEqual('application/json');
@@ -160,7 +160,7 @@ describe('Unit Tests of View approval question list function', () => {
         const response = await request(app)
             .get('/api/admin/mailbox/list_questions_admin')
             .query({ status_question: 'Đã được duyệt' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -169,7 +169,7 @@ describe('Unit Tests of View approval question list function', () => {
         const response = await request(app)
             .get('/api/admin/mailbox/list_questions_admin')
             .query({ status_question: 'Đã được duyệt' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});;
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});;
         const mailbox = await Mailbox.find({
             status_question: 'Đã được duyệt',
         }).sort({
@@ -184,7 +184,7 @@ describe('Unit Tests of View and search for question which has been replied func
         const response = await request(app)
             .get('/api/user/mailbox/list_questions_user')
             .query({ type_name: 'Học phần' })            
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(201);
         expect(response.type).toEqual('application/json');
@@ -193,7 +193,7 @@ describe('Unit Tests of View and search for question which has been replied func
         const response = await request(app)
             .get('/api/user/mailbox/list_questions_user')
             .query({ type_name: 'Học phần' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
         
         const mailbox = await Mailbox.find({
             type_name: 'Học phần',
@@ -214,7 +214,7 @@ describe('Unit Tests of edit answer function when entering complete information'
             answer: 'Có nha em',
             id_question: 1,
         })            
-        .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+        .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
         
         expect(response.statusCode).toBe(201);
         expect(response.type).toEqual('application/json');
@@ -233,7 +233,7 @@ describe('Unit Tests of edit answer function when leaving type name or answer bl
                 answer: 'Có nha em',
                 id_question: 1,
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -251,7 +251,7 @@ describe('Unit Tests of edit answer function when leaving type name or answer bl
                 answer: '',
                 id_question: 1,
             })            
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -266,7 +266,7 @@ describe('Unit Tests of refuse question function when entering complete informat
             .send({ username: '197pm33529',
                     id_question: 3,
                     message: 'Đã được trả lời rồi nha em'})
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(201);
         expect(response.type).toEqual('application/json');
@@ -280,7 +280,7 @@ describe('Unit Tests of refuse question function when leaving message blank', ()
         const response = await request(app)
             .patch('/api/admin/mailbox/refuse_question')
             .send({ username: '197pm33529', id_question: 3, message: '' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -295,7 +295,7 @@ describe('Unit Tests of View rejected questions function', () => {
         const response = await request(app)
             .get('/api/admin/mailbox/list_questions_admin')
             .query({ status_question: 'Đã bị từ chối' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -304,7 +304,7 @@ describe('Unit Tests of View rejected questions function', () => {
         const response = await request(app)
             .get('/api/admin/mailbox/list_questions_admin')
             .query({ status_question: 'Đã bị từ chối' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA'});
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
 
         const mailbox = await Mailbox.find({
             status_question: 'Đã bị từ chối',
@@ -322,7 +322,7 @@ describe('Unit Tests of View question details function', () => {
             .query({ id_question: 1 })
             .set({
                 Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA',
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM',
             });
 
         expect(response.statusCode).toBe(200);
@@ -334,7 +334,7 @@ describe('Unit Tests of View question details function', () => {
             .query({ id_question: 1 })
             .set({
                 Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIHZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.p6LBoiOhdJMWu-mg_2h7UDVsOKRHu9puMqXStUXBEmA',
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM',
             });
 
         const mailbox = await Mailbox.findOne({
