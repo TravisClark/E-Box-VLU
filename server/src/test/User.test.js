@@ -454,7 +454,7 @@ describe('Unit Tests of change account information function', () => {
             .send({
                 username: '197pm33529',
                 password: 'VLU33529',
-                status_name: 'Đang hoạt động',
+                status_account: 'Đang hoạt động',
                 role: 'Sinh viên',
             })
             .set({
