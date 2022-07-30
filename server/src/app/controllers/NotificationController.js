@@ -9,6 +9,8 @@ class NotificationController {
             //Search notification by username get from token
             const notification = await NotificationModel.find({
                 username_receiver: req.user.username,
+            }).sort({
+                createdAt: 'desc',
             });
             const list_notification = [];
             for (let i = 0; i < notification.length; i++) {
