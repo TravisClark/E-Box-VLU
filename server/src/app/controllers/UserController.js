@@ -105,6 +105,7 @@ class UserController {
                     }),
                 );
             } else {
+                formData.username = username;
                 //format password by username
                 formData.password = `VLU${username.trim().slice(-5)}`;
                 //Get data add new user
