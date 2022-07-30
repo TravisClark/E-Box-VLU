@@ -4,7 +4,7 @@ const NewSchema = mongoose.Schema;
 
 const Status = new NewSchema({
     id_status: { type: Number },
-    status_name: {
+    status_account: {
         type: 'string',
         required: [true, 'Loại câu hỏi không được bỏ trống'],
         default: 'Đang hoạt động',
