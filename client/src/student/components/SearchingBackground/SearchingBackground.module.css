@@ -1,0 +1,14 @@
+.model{
+    background: rgb(89,149,238);
+background: linear-gradient(150deg, rgba(89,149,238,0.8004866180048662) 3%, rgba(109,162,240,0.7329306722689075) 25%, rgba(6,55,128,1) 43%, rgba(2,6,9,1) 69%);
+    opacity: 57%;
+}
+.bannerBg{
+    width: 100%;
+    height: 45vh;
+    /* z-index: 20; */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../../../assets/background-student.jpg");
+}

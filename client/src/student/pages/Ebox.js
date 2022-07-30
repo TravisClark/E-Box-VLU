@@ -19,12 +19,12 @@ function Ebox() {
     isLoggedIn && history.push("/E-boxVLU/Home");
   }, [isLoggedIn, history]);
   return (
-    <>
-      <IntroductionBanner>
+    <div className="snap-y">
+      <IntroductionBanner className='snap-center'>
         <IntroContent />
       </IntroductionBanner>
       <section id="services">
-        <Container className="flex flex-col relative items-center min-w-full p-0 mb-20 space-y-6">
+        <Container className="snap-center flex flex-col relative items-center min-w-full p-0 mb-20 space-y-6">
           <div className="absolute flex overflow-hidden justify-center top-0 h-full w-full bg-heavyBlue xl:h-80 xl:-top-20 xl:rounded-xl xl:w-10/12">
             <CircleIcon/>
             <div className=" relative flex justify-between min-w-full min-h-full">
@@ -70,7 +70,7 @@ function Ebox() {
         </Container>
       </section>
       <section id="description">
-        <Container className="flex flex-col space-y-10 px-12 py-16 items-center justify-between bg-gray-200 min-w-full lg:flex-row  lg:space-y-0">
+        <Container className="snap-center flex flex-col space-y-10 px-12 py-16 items-center justify-between bg-gray-200 min-w-full lg:flex-row  lg:space-y-0">
           <div className="flex flex-col space-y-4 items-center text-black lg:w-1/2 xl:pl-40 lg:items-start">
             <h1 className="font-bold text-xl">HỘP THƯ GÓP Ý KHOA CNTT</h1>
             <h1 className="text-md max-w-md">
@@ -90,7 +90,7 @@ function Ebox() {
           </div>
         </Container>
       </section>
-    </>
+    </div>
   );
 }
 

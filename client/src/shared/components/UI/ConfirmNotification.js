@@ -7,6 +7,7 @@ import { RejectForm } from "../../../admin/components/Table/Form/RejectForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
 import { RestoreQuestionForm } from "../../../admin/components/Table/Form/RestoreQuestionForm";
 import { UserDetailForm } from "../../../admin/components/Table/Form/UserDetailForm";
+import QuestionForm from "../../../student/components/QuestionSection/QuestionForm";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { pageActions } from "../../store/page-slice";
@@ -98,12 +99,19 @@ export const ConfirmNotification = (props) => {
       />
     );
   }
+  else if(type === "PUBLISH_QUESTION_FORM"){
+    form = (
+      <QuestionForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+      />
+    );
+  }
 
   return (
     <div className={` w-full min-h-full absolute flex items-center z-50`}>
       <div className="absolute bg-black opacity-80 w-full min-h-full top-0 left-0 z-0"></div>
       {form}
-      
     </div>
   );
 };

@@ -8,7 +8,7 @@ const Type = Schema({
     },
     type_name: {
         type: 'string',
-        required: true,
+        required: [true, 'Loại câu hỏi không được bỏ trống'],
     },
 });
 

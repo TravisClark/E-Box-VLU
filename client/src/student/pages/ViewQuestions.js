@@ -2,12 +2,16 @@ import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { QuestionType } from "../../shared/components/QuestionType/QuestionType";
+import { SearchItem } from "../../shared/components/SearchItem/SearchItem";
+import { ConfirmNotification } from "../../shared/components/UI/ConfirmNotification";
 import { Notification } from "../../shared/components/UI/Notification";
 import { itemActions } from "../../shared/store/item-slice";
+import { uiActions } from "../../shared/store/ui-slice";
 import IntroductionBanner from "../components/IntroductionBanner/IntroductionBanner";
 import MenuType from "../components/QuestionSection/MenuType/MenuType";
 import QuestionForm from "../components/QuestionSection/QuestionForm";
 import QuestionList from "../components/QuestionSection/QuestionList/QuestionList";
+import { SearchingBackground } from "../components/SearchingBackground/SearchingBackground";
 import Button from "../components/UI/Button";
 import CircleIcon from "../components/UI/CircleIcon";
 import Container from "../components/UI/Container";
@@ -16,45 +20,41 @@ import TriangleIcon from "../components/UI/TriangleIcon";
 
 function ViewQuestions() {
   const searchInputRef = useRef();
+  const dispatch = useDispatch();
   const [isQFormOpen, setIsQFormOpen] = useState(false);
   const { successNotification } = useSelector((state) => state.ui);
-  const dispatch = useDispatch();
   const {account} = useSelector((state) => state.auth);
+  
   const onToggleFormHandler = () => {
     setIsQFormOpen((prevState) => !prevState);
   };
 
-  const searchItemHandler = () => {
+  const onOpenFormHandler = async (value) => {
     dispatch(
-      itemActions.searchItem({ item: searchInputRef.current.value })
+      uiActions.showNotification({
+        type: "PUBLISH_QUESTION_FORM",
+      })
     );
   };
 
   return (
     <>
-      <IntroductionBanner>
-        <form>
-          <div className="absolute flex flex-col min-w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center items-center  md:max-w-4xl sm:max-w-xl">
-            <h1 className="text-white font-bold text-2xl md:text-4xl">
+      <SearchingBackground>
+          <div className="absolute flex flex-col min-w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center items-center -space-y-6 md:max-w-4xl sm:max-w-xl">
+            <h1 className="text-white font-bold text-2xl mt-10 md:text-4xl">
               Danh sách câu hỏi
             </h1>
             <div className="flex flex-col space-y-8 w-full max-w-3xl p-14 md:flex-row md:space-y-0 md:w-full">
-              <input
-                type="text"
-                ref={searchInputRef}
-                className="bg-transparent text-white outline-none rounded-md p-4 w-full  border border-gray-300 md:rounded-none"
-                onChange={searchItemHandler}
-              />
+              <SearchItem className="bg-transparent text-white outline-none rounded-md p-4 w-full border border-gray-300 md:rounded-none"/>
               <button
-                className="bg-black text-white mx-auto py-4 px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2"
-                onClick={searchItemHandler}
+                className="bg-slate-800 text-white mx-auto py-4 px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2"
+               
               >
                 <a href="#questions">Tìm kiếm</a>
               </button>
             </div>
           </div>
-        </form>
-      </IntroductionBanner>
+      </SearchingBackground>
       <section id="question">
         <div className="h-fit mb-20">
         <Container className="min-w-full relative flex flex-col items-center">
@@ -90,7 +90,7 @@ function ViewQuestions() {
             account.role_name === "Ban Chủ Nhiệm Khoa" ||
             account.role_name === "Trợ Lý") && (<button
             className="bg-black text-white px-4 mb-10 mx-auto py-3 font-semibold rounded"
-            onClick={onToggleFormHandler}
+            onClick={onOpenFormHandler}
           >
             Đặt câu hỏi
           </button>)}

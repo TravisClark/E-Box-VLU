@@ -28,12 +28,7 @@ export const RepliedQuestionList = () => {
 
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.responsedAt);
-    const dateTranslate = {
-      day: date.getDate(),
-      month: date.getMonth()+1,
-      year: date.getFullYear(),
-    };
-    const formatDate = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
+    const formatDate = date.toUTCString().replace('GMT','');
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>

@@ -9,7 +9,8 @@ function NewQuestionList() {
   const { currentItems } = useSelector((state) => state.page.pagination);
   const { isLoading } = useHttpClient();
 
-  const onApproveHandler = (value) => {
+  const onApproveHandler = (value,a) => {
+    console.log(a)
     dispatch(
       uiActions.showNotification({
         message: value.question,
@@ -45,12 +46,7 @@ function NewQuestionList() {
 
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.createdAt);
-    const dateTranslate = {
-      day: date.getDate(),
-      month: date.getMonth()+1,
-      year: date.getFullYear(),
-    };
-    const formatDate = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
+    const formatDate = date.toUTCString().replace('GMT','');
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>
@@ -60,7 +56,7 @@ function NewQuestionList() {
         <td className="py-2 px-4">{formatDate}</td>
         <td className="py-2 px-10">{question.type_name}</td>
         <td className="py-2 px-4">
-          <button onClick={onApproveHandler.bind(null, question)}>
+          <button onClick={onApproveHandler.bind(null, question,1)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
