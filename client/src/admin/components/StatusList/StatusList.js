@@ -15,7 +15,7 @@ export default function StatusList({onChangeStatus, status}) {
     const request = async () => {
       try {
         const response = await sendRequest(Requests.fetchAccountStatus);
-        setOptions(response.map(res => <option value={res.status_name} key={res.id_status}>{res.status_name}</option>));
+        setOptions(response.map(res => <option value={res.status_account} key={res.id_status}>{res.status_account}</option>));
         // dispatch(itemActions.getSelected({type:selectedTypeChanged ? selectedTypeChanged : selectedType}));
       } catch (error) {}
     };

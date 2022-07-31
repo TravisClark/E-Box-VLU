@@ -32,7 +32,7 @@ const useHttpClient = () => {
           headers,
           // signal: httpAbortCtrl.signal,
         });
-        console.log(token)
+        console.log(body)
         const responseData = await response.json();
         // activeHttpRequests.current = activeHttpRequests.current.filter(
         //   (reqCtrl) => reqCtrl !== httpAbortCtrl
