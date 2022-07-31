@@ -7,6 +7,7 @@ const admin_typeRoute = require('./admin_typeRoute');
 const user_typeRoute = require('./user_typeRoute');
 const admin_statusRoute = require('./admin_statusRoute');
 const user_notificationRoute = require('./user_notificationRoute');
+const user_conversationRoute = require('./user_conversationRoute');
 
 const { checkLogin } = require('../middleware/Auth');
 
@@ -23,6 +24,7 @@ function route(app) {
     app.use('/api/user/mailbox', checkLogin, user_mailboxRoute);
     app.use('/api/user/type', checkLogin, user_typeRoute);
     app.use('/api/user/notification', checkLogin, user_notificationRoute);
+    app.use('/api/user/conversation', checkLogin, user_conversationRoute);
 }
 
 module.exports = route;

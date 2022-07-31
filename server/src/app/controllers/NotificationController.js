@@ -28,7 +28,7 @@ class NotificationController {
                     ).fromNow(),
                 });
             }
-            //Return user info
+            //Return list notification
             res.status(200).json(list_notification);
         } catch (err) {
             console.log(err);
