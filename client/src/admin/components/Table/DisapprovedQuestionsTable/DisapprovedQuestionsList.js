@@ -17,7 +17,6 @@ export const DisapprovedQuestionList = (props) => {
           url: Requests.restoreQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Khôi phục câu hỏi thành công!",
         type: "RESTORE_QUESTION_FORM",
@@ -27,7 +26,7 @@ export const DisapprovedQuestionList = (props) => {
   
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.createdAt);
-    const formatDate = date.toUTCString();
+    const formatDate = date.toUTCString().replace('GMT','');
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>

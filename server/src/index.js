@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -34,6 +36,8 @@ mongoose
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+app.use(helmet());
+app.use(morgan("common"));
 
 //Connecting router
 route(app);

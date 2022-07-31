@@ -3,12 +3,12 @@ const Notification = require('../models/NotificationModel');
 const InboxModel = require('../models/InboxModel');
 
 class MailboxController {
-    //[GET] http://localhost:5000/api/admin/mailbox/list_questions_admin?status_question=???
+    //[GET] http://localhost:5000/api/admin/mailbox/list_questions_admin?status=???
     list_questions_admin = async (req, res, next) => {
         try {
-            if (req.query.hasOwnProperty('status_question')) {
+            if (req.query.hasOwnProperty('status')) {
                 const mailbox = await Mailbox.find({
-                    status_question: req.query.status_question,
+                    status: req.query.status,
                 }).sort({
                     approvedAt: 'desc',
                 });
@@ -30,14 +30,14 @@ class MailboxController {
             if (req.query.hasOwnProperty('type_name')) {
                 const mailbox = await Mailbox.find({
                     type_name: req.query.type_name,
-                    status_question: 'Đã được trả lời',
+                    status: 'Đã được trả lời',
                 }).sort({
                     createdAt: 'desc',
                 });
                 res.status(201).json(mailbox);
             } else {
                 const mailbox = await Mailbox.find({
-                    status_question: 'Đã được trả lời',
+                    status: 'Đã được trả lời',
                 }).sort({
                     createdAt: 'desc',
                 });
@@ -93,7 +93,7 @@ class MailboxController {
                 //create mailbox information data
                 const info_mailbox = {
                     question: data_question,
-                    status_question: 'Chưa được duyệt',
+                    status: 'Chưa được duyệt',
                     type_name: data_type_name,
                     username_questioner: data_username,
                 };
@@ -120,17 +120,31 @@ class MailboxController {
             const data_username = req.body.username;
             const data_id_question = req.body.id_question;
             const data_type_name = req.body.type_name;
-            //update question status_question to MongoDB
-            var status_question = 'Đã được duyệt';
+            //update question status to MongoDB
+            var status = 'Đã được duyệt';
             await Mailbox.findOneAndUpdate(
                 { id_question: data_id_question },
                 {
-                    status_question: status_question,
+                    status: status,
                     username_approver: data_username,
                     type_name: data_type_name,
                     approvedAt: new Date(),
                 },
-            )
+            );
+            //create informational data for the notification
+            const info_mailbox = await Mailbox.findOne({
+                id_question: data_id_question,
+            });
+            const info_notification = {
+                question: info_mailbox.question,
+                notification: status,
+                username_sender: data_username,
+                username_receiver: info_mailbox.username_questioner,
+            };
+            //create notifications for students
+            const notification = new Notification(info_notification);
+            notification
+                .save()
                 .then(() => {
                     res.status(201).json({
                         message: 'Duyệt câu hỏi thành công',
@@ -159,12 +173,12 @@ class MailboxController {
                     }),
                 );
             } else {
-                //update question status_question to MongoDB
-                var status_question = 'Đã bị từ chối';
+                //update question status to MongoDB
+                var status = 'Đã bị từ chối';
                 await Mailbox.findOneAndUpdate(
                     { id_question: data_id_question },
                     {
-                        status_question: status_question,
+                        status: status,
                         username_approver: data_username,
                         approvedAt: new Date(),
                     },
@@ -186,8 +200,8 @@ class MailboxController {
 
                 //create data notification
                 const info_notification = {
-                    id_question: data_id_question,
-                    status_notification: status_question,
+                    question: info_mailbox.question,
+                    notification: status,
                     username_sender: data_username,
                     username_receiver: info_mailbox.username_questioner,
                 };
@@ -212,12 +226,12 @@ class MailboxController {
         //Get data from client
         const data_username = req.body.username;
         const data_id_question = req.body.id_question;
-        //update question status_question to MongoDB
-        var status_question = 'Chưa được duyệt';
+        //update question status to MongoDB
+        var status = 'Chưa được duyệt';
         await Mailbox.findOneAndUpdate(
             { id_question: data_id_question },
             {
-                status_question: status_question,
+                status: status,
                 username_approver: data_username,
                 approvedAt: new Date(),
             },
@@ -263,12 +277,12 @@ class MailboxController {
                     }),
                 );
             } else {
-                //update answer status_question to MongoDB
-                var status_question = 'Đã được trả lời';
+                //update answer status to MongoDB
+                var status = 'Đã được trả lời';
                 await Mailbox.findOneAndUpdate(
                     { id_question: data_id_question },
                     {
-                        status_question: status_question,
+                        status: status,
                         answer: data_answer,
                         type_name: data_type_name,
                         username_respondent: data_username,
@@ -280,8 +294,8 @@ class MailboxController {
                     id_question: data_id_question,
                 });
                 const info_notification = {
-                    id_question: data_id_question,
-                    status_notification: status_question,
+                    question: info_mailbox.question,
+                    notification: status,
                     username_sender: data_username,
                     username_receiver: info_mailbox.username_questioner,
                 };

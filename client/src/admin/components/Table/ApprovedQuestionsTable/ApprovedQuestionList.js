@@ -18,7 +18,6 @@ export const ApprovedQuestionList = (props) => {
           url: Requests.replyQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Trả lời thành công!",
         type: "REPLY_FORM",
@@ -27,7 +26,7 @@ export const ApprovedQuestionList = (props) => {
   };
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.approvedAt);
-    const formatDate = date.toUTCString();
+    const formatDate = date.toUTCString().replace('GMT','');
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>

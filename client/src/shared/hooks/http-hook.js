@@ -1,17 +1,26 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../store/ui-slice";
 
 const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
 
   // const activeHttpRequests = useRef([]);
 
   const sendRequest = useCallback(
-    async (url, method = "GET", body = null, headers = {}) => {
+    async (
+      url,
+      method = "GET",
+      body = null,
+      headers = {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token && token}`,
+      }
+    ) => {
       // setIsLoading(true);
       // console.log(isLoading)
       // const httpAbortCtrl = new AbortController();
@@ -21,8 +30,9 @@ const useHttpClient = () => {
           method,
           body,
           headers,
-          // signal: httpAbortCtrl.signal,                            
+          // signal: httpAbortCtrl.signal,
         });
+        console.log(body)
         const responseData = await response.json();
         // activeHttpRequests.current = activeHttpRequests.current.filter(
         //   (reqCtrl) => reqCtrl !== httpAbortCtrl
@@ -34,13 +44,13 @@ const useHttpClient = () => {
         // setIsLoading(false);
         return responseData;
       } catch (error) {
-        const err = error.toString().replace('Error:', '')
+        const err = error.toString().replace("Error:", "");
         // setError(err);
-        dispatch(uiActions.catchError({message: err}))
+        dispatch(uiActions.catchError({ message: err }));
         throw error;
       }
     },
-    [dispatch]
+    [dispatch, token]
   );
 
   const clearError = () => {

@@ -4,15 +4,12 @@ const Schema = mongoose.Schema;
 
 const User = new Schema(
     {
-        id_user: {
-            type: Number,
-        },
         username: {
             type: 'string',
             minlength: 5,
             maxlength: 20,
             required: true,
-            unique: true,
+            unique: [true, 'Tài khoản đã tồn tại!!!'],
         },
         password: {
             type: 'string',
@@ -20,7 +17,7 @@ const User = new Schema(
             maxlength: 20,
             required: true,
         },
-        status: {
+        status_account: {
             type: 'string',
             default: 'Đang hoạt động',
         },
@@ -34,7 +31,5 @@ const User = new Schema(
         timestamps: true,
     },
 );
-
-User.plugin(AutoIncrement, { inc_field: 'id_user' });
 
 module.exports = mongoose.model('User', User);

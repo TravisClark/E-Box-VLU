@@ -3,8 +3,10 @@ import Container from "../../../../student/components/UI/Container";
 import classes from "./SideNav.module.css";
 import { NavLink } from "react-router-dom";
 import logo from "../../../../assets/logo.png";
+import { useSelector } from "react-redux";
 function SideNav() {
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
+  const {account} = useSelector((state) => state.auth);
 
   let hamBtnClass = `${classes.hamburger}`;
   if (navbarIsOpen) {
@@ -12,7 +14,6 @@ function SideNav() {
   }
   const openNavHandler = () => {
     setNavbarIsOpen((prevState) => !prevState);
-    console.log('trigger')
   };
   return (
     <nav>
@@ -50,7 +51,7 @@ function SideNav() {
           )}
         </div>
         <div className="w-4/5 border"></div>
-        <NavLink
+        {account.role_name !== 'Trợ Lý' &&<NavLink
           to="/E-boxVLU/admin/dashboard"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full cursor-pointer justify-center group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"
@@ -70,7 +71,7 @@ function SideNav() {
               Dashboard
             </h1>
           )}
-        </NavLink>
+        </NavLink>}
         <NavLink
           to="/E-boxVLU/admin/questions"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${
@@ -92,7 +93,7 @@ function SideNav() {
             </h1>
           )}
         </NavLink>
-        <NavLink
+        {account.role_name === 'Quản Trị Viên' && <NavLink
           to="/E-boxVLU/admin/users"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"
@@ -113,7 +114,7 @@ function SideNav() {
               User
             </h1>
           )}
-        </NavLink>
+        </NavLink>}
         <NavLink
           to="/E-boxVLU/admin/chat"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${

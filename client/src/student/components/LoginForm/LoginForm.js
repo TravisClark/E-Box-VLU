@@ -15,7 +15,6 @@ function LoginForm() {
   const passwordRef = useRef();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [account, setAccount] = useState();
   const {isShowing} = useSelector((state) => state.ui.error)
   const { sendRequest } = useHttpClient();
 
@@ -37,24 +36,25 @@ function LoginForm() {
           Requests.loginRequest,
           "POST",
           JSON.stringify({ username, password }),
-          { "Content-Type": "application/json" }
         );
-        setAccount(requestData);
+        // setAccount(requestData);
+        dispatch(authActions.loginHandler({token: requestData}));
+        history.push("/E-boxVLU/Home");
       } catch (error) {
       }
     };
     await fetchData();
   };
 
-  useEffect(() => {
-    if (account) {
-      const storeData = async () => {
-        await dispatch(authActions.loginHandler(account));
-        await history.push("/E-boxVLU/Home");
-      };
-      storeData();
-    }
-  }, [account, dispatch, history]);
+  // useEffect(() => {
+  //   if (account) {
+  //     const storeData = async () => {
+  //       await dispatch(authActions.loginHandler(account));
+  //       await history.push("/E-boxVLU/Home");
+  //     };
+  //     storeData();
+  //   }
+  // }, [account, dispatch, history]);
   return (
     <form onSubmit={onSubmitHandler}>
       <Container className="absolute min-w-full min-h-full p-0 top-0 flex items-center justify-center">

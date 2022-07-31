@@ -18,7 +18,6 @@ export const RepliedQuestionList = () => {
           url: Requests.replyQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Chỉnh sửa câu trả lời thành công!",
         type: "MODIFY_ANSWER_FORM",
@@ -28,7 +27,7 @@ export const RepliedQuestionList = () => {
 
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.responsedAt);
-    const formatDate = date.toUTCString();
+    const formatDate = date.toUTCString().replace('GMT','');
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>

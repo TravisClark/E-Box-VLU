@@ -19,7 +19,6 @@ function NewQuestionList() {
           url: Requests.approveQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Duyệt thành công!",
         type: "APPROVE_FORM",
@@ -36,7 +35,6 @@ function NewQuestionList() {
           url: Requests.refuseQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Từ chối thành công!",
         type: "REJECT_FORM",
@@ -46,7 +44,7 @@ function NewQuestionList() {
 
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.createdAt);
-    const formatDate = date.toUTCString();
+    const formatDate = date.toUTCString().replace('GMT','');
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>

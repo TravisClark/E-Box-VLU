@@ -18,7 +18,6 @@ function Layout(props) {
     dispatch(uiActions.runAdminMode({ type: "REFRESH_ADMIN_PAGE" }));
     // isInAdminMode && history.replace("/E-boxVLU/admin/dashboard");
   }, [dispatch, isLoggedIn, history, isInAdminMode]);
-  console.log(isInAdminMode)
 
   return (
     <>

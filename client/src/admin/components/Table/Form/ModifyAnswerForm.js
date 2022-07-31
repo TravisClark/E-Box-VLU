@@ -18,13 +18,6 @@ export const ModifyAnswerForm = (props) => {
   }, [dispatch, data]);
 
   const date = new Date(data.createdAt);
-  const dateTranslate = {
-    min: date.getMinutes(),
-    hour: date.getHours(),
-    day: date.getDate(),
-    month: date.getMonth(),
-    year: date.getFullYear(),
-  };
   const formatDate = date.toUTCString();
 
   const onSubmitHandler = (e) => {
@@ -76,7 +69,7 @@ export const ModifyAnswerForm = (props) => {
               className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
               // onClick={props.onSubmitHandler}
             >
-              Submit
+              Xác nhận
             </button>
             <button
               className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
