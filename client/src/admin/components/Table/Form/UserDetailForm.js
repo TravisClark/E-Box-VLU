@@ -9,7 +9,7 @@ export const UserDetailForm = (props) => {
   const [newPassword, setNewPassword]= useState('')
   const [isShowWarning, setIsShowWarning] = useState(false)
   const [isAbleToSubmit, setIsAbleToSubmit] = useState(false)
-  const [status, setStatus] = useState(data.status)
+  const [status, setStatus] = useState(data.status_account)
   const inputRef = useRef();
 
   const onSubmitHandler = (e) => {
@@ -17,7 +17,7 @@ export const UserDetailForm = (props) => {
     const body = JSON.stringify({
       username: data.username,
       password: newPassword,
-      status_name: status,
+      status_account: status,
       role_name: selectedTypeChanged ? selectedTypeChanged : selectedType,
     });
     props.onSubmitHandler(body);

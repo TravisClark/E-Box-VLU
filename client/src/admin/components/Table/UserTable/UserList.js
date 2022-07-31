@@ -27,40 +27,6 @@ export const UserList = () => {
     );
   };
 
-  const onOpenDeactivateForm = (value) => {
-    dispatch(
-      uiActions.showNotification({
-        message: value.username,
-        data: value,
-        request: {
-          url: Requests.deactivateUser,
-          method: "PATCH",
-          body: null,
-          headers: { "Content-Type": "application/json" },
-        },
-        successMessage: "Vô hiệu hóa tài khoản thành công!",
-        type: "DEACTIVATE_FORM",
-      })
-    );
-  };
-
-  const onOpenActivateForm = (value) => {
-    // dispatch(
-    //   uiActions.showNotification({
-    //     message: value.username,
-    //     data: value,
-    //     request: {
-    //       url: Requests.deactivateUser,
-    //       method: "PATCH",
-    //       body: null,
-    //       headers: { "Content-Type": "application/json" },
-    //     },
-    //     successMessage: "Vô hiệu hóa tài khoản thành công!",
-    //     type: "DEACTIVATE_FORM",
-    //   })
-    // );
-  };
-
   const users = currentItems.map((user, index) => {
     return (
       <tr key={user._id}>
@@ -70,10 +36,10 @@ export const UserList = () => {
         <td className={`py-2 px-4 `}>
           <div
             className={` rounded-lg text-center w-28 text-xs py-1 font-medium ${
-              user.status_name === "Đang hoạt động" ? activeStyle : deactivateStyle
+              user.status_account === "Đang hoạt động" ? activeStyle : deactivateStyle
             }`}
           >
-            {user.status_name}
+            {user.status_account}
           </div>
         </td>
         <td className="py-2 px-10 ">
