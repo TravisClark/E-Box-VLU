@@ -12,7 +12,7 @@ export const Table = ({ conditionFilter, tableHeader, children, itemList }) => {
   useEffect(() => {
     const questions = items.filter(
       (question) =>
-        question.status === conditionFilter &&
+        question.status_question === conditionFilter &&
         question.question.includes(itemSearching)
     );
     dispatch(

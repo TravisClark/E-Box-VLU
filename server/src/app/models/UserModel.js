@@ -17,7 +17,7 @@ const User = new Schema(
             maxlength: 20,
             required: true,
         },
-        status: {
+        status_account: {
             type: 'string',
             default: 'Đang hoạt động',
         },

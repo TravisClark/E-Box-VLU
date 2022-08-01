@@ -35,7 +35,7 @@ class UserController {
         }
     };
 
-    //[GET] http://localhost:5000/api/user/user/user/account_info
+    //[GET] http://localhost:5000/api/user/user/account_info
     account_info = async (req, res) => {
         try {
             //Search user by token
@@ -105,6 +105,7 @@ class UserController {
                     }),
                 );
             } else {
+                formData.username = username;
                 //format password by username
                 formData.password = `VLU${username.trim().slice(-5)}`;
                 //Get data add new user
@@ -152,7 +153,7 @@ class UserController {
                     password,
                 });
 
-                if (!user || user.status === 'Không hoạt động') {
+                if (!user || user.status_account === 'Không hoạt động') {
                     //Check if the user is found
                     return next(
                         res.status(401).json({
@@ -299,12 +300,25 @@ class UserController {
     //[PATCH] http://localhost:5000/api/admin/user/change_user_information
     change_user_information = async (req, res, next) => {
         try {
+            //get data form client
+            var data_password = req.body.password;
+            var data_role_name = req.body.role_name;
+            var data_status_account = req.body.status_account;
+
+            var password = data_password.replace(/\s+/g, '');
+            if (
+                password == null ||
+                password === ''
+            ) {
+                const user = UserModel.findOne({ username: req.body.username });
+                password = user.password;
+            }
             UserModel.findOneAndUpdate(
                 { username: req.body.username },
                 {
-                    password: req.body.password,
-                    role_name: req.body.role_name,
-                    status_name: req.body.status_name,
+                    password: password,
+                    role_name: data_role_name,
+                    status_account: data_status_account,
                 },
             )
                 .then(() => {

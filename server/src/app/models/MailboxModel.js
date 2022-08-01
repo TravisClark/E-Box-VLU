@@ -13,7 +13,7 @@ const Mailbox = new Schema({
     answer: {
         type: 'string',
     },
-    status: {
+    status_question: {
         type: 'string',
         required: true,
     },

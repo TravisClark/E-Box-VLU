@@ -17,7 +17,6 @@ export const DisapprovedQuestionList = (props) => {
           url: Requests.restoreQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Khôi phục câu hỏi thành công!",
         type: "RESTORE_QUESTION_FORM",
