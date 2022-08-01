@@ -4,7 +4,7 @@ class InboxController {
     //[GET] http://localhost:5000/api/user/inbox/list_messages
     list_messages = async (req, res, next) => {
         try {
-            const list_messages = await InboxModel.find({id_conversation: req.body.id_conversation});
+            const list_messages = await InboxModel.find({id_conversation: req.query.id_conversation});
             res.status(201).json(list_messages);
         } catch (err) {
             console.log(err);
