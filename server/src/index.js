@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
+const server = require('http').createServer(app);
 const PORT = process.env.PORT;
 
 const route = require('./routes/index');
@@ -34,9 +37,22 @@ mongoose
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+app.use(helmet());
+app.use(morgan("common"));
 
 //Connecting router
 route(app);
+
+//connect socket
+const io = require('socket.io')(server, {
+    cors: {
+        origin: 'https://localhost:3000',
+    }
+});
+
+io.on('connection', (socket)=>{
+    console.log('Connected to socket')
+})
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);

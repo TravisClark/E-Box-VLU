@@ -1,6 +1,7 @@
 const Mailbox = require('../models/MailboxModel');
 const Notification = require('../models/NotificationModel');
 const InboxModel = require('../models/InboxModel');
+const Conversation = require('../models/ConversationModel');
 
 class MailboxController {
     //[GET] http://localhost:5000/api/admin/mailbox/list_questions_admin?status_question=???
@@ -173,12 +174,22 @@ class MailboxController {
                 const info_mailbox = await Mailbox.findOne({
                     id_question: data_id_question,
                 });
-
+                //check Conversation exist or not
+                const checkConversation = await Conversation.findOne({members: [data_username, info_mailbox.username_questioner]});
+                if(!checkConversation){
+                    //create data Conversation
+                    const newConversation = new Conversation({
+                        members: [data_username, info_mailbox.username_questioner]
+                    });
+                    await newConversation.save();
+                }
+                //get id of conversation
+                const info_Conversation = await Conversation.findOne({members: [data_username, info_mailbox.username_questioner]});
                 //create data message
                 const info_inbox = {
+                    id_conversation: info_Conversation.id_conversation,
                     message: data_message,
                     username_sender: data_username,
-                    username_receiver: info_mailbox.username_questioner,
                 };
                 const inbox = new InboxModel(info_inbox);
                 //Send Message to student
