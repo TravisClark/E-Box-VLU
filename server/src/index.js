@@ -45,29 +45,29 @@ route(app);
 //connect socket
 const io = require('socket.io')(8900, {
     cors: {
-        origin: 'https://localhost:3000',
+        origin: 'http://localhost:3000',
     }
 });
 
 let users = [];
 
 const addUser = (username,socketId) => {
-    !users.some(user=> uses.username === userId) && users.push({username,socketId});
+    !users.some(user=> use.username === userId) && users.push({username,socketId});
 }
 
 const removeUser = (socketId) =>{
-    users = users.filter(user=> uses.socketId !== socketId)
+    users = users.filter(user=> use.socketId !== socketId)
 }
 
 const getUser = (username) =>{
-    return users.find(user=> uses.username !== username)
+    return users.find(user=> use.username !== username)
 }
 
 io.on('connection', (socket)=>{
     //connected successfully
     console.log('Connected to socket');
     //Send message to everyone connected
-    io.to().emit("welcome","hello this is socket server!");
+    io.emit("welcome","hello this is socket server!");
     //get username and socketId from user
     socket.on("addUser", (username) => {
         addUser(username,socket.id);
