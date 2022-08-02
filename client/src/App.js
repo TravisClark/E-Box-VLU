@@ -8,10 +8,8 @@ import QuestionManagement from "./admin/pages/QuestionManagement";
 import Users from "./admin/pages/Users";
 import Layout from "./shared/components/Layout/Layout";
 import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
-// import { QuestionDetail } from ";
 import ChangePassword from "./student/pages/ChangePassword";
 import { QuestionDetail } from "./student/pages/QuestionDetail";
-import jwt_decode from "jwt-decode";
 
 const Login = React.lazy(() => import("./student/pages/Login"));
 const Ebox = React.lazy(() => import("./student/pages/Ebox"));
