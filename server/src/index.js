@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
-const server = require('http').createServer(app);
 const PORT = process.env.PORT;
 
 const route = require('./routes/index');
@@ -44,7 +43,7 @@ app.use(morgan("common"));
 route(app);
 
 //connect socket
-const io = require('socket.io')(server, {
+const io = require('socket.io')(8900, {
     cors: {
         origin: 'https://localhost:3000',
     }
@@ -52,7 +51,7 @@ const io = require('socket.io')(server, {
 
 io.on('connection', (socket)=>{
     console.log('Connected to socket');
-    io.emit("welcome","hello this is socket server!");
+    io.to().emit("welcome","hello this is socket server!");
 })
 
 app.listen(PORT, () => {
