@@ -59,6 +59,10 @@ const removeUser = (socketId) =>{
     users = users.filter(user=> uses.socketId !== socketId)
 }
 
+const getUser = (username) =>{
+    return users.find(user=> uses.username !== username)
+}
+
 io.on('connection', (socket)=>{
     //connected successfully
     console.log('Connected to socket');
@@ -68,6 +72,14 @@ io.on('connection', (socket)=>{
     socket.on("addUser", (username) => {
         addUser(username,socket.id);
         io.emit("getUsers", users);
+    })
+    //send and get message
+    socket.on("sendMessage", (username_sender,username_receiver,message) =>{
+        const user = getUser(username_receiver);
+        io.to(user.socketId).emit("getMessage",{
+            username_sender,
+            message,
+        })
     })
     //when disconnect
     socket.on("disconnect", () =>{
