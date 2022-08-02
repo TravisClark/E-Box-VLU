@@ -1,7 +1,7 @@
 const InboxModel = require('../models/InboxModel');
 
 class InboxController {
-    //[GET] http://localhost:5000/api/user/inbox/list_messages
+    //[GET] http://localhost:5000/api/user/inbox/list_messages?id_conversation=??
     list_messages = async (req, res, next) => {
         try {
             const list_messages = await InboxModel.find({id_conversation: req.query.id_conversation});
