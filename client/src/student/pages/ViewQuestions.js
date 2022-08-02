@@ -1,18 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { QuestionType } from "../../shared/components/QuestionType/QuestionType";
 import { SearchItem } from "../../shared/components/SearchItem/SearchItem";
-import { ConfirmNotification } from "../../shared/components/UI/ConfirmNotification";
 import { Notification } from "../../shared/components/UI/Notification";
-import { itemActions } from "../../shared/store/item-slice";
 import { uiActions } from "../../shared/store/ui-slice";
-import IntroductionBanner from "../components/IntroductionBanner/IntroductionBanner";
 import MenuType from "../components/QuestionSection/MenuType/MenuType";
 import QuestionForm from "../components/QuestionSection/QuestionForm";
 import QuestionList from "../components/QuestionSection/QuestionList/QuestionList";
 import { SearchingBackground } from "../components/SearchingBackground/SearchingBackground";
-import Button from "../components/UI/Button";
 import CircleIcon from "../components/UI/CircleIcon";
 import Container from "../components/UI/Container";
 import SquareIcon from "../components/UI/SquareIcon";
@@ -55,9 +50,9 @@ function ViewQuestions() {
       <section id="question">
         <Container
           className="min-w-full relative flex flex-col items-center"
-          style={{ background: "#eaeaea" }}
+          style={{ background: "#eaeaea" , minHeight: '500px'}}
         >
-          <div className="absolute w-full flex justify-center overflow-hidden z-0">
+          <div className="absolute w-full flex justify-center overflow-hidden z-0 ">
             <CircleIcon className="hidden md:block" />
             <svg
               id="visual"
