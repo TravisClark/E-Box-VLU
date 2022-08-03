@@ -12,6 +12,7 @@ export const Conversation = ({ selectedUser }) => {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const socket = useRef();
+  const scrollRef = useRef();
   // const [socket, setSocket] = useState(null);
   const { sendRequest } = useHttpClient();
 
@@ -44,21 +45,20 @@ export const Conversation = ({ selectedUser }) => {
   // console.log(conversations);
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
-    socket.current.on("getMessage", data => {
+    socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         username_sender: data.username_sender,
         // username_receiver: selectedUser.members[1],
         message: data.message,
       });
-      console.log(data)
+      console.log(data);
       // console.log('Im in')
     });
-    
-  }, [socket, newMessage, account.username, selectedUser.members]);
+  }, []);
+  console.log(arrivalMessage);
 
-  console.log(conversations)
   useEffect(() => {
-    console.log(arrivalMessage)
+    console.log(arrivalMessage);
     arrivalMessage &&
       setConversations((prevState) => [...prevState, arrivalMessage]);
   }, [arrivalMessage]);
@@ -68,8 +68,7 @@ export const Conversation = ({ selectedUser }) => {
     socket.current.on("getUsers", (users) => {
       console.log(users);
     });
-  }, [socket, account.username]);
-
+  }, [account.username]);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -82,20 +81,27 @@ export const Conversation = ({ selectedUser }) => {
       username_sender: account.username,
       username_receiver: selectedUser.members[1],
       message: newMessage,
-    }
-    console.table(socketItem)
+    };
+    // console.table(socketItem)
     socket.current.emit("sendMessage", socketItem);
-    
 
     try {
-      const res = await sendRequest(Requests.sendMessage, "POST", JSON.stringify(message));
-      console.log(res)
+      const res = await sendRequest(
+        Requests.sendMessage,
+        "POST",
+        JSON.stringify(message)
+      );
+      // console.log(res)
       setConversations([...conversations, res]);
     } catch (error) {
       console.log(error);
     }
     setNewMessage("");
   };
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [conversations]);
 
   return (
     <div className="h-fit w-full bg-white rounded-md flex flex-col">
@@ -116,10 +122,16 @@ export const Conversation = ({ selectedUser }) => {
       >
         {conversations.map(function (conversation) {
           if (conversation.username_sender === account.username) {
-            return <MessageSender key={conversation._id} chat={conversation} />;
+            return (
+              <div ref={scrollRef}>
+                <MessageSender key={conversation._id} chat={conversation} />
+              </div>
+            );
           } else {
             return (
-              <MessageReceiver key={conversation._id} chat={conversation} />
+              <div ref={scrollRef}>
+                <MessageReceiver key={conversation._id} chat={conversation} />
+              </div>
             );
           }
         })}
