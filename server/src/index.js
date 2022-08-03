@@ -60,7 +60,7 @@ const removeUser = (socketId) =>{
 }
 
 const getUser = (username) =>{
-    return users.find(user=> user.username !== username)
+    return users.find(user=> user.username === username)
 }
 
 io.on('connection', (socket)=>{
