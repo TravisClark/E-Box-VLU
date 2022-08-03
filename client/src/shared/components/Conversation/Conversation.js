@@ -6,17 +6,14 @@ import { MessageReceiver } from "./MessageReceiver/MessageReceiver";
 import { MessageSender } from "./MessageSender/MessageSender";
 import { io } from "socket.io-client";
 
-export const Conversation = ({ selectedUser }) => {
+export const Conversation = ({ selectedUser, minHeight }) => {
   const { account } = useSelector((state) => state.auth);
   const [conversations, setConversations] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const socket = useRef();
   const scrollRef = useRef();
-  // const [socket, setSocket] = useState(null);
   const { sendRequest } = useHttpClient();
-
-  // console.count()
 
   useEffect(() => {
     const request = async () => {
@@ -28,38 +25,19 @@ export const Conversation = ({ selectedUser }) => {
     request();
   }, [selectedUser, sendRequest]);
 
-  // useEffect(() => {
-  //   socket.current = io("ws://localhost:8900");
-  // }, []);
-
-  // console.log(socket)
-
-  // useEffect(() => {
-  //   socket &&
-  //     socket.on("welcome", (message) => {
-  //       console.log(message);
-  //     });
-  // }, [socket]);
-
-  //----------------------Development
-  // console.log(conversations);
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         username_sender: data.username_sender,
-        // username_receiver: selectedUser.members[1],
         message: data.message,
         createdAt: Date.now()
       });
       console.log(data);
-      // console.log('Im in')
     });
   }, []);
-  console.log(arrivalMessage);
 
   useEffect(() => {
-    console.log(arrivalMessage);
     arrivalMessage &&
       setConversations((prevState) => [...prevState, arrivalMessage]);
   }, [arrivalMessage]);
@@ -83,7 +61,6 @@ export const Conversation = ({ selectedUser }) => {
       username_receiver: selectedUser.members[1],
       message: newMessage,
     };
-    // console.table(socketItem)
     socket.current.emit("sendMessage", socketItem);
 
     try {
@@ -92,7 +69,6 @@ export const Conversation = ({ selectedUser }) => {
         "POST",
         JSON.stringify(message)
       );
-      // console.log(res)
       setConversations([...conversations, res]);
     } catch (error) {
       console.log(error);
@@ -105,7 +81,7 @@ export const Conversation = ({ selectedUser }) => {
   }, [conversations]);
 
   return (
-    <div className="h-fit w-full bg-white rounded-md flex flex-col">
+    <div className=" w-full bg-white rounded-md flex flex-col" style={{maxHeight: '500px', minHeight: '400px'}}>
       <div
         className="p-4 flex space-x-2"
         style={{ borderBottom: "1px solid #dfe6e9" }}
@@ -118,8 +94,8 @@ export const Conversation = ({ selectedUser }) => {
         </span>
       </div>
       <div
-        className="flex flex-col space-y-2 min-w-full overflow-hidden hover:overflow-auto"
-        style={{ maxHeight: "428px", minHeight: "428px" }}
+        className="flex flex-col space-y-2 w-96 min-w-full h-3/4 overflow-hidden hover:overflow-auto"
+        // style={{ maxHeight: "428px", minHeight: minHeight }}
       >
         {conversations.map(function (conversation) {
           if (conversation.username_sender === account.username) {

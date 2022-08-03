@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Requests from "../../../api/Requests";
 import useHttpClient from "../../../hooks/http-hook";
 
 export const ContactList = ({ onSelectUser, selectedUser }) => {
   const { sendRequest } = useHttpClient();
+  const { account } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const request = async () => {
       const response = await sendRequest(Requests.fetchUsersContact);
+      if (response[0].members[1] === account.username) {
+        for (let index = 0; index < response.length; index++) {
+          let temp = response[index].members[0];
+          response[index].members.shift();
+          response[index].members.push(temp);
+        }
+      }
       setUsers(response);
       onSelectUser(response[0]);
+      console.log(response);
     };
     request();
-  }, [sendRequest, onSelectUser]);
+  }, [sendRequest, onSelectUser, account.username]);
 
   const userList = users.map((user) => (
     <li
-      className={`p-4 rounded-md  flex cursor-pointer transition group ${
+      className={`p-4 rounded-md w-fit flex cursor-pointer transition group ${
         selectedUser.members[1] === user.members[1]
           ? "bg-blue-600 text-white "
           : "text-black hover:bg-slate-100 hover:text-black"
@@ -40,9 +50,9 @@ export const ContactList = ({ onSelectUser, selectedUser }) => {
       {user.members[1]}
     </li>
   ));
-  
+
   return (
-    <div className="shrink h-full w-1/3 bg-white rounded-md">
+    <div className="h-full w-1/3 bg-white rounded-md">
       <ul
         className="flex flex-col space-y-2 p-4"
         style={{ maxHeight: "555px", minHeight: "555px" }}

@@ -54,7 +54,7 @@ function QuestionList() {
       for (let i = 0; i < currentItems.length; i++) {
         let item = (
           <li
-            className={`bg-lightBlue px-6 py-3 text-white truncate`}
+            className={`bg-lightBlue px-6 py-3 text-white truncate cursor-pointer hover:bg-blue-700`}
             value={currentItems[i]?.question}
             key={currentItems[i]?.id_question}
             onClick={onStoreSelectedItem.bind(null, currentItems[i])}

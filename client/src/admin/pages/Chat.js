@@ -5,7 +5,6 @@ import Container from "../../student/components/UI/Container";
 
 export const Chat = () => {
   const [selectedUser, setSelectedUser] = useState({});
-  console.count();
 
   const onSelectUser = useCallback((selected) => {
     setSelectedUser(selected);
