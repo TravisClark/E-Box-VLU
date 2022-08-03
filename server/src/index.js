@@ -46,22 +46,21 @@ route(app);
 const io = require('socket.io')(8900, {
     cors: {
         origin: 'http://localhost:3000',
-        methods: ["GET", "POST"]
     }
 });
 
 let users = [];
 
 const addUser = (username,socketId) => {
-    !users.some(user=> user.username === username) && users.push({username,socketId});
+    !users.some(user=> use.username === userId) && users.push({username,socketId});
 }
 
 const removeUser = (socketId) =>{
-    users = users.filter(user=> user.socketId !== socketId)
+    users = users.filter(user=> use.socketId !== socketId)
 }
 
 const getUser = (username) =>{
-    return users.find(user=> user.username !== username)
+    return users.find(user=> use.username !== username)
 }
 
 io.on('connection', (socket)=>{
@@ -75,7 +74,7 @@ io.on('connection', (socket)=>{
         io.emit("getUsers", users);
     })
     //send and get message
-    socket.on("sendMessage", (username_sender,username_receiver,message) =>{
+    socket.on("sendMessage", ({username_sender,username_receiver,message}) =>{
         const user = getUser(username_receiver);
         io.to(user.socketId).emit("getMessage",{
             username_sender,

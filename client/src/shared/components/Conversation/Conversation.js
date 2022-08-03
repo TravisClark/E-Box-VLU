@@ -10,9 +10,12 @@ export const Conversation = ({ selectedUser }) => {
   const { account } = useSelector((state) => state.auth);
   const [conversations, setConversations] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const socket = useRef(io("ws://localhost:8900"));
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const socket = useRef();
   // const [socket, setSocket] = useState(null);
   const { sendRequest } = useHttpClient();
+
+  // console.count()
 
   useEffect(() => {
     const request = async () => {
@@ -25,7 +28,7 @@ export const Conversation = ({ selectedUser }) => {
   }, [selectedUser, sendRequest]);
 
   // useEffect(() => {
-  //   setSocket(io("ws://localhost:8900"));
+  //   socket.current = io("ws://localhost:8900");
   // }, []);
 
   // console.log(socket)
@@ -38,11 +41,27 @@ export const Conversation = ({ selectedUser }) => {
   // }, [socket]);
 
   //----------------------Development
-
+  // console.log(conversations);
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
-  }, [socket]);
-  console.log(selectedUser);
+    socket.current.on("getMessage", data => {
+      setArrivalMessage({
+        username_sender: data.username_sender,
+        // username_receiver: selectedUser.members[1],
+        message: data.message,
+      });
+      console.log(data)
+      // console.log('Im in')
+    });
+    
+  }, [socket, newMessage, account.username, selectedUser.members]);
+
+  console.log(conversations)
+  useEffect(() => {
+    console.log(arrivalMessage)
+    arrivalMessage &&
+      setConversations((prevState) => [...prevState, arrivalMessage]);
+  }, [arrivalMessage]);
 
   useEffect(() => {
     socket.current.emit("addUser", account.username);
@@ -51,7 +70,6 @@ export const Conversation = ({ selectedUser }) => {
     });
   }, [socket, account.username]);
 
-  console.log(socket);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -60,21 +78,23 @@ export const Conversation = ({ selectedUser }) => {
       message: newMessage,
       id_conversation: selectedUser.id_conversation,
     };
-    // console.log(account.username);
-    // console.log(selectedUser.members[1]);
-    // console.log(newMessage);
-    socket.current.emit("sendMessage", {
+    const socketItem = {
       username_sender: account.username,
       username_receiver: selectedUser.members[1],
       message: newMessage,
-    });
+    }
+    console.table(socketItem)
+    socket.current.emit("sendMessage", socketItem);
+    
 
     try {
-      await sendRequest(Requests.sendMessage, "POST", JSON.stringify(message));
+      const res = await sendRequest(Requests.sendMessage, "POST", JSON.stringify(message));
+      console.log(res)
+      setConversations([...conversations, res]);
     } catch (error) {
       console.log(error);
     }
-    // setNewMessage('')
+    setNewMessage("");
   };
 
   return (
