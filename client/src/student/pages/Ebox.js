@@ -15,9 +15,11 @@ import CircleIcon from "../components/UI/CircleIcon";
 function Ebox() {
   const history = useHistory();
   const { isLoggedIn } = useSelector((state) => state.auth);
+  
   useEffect(() => {
     isLoggedIn && history.push("/E-boxVLU/Home");
   }, [isLoggedIn, history]);
+  
   return (
     <div className="snap-y">
       <IntroductionBanner className='snap-center'>
