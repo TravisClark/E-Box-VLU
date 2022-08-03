@@ -7,7 +7,7 @@ import classes from "./IntroductionBanner.module.css";
 function IntroductionBanner(props) {
   return (
     <section id="Introduction">
-      <Container className="relative min-w-full min-h-fit z-0">
+      <Container className={`relative min-w-full min-h-fit z-0 ${props.className}`}>
         <video
           className="hidden min-w-full min-h-full md:block"
           src={introVideo}

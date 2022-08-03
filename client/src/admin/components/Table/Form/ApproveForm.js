@@ -26,7 +26,7 @@ export const ApproveForm = (props) => {
     <>
       <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10">
         <span className="text-2xl font-bold">Xác nhận duyệt</span>
-        <h1 className="max-w-lg break-all">{props.message}</h1>
+        <h1 className="max-w-lg break-all">{data.question}</h1>
         <QuestionType
           className="self-start border"
           selected={data.type_name}
@@ -36,7 +36,7 @@ export const ApproveForm = (props) => {
             className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
             onClick={onSubmitHandler}
           >
-            Submit
+            Duyệt
           </button>
           <button
             className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"

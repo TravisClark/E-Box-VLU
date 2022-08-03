@@ -1,34 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
 import { uiActions } from "../../../shared/store/ui-slice";
 import Container from "../../../student/components/UI/Container";
 import classes from './AdminNav.module.css'
 function AdminNav() {
   const { account } = useSelector((state) => state.auth);
+  const {isInAdminMode} = useSelector((state) => state.ui);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
+
   const logoutHandler = () => {
     dispatch(authActions.logoutHandler());
     dispatch(uiActions.runStudentMode());
     history.replace("/E-boxVLU");
   };
+
   const toggleMenuHandler = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
+
   const runUserModeHandler = (page) => {
     dispatch(uiActions.runStudentMode());
     if (page === "Home") {
-      history.push("/E-boxVLU/Home");
+      history.replace("/E-boxVLU/Home");
     } else if (page === "Change Password") {
       history.replace("/E-boxVLU/change-password");
     }
   };
+
+  useEffect(() => {
+    !isInAdminMode && history.replace("/E-boxVLU/Home") 
+  }, [isInAdminMode, history]);
+  
+  
   return (
     <nav>
-      <Container className="fixed min-w-full flex justify-end p-8 bg-transparent z-10">
+      <Container className="absolute min-w-full flex justify-end p-8 bg-transparent z-10">
         <div
           className={`flex space-x-2 cursor-pointer`}
           onClick={toggleMenuHandler}
@@ -42,7 +52,7 @@ function AdminNav() {
             <path d="M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10 10-4.579 10-10S17.421 2 12 2zm0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3zm-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228z"></path>
           </svg>
           <span className={`font-medium text-black`}>
-            {account && account.username}
+            {account?.username}
           </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"

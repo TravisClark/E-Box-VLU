@@ -21,6 +21,12 @@ const pageSlice = createSlice({
       const indexOfFirstItem = indexOfLastItem - state.pagination.itemsPerPage;
       state.pagination.currentItems = state.pagination.items.slice(indexOfFirstItem, indexOfLastItem);
     },
+    resetPagination(state, action) {
+      state.pagination.items = []
+      state.pagination.currentPage = ''
+      state.pagination.itemsPerPage = ''
+      state.pagination.currentItems = []
+    },
     storeItemSelected(state, action){
       state.selectedItem = action.payload
     },

@@ -18,7 +18,6 @@ export const RepliedQuestionList = () => {
           url: Requests.replyQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Chỉnh sửa câu trả lời thành công!",
         type: "MODIFY_ANSWER_FORM",
@@ -28,12 +27,7 @@ export const RepliedQuestionList = () => {
 
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.responsedAt);
-    const dateTranslate = {
-      day: date.getDate(),
-      month: date.getMonth(),
-      year: date.getFullYear(),
-    };
-    const formatDate = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
+    const formatDate = date.toUTCString().replace('GMT','');
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>
@@ -42,6 +36,7 @@ export const RepliedQuestionList = () => {
         </td>
         <td className="py-2 px-4">{formatDate}</td>
         <td className="py-2 px-4">{question.username_respondent}</td>
+        <td className="py-2 px-10">{question.type_name}</td>
         <td className="py-2 px-4 underline flex justify-center">
           <button onClick={onOpenFormHandler.bind(null, question)}>
             <svg

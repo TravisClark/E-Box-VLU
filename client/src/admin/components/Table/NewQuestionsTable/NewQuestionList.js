@@ -9,7 +9,8 @@ function NewQuestionList() {
   const { currentItems } = useSelector((state) => state.page.pagination);
   const { isLoading } = useHttpClient();
 
-  const onApproveHandler = (value) => {
+  const onApproveHandler = (value,a) => {
+    console.log(a)
     dispatch(
       uiActions.showNotification({
         message: value.question,
@@ -18,7 +19,6 @@ function NewQuestionList() {
           url: Requests.approveQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Duyệt thành công!",
         type: "APPROVE_FORM",
@@ -35,7 +35,6 @@ function NewQuestionList() {
           url: Requests.refuseQuestion,
           method: "PATCH",
           body: null,
-          headers: { "Content-Type": "application/json" },
         },
         successMessage: "Từ chối thành công!",
         type: "REJECT_FORM",
@@ -45,27 +44,22 @@ function NewQuestionList() {
 
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.createdAt);
-    const dateTranslate = {
-      day: date.getDate(),
-      month: date.getMonth(),
-      year: date.getFullYear(),
-    };
-    const formatDate = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
+    const formatDate = date.toUTCString().replace('GMT','');
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>
         <td className="py-2 px-4">
-          <div className="truncate w-96">{question.question}</div>
+          <div className="w-40 xl:w-96 break-words">{question.question}</div>
         </td>
         <td className="py-2 px-4">{formatDate}</td>
-        <td className="py-2 px-4">{question.type_name}</td>
-        <td className="py-2 px-4 flex justify-center">
-          <button onClick={onApproveHandler.bind(null, question)}>
+        <td className="py-2 px-10">{question.type_name}</td>
+        <td className="py-2 px-4">
+          <button onClick={onApproveHandler.bind(null, question,1)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
-              className="fill-blue-500 scale-75"
+              className="fill-blue-500 scale-75 translate-x-1/2"
             >
               <path d="m2.394 13.742 4.743 3.62 7.616-8.704-1.506-1.316-6.384 7.296-3.257-2.486zm19.359-5.084-1.506-1.316-6.369 7.279-.753-.602-1.25 1.562 2.247 1.798z"></path>
             </svg>

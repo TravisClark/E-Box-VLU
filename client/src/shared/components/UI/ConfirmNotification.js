@@ -1,17 +1,19 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApproveForm } from "../../../admin/components/Table/Form/ApproveForm";
 import { DeactivateForm } from "../../../admin/components/Table/Form/DeactivateForm";
 import { ModifyAnswerForm } from "../../../admin/components/Table/Form/ModifyAnswerForm";
 import { RejectForm } from "../../../admin/components/Table/Form/RejectForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
+import { RestoreQuestionForm } from "../../../admin/components/Table/Form/RestoreQuestionForm";
 import { UserDetailForm } from "../../../admin/components/Table/Form/UserDetailForm";
-import Requests from "../../api/Requests";
+import QuestionForm from "../../../student/components/QuestionSection/QuestionForm";
 import useHttpClient from "../../hooks/http-hook";
+import { pageActions } from "../../store/page-slice";
 import { uiActions } from "../../store/ui-slice";
 
 export const ConfirmNotification = (props) => {
-  const { request, message, successMessage, type } = useSelector(
+  const { request, successMessage, type } = useSelector(
     (state) => state.ui.notification
   );
   const { sendRequest } = useHttpClient();
@@ -31,8 +33,9 @@ export const ConfirmNotification = (props) => {
       );
       dispatch(uiActions.closeNotification());
       dispatch(uiActions.showSuccessNotification(successMessage));
+      dispatch(pageActions.setCurrentPage(1))
     } catch (error) {
-      dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
+      // dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
     }
     
   };
@@ -41,7 +44,6 @@ export const ConfirmNotification = (props) => {
   if (type === "REPLY_FORM") {
     form = (
       <ReplyForm
-        
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
       />
@@ -51,7 +53,6 @@ export const ConfirmNotification = (props) => {
       <ApproveForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        message={message}
       />
     );
   } else if (type === "MODIFY_ANSWER_FORM") {
@@ -89,10 +90,26 @@ export const ConfirmNotification = (props) => {
       />
     );
   }
+  else if(type === "RESTORE_QUESTION_FORM"){
+    form = (
+      <RestoreQuestionForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+      />
+    );
+  }
+  else if(type === "PUBLISH_QUESTION_FORM"){
+    form = (
+      <QuestionForm
+        onClose={onCloseNotificationHandler}
+        onSubmitHandler={onSubmitHandler}
+      />
+    );
+  }
 
   return (
-    <div className={` w-full h-full absolute flex items-center z-50`}>
-      <div className="absolute bg-black opacity-60 w-full h-full top-0 left-0 z-0"></div>
+    <div className={` w-full min-h-full absolute flex items-center z-50`}>
+      <div className="absolute bg-black opacity-80 w-full min-h-full top-0 left-0 z-0"></div>
       {form}
     </div>
   );

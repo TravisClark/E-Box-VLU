@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 export default function BasicSelect({selected, className, onShowWarning}) {
   const [options, setOptions] = useState([]);
   const { sendRequest } = useHttpClient();
-  const {selectedType} = useSelector((state) => state.item)
+  const {selectedType, selectedTypeChanged} = useSelector((state) => state.item)
   const dispatch = useDispatch();
 
   const onChangeHandler = (input)=>{
-    dispatch(itemActions.getSelected(input.target.value));
+    dispatch(itemActions.changeSelectedType({type:input.target.value}));
     onShowWarning()
   }
 
@@ -22,18 +22,21 @@ export default function BasicSelect({selected, className, onShowWarning}) {
       try {
         const response = await sendRequest(Requests.fetchRoleList);
         setOptions(response.map(res => <option value={res.role_name} key={res.id_role}>{res.role_name}</option>));
-        dispatch(itemActions.getSelected(selected ? selected : response[0].role_name))
+        // dispatch(itemActions.getSelected({type:selectedTypeChanged ? selectedTypeChanged : selectedType}));
       } catch (error) {}
     };
     request();
-  }, [sendRequest, dispatch, selected]);
+  }, [sendRequest, dispatch]);
+
+  useEffect(() => {
+    dispatch(itemActions.getSelected({type:selected}))
+  }, [selected, dispatch]);
 
   return (
     <select
-      value={selectedType}
+      value={selectedTypeChanged ? selectedTypeChanged : selectedType}
       onChange={(e) => onChangeHandler(e)}
       className={`w-fit px-4 py-2 rounded-md outline-none ${className}`}
-      
     >
       {options}
     </select>

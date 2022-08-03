@@ -3,3 +3,6 @@
     background: #d3d3d3;
     cursor: none;
 }
+.min-width {
+    width: 800px;
+}

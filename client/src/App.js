@@ -1,6 +1,6 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 import AddUser from "./admin/pages/AddUser";
 import { Chat } from "./admin/pages/Chat";
 import Dashboard from "./admin/pages/Dashboard";
@@ -8,7 +8,6 @@ import QuestionManagement from "./admin/pages/QuestionManagement";
 import Users from "./admin/pages/Users";
 import Layout from "./shared/components/Layout/Layout";
 import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
-// import { QuestionDetail } from ";
 import ChangePassword from "./student/pages/ChangePassword";
 import { QuestionDetail } from "./student/pages/QuestionDetail";
 
@@ -20,7 +19,14 @@ const ViewQuestions = React.lazy(() => import("./student/pages/ViewQuestions"));
 function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { account } = useSelector((state) => state.auth);
-  console.count();
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+  const accessConditions =
+    account?.role_name === "Quản Trị Viên" ||
+    account?.role_name === "Ban Chủ Nhiệm Khoa" ||
+    account?.role_name === "Trợ Lý";
 
   return (
     <Layout>
@@ -53,9 +59,7 @@ function App() {
                 <ChangePassword />
               </Route>
 
-              {(account.role_name === "Quản Trị Viên" ||
-                account.role_name === "Ban Chủ Nhiệm Khoa" ||
-                account.role_name === "Trợ lý") && (
+              {accessConditions && (
                 <>
                   <Route path="/E-boxVLU/admin/dashboard">
                     <Dashboard />
@@ -84,5 +88,4 @@ function App() {
     </Layout>
   );
 }
-
 export default App;

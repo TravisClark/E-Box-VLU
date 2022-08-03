@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../shared/api/Requests";
 import { QuestionType } from "../../../shared/components/QuestionType/QuestionType";
@@ -21,9 +21,9 @@ function QuestionForm(props) {
         Requests.publishQuestion,
         "POST",
         JSON.stringify({ username: account.username, question, type_name: selectedTypeChanged   }),
-        { "Content-Type": "application/json" }
+
       );
-      props.onCloseForm();
+      props.onClose();
       dispatch(uiActions.showSuccessNotification("Đặt câu hỏi thành công"));
     } catch (error) {}
   };
@@ -40,7 +40,7 @@ function QuestionForm(props) {
             width="24"
             height="24"
             className="self-end cursor-pointer"
-            onClick={props.onCloseForm}
+            onClick={props.onClose}
           >
             <path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path>
           </svg>
@@ -49,11 +49,16 @@ function QuestionForm(props) {
             <label className="text-sm text-black italic">
               *Lưu ý: sau khi đặt câu hỏi vui lòng đợi duyệt
             </label>
+            <div className='flex space-x-3'>
+            <label className="text-md text-black self-center">
+              Loại:
+            </label>
             <QuestionType className="border"/>
+            </div>
             <textarea
               type="text"
               className="p-4 text-sm border text-start rounded-md border-gray-300 h-32 outline-none"
-              placeholder="Nhập câu hỏi"
+              placeholder="Nội dung câu hỏi.."
               ref={questionInputRef}
             />
             {error && <h3 className="text-red-500 text-sm">{error}</h3>}

@@ -17,21 +17,26 @@ const uiSlice = createSlice({
       message: "",
       refresh: false
     },
-    error: ''
+    error: {
+      isShowing: false,
+      message: "",
+    }
+    ,
+    isSpinnerLoading: false,
   },
   reducers: {
     runAdminMode(state, action) {
       if(action.payload.type === 'RUN_ADMIN_MODE'){
         state.isInAdminMode = true;
-        localStorage.setItem('isInAdminMode', state.isInAdminMode);
+        sessionStorage.setItem('isInAdminMode', state.isInAdminMode);
       }
       else if(action.payload.type === 'REFRESH_ADMIN_PAGE'){
-        state.isInAdminMode = JSON.parse(localStorage.getItem('isInAdminMode'))
+        state.isInAdminMode = JSON.parse(sessionStorage.getItem('isInAdminMode'))
       }
     },
     runStudentMode(state) {
       state.isInAdminMode = false;
-      localStorage.removeItem('isInAdminMode');
+      sessionStorage.removeItem('isInAdminMode');
     },
     showNotification(state, action) {
       state.notification.isShowing = true;
@@ -58,7 +63,12 @@ const uiSlice = createSlice({
         state.successNotification.message = ''
     },
     catchError (state, action){
-      state.error = action.payload
+      state.error.isShowing = true;
+      state.error.message = action.payload.message;
+    },
+    clearError(state){
+      state.error.isShowing = false;
+      state.error.message = ''
     }
   },
 });

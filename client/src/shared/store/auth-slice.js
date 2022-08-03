@@ -1,30 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+import jwt_decode from "jwt-decode";
 const authSlice = createSlice({
     name: 'auth',
-    initialState: {isLoggedIn: false, account: {}, token: ''},
+    initialState: {isLoggedIn: false, account: {}, token: null},
     reducers:{
         loginHandler(state, action) {
-            localStorage.setItem('account', JSON.stringify(action.payload))
+            state.token = action.payload.token.token
+            sessionStorage.setItem('token', JSON.stringify(state.token))
             state.isLoggedIn = true;
-            state.account = action.payload
+            state.account = jwt_decode(state.token)
         },
         saveUserHandler(state, action) {
             state.account = action.payload
         },
         autoLoginHandler(state) {
-            state.account = JSON.parse(localStorage.getItem('account'));
-            state.account && (state.isLoggedIn = true) ;
+            state.token = JSON.parse(sessionStorage.getItem('token'));
+            state.token && (state.account = jwt_decode(state.token))
+            state.account.username && (state.isLoggedIn = true) ;
         },
         logoutHandler(state) {
             state.account = {}
-            localStorage.removeItem('account')
+            sessionStorage.removeItem('token')
             state.isLoggedIn = false;
+            state.token = null
         },
         changePasswordHandler(state, action) {
             const {username, password} = action.payload;
-            localStorage.clear();
-            localStorage.setItem('account', JSON.stringify(username, password));
+            sessionStorage.clear();
+            sessionStorage.setItem('token', JSON.stringify(username, password));
         }
     }
 })

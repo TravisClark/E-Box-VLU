@@ -11,14 +11,16 @@ import useHttpClient from "../../shared/hooks/http-hook";
 import { Notification } from "../../shared/components/UI/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
+import { Error } from "../../shared/components/Error/Error";
 
 function QuestionManagement() {
   const [selectedTable, setSelectedTable] = useState("New Question List");
-  const { sendRequest, error } = useHttpClient();
+  const { sendRequest } = useHttpClient();
   const { successNotification } = useSelector((state) => state.ui);
-  const { selectedType, newSortType } = useSelector((state) => state.item);
+  const { newSortType } = useSelector((state) => state.item);
   const { isSortingItems } = useSelector((state) => state.page);
   const dispatch = useDispatch();
+  const { isShowing } = useSelector((state) => state.ui.error);
 
   useEffect(() => {
     try {
@@ -39,7 +41,6 @@ function QuestionManagement() {
     sendRequest,
     successNotification.refresh,
     dispatch,
-    selectedType,
     isSortingItems,
     newSortType,
   ]);
@@ -49,20 +50,28 @@ function QuestionManagement() {
   };
 
   let table;
-  if (selectedTable === "New Question List") {
-    table = <NewQuestionsTable />;
-  } else if (selectedTable === "Disapproved Question List") {
-    table = <DisapprovedQuestionsTable />;
-  } else if (selectedTable === "Approved Question List") {
-    table = <ApprovedQuestionsTable />;
-  } else {
-    table = <RepliedQuestionsTable />;
+  switch (selectedTable) {
+    case "New Question List": {
+      (table = <NewQuestionsTable />)
+      break;
+    }
+    case 'Disapproved Question List':{
+      table = <DisapprovedQuestionsTable />
+      break;
+    }
+    case 'Approved Question List':{
+      table = <ApprovedQuestionsTable />
+      break;
+    }
+    default: {
+      table = <RepliedQuestionsTable />;
+    }
   }
 
   return (
     <Container className="m-auto w-11/12 h-full py-14 px-20 space-y-6 relative">
       <h1 className="text-2xl font-semibold">Question Management</h1>
-      <div className="flex flex-col bg-white py-6 px-10 rounded-md items-center space-y-5 relative">
+      <div className="flex flex-col bg-white py-6 pl-5 pr-28 rounded-md items-center space-y-5 relative xl:px-10">
         <div className="flex justify-between w-full">
           <h1 className="text-lg font-semibold self-center text-gray-500">
             {selectedTable}
@@ -74,7 +83,7 @@ function QuestionManagement() {
         </div>
         <div className="border w-full"></div>
 
-        {error && <h3 className="text-red-500 text-sm">{error}</h3>}
+        {isShowing && <Error />}
         {table && table}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />

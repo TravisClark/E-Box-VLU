@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
 
 export const DeactivateForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
@@ -21,7 +20,7 @@ export const DeactivateForm = (props) => {
         </h1>
         <div className="flex w-full space-x-8 justify-center mt-10">
           <button
-            className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
+            className="py-2 px-3 rounded-lg bg-red-500 text-white font-medium text-sm"
             onClick={onSubmitHandler}
           >
             Xác nhận
