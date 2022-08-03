@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { MessageReceiver } from "./MessageReceiver/MessageReceiver";
 import { MessageSender } from "./MessageSender/MessageSender";
+import { io } from "socket.io-client";
 
 export const Conversation = ({ selectedUser }) => {
+  const { account } = useSelector((state) => state.auth);
   const [conversations, setConversations] = useState([]);
-  const [socket, setSocket] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const socket = useRef(io("ws://localhost:8900"));
+  // const [socket, setSocket] = useState(null);
   const { sendRequest } = useHttpClient();
 
   useEffect(() => {
@@ -20,7 +24,59 @@ export const Conversation = ({ selectedUser }) => {
     request();
   }, [selectedUser, sendRequest]);
 
-  const { account } = useSelector((state) => state.auth);
+  // useEffect(() => {
+  //   setSocket(io("ws://localhost:8900"));
+  // }, []);
+
+  // console.log(socket)
+
+  // useEffect(() => {
+  //   socket &&
+  //     socket.on("welcome", (message) => {
+  //       console.log(message);
+  //     });
+  // }, [socket]);
+
+  //----------------------Development
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, [socket]);
+  console.log(selectedUser);
+
+  useEffect(() => {
+    socket.current.emit("addUser", account.username);
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, [socket, account.username]);
+
+  console.log(socket);
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    const message = {
+      username_sender: account.username,
+      message: newMessage,
+      id_conversation: selectedUser.id_conversation,
+    };
+    // console.log(account.username);
+    // console.log(selectedUser.members[1]);
+    // console.log(newMessage);
+    socket.current.emit("sendMessage", {
+      username_sender: account.username,
+      username_receiver: selectedUser.members[1],
+      message: newMessage,
+    });
+
+    try {
+      await sendRequest(Requests.sendMessage, "POST", JSON.stringify(message));
+    } catch (error) {
+      console.log(error);
+    }
+    // setNewMessage('')
+  };
+
   return (
     <div className="h-fit w-full bg-white rounded-md flex flex-col">
       <div
@@ -48,18 +104,22 @@ export const Conversation = ({ selectedUser }) => {
           }
         })}
       </div>
-      <div
-        className="flex justify-self-end justify-between px-4 space-x-4 items-end py-4"
-        style={{ border: "1px solid #f1f2f6", borderRight: "2px" }}
-      >
-        <input
-          className="border px-2 py-2 rounded-md w-full outline-none text-sm"
-          placeholder="Input Message"
-        />
-        <button className="rounded-md text-white px-3 py-2 font-medium h-fit text-sm bg-lightBlue w-fit">
-          Submit
-        </button>
-      </div>
+      <form onSubmit={onSubmitHandler}>
+        <div
+          className="flex justify-self-end justify-between px-4 space-x-4 items-end py-4"
+          style={{ border: "1px solid #f1f2f6", borderRight: "2px" }}
+        >
+          <input
+            className="border px-2 py-2 rounded-md w-full outline-none text-sm"
+            placeholder="Input Message"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+          />
+          <button className="rounded-md text-white px-3 py-2 font-medium h-fit text-sm bg-lightBlue w-fit">
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

@@ -3,8 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import useHttpClient from "../../../shared/hooks/http-hook";
 import Requests from "../../../shared/api/Requests";
-import { itemActions } from "../../../shared/store/item-slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function StatusList({onChangeStatus, status}) {
   const [options, setOptions] = useState([]);
@@ -16,7 +15,6 @@ export default function StatusList({onChangeStatus, status}) {
       try {
         const response = await sendRequest(Requests.fetchAccountStatus);
         setOptions(response.map(res => <option value={res.status_account} key={res.id_status}>{res.status_account}</option>));
-        // dispatch(itemActions.getSelected({type:selectedTypeChanged ? selectedTypeChanged : selectedType}));
       } catch (error) {}
     };
     request();
