@@ -26,7 +26,7 @@ class InboxController {
                     username_sender: req.user.username,
                 });
                 new_message.save();
-                res.status(200).json('successfully send message');
+                res.status(200).json(new_message);
             }
         } catch (err) {
             console.log(err);
