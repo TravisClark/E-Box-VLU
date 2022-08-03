@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect,  useState } from "react";
+import {  useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Requests from "../../shared/api/Requests";
 import { SearchItem } from "../../shared/components/SearchItem/SearchItem";
 import { Notification } from "../../shared/components/UI/Notification";
 import useHttpClient from "../../shared/hooks/http-hook";
 import Container from "../../student/components/UI/Container";
-// import { SearchItem } from "../components/SearchItem/SearchItem";
 import { UserTable } from "../components/Table/UserTable/UserTable";
 
 function Users() {

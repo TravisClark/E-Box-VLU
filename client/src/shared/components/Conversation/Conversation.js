@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { MessageReceiver } from "./MessageReceiver/MessageReceiver";
 import { MessageSender } from "./MessageSender/MessageSender";
+import { io } from "socket.io-client";
 
-export const Conversation = ({ selectedUser }) => {
+export const Conversation = ({ selectedUser, minHeight }) => {
+  const { account } = useSelector((state) => state.auth);
   const [conversations, setConversations] = useState([]);
-  const [socket, setSocket] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const socket = useRef();
+  const scrollRef = useRef();
   const { sendRequest } = useHttpClient();
 
   useEffect(() => {
@@ -20,9 +25,63 @@ export const Conversation = ({ selectedUser }) => {
     request();
   }, [selectedUser, sendRequest]);
 
-  const { account } = useSelector((state) => state.auth);
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        username_sender: data.username_sender,
+        message: data.message,
+        createdAt: Date.now()
+      });
+      console.log(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage &&
+      setConversations((prevState) => [...prevState, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  useEffect(() => {
+    socket.current.emit("addUser", account.username);
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, [account.username]);
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    const message = {
+      username_sender: account.username,
+      message: newMessage,
+      id_conversation: selectedUser.id_conversation,
+    };
+    const socketItem = {
+      username_sender: account.username,
+      username_receiver: selectedUser.members[1],
+      message: newMessage,
+    };
+    socket.current.emit("sendMessage", socketItem);
+
+    try {
+      const res = await sendRequest(
+        Requests.sendMessage,
+        "POST",
+        JSON.stringify(message)
+      );
+      setConversations([...conversations, res]);
+    } catch (error) {
+      console.log(error);
+    }
+    setNewMessage("");
+  };
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [conversations]);
+
   return (
-    <div className="h-fit w-full bg-white rounded-md flex flex-col">
+    <div className=" w-full bg-white rounded-md flex flex-col" style={{maxHeight: '500px', minHeight: '400px'}}>
       <div
         className="p-4 flex space-x-2"
         style={{ borderBottom: "1px solid #dfe6e9" }}
@@ -35,31 +94,41 @@ export const Conversation = ({ selectedUser }) => {
         </span>
       </div>
       <div
-        className="flex flex-col space-y-2 min-w-full overflow-hidden hover:overflow-auto"
-        style={{ maxHeight: "428px", minHeight: "428px" }}
+        className="flex flex-col space-y-2 w-96 min-w-full h-3/4 overflow-hidden hover:overflow-auto"
+        // style={{ maxHeight: "428px", minHeight: minHeight }}
       >
         {conversations.map(function (conversation) {
           if (conversation.username_sender === account.username) {
-            return <MessageSender key={conversation._id} chat={conversation} />;
+            return (
+              <div ref={scrollRef}>
+                <MessageSender key={conversation._id} chat={conversation} />
+              </div>
+            );
           } else {
             return (
-              <MessageReceiver key={conversation._id} chat={conversation} />
+              <div ref={scrollRef}>
+                <MessageReceiver key={conversation._id} chat={conversation} />
+              </div>
             );
           }
         })}
       </div>
-      <div
-        className="flex justify-self-end justify-between px-4 space-x-4 items-end py-4"
-        style={{ border: "1px solid #f1f2f6", borderRight: "2px" }}
-      >
-        <input
-          className="border px-2 py-2 rounded-md w-full outline-none text-sm"
-          placeholder="Input Message"
-        />
-        <button className="rounded-md text-white px-3 py-2 font-medium h-fit text-sm bg-lightBlue w-fit">
-          Submit
-        </button>
-      </div>
+      <form onSubmit={onSubmitHandler}>
+        <div
+          className="flex justify-self-end justify-between px-4 space-x-4 items-end py-4"
+          style={{ border: "1px solid #f1f2f6", borderRight: "2px" }}
+        >
+          <input
+            className="border px-2 py-2 rounded-md w-full outline-none text-sm"
+            placeholder="Input Message"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+          />
+          <button className="rounded-md text-white px-3 py-2 font-medium h-fit text-sm bg-lightBlue w-fit">
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

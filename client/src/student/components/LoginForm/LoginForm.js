@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { useState } from "react";
+import React, {  useRef } from "react";
 import Button from "../UI/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";

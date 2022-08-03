@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApproveForm } from "../../../admin/components/Table/Form/ApproveForm";
 import { DeactivateForm } from "../../../admin/components/Table/Form/DeactivateForm";
@@ -8,13 +8,12 @@ import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
 import { RestoreQuestionForm } from "../../../admin/components/Table/Form/RestoreQuestionForm";
 import { UserDetailForm } from "../../../admin/components/Table/Form/UserDetailForm";
 import QuestionForm from "../../../student/components/QuestionSection/QuestionForm";
-import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { pageActions } from "../../store/page-slice";
 import { uiActions } from "../../store/ui-slice";
 
 export const ConfirmNotification = (props) => {
-  const { request, message, successMessage, type } = useSelector(
+  const { request, successMessage, type } = useSelector(
     (state) => state.ui.notification
   );
   const { sendRequest } = useHttpClient();

@@ -6,8 +6,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import Requests from "../../../shared/api/Requests";
-import useHttpClient from "../../../shared/hooks/http-hook";
 
 const tableOptions = [
   "New Question List",
@@ -19,7 +17,6 @@ const tableOptions = [
 export default function TableList({ onChangeSelectedTable, selectedTable }) {
   const [options, setOptions] = React.useState([]);
   const { account } = useSelector((state) => state.auth);
-  const { sendRequest } = useHttpClient();
   const handleChange = (event) => {
     onChangeSelectedTable(event.target.value);
   };
@@ -44,23 +41,7 @@ export default function TableList({ onChangeSelectedTable, selectedTable }) {
       ))
     );
   }, [account.role_name]);
-
-  const menuItem = (
-    <div>
-      {account.role_name !== "Ban Chủ Nhiệm Khoa" && (
-        <div>
-          <MenuItem value={"New Question List"}>New Question List</MenuItem>
-          <MenuItem value={"Approved Question List"}>
-            Approved Question List
-          </MenuItem>
-          <MenuItem value={"Disapproved Question List"}>
-            Disapproved Question List
-          </MenuItem>
-        </div>
-      )}
-      <MenuItem value={"Replied Question List"}>Replied Question List</MenuItem>
-    </div>
-  );
+  
   return (
     <Box sx={{ minWidth: 220 }}>
       <FormControl fullWidth variant="standard">
