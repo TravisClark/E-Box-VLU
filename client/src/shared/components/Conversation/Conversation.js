@@ -50,6 +50,7 @@ export const Conversation = ({ selectedUser }) => {
         username_sender: data.username_sender,
         // username_receiver: selectedUser.members[1],
         message: data.message,
+        createdAt: Date.now()
       });
       console.log(data);
       // console.log('Im in')
