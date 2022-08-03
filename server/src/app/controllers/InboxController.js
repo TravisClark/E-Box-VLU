@@ -17,7 +17,9 @@ class InboxController {
             //get data from client
             const data_id_conversation = req.body.id_conversation;
             const data_message = req.body.message;
-            if(!(data_message == null || data_message === '')){
+            //format data_message
+            var message = data_message.replace(/\s+/g, '');
+            if(!(data_message == null || message === '')){
                 const new_message = new InboxModel({
                     id_conversation: data_id_conversation,
                     message: data_message,
