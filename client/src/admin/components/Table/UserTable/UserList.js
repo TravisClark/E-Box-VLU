@@ -1,12 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../../shared/api/Requests";
+import LoadingSpinner from "../../../../shared/components/LoadingSpinner/LoadingSpinner";
 import useHttpClient from "../../../../shared/hooks/http-hook";
 import { uiActions } from "../../../../shared/store/ui-slice";
 export const UserList = () => {
-  // const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
-  const { isLoading } = useHttpClient();
+  const { isSpinnerLoading } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
   const activeStyle = `bg-green-100 text-green-500`;
   const deactivateStyle = `bg-red-100 text-red-500`;
@@ -36,7 +36,9 @@ export const UserList = () => {
         <td className={`py-2 px-4 `}>
           <div
             className={` rounded-lg text-center w-28 text-xs py-1 font-medium ${
-              user.status_account === "Đang hoạt động" ? activeStyle : deactivateStyle
+              user.status_account === "Đang hoạt động"
+                ? activeStyle
+                : deactivateStyle
             }`}
           >
             {user.status_account}
@@ -59,15 +61,15 @@ export const UserList = () => {
   });
   return (
     <tbody>
-      {isLoading ? (
-        <tr>
-          <td>Loading...</td>
+      {isSpinnerLoading && (
+        <tr className='translate-x-1/2'>
+            <LoadingSpinner />
         </tr>
-      ) : users.length > 0 ? (
-        users
-      ) : (
+      )}
+      {users.length > 0 && !isSpinnerLoading && users}
+      {users.length <= 0 && !isSpinnerLoading && (
         <tr>
-          <td>There is no question in this list</td>
+          <td>There is no users in this list</td>
         </tr>
       )}
     </tbody>

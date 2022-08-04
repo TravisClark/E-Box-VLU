@@ -14,7 +14,7 @@ export default function BasicSelect({selected, className, onShowWarning}) {
 
   const onChangeHandler = (input)=>{
     dispatch(itemActions.changeSelectedType({type:input.target.value}));
-    onShowWarning()
+    onShowWarning && onShowWarning()
   }
 
   useEffect(() => {
@@ -29,8 +29,8 @@ export default function BasicSelect({selected, className, onShowWarning}) {
   }, [sendRequest, dispatch]);
 
   useEffect(() => {
-    dispatch(itemActions.getSelected({type:selected}))
-  }, [selected, dispatch]);
+    dispatch(itemActions.getSelected({type:selected ? selected : ''}))
+  }, [selected, dispatch, options]);
 
   return (
     <select
