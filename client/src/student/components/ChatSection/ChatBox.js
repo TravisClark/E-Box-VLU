@@ -25,7 +25,8 @@ export const ChatBox = () => {
           <Conversation
             onSelectUser={onSelectUser}
             selectedUser={selectedUser}
-            minHeight='280px'
+            minHeight='250px'
+            maxHeight='280px'
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
