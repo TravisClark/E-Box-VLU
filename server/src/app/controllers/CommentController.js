@@ -26,7 +26,7 @@ class CommentController {
                     username: req.user.username,
                 });
                 new_comment.save();
-                res.status(200).json('successfully send comment');
+                res.status(200).json(new_comment);
             }
         } catch (err) {
             console.log(err);
