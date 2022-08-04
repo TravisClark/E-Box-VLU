@@ -1,8 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../../shared/api/Requests";
-import LoadingSpinner from "../../../../shared/components/LoadingSpinner/LoadingSpinner";
-import useHttpClient from "../../../../shared/hooks/http-hook";
+import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { uiActions } from "../../../../shared/store/ui-slice";
 export const UserList = () => {
   const { currentItems } = useSelector((state) => state.page.pagination);
@@ -62,8 +61,8 @@ export const UserList = () => {
   return (
     <tbody>
       {isSpinnerLoading && (
-        <tr className='translate-x-1/2'>
-            <LoadingSpinner />
+        <tr className='translate-x-1/2 h-44 translate-y-1/2'>
+            <LoadingDot className='pt-20'/>
         </tr>
       )}
       {users.length > 0 && !isSpinnerLoading && users}

@@ -12,7 +12,8 @@ import { Notification } from "../../shared/components/UI/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
 import { Error } from "../../shared/components/Error/Error";
-import LoadingSpinner from "../../shared/components/LoadingSpinner/LoadingSpinner";
+import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
+
 
 function QuestionManagement() {
   const [selectedTable, setSelectedTable] = useState("New Question List");
@@ -86,7 +87,7 @@ function QuestionManagement() {
         <div className="border w-full"></div>
 
         {isShowing && <Error />}
-        {isSpinnerLoading && <LoadingSpinner/>}
+        {isSpinnerLoading && <LoadingDot/>}
         {table && table}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />
