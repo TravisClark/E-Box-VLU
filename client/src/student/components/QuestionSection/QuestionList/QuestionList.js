@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Requests from "../../../../shared/api/Requests";
@@ -9,12 +9,11 @@ import classes from "./QuestionList.module.css";
 function QuestionList() {
   const [firstList, setFirstList] = useState([]);
   const [secondList, setSecondList] = useState([]);
-  const { account } = useSelector((state) => state.auth);
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
   const history = useHistory();
-  const { selectedType, isSearching, itemSearching, newSortType } = useSelector(
+  const { selectedType,  itemSearching, newSortType } = useSelector(
     (state) => state.item
   );
 
@@ -55,7 +54,7 @@ function QuestionList() {
       for (let i = 0; i < currentItems.length; i++) {
         let item = (
           <li
-            className={`bg-lightBlue px-6 py-3 text-white truncate`}
+            className={`bg-lightBlue px-6 py-3 text-white truncate cursor-pointer hover:bg-blue-700`}
             value={currentItems[i]?.question}
             key={currentItems[i]?.id_question}
             onClick={onStoreSelectedItem.bind(null, currentItems[i])}

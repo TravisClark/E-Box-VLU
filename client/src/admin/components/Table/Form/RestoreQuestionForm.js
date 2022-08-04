@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
 import { itemActions } from "../../../../shared/store/item-slice";
 
 export const RestoreQuestionForm = (props) => {

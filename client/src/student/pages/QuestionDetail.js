@@ -12,7 +12,7 @@ export const QuestionDetail = () => {
   const params = useParams();
   const [question, setQuestion] = useState({});
   const [createDate, setCreateDate] = useState([]);
-  const { sendRequest, error } = useHttpClient();
+  const { sendRequest } = useHttpClient();
 
   useEffect(() => {
     const fetchData = async () => {

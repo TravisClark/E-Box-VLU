@@ -13,6 +13,7 @@ const Requests = {
     deactivateUser: `${URL}/api/admin/user/deactivate_user`,
     activateUser: `${URL}/api/admin/user/restore_user`,
     restoreQuestion:`${URL}/api/admin/mailbox/restore_question`,
+    sendMessage:`${URL}/api/user/inbox/send_message`,
     fetchQuestionTypes: `${URL}/api/admin/type/list_types_admin`,
     fetchAccount: `${URL}/api/user/account_info`, 
     fetchRoleList: `${URL}/api/admin/role/list_roles`, 
@@ -22,6 +23,8 @@ const Requests = {
     fetchQuestionBasedOnStatus: `${URL}/api/mailbox/list_questions?status=`,
     fetchQuestionListUser: `${URL}/api/user/mailbox/list_questions_user`,
     fetchAccountStatus: `${URL}/api/admin/status/list_status`,
-    fetchNotifications: `${URL}/api/user/notification/list_notification`
+    fetchNotifications: `${URL}/api/user/notification/list_notification`,
+    fetchUsersContact: `${URL}/api/user/conversation/list_conversations`,
+    fetchConversation: `${URL}/api/user/inbox/list_messages?id_conversation=`,
 }
 export default Requests;

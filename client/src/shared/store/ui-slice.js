@@ -21,6 +21,8 @@ const uiSlice = createSlice({
       isShowing: false,
       message: "",
     }
+    ,
+    isSpinnerLoading: false,
   },
   reducers: {
     runAdminMode(state, action) {

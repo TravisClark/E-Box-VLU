@@ -24,7 +24,7 @@ const User = new Schema(
         role_name: {
             type: 'string',
             required: true,
-            default: 'Sinh vien',
+            default: 'Sinh Viên',
         },
     },
     {
