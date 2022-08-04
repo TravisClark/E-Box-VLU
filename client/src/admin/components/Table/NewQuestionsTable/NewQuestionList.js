@@ -1,13 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../../shared/api/Requests";
-import useHttpClient from "../../../../shared/hooks/http-hook";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
 function NewQuestionList() {
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
-  const { isLoading } = useHttpClient();
+  const {isSpinnerLoading} = useSelector((state) => state.ui)
 
   const onApproveHandler = (value,a) => {
     console.log(a)
@@ -83,15 +82,10 @@ function NewQuestionList() {
   });
   return (
     <tbody>
-      {isLoading ? (
+      {questions.length > 0 && !isSpinnerLoading && questions}
+      {questions.length <= 0 && !isSpinnerLoading && (
         <tr>
-          <td>Loading...</td>
-        </tr>
-      ) : questions.length > 0 ? (
-        questions
-      ) : (
-        <tr>
-          <td>There is no question in this list</td>
+          <td>There is no questions in this list</td>
         </tr>
       )}
     </tbody>

@@ -5,6 +5,7 @@ import useHttpClient from "../../hooks/http-hook";
 import { MessageReceiver } from "./MessageReceiver/MessageReceiver";
 import { MessageSender } from "./MessageSender/MessageSender";
 import { io } from "socket.io-client";
+import { LoadingDot } from "../LoadingDot/LoadingDot";
 
 export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
   const { account } = useSelector((state) => state.auth);
@@ -12,6 +13,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [receiver,setReceiver] = useState(null)
+  const {isSpinnerLoading} = useSelector((state) => state.ui)
   const socket = useRef();
   const scrollRef = useRef();
   const { sendRequest } = useHttpClient();
@@ -102,6 +104,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
         className="flex flex-col space-y-2 w-96 min-w-full overflow-hidden hover:overflow-auto"
         style={{ maxHeight, minHeight }}
       >
+        {isSpinnerLoading && <LoadingDot className="m-auto"/>}
         {conversations.map(function (conversation) {
           if (conversation.username_sender === account.username) {
             return (
@@ -129,7 +132,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
           />
-          <button className="rounded-md text-white px-3 py-2 font-medium h-fit text-sm bg-lightBlue w-fit">
+          <button className="btn-primary">
             Submit
           </button>
         </div>

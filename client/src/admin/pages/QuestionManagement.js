@@ -12,6 +12,8 @@ import { Notification } from "../../shared/components/UI/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
 import { Error } from "../../shared/components/Error/Error";
+import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
+
 
 function QuestionManagement() {
   const [selectedTable, setSelectedTable] = useState("New Question List");
@@ -21,6 +23,7 @@ function QuestionManagement() {
   const { isSortingItems } = useSelector((state) => state.page);
   const dispatch = useDispatch();
   const { isShowing } = useSelector((state) => state.ui.error);
+  const {isSpinnerLoading} = useSelector((state) => state.ui)
 
   useEffect(() => {
     try {
@@ -84,6 +87,7 @@ function QuestionManagement() {
         <div className="border w-full"></div>
 
         {isShowing && <Error />}
+        {isSpinnerLoading && <LoadingDot/>}
         {table && table}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />
