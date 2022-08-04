@@ -37,7 +37,6 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
         message: data.message,
         createdAt: Date.now(),
       });
-      console.log(data);
     });
   }, []);
 
