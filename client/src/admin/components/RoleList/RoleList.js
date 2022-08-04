@@ -29,8 +29,8 @@ export default function BasicSelect({selected, className, onShowWarning}) {
   }, [sendRequest, dispatch]);
 
   useEffect(() => {
-    dispatch(itemActions.getSelected({type:selected ? selected : ''}))
-  }, [selected, dispatch, options]);
+    dispatch(itemActions.getSelected({type:selected}))
+  }, [selected, dispatch]);
 
   return (
     <select
