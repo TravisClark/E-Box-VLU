@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Requests from "../../../api/Requests";
 import useHttpClient from "../../../hooks/http-hook";
 
-export const ContactList = ({ onSelectUser, selectedUser }) => {
+export const ContactList = ({ onSelectUser, selectedUser,}) => {
   const { sendRequest } = useHttpClient();
   const { account } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
@@ -27,7 +27,7 @@ export const ContactList = ({ onSelectUser, selectedUser }) => {
 
   const userList = users.map((user) => (
     <li
-      className={`p-4 rounded-md w-fit flex cursor-pointer transition group ${
+      className={`py-2 px-4 rounded-md w-full flex cursor-pointer transition group ${
         selectedUser.members[1] === user.members[1]
           ? "bg-blue-600 text-white "
           : "text-black hover:bg-slate-100 hover:text-black"
@@ -52,10 +52,9 @@ export const ContactList = ({ onSelectUser, selectedUser }) => {
   ));
 
   return (
-    <div className="h-full w-1/3 bg-white rounded-md">
+    <div className="h-auto w-1/3 bg-white rounded-md border">
       <ul
         className="flex flex-col space-y-2 p-4"
-        style={{ maxHeight: "555px", minHeight: "555px" }}
       >
         {userList}
       </ul>
