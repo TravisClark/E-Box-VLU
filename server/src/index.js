@@ -50,7 +50,9 @@ const io = require("socket.io")(8900, {
 });
 
 let users = [];
+let users_question = [];
 
+//message
 const addUser = (username, socketId, id_conversation) => {
     !users.some((user) => user.username === username) && users.push({ username, socketId, id_conversation });
     var info_user = users.find(user => user.username === username);
@@ -67,6 +69,17 @@ const removeUser = (socketId) => {
 
 const getUser = (username) => {
   return users.find((user) => user.username === username);
+};
+
+//comment
+const addUser_question = (username, socketId, id_question) => {
+  !users_question.some((user) => user.username === username) && users_question.push({ username, socketId, id_question });
+  var info_user = users_question.find(user => user.username === username);
+  //   console.log(info_user)
+  if (info_user != null && info_user.id_question != id_question) {
+    users_question = users_question.filter((user) => user.username !== username);
+    users_question.push({ username, socketId, id_question });
+  }
 };
 
 io.on("connection", (socket) => {
@@ -91,6 +104,11 @@ io.on("connection", (socket) => {
       }
     }
   );
+  //get username and socketId from user in question
+  socket.on("addUser_question", ({ username, id_question }) => {
+    addUser_question(username, socket.id, id_question);
+    io.emit("getUsers_question", users_question);
+  });
   //when disconnect
   socket.on("disconnect", () => {
     console.log("disconnected");
