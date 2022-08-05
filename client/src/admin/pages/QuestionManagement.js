@@ -14,16 +14,22 @@ import { itemActions } from "../../shared/store/item-slice";
 import { Error } from "../../shared/components/Error/Error";
 import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
 
+const tableOptions = [
+  "New Question List",
+  "Approved Question List",
+  "Disapproved Question List",
+  "Replied Question List",
+];
 
 function QuestionManagement() {
-  const {account} = useSelector((state) => state.auth);
+  const { account } = useSelector((state) => state.auth);
   const { sendRequest } = useHttpClient();
   const { successNotification } = useSelector((state) => state.ui);
   const { newSortType } = useSelector((state) => state.item);
   const { isSortingItems } = useSelector((state) => state.page);
   const dispatch = useDispatch();
   const { isShowing } = useSelector((state) => state.ui.error);
-  const {isSpinnerLoading} = useSelector((state) => state.ui)
+  const { isSpinnerLoading } = useSelector((state) => state.ui);
   const [selectedTable, setSelectedTable] = useState();
 
   useEffect(() => {
@@ -50,25 +56,29 @@ function QuestionManagement() {
   ]);
 
   useEffect(() => {
-    setSelectedTable(account.role_name !== "Ban Chủ Nhiệm Khoa" ? 'New Question List': 'Approved Question List') 
+    setSelectedTable(
+      account.role_name !== "Ban Chủ Nhiệm Khoa"
+        ? tableOptions[0]
+        : tableOptions[1]
+    );
   }, [account.role_name]);
-  
+
   const onChangeSelectedTable = (selected) => {
     setSelectedTable(selected);
   };
 
   let table;
   switch (selectedTable) {
-    case "New Question List": {
-      (table = <NewQuestionsTable />)
+    case tableOptions[0]: {
+      table = <NewQuestionsTable />;
       break;
     }
-    case 'Disapproved Question List':{
-      table = <DisapprovedQuestionsTable />
+    case tableOptions[1]: {
+      table = <DisapprovedQuestionsTable />;
       break;
     }
-    case 'Approved Question List':{
-      table = <ApprovedQuestionsTable />
+    case tableOptions[2]: {
+      table = <ApprovedQuestionsTable />;
       break;
     }
     default: {
@@ -87,12 +97,13 @@ function QuestionManagement() {
           <TableOptions
             onChangeSelectedTable={onChangeSelectedTable}
             selectedTable={selectedTable}
+            tableOptions={tableOptions}
           />
         </div>
         <div className="border w-full"></div>
 
         {isShowing && <Error />}
-        {isSpinnerLoading && <LoadingDot/>}
+        {isSpinnerLoading && <LoadingDot />}
         {table && table}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />

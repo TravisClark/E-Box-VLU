@@ -42,7 +42,7 @@ function ViewQuestions() {
           <div className="flex flex-col space-y-8 w-full max-w-3xl p-14 md:flex-row md:space-y-0 md:w-full">
             <SearchItem className="bg-transparent text-white outline-none rounded-md p-4 w-full border border-gray-300 md:rounded-none" />
             <button className="bg-slate-800 text-white mx-auto py-4 px-8 w-fit whitespace-nowrap hover:bg-white hover:text-black transition md:rounded-none md:-translate-x-2">
-              <a href="#questions">Tìm kiếm</a>
+              <a href="#scroll" >Tìm kiếm</a>
             </button>
           </div>
         </div>
@@ -50,13 +50,12 @@ function ViewQuestions() {
       <section id="question">
         <Container
           className="min-w-full relative flex flex-col items-center"
-          style={{ background: "#eaeaea" , minHeight: '500px'}}
+          style={{ background: "#eaeaea", minHeight: "500px" }}
         >
           <div className="absolute w-full flex justify-center overflow-hidden z-0 ">
             <CircleIcon className="hidden md:block" />
             <svg
               id="visual"
-              // viewBox="0 0 100% 540"
               width="100%"
               height="540"
               xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +82,9 @@ function ViewQuestions() {
               "md:space-x-20 md:flex-row md:space-y-0 md:w-1/2 md:justify-center md:items-start"
             }`}
           >
-            <MenuType />
+            <div id='scroll'>
+              <MenuType />
+            </div>
             <QuestionList />
           </div>
           {!(
