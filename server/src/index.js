@@ -51,8 +51,13 @@ const io = require('socket.io')(8900, {
 
 let users = [];
 
-const addUser = (username,socketId) => {
-    !users.some(user=> user.username === username) && users.push({username,socketId});
+const addUser = (username,socketId,id_conversation) => {
+    // !users.some(user=> user.username === username) && users.push({username,socketId,id_conversation});
+    // var info_user = users.find({username: username});
+    // if(info_user != null && info_user.id_conversation != id_conversation){
+    //     users = users.filter(user => user.username === username);
+        users.push({username,socketId,id_conversation});
+    // }
 }
 
 const removeUser = (socketId) =>{
@@ -67,8 +72,8 @@ io.on('connection', (socket)=>{
     //connected successfully
     console.log('Connected to socket');
     //get username and socketId from user
-    socket.on("addUser", (username) => {
-        addUser(username,socket.id);
+    socket.on("addUser", (username,id_conversation) => {
+        addUser(username,socket.id,id_conversation);
         io.emit("getUsers", users);
     })
     //send and get message
