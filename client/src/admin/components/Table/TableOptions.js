@@ -17,9 +17,11 @@ const tableOptions = [
 export default function TableList({ onChangeSelectedTable, selectedTable }) {
   const [options, setOptions] = React.useState([]);
   const { account } = useSelector((state) => state.auth);
+
   const handleChange = (event) => {
     onChangeSelectedTable(event.target.value);
   };
+  
   useEffect(() => {
     let roleList;
     switch (account.role_name) {
@@ -41,7 +43,7 @@ export default function TableList({ onChangeSelectedTable, selectedTable }) {
       ))
     );
   }, [account.role_name]);
-  
+
   return (
     <Box sx={{ minWidth: 220 }}>
       <FormControl fullWidth variant="standard">
