@@ -13,7 +13,7 @@ export const QuestionDetail = () => {
   const params = useParams();
   const [question, setQuestion] = useState({});
   const [dates, setDates] = useState([]);
-  const [inputComment, setInputComment] = useState("");
+  
   const { sendRequest } = useHttpClient();
 
   useEffect(() => {
@@ -33,21 +33,7 @@ export const QuestionDetail = () => {
   }, [params.questionId, sendRequest]);
   console.log(dates)
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    const request = async () => {
-      await sendRequest(
-        Requests.sendComment,
-        "POST",
-        JSON.stringify({
-          comment: inputComment,
-          id_question: params.questionId,
-        })
-      );
-    };
-    request();
-    setInputComment("");
-  };
+  
 
   return (
     <Container className="min-w-full relative flex flex-col items-center mb-20 pb-20 min-h-screen">
@@ -110,17 +96,7 @@ export const QuestionDetail = () => {
             </div>
           </div>
         </div>
-        <form onSubmit={onSubmitHandler}>
-          <div className="flex flex-col items-end space-y-4">
-            <textarea
-              className="border p-4 rounded-md h-24 w-full outline-gray-300"
-              placeholder="Nhập bình luận..."
-              value={inputComment}
-              onChange={(e) => setInputComment(e.target.value)}
-            />
-            <button className="btn-primary">Bình luận</button>
-          </div>
-        </form>
+        
         <CommentList id_question={params.questionId} />
       </div>
     </Container>

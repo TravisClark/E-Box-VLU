@@ -38,7 +38,7 @@ function AddUser() {
       <h1 className="text-2xl font-semibold ">Add User</h1>
       <div className="flex flex-col bg-white py-10 rounded-md items-center space-y-10">
         <h1 className="text-2xl font-bold">Add User</h1>
-        <form className="flex flex-col space-y-4 " onSubmit={onSubmitHandler}>
+        <form className="flex flex-col space-y-4" onSubmit={onSubmitHandler}>
           <div className="flex flex-col space-y-2">
             <span className="">Username</span>
             <input
@@ -51,7 +51,7 @@ function AddUser() {
           <div className="flex flex-col space-y-2">
             <span>Role</span>
             <RoleList className="border w-full" selected='Sinh Viên'/>
-            {isShowing && <Error/>}
+            {isShowing && <Error className="w-72"/>}
           </div>
           <button className="btn-primary w-fit mx-auto">
             Add User

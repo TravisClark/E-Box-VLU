@@ -56,7 +56,6 @@ let users_question = [];
 const addUser = (username, socketId, id_conversation) => {
     !users.some((user) => user.username === username) && users.push({ username, socketId, id_conversation });
     var info_user = users.find(user => user.username === username);
-    //   console.log(info_user)
     if (info_user != null && info_user.id_conversation != id_conversation) {
       users = users.filter((user) => user.username !== username);
       users.push({ username, socketId, id_conversation });
@@ -75,7 +74,6 @@ const getUser = (username) => {
 const addUser_question = (username, socketId, id_question) => {
   !users_question.some((user) => user.username === username) && users_question.push({ username, socketId, id_question });
   var info_user = users_question.find(user => user.username === username);
-  //   console.log(info_user)
   if (info_user != null && info_user.id_question != id_question) {
     users_question = users_question.filter((user) => user.username !== username);
     users_question.push({ username, socketId, id_question });
@@ -86,8 +84,8 @@ const removeUser_question = (socketId) => {
   users_question = users_question.filter((user) => user.socketId !== socketId);
 };
 
-const getUsers_question = (username) => {
-  return users.find((user) => user.username === username);
+const getUsers_question = (id_question) => {
+  return users_question.filter((user) => user.id_question === id_question);
 };
 
 io.on("connection", (socket) => {
@@ -123,14 +121,14 @@ io.on("connection", (socket) => {
   //send and get comment
   socket.on(
     "sendComment",
-    ({ username_sender, id_question, comment }) => {
+    ({ username, id_question, comment }) => {
       const list_username = getUsers_question(id_question);
       var data_comment = comment.replace(/\s+/g, '');
       if(!(comment === null || data_comment === "")){
         for(let i = 0; i < list_username.length; i++) {
-          if(list_username[i].username !== username_sender){
+          if(list_username[i].username !== username){
             io.to(list_username[i].socketId).emit("getComment", {
-              username_sender,
+             username,
               comment,
             });
           }
