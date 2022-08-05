@@ -16,7 +16,7 @@ import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
 
 
 function QuestionManagement() {
-  const [selectedTable, setSelectedTable] = useState("New Question List");
+  const {account} = useSelector((state) => state.auth);
   const { sendRequest } = useHttpClient();
   const { successNotification } = useSelector((state) => state.ui);
   const { newSortType } = useSelector((state) => state.item);
@@ -24,6 +24,7 @@ function QuestionManagement() {
   const dispatch = useDispatch();
   const { isShowing } = useSelector((state) => state.ui.error);
   const {isSpinnerLoading} = useSelector((state) => state.ui)
+  const [selectedTable, setSelectedTable] = useState();
 
   useEffect(() => {
     try {
@@ -48,6 +49,10 @@ function QuestionManagement() {
     newSortType,
   ]);
 
+  useEffect(() => {
+    setSelectedTable(account.role_name !== "Ban Chủ Nhiệm Khoa" ? 'New Question List': 'Approved Question List') 
+  }, [account.role_name]);
+  
   const onChangeSelectedTable = (selected) => {
     setSelectedTable(selected);
   };
