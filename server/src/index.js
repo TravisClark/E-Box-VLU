@@ -82,6 +82,14 @@ const addUser_question = (username, socketId, id_question) => {
   }
 };
 
+const removeUser_question = (socketId) => {
+  users_question = users_question.filter((user) => user.socketId !== socketId);
+};
+
+const getUsers_question = (username) => {
+  return users.find((user) => user.username === username);
+};
+
 io.on("connection", (socket) => {
   //connected successfully
   console.log("Connected to socket");
@@ -104,16 +112,37 @@ io.on("connection", (socket) => {
       }
     }
   );
-  //get username and socketId from user in question
-  socket.on("addUser_question", ({ username, id_question }) => {
-    addUser_question(username, socket.id, id_question);
-    io.emit("getUsers_question", users_question);
-  });
   //when disconnect
   socket.on("disconnect", () => {
     console.log("disconnected");
     removeUser(socket.id);
     io.emit("getUsers", users);
+  });
+  //get username and socketId from user in question
+  socket.on("addUser_question", ({ username, id_question }) => {
+    addUser_question(username, socket.id, id_question);
+    io.emit("getUsers_question", users_question);
+  });
+  //send and get comment
+  socket.on(
+    "sendComment",
+    ({ username_sender, id_question, comment }) => {
+      const list_username = getUsers_question(id_question);
+      for(let i = 0; i < list_username.length; i++) {
+        if(list_username[i].username !== username_sender){
+          io.to(list_username[i].socketId).emit("getComment", {
+            username_sender,
+            comment,
+          });
+        }
+      }
+    }
+  );
+  //when disconnect
+  socket.on("disconnect_question", () => {
+    console.log("disconnected question");
+    removeUser_question(socket.id);
+    io.emit("getUsers_question", users_question);
   });
 });
 
