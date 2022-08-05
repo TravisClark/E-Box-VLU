@@ -97,7 +97,7 @@ io.on("connection", (socket) => {
       const info_username_sender = getUser(username_sender)
       const info_username_receiver = getUser(username_receiver);
       if (info_username_receiver && info_username_sender.id_conversation === info_username_receiver.id_conversation) {
-        io.to(user.socketId).emit("getMessage", {
+        io.to(info_username_receiver.socketId).emit("getMessage", {
           username_sender,
           message,
         });
