@@ -21,6 +21,8 @@ const uiSlice = createSlice({
       isShowing: false,
       message: "",
     }
+    ,
+    isSpinnerLoading: false,
   },
   reducers: {
     runAdminMode(state, action) {
@@ -67,6 +69,14 @@ const uiSlice = createSlice({
     clearError(state){
       state.error.isShowing = false;
       state.error.message = ''
+    },
+    setSpinnerState(state, action){
+      if(action.payload.type === "LOADING"){
+        state.isSpinnerLoading = true
+      }
+      else if(action.payload.type === "DONE"){
+        state.isSpinnerLoading = false;
+      }
     }
   },
 });

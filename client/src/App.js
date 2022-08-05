@@ -33,7 +33,7 @@ function App() {
       <Suspense
         fallback={
           <div className="centered min-h-screen">
-            <LoadingSpinner />
+            <LoadingSpinner className='fixed z-50'/>
           </div>
         }
       >

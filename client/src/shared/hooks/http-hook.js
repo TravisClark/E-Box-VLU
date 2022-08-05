@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../store/ui-slice";
 
 const useHttpClient = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  // const {isSpinnerLoading} = useSelector((state) => state.ui)
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
 
@@ -25,6 +26,7 @@ const useHttpClient = () => {
       // console.log(isLoading)
       // const httpAbortCtrl = new AbortController();
       // activeHttpRequests.current.push(httpAbortCtrl);
+      dispatch(uiActions.setSpinnerState({ type: "LOADING" }));
       try {
         const response = await fetch(url, {
           method,
@@ -32,7 +34,8 @@ const useHttpClient = () => {
           headers,
           // signal: httpAbortCtrl.signal,
         });
-        console.log(body)
+        // console.log(headers)
+        // console.log(body)
         const responseData = await response.json();
         // activeHttpRequests.current = activeHttpRequests.current.filter(
         //   (reqCtrl) => reqCtrl !== httpAbortCtrl
@@ -42,6 +45,7 @@ const useHttpClient = () => {
           throw new Error(responseData.message);
         }
         // setIsLoading(false);
+        await dispatch(uiActions.setSpinnerState({ type: "DONE" }));
         return responseData;
       } catch (error) {
         const err = error.toString().replace("Error:", "");
@@ -64,7 +68,7 @@ const useHttpClient = () => {
   //   };
   // }, []);
 
-  return { isLoading, error, sendRequest, clearError };
+  return { error, sendRequest, clearError };
 };
 
 export default useHttpClient;

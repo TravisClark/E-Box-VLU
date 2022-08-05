@@ -1,8 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Pagination } from '../../../../shared/components/Pagination/Pagination';
-import { pageActions } from '../../../../shared/store/page-slice';
+import React, {  useMemo } from 'react'
 import { Table } from '../Table';
 import { TableHeader } from '../TableHeader';
 import { UserList } from './UserList';

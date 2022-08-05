@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
 
 export const DeactivateForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
