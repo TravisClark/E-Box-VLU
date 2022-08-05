@@ -33,7 +33,7 @@ export const Comment = ({ comment }) => {
             // value={newMessage}
             // onChange={(e) => setNewMessage(e.target.value)}
           />
-          <button className="btn-primary">Submit</button>
+          <button className="btn-primary">Gửi</button>
         </div>
       </form>}
     </div>

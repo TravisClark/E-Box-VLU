@@ -87,7 +87,7 @@ export const QuestionDetail = () => {
             </div>
           </div>
           <div className="border"></div>
-          <div className="bg-gray-200 p-4 text-black rounded-sm">
+          <div className="bg-gray-200 p-4 text-black rounded-sm break-words">
             {question.answer}
           </div>
           <div className="flex flex-col items-end space-y-4 text-sm md:flex-row md:space-x-4 md:space-y-0 md:justify-end">
