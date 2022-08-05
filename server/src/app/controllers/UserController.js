@@ -89,7 +89,7 @@ class UserController {
                         message: 'Độ dài tài khoản từ 5 đến 20 ký tự',
                     }),
                 );
-            } else if (username.match(format).length != username.length) {
+            } else if (username.match(format) === null || username.match(format).length != username.length) {
                 //check username for correct format
                 return next(
                     res.status(412).json({
