@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Requests from "../../shared/api/Requests";
 import useHttpClient from "../../shared/hooks/http-hook";
+import { CommentList } from "../components/CommentSection/CommentList/CommentList";
 import CircleIcon from "../components/UI/CircleIcon";
 import Container from "../components/UI/Container";
 import SquareIcon from "../components/UI/SquareIcon";
@@ -12,6 +13,7 @@ export const QuestionDetail = () => {
   const params = useParams();
   const [question, setQuestion] = useState({});
   const [createDate, setCreateDate] = useState([]);
+  const [inputComment, setInputComment] = useState('')
   const { sendRequest } = useHttpClient();
 
   useEffect(() => {
@@ -24,19 +26,7 @@ export const QuestionDetail = () => {
         let dates = [response.createdAt, response.updatedAt];
         for (let index = 0; index < dates.length; index++) {
           const date = new Date(dates[index]);
-          // const options = { month: "long" };
-          // console.log(new Intl.DateTimeFormat("en-US", options).format(date));
-          // const dateTranslate = {
-          //   day: date.getDate(),
-          //   month: date.getMonth(),
-          //   year: date.getFullYear(),
-          // };
-          // dates[
-          //   index
-          // ] = `${dateTranslate.day}/${dateTranslate.month}/${dateTranslate.year}`;
-          dates[
-            index
-          ] = `${date.toDateString()}`;
+          dates[index] = `${date.toDateString()}`;
         }
         setCreateDate(dates);
       };
@@ -44,6 +34,15 @@ export const QuestionDetail = () => {
     };
     fetchData();
   }, [params.questionId, sendRequest]);
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    const request = async () => {
+      await sendRequest(Requests.sendComment, 'POST', JSON.stringify({comment: inputComment, id_question: params.questionId}))
+    }
+    request()
+    setInputComment('')
+  }
 
   return (
     <Container className="min-w-full relative flex flex-col items-center mb-20 pb-20 min-h-screen">
@@ -70,6 +69,8 @@ export const QuestionDetail = () => {
           <SquareIcon />
         </div>
       </div>
+
+      {/* Form */}
       <div className="flex relative rounded-lg space-y-8 flex-col w-full py-6 text-sm px-8 translate-y-20 bg-white drop-shadow-md sm:w-10/12 md:m-auto md:border md:h-fit md:max-w-xl lg:max-w-3xl">
         <div className="flex flex-col p-3 space-y-6 border-black rounded-lg md:border md:px-6">
           <div className="flex flex-col space-y-4 ">
@@ -86,7 +87,7 @@ export const QuestionDetail = () => {
             </div>
           </div>
           <div className="border"></div>
-          <div className="bg-gray-200 p-4 text-black rounded-sm">
+          <div className="bg-gray-200 p-4 text-black rounded-sm break-words">
             {question.answer}
           </div>
           <div className="flex flex-col items-end space-y-4 text-sm md:flex-row md:space-x-4 md:space-y-0 md:justify-end">
@@ -104,16 +105,18 @@ export const QuestionDetail = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-end space-y-4">
-          <textarea
-            className="border p-4 rounded-md h-24 w-full outline-gray-300"
-            placeholder="Nhập bình luận..."
-          />
-          <button className="p-2 rounded-md bg-blue-500 text-white w-fit">
-            Bình luận
-          </button>
-        </div>
-        <div className="flex h-44 border"></div>
+        <form onSubmit={onSubmitHandler}>
+          <div className="flex flex-col items-end space-y-4">
+            <textarea
+              className="border p-4 rounded-md h-24 w-full outline-gray-300"
+              placeholder="Nhập bình luận..."
+              value={inputComment}
+              onChange={(e) => setInputComment(e.target.value)}
+            />
+            <button className="btn-primary">Bình luận</button>
+          </div>
+        </form>
+        <CommentList id_question={params.questionId} />
       </div>
     </Container>
   );

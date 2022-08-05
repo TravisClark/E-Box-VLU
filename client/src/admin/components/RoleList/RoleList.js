@@ -14,7 +14,7 @@ export default function BasicSelect({selected, className, onShowWarning}) {
 
   const onChangeHandler = (input)=>{
     dispatch(itemActions.changeSelectedType({type:input.target.value}));
-    onShowWarning()
+    onShowWarning && onShowWarning()
   }
 
   useEffect(() => {
@@ -22,7 +22,6 @@ export default function BasicSelect({selected, className, onShowWarning}) {
       try {
         const response = await sendRequest(Requests.fetchRoleList);
         setOptions(response.map(res => <option value={res.role_name} key={res.id_role}>{res.role_name}</option>));
-        // dispatch(itemActions.getSelected({type:selectedTypeChanged ? selectedTypeChanged : selectedType}));
       } catch (error) {}
     };
     request();

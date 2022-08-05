@@ -5,13 +5,15 @@ import useHttpClient from "../../hooks/http-hook";
 import { MessageReceiver } from "./MessageReceiver/MessageReceiver";
 import { MessageSender } from "./MessageSender/MessageSender";
 import { io } from "socket.io-client";
+import { LoadingDot } from "../LoadingDot/LoadingDot";
 
 export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
   const { account } = useSelector((state) => state.auth);
   const [conversations, setConversations] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [receiver,setReceiver] = useState(null)
+  const [receiver, setReceiver] = useState(null);
+  const { isSpinnerLoading } = useSelector((state) => state.ui);
   const socket = useRef();
   const scrollRef = useRef();
   const { sendRequest } = useHttpClient();
@@ -22,7 +24,11 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
         `${Requests.fetchConversation}${selectedUser.id_conversation}`
       );
       setConversations(response);
-      setReceiver(selectedUser.members.filter(member => member !== account.username).toString());
+      setReceiver(
+        selectedUser.members
+          .filter((member) => member !== account.username)
+          .toString()
+      );
     };
     request();
   }, [selectedUser, sendRequest, account.username]);
@@ -35,7 +41,6 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
         message: data.message,
         createdAt: Date.now(),
       });
-      console.log(data);
     });
   }, []);
 
@@ -45,11 +50,14 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
   }, [arrivalMessage]);
 
   useEffect(() => {
-    socket.current.emit("addUser", account.username);
+    socket.current.emit("addUser", {
+      username: account.username,
+      id_conversation: selectedUser.id_conversation,
+    });
     socket.current.on("getUsers", (users) => {
       console.log(users);
     });
-  }, [account.username]);
+  }, [account.username, selectedUser]);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -58,7 +66,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
       message: newMessage,
       id_conversation: selectedUser.id_conversation,
     };
-    console.log(receiver)
+    console.log(receiver);
     const socketItem = {
       username_sender: account.username,
       username_receiver: receiver,
@@ -84,9 +92,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
   }, [conversations]);
 
   return (
-    <div
-      className=" w-full bg-white rounded-md flex flex-col"
-    >
+    <div className=" w-full bg-white rounded-md flex flex-col">
       <div
         className="p-4 flex space-x-2"
         style={{ borderBottom: "1px solid #dfe6e9" }}
@@ -94,14 +100,14 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
           <path d="M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10 10-4.579 10-10S17.421 2 12 2zm0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3zm-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228z"></path>
         </svg>
-        <span className="font-semibold">
-          {receiver}
-        </span>
+        <span className="font-semibold">{receiver}</span>
       </div>
+
       <div
         className="flex flex-col space-y-2 w-96 min-w-full overflow-hidden hover:overflow-auto"
         style={{ maxHeight, minHeight }}
       >
+        {isSpinnerLoading && <LoadingDot className="m-auto" />}
         {conversations.map(function (conversation) {
           if (conversation.username_sender === account.username) {
             return (
@@ -129,9 +135,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
           />
-          <button className="rounded-md text-white px-3 py-2 font-medium h-fit text-sm bg-lightBlue w-fit">
-            Submit
-          </button>
+          <button className="btn-primary">Submit</button>
         </div>
       </form>
     </div>
