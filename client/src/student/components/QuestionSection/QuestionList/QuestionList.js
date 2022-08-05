@@ -13,7 +13,7 @@ function QuestionList() {
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
   const history = useHistory();
-  const { selectedType,  itemSearching, newSortType } = useSelector(
+  const { selectedType, itemSearching, newSortType } = useSelector(
     (state) => state.item
   );
 
@@ -21,16 +21,15 @@ function QuestionList() {
     try {
       const request = async () => {
         const response = await sendRequest(Requests.fetchQuestionListUser);
-        const sortedQuestions = response.filter(
-          (question) =>
-            question.question
-              .toLowerCase()
-              .includes(itemSearching.toLowerCase()) &&
-            question.type_name.includes(newSortType)
+        const questions = response.filter((question) =>
+          question.question.toLowerCase().includes(itemSearching.toLowerCase())
+        );
+        const sortedQuestions = questions.filter((question) =>
+          question.type_name.includes(newSortType)
         );
         dispatch(
           pageActions.setCurrentItems({
-            items: newSortType === "Tất cả" ? response : sortedQuestions,
+            items: newSortType === "Tất cả" ? questions : sortedQuestions,
             itemsPerPage: 10,
             currentPage: 1,
           })
@@ -75,41 +74,30 @@ function QuestionList() {
     }
   }, [currentItems, onStoreSelectedItem]);
 
-  // console.log(currentItems[0].map((item) => item.question))
-
-  // const typeList = currentItems.map((item, index) => (
-  //   <li
-  //     className={`bg-lightBlue px-6 py-3 text-white truncate`}
-  //     value={item.question}
-  //     key={item.id_question}
-  //     onClick={onStoreSelectedItem.bind(null, item)}
-  //   >
-  //     {`${index + 1}. ${item.question}`}
-  //   </li>
-  // ));
-
-  
-
   return (
     <section id="questions">
       <div className="flex flex-col space-y-6 items-center">
         <h1 className=" font-semibold uppercase text-white">
           Câu Hỏi Theo Danh Mục
         </h1>
-        <div className={`flex flex-col md:flex-row md:space-x-10 md:justify-center`}>
-          {currentItems.length !== 0 && <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
-            {firstList}
-          </ul>}
+        <div
+          className={`flex flex-col md:flex-row md:space-x-10 md:justify-center`}
+        >
+          {currentItems.length !== 0 && (
+            <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
+              {firstList}
+            </ul>
+          )}
           {currentItems.length > 5 && (
             <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
               {secondList}
             </ul>
           )}
           {currentItems.length === 0 && (
-              <div className="w-96 bg-white p-4 rounded-md drop-shadow-lg">
-                <h1>Không tìm thấy câu hỏi!</h1>
-              </div>
-            )}
+            <div className="w-96 bg-white p-4 rounded-md drop-shadow-lg">
+              <h1>Không tìm thấy câu hỏi!</h1>
+            </div>
+          )}
         </div>
 
         {currentItems.length > 0 && (
