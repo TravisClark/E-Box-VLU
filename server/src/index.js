@@ -52,13 +52,13 @@ const io = require("socket.io")(8900, {
 let users = [];
 
 const addUser = (username, socketId, id_conversation) => {
-  !users.some((user) => user.username === username) && users.push({ username, socketId, id_conversation });
-  var info_user = users.find(user => user.username === username);
-//   console.log(info_user)
-  if (info_user != null && info_user.id_conversation != id_conversation) {
-    users = users.filter((user) => user.username === username);
-    users.push({ username, socketId, id_conversation });
-  }
+    !users.some((user) => user.username === username) && users.push({ username, socketId, id_conversation });
+    var info_user = users.find(user => user.username === username);
+    //   console.log(info_user)
+    if (info_user != null && info_user.id_conversation != id_conversation) {
+      users = users.filter((user) => user.username !== username);
+      users.push({ username, socketId, id_conversation });
+    }
 };
 
 const removeUser = (socketId) => {
@@ -81,8 +81,9 @@ io.on("connection", (socket) => {
   socket.on(
     "sendMessage",
     ({ username_sender, username_receiver, message }) => {
-      const user = getUser(username_receiver);
-      if (user) {
+      const info_username_sender = getUser(username_sender)
+      const info_username_receiver = getUser(username_receiver);
+      if (info_username_receiver && info_username_sender.id_conversation === info_username_receiver.id_conversation) {
         io.to(user.socketId).emit("getMessage", {
           username_sender,
           message,
