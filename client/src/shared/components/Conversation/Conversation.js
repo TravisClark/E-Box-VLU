@@ -66,7 +66,6 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
       message: newMessage,
       id_conversation: selectedUser.id_conversation,
     };
-    console.log(receiver);
     const socketItem = {
       username_sender: account.username,
       username_receiver: receiver,

@@ -50,7 +50,7 @@ function AddUser() {
           </div>
           <div className="flex flex-col space-y-2">
             <span>Role</span>
-            <RoleList className="border w-auto" selected='Sinh Viên'/>
+            <RoleList className="border w-full" selected='Sinh Viên'/>
             {isShowing && <Error/>}
           </div>
           <button className="btn-primary w-fit mx-auto">
