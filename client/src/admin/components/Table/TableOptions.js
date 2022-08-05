@@ -17,7 +17,6 @@ const tableOptions = [
 export default function TableList({ onChangeSelectedTable, selectedTable }) {
   const [options, setOptions] = React.useState([]);
   const { account } = useSelector((state) => state.auth);
-  const [iniTialValue, setInitialValue] = React.useState(null);
 
   const handleChange = (event) => {
     onChangeSelectedTable(event.target.value);
@@ -36,7 +35,6 @@ export default function TableList({ onChangeSelectedTable, selectedTable }) {
       default:
         roleList = tableOptions;
     }
-    setInitialValue(roleList[0]);
     setOptions(
       roleList.map((role, index) => (
         <MenuItem value={role} key={index}>
@@ -45,10 +43,6 @@ export default function TableList({ onChangeSelectedTable, selectedTable }) {
       ))
     );
   }, [account.role_name]);
-
-  useEffect(() => {
-    onChangeSelectedTable(iniTialValue);
-  }, [iniTialValue, onChangeSelectedTable]);
 
   return (
     <Box sx={{ minWidth: 220 }}>

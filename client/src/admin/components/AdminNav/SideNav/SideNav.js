@@ -21,7 +21,7 @@ function SideNav() {
         className={`flex flex-col relative w-20 px-4 items-center bg-white z-20 transition duration-1000 ${
           navbarIsOpen && "w-64"
         }`}
-        style={{minHeight:'885px'}}
+        style={{minHeight:'880px'}}
       >
         {/* Mobile hamburger */}
         <div
