@@ -14,6 +14,7 @@ const Requests = {
     activateUser: `${URL}/api/admin/user/restore_user`,
     restoreQuestion:`${URL}/api/admin/mailbox/restore_question`,
     sendMessage:`${URL}/api/user/inbox/send_message`,
+    sendComment: `${URL}/api/user/comment/send_comment`,
     fetchQuestionTypes: `${URL}/api/admin/type/list_types_admin`,
     fetchAccount: `${URL}/api/user/account_info`, 
     fetchRoleList: `${URL}/api/admin/role/list_roles`, 
@@ -26,5 +27,6 @@ const Requests = {
     fetchNotifications: `${URL}/api/user/notification/list_notification`,
     fetchUsersContact: `${URL}/api/user/conversation/list_conversations`,
     fetchConversation: `${URL}/api/user/inbox/list_messages?id_conversation=`,
+    fetchComments: `${URL}/api/user/comment/list_comments?id_question=`
 }
 export default Requests;

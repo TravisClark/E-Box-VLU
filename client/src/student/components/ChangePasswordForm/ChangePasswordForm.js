@@ -34,7 +34,6 @@ function ChangePasswordForm() {
           new_password: newPw,
           re_new_password: confirmNewPw,
         }),
-        { "Content-Type": "application/json"}
       );
       await dispatch(
         authActions.changePasswordHandler({ username: account.username, password: newPw })

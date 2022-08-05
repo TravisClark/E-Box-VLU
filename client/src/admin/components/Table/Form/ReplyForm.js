@@ -42,7 +42,7 @@ export const ReplyForm = (props) => {
               <span className="text-xl font-semibold w-72">Câu hỏi</span>
               <span className="text-xl font-semibold w-52">Gửi vào lúc</span>
             </div>
-            <div className="flex w-full py-2 px-10 space-x-10 border">
+            <div className="flex w-full py-2 px-10 space-x-10 border items-center">
               <span className="text-xl font-semibold w-32 m-auto">
                 {data.username_questioner}
               </span>

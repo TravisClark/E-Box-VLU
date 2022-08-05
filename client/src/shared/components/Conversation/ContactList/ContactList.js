@@ -52,9 +52,9 @@ export const ContactList = ({ onSelectUser, selectedUser,}) => {
   ));
 
   return (
-    <div className="h-auto w-1/3 bg-white rounded-md border">
+    <div className="h-auto w-1/3 bg-white rounded-md border ">
       <ul
-        className="flex flex-col space-y-2 p-4"
+        className="flex flex-col space-y-2 p-4 min-w-full"
       >
         {userList}
       </ul>

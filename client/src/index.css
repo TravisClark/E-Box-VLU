@@ -8,13 +8,30 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   scroll-behavior: auto;
 }
+
 .centered {
   margin: 3rem auto;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-track{
+  background: #fff;
+  opacity: 0.5;
+}
+::-webkit-scrollbar-thumb{
+  border-radius: 25px;
+  background: #dfe6e9;
 }
