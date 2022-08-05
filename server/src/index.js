@@ -117,6 +117,8 @@ io.on("connection", (socket) => {
     console.log("disconnected");
     removeUser(socket.id);
     io.emit("getUsers", users);
+    removeUser_question(socket.id);
+    io.emit("getUsers_question", users_question);
   });
   //get username and socketId from user in question
   socket.on("addUser_question", ({ username, id_question }) => {
@@ -138,12 +140,6 @@ io.on("connection", (socket) => {
       }
     }
   );
-  //when disconnect
-  socket.on("disconnect_question", () => {
-    console.log("disconnected question");
-    removeUser_question(socket.id);
-    io.emit("getUsers_question", users_question);
-  });
 });
 
 app.listen(PORT, () => {
