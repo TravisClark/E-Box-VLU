@@ -10,7 +10,7 @@ function TableQuestionList() {
   const tableHeader = (
     <>
       <td className="py-2 px-4 whitespace-nowrap">{headItem[0]}</td>
-      <td className="py-2 px-4 whitespace-nowrap">{headItem[1]}</td>
+      <td className="py-2 px-4 whitespace-nowrap w-96">{headItem[1]}</td>
       <td className="py-2 px-4 whitespace-nowrap flex justify-between mt-1 h-full items-center">
         {headItem[2]}
         <Sort />

@@ -43,11 +43,11 @@ export const ModifyAnswerForm = (props) => {
               <span className="text-xl font-semibold w-96">Câu hỏi</span>
               <span className="text-xl font-semibold w-52">Gửi vào lúc</span>
             </div>
-            <div className="flex w-full py-2 px-10 space-x-10 border">
+            <div className="flex w-full py-2 px-10 space-x-10 border items-center">
               <span className="text-xl font-semibold w-32 m-auto">
                 {data.username_questioner}
               </span>
-              <span className="text-xl font-semibold w-32 m-auto">
+              <span className="text-xl font-semibold w-32 m-auto break-words">
                 {data.username_respondent}
               </span>
               <span className="text-xl font-semibold w-96 break-words">
@@ -57,7 +57,7 @@ export const ModifyAnswerForm = (props) => {
             </div>
             <QuestionType selected={data.type_name} className="border" />
             <textarea
-              className="w-full border px-4 py-2 rounded-lg h-28 outline-none"
+              className="w-full border px-4 py-2 rounded-lg h-48 outline-none"
               ref={inputRef}
               defaultValue={data.answer}
               placeholder="Nhập câu trả lời..."

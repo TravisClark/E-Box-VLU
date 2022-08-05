@@ -12,8 +12,8 @@ import TriangleIcon from "../components/UI/TriangleIcon";
 export const QuestionDetail = () => {
   const params = useParams();
   const [question, setQuestion] = useState({});
-  const [createDate, setCreateDate] = useState([]);
-  const [inputComment, setInputComment] = useState('')
+  const [dates, setDates] = useState([]);
+  const [inputComment, setInputComment] = useState("");
   const { sendRequest } = useHttpClient();
 
   useEffect(() => {
@@ -22,27 +22,32 @@ export const QuestionDetail = () => {
         `${Requests.fetchQuestionDetail}${params.questionId}`
       );
       setQuestion(response);
-      const formatDate = () => {
-        let dates = [response.createdAt, response.updatedAt];
-        for (let index = 0; index < dates.length; index++) {
-          const date = new Date(dates[index]);
-          dates[index] = `${date.toDateString()}`;
-        }
-        setCreateDate(dates);
-      };
-      formatDate();
+      const { createdAt, approvedAt, responsedAt } = response;
+      setDates({
+        createDate: new Date(createdAt).toDateString(),
+        approveDate: new Date(approvedAt).toDateString(),
+        responseDate: new Date(responsedAt).toDateString(),
+      });
     };
     fetchData();
   }, [params.questionId, sendRequest]);
+  console.log(dates)
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const request = async () => {
-      await sendRequest(Requests.sendComment, 'POST', JSON.stringify({comment: inputComment, id_question: params.questionId}))
-    }
-    request()
-    setInputComment('')
-  }
+      await sendRequest(
+        Requests.sendComment,
+        "POST",
+        JSON.stringify({
+          comment: inputComment,
+          id_question: params.questionId,
+        })
+      );
+    };
+    request();
+    setInputComment("");
+  };
 
   return (
     <Container className="min-w-full relative flex flex-col items-center mb-20 pb-20 min-h-screen">
@@ -77,7 +82,7 @@ export const QuestionDetail = () => {
             <div className="flex flex-col space-y-4 md:space-y-0">
               <span className="text-xl break-words">{question.question}</span>
               <span className="text-md break-words text-gray-500">
-                Đã hỏi vào {createDate[0]}
+                Đã hỏi vào {dates.createDate}
               </span>
             </div>
             <div className="h-full">
@@ -95,13 +100,13 @@ export const QuestionDetail = () => {
               <span className="text-blue-500">
                 {question.username_approver}
               </span>
-              <span>Duyệt, {createDate[0]}</span>
+              <span>Duyệt, {dates.approveDate}</span>
             </div>
             <div className="flex flex-col text-left p-2 rounded bg-blue-200">
               <span className="text-blue-500">
                 {question.username_respondent}
               </span>
-              <span>Trả lời, {createDate[0]}</span>
+              <span>Trả lời, {dates.responseDate}</span>
             </div>
           </div>
         </div>
