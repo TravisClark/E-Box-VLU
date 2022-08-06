@@ -319,7 +319,7 @@ describe('Unit Tests of View question details function', () => {
     test('Status is 200 and format json', async () => {
         const response = await request(app)
             .get('/api/user/mailbox/details_question')
-            .query({ id_question: 1 })
+            .query({ id_question: 2 })
             .set({
                 Authorization:
                     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
@@ -331,15 +331,82 @@ describe('Unit Tests of View question details function', () => {
     test('Return selected question', async () => {
         const response = await request(app)
             .get('/api/user/mailbox/details_question')
-            .query({ id_question: 1 })
+            .query({ id_question: 2 })
             .set({
                 Authorization:
                     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
             });
 
         const mailbox = await Mailbox.findOne({
-            id_question: 1,
+            id_question: 2,
         });
         expect(response.body.question).toEqual(mailbox.question);
+    });
+});
+
+describe('Unit Tests of view rejection notice function', () => {
+    test('Status is 200 and format json', async () => {
+        const response = await request(app)
+            .get('/api/admin/mailbox/statistical')
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.type).toEqual('application/json');
+    });
+    test('Return count status and type of question and charts', async () => {
+        const response = await request(app)
+            .get('/api/admin/mailbox/statistical')
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
+
+        var count_unchecked = await Mailbox.count({status_question: 'Chưa được duyệt'});
+        var count_approved = await Mailbox.count({status_question: 'Đã được duyệt'});
+        var count_answered = await Mailbox.count({status_question: 'Đã được trả lời'});
+        var count_refused = await Mailbox.count({status_question: 'Đã bị từ chối'});
+        var count_type1 = await Mailbox.count({type_name: 'Học phần'});
+        var count_type2 = await Mailbox.count({type_name: 'Học phí'});
+        var count_type3 = await Mailbox.count({type_name: 'Học bổng'});
+        var count_type4 = await Mailbox.count({type_name: 'Chương trình đào tạo'});
+        var count_type5 = await Mailbox.count({type_name: 'Hướng nghiệp'});
+        var count_type6 = await Mailbox.count({type_name: 'Câu hỏi khác'});
+        const list_questions = await Mailbox.find({status_question: 'Đã được trả lời'});
+        await list_questions.sort(function(a, b){
+            if(a.members_star != null && b.members_star != null){
+                if(a.members_star.length > b.members_star.length){
+                    return -1;
+                }else{
+                    return 1;
+                }
+            }
+            return 0;
+        });
+        let check = {
+            unchecked: count_unchecked,
+            approved: count_approved,
+            answered: count_answered,
+            refused: count_refused,
+            HocPhan: count_type1,
+            HocPhi: count_type2,
+            HocBong: count_type3,
+            CTDT: count_type4,
+            HuongNghiep: count_type5,
+            CauHoiKhac: count_type6,
+            charts: list_questions,
+        };
+        expect(response.body.unchecked).toEqual(check.unchecked);
+        expect(response.body.approved).toEqual(check.approved);
+        expect(response.body.answered).toEqual(check.answered);
+        expect(response.body.refused).toEqual(check.refused);
+        expect(response.body.HocPhan).toEqual(check.HocPhan);
+        expect(response.body.HocPhi).toEqual(check.HocPhi);
+        expect(response.body.HocBong).toEqual(check.HocBong);
+        expect(response.body.CTDT).toEqual(check.CTDT);
+        expect(response.body.HuongNghiep).toEqual(check.HuongNghiep);
+        expect(response.body.CauHoiKhac).toEqual(check.CauHoiKhac);
     });
 });
