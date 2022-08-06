@@ -314,7 +314,7 @@ describe('Unit Tests of View rejected questions function', () => {
         expect(response.body.length).toEqual(mailbox.length);
     });
 });
-*/
+
 describe('Unit Tests of View question details function', () => {
     test('Status is 200 and format json', async () => {
         const response = await request(app)
@@ -331,7 +331,7 @@ describe('Unit Tests of View question details function', () => {
     test('Return selected question', async () => {
         const response = await request(app)
             .get('/api/user/mailbox/details_question')
-            .query({ id_question: 2 })
+            .query({ id_question: 1 })
             .set({
                 Authorization:
                     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
@@ -408,5 +408,19 @@ describe('Unit Tests of view rejection notice function', () => {
         expect(response.body.CTDT).toEqual(check.CTDT);
         expect(response.body.HuongNghiep).toEqual(check.HuongNghiep);
         expect(response.body.CauHoiKhac).toEqual(check.CauHoiKhac);
+    });
+});
+*/
+describe('Unit Tests of question recovery function', () => {
+    test('Status is 201, format json and return message "Khôi phục câu hỏi thành công"', async () => {
+        const response = await request(app)
+            .patch('/api/admin/mailbox/restore_question')
+            .send({ username: '197pm33529',
+                    id_question: 3,})
+            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA'});
+
+        expect(response.statusCode).toBe(201);
+        expect(response.type).toEqual('application/json');
+        expect(response.body).toEqual({message: 'Khôi phục câu hỏi thành công'});
     });
 });
