@@ -9,5 +9,6 @@ router.get(
 );
 router.get("/details_question", mailboxController.details_question);
 router.post("/publish_question", mailboxController.publish_question);
+router.put("/like", mailboxController.like);
 
 module.exports = router;
