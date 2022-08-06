@@ -131,7 +131,12 @@ class MailboxController {
                     })
                     .catch(next);
             }else{
-                res.status(400).json({message: 'Đã thả sao rồi'})
+                list_users_like = list_users_like.filter(user => user.username !== req.user.username)
+                Mailbox.findOneAndUpdate({id_question: req.body.id_question}, {members_star: list_users_like})
+                    .then(() => {
+                        res.status(201).json({message: 'Bỏ thả sao thành công'})
+                    })
+                    .catch(next);
             }
         } catch (error) {
             console.log(error);
