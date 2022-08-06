@@ -18,6 +18,7 @@ class NotificationController {
                     id_question: notification[i].id_question,
                 });
                 list_notification.push({
+                    id_notification: notification[i].id_notification,
                     status_notification: notification[i].status_notification,
                     username_sender: notification[i].username_sender,
                     id_question: notification[i].id_question,
