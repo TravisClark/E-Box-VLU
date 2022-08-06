@@ -29,7 +29,7 @@ const Notification = Schema({
     watched: {
         type: Boolean,
         default: false,
-    }
+    },
 });
 
 Notification.plugin(AutoIncrement, { inc_field: 'id_notification' });

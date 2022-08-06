@@ -7,9 +7,9 @@ class ConversationController {
         try {
             //Search and get conversation by username get from token
             const list_conversation = await Conversation.find({
-                members: { $in: [req.user.username]},
+                members: { $in: [req.user.username] },
             });
-            
+
             //Return user info
             res.status(200).json(list_conversation);
         } catch (err) {

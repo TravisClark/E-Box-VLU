@@ -81,7 +81,7 @@ function QuestionList() {
           Câu Hỏi Theo Danh Mục
         </h1>
         <div
-          className={`flex flex-col md:flex-row md:space-x-10 md:justify-center`}
+          className={`flex flex-col space-y-0.5 xl:flex-row xl:space-x-10 xl:justify-center xl:space-y-0`}
         >
           {currentItems.length !== 0 && (
             <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>

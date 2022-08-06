@@ -42,7 +42,7 @@ const Mailbox = new Schema({
         type: 'Date',
         default: Date.now,
     },
-    members_star:{
+    members_star: {
         type: Array,
     },
 });
