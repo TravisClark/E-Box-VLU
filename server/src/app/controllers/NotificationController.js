@@ -13,22 +13,24 @@ class NotificationController {
                 createdAt: 'desc',
             });
             const list_notification = [];
-            for (let i = 0; i < notification.length; i++) {
-                const info_mailbox = await MailboxModel.findOne({
-                    id_question: notification[i].id_question,
-                });
-                list_notification.push({
-                    id_notification: notification[i].id_notification,
-                    status_notification: notification[i].status_notification,
-                    username_sender: notification[i].username_sender,
-                    id_question: notification[i].id_question,
-                    question: info_mailbox.question,
-                    time: moment(
-                        notification[i].createdAt,
-                        'YYYY-MM-DDTHH:mm:ss.SSS',
-                    ).fromNow(),
-                    watched: notification[i].watched,
-                });
+            if(notification !== null) {
+                for (let i = 0; i < notification.length; i++) {
+                    const info_mailbox = await MailboxModel.findOne({
+                        id_question: notification[i].id_question,
+                    });
+                    list_notification.push({
+                        id_notification: notification[i].id_notification,
+                        status_notification: notification[i].status_notification,
+                        username_sender: notification[i].username_sender,
+                        id_question: notification[i].id_question,
+                        question: info_mailbox.question,
+                        time: moment(
+                            notification[i].createdAt,
+                            'YYYY-MM-DDTHH:mm:ss.SSS',
+                        ).fromNow(),
+                        watched: notification[i].watched,
+                    });
+                }
             }
             //Return list notification
             res.status(200).json(list_notification);
