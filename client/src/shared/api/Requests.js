@@ -15,6 +15,7 @@ const Requests = {
     restoreQuestion:`${URL}/api/admin/mailbox/restore_question`,
     sendMessage:`${URL}/api/user/inbox/send_message`,
     sendComment: `${URL}/api/user/comment/send_comment`,
+    watchNotification: `${URL}/api/user/notification/watched`,
     fetchQuestionTypes: `${URL}/api/admin/type/list_types_admin`,
     fetchAccount: `${URL}/api/user/account_info`, 
     fetchRoleList: `${URL}/api/admin/role/list_roles`, 
