@@ -15,6 +15,7 @@ function SideNav() {
   const openNavHandler = () => {
     setNavbarIsOpen((prevState) => !prevState);
   };
+  // console.log(navbarIsOpen)
   return (
     <nav>
       <Container

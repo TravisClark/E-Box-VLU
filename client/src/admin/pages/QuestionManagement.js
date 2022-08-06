@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import Container from "../../student/components/UI/Container";
 import TableOptions from "../components/Table/TableOptions";
-import NewQuestionsTable from "../components/Table/NewQuestionsTable/NewQuestionsTable";
 import { DisapprovedQuestionsTable } from "../components/Table/DisapprovedQuestionsTable/DisapprovedQuestionsTable";
 import { ApprovedQuestionsTable } from "../components/Table/ApprovedQuestionsTable/ApprovedQuestionsTable";
 import { RepliedQuestionsTable } from "../components/Table/RepliedQuestionsTable/RepliedQuestionsTable";
+import { NewQuestionsTable } from "../components/Table/NewQuestionsTable/NewQuestionsTable";
 import { useEffect } from "react";
 import Requests from "../../shared/api/Requests";
 import useHttpClient from "../../shared/hooks/http-hook";
 import { Notification } from "../../shared/components/UI/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
-import { Error } from "../../shared/components/Error/Error";
-import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
+// import { Error } from "../../shared/components/Error/Error";
+// import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
 
 const tableOptions = [
   "New Question List",
@@ -22,15 +22,16 @@ const tableOptions = [
 ];
 
 function QuestionManagement() {
-  const { account } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const [table, setTable] = useState(null);
+  const [selectedTable, setSelectedTable] = useState();
   const { sendRequest } = useHttpClient();
+  const { account } = useSelector((state) => state.auth);
   const { successNotification } = useSelector((state) => state.ui);
   const { newSortType } = useSelector((state) => state.item);
   const { isSortingItems } = useSelector((state) => state.page);
-  const dispatch = useDispatch();
-  const { isShowing } = useSelector((state) => state.ui.error);
-  const { isSpinnerLoading } = useSelector((state) => state.ui);
-  const [selectedTable, setSelectedTable] = useState();
+  // const { isShowing } = useSelector((state) => state.ui.error);
+  
 
   useEffect(() => {
     try {
@@ -46,6 +47,7 @@ function QuestionManagement() {
         );
       };
       fetchQuestionList();
+      console.log("first");
     } catch (error) {}
   }, [
     sendRequest,
@@ -61,30 +63,35 @@ function QuestionManagement() {
         ? tableOptions[0]
         : tableOptions[1]
     );
+    console.log("se");
   }, [account.role_name]);
 
   const onChangeSelectedTable = (selected) => {
     setSelectedTable(selected);
   };
 
-  let table;
-  switch (selectedTable) {
-    case tableOptions[0]: {
-      table = <NewQuestionsTable />;
-      break;
+  console.count();
+
+  useEffect(() => {
+    switch (selectedTable) {
+      case tableOptions[0]: {
+        setTable(<NewQuestionsTable />);
+        break;
+      }
+      case tableOptions[1]: {
+        setTable(<DisapprovedQuestionsTable />);
+        break;
+      }
+      case tableOptions[2]: {
+        setTable(<ApprovedQuestionsTable />);
+        break;
+      }
+      default: {
+        setTable(<RepliedQuestionsTable />);
+      }
     }
-    case tableOptions[1]: {
-      table = <DisapprovedQuestionsTable />;
-      break;
-    }
-    case tableOptions[2]: {
-      table = <ApprovedQuestionsTable />;
-      break;
-    }
-    default: {
-      table = <RepliedQuestionsTable />;
-    }
-  }
+    console.log('th');
+  }, [selectedTable]);
 
   return (
     <Container className="m-auto w-11/12 h-full py-14 px-20 space-y-6 relative">
@@ -102,9 +109,9 @@ function QuestionManagement() {
         </div>
         <div className="border w-full"></div>
 
-        {isShowing && <Error />}
-        {isSpinnerLoading && <LoadingDot />}
-        {table && table}
+        {/* {isShowing && <Error />} */}
+        {/* {isSpinnerLoading && <LoadingDot />} */}
+        {table}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />
         )}
