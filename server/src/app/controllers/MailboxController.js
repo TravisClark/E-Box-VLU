@@ -60,6 +60,47 @@ class MailboxController {
             console.log(err);
         }
     };
+    //[GET] http://localhost:5000/api/admin/mailbox/statistical
+    statistical = async (req, res) => {
+        try {
+            var count_unchecked = await Mailbox.count({status_question: 'Chưa được duyệt'});
+            var count_approved = await Mailbox.count({status_question: 'Đã được duyệt'});
+            var count_answered = await Mailbox.count({status_question: 'Đã được trả lời'});
+            var count_refused = await Mailbox.count({status_question: 'Đã bị từ chối'});
+            var count_type1 = await Mailbox.count({type_name: 'Học phần'});
+            var count_type2 = await Mailbox.count({type_name: 'Học phí'});
+            var count_type3 = await Mailbox.count({type_name: 'Học bổng'});
+            var count_type4 = await Mailbox.count({type_name: 'Chương trình đào tạo'});
+            var count_type5 = await Mailbox.count({type_name: 'Hướng nghiệp'});
+            var count_type6 = await Mailbox.count({type_name: 'Câu hỏi khác'});
+            const list_questions = await Mailbox.find({status_question: 'Đã được trả lời'});
+            await list_questions.sort(function(a, b){
+                if(a.members_star != null && b.members_star != null){
+                    if(a.members_star.length > b.members_star.length){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                }
+                return 0;
+            });
+            res.status(200).json({
+                unchecked: count_unchecked,
+                approved: count_approved,
+                answered: count_answered,
+                refused: count_refused,
+                HocPhan: count_type1,
+                HocPhi: count_type2,
+                HocBong: count_type3,
+                CTDT: count_type4,
+                HuongNghiep: count_type5,
+                CauHoiKhac: count_type6,
+                charts: list_questions,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     //[POST] http://localhost:5000/api/user/mailbox/publish_question
     publish_question = async (req, res, next) => {

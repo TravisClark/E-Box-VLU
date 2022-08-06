@@ -26,6 +26,7 @@ class NotificationController {
                         notification[i].createdAt,
                         'YYYY-MM-DDTHH:mm:ss.SSS',
                     ).fromNow(),
+                    watched: notification[i].watched,
                 });
             }
             //Return list notification
