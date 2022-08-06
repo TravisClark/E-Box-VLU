@@ -13,7 +13,7 @@ export const QuestionDetail = () => {
   const params = useParams();
   const [question, setQuestion] = useState({});
   const [dates, setDates] = useState([]);
-  
+
   const { sendRequest } = useHttpClient();
 
   useEffect(() => {
@@ -31,12 +31,12 @@ export const QuestionDetail = () => {
     };
     fetchData();
   }, [params.questionId, sendRequest]);
-  console.log(dates)
-
-  
 
   return (
-    <Container className="min-w-full relative flex flex-col items-center mb-20 pb-20 min-h-screen" style={{background: '#eaeaea'}}>
+    <Container
+      className="min-w-full relative flex flex-col items-center pb-28 min-h-screen"
+      style={{ background: "#eaeaea" }}
+    >
       <div className="absolute w-full justify-center overflow-hidden z-0 flex">
         <CircleIcon className="hidden md:block" />
         <svg
@@ -96,7 +96,7 @@ export const QuestionDetail = () => {
             </div>
           </div>
         </div>
-        
+
         <CommentList id_question={params.questionId} />
       </div>
     </Container>

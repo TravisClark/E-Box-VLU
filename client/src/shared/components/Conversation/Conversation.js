@@ -136,7 +136,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
               />
-              <button className="btn-primary">Submit</button>
+              <button className="btn-primary">Gửi</button>
             </div>
           </form>
         </>

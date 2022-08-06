@@ -1,12 +1,8 @@
 import { useCallback } from "react";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../store/ui-slice";
 
 const useHttpClient = () => {
-  // const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
-  // const {isSpinnerLoading} = useSelector((state) => state.ui)
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
 
@@ -22,8 +18,6 @@ const useHttpClient = () => {
         Authorization: `Bearer ${token && token}`,
       }
     ) => {
-      // setIsLoading(true);
-      // console.log(isLoading)
       // const httpAbortCtrl = new AbortController();
       // activeHttpRequests.current.push(httpAbortCtrl);
       dispatch(uiActions.setSpinnerState({ type: "LOADING" }));
@@ -34,22 +28,19 @@ const useHttpClient = () => {
           headers,
           // signal: httpAbortCtrl.signal,
         });
-        // console.log(headers)
-        // console.log(body)
         const responseData = await response.json();
         // activeHttpRequests.current = activeHttpRequests.current.filter(
         //   (reqCtrl) => reqCtrl !== httpAbortCtrl
         // );
 
         if (!response.ok) {
+          dispatch(uiActions.setSpinnerState({ type: "DONE" }));
           throw new Error(responseData.message);
         }
-        // setIsLoading(false);
-        await dispatch(uiActions.setSpinnerState({ type: "DONE" }));
+        dispatch(uiActions.setSpinnerState({ type: "DONE" }));
         return responseData;
       } catch (error) {
         const err = error.toString().replace("Error:", "");
-        // setError(err);
         dispatch(uiActions.catchError({ message: err }));
         throw error;
       }
@@ -57,9 +48,6 @@ const useHttpClient = () => {
     [dispatch, token]
   );
 
-  const clearError = () => {
-    setError(null);
-  };
 
   // useEffect(() => {
   //   return () => {
@@ -68,7 +56,7 @@ const useHttpClient = () => {
   //   };
   // }, []);
 
-  return { error, sendRequest, clearError };
+  return { sendRequest };
 };
 
 export default useHttpClient;

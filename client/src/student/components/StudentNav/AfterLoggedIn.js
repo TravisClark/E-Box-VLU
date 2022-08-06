@@ -38,7 +38,9 @@ function AfterLoggedIn({
       {/* Desktop nav */}
       <div className="hidden md:flex md:flex-col md:items-center md:w-52">
         <div className="flex space-x-4">
-          {account.role_name === 'Sinh Viên' && <Notifications changeBgColor={changeBgColor}/>}
+          {account.role_name === "Sinh Viên" && (
+            <Notifications changeBgColor={changeBgColor} />
+          )}
           <div
             className={`flex space-x-2 cursor-pointer`}
             onClick={toggleMenuHandler}
