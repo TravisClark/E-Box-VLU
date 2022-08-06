@@ -319,7 +319,7 @@ describe('Unit Tests of View question details function', () => {
     test('Status is 200 and format json', async () => {
         const response = await request(app)
             .get('/api/user/mailbox/details_question')
-            .query({ id_question: 2 })
+            .query({ id_question: 1 })
             .set({
                 Authorization:
                     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
@@ -338,7 +338,7 @@ describe('Unit Tests of View question details function', () => {
             });
 
         const mailbox = await Mailbox.findOne({
-            id_question: 2,
+            id_question: 1,
         });
         expect(response.body.question).toEqual(mailbox.question);
     });
