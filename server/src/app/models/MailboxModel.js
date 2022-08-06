@@ -42,6 +42,9 @@ const Mailbox = new Schema({
         type: 'Date',
         default: Date.now,
     },
+    members_star:{
+        type: Array,
+    },
 });
 
 Mailbox.plugin(AutoIncrement, { inc_field: 'id_question' });

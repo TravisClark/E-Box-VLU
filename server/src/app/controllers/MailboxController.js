@@ -114,6 +114,35 @@ class MailboxController {
         }
     };
 
+    //[PUT] http://localhost:5000/api/user/mailbox/like
+    like = async (req, res, next) => {
+        try {
+            const info_mailbox = await Mailbox.findOne({id_question: req.body.id_question});
+            
+            let list_users_like = [];
+            if(info_mailbox.members_star !== null){
+                list_users_like = info_mailbox.members_star;
+            }
+            if(!(list_users_like.find(user => user.username === req.user.username))){
+                await list_users_like === list_users_like.push({username: req.user.username})
+                Mailbox.findOneAndUpdate({id_question: req.body.id_question}, {members_star: list_users_like})
+                    .then(() => {
+                        res.status(201).json({message: 'Thả sao thành công'})
+                    })
+                    .catch(next);
+            }else{
+                list_users_like = list_users_like.filter(user => user.username !== req.user.username)
+                Mailbox.findOneAndUpdate({id_question: req.body.id_question}, {members_star: list_users_like})
+                    .then(() => {
+                        res.status(201).json({message: 'Bỏ thả sao thành công'})
+                    })
+                    .catch(next);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     //[PATCH] http://localhost:5000/api/admin/mailbox/approve_question
     approve_question = async (req, res, next) => {
         try {

@@ -34,6 +34,17 @@ class NotificationController {
             console.log(err);
         }
     };
+    //[PATCH] http://localhost:5000/api/user/notification/watched
+    watched = async (req, res,next) => {
+        try {
+            NotificationModel.findOneAndUpdate({id_notification: req.body.id_notification}, {watched: true})
+            .then(() => {res.status(201).json({message: 'Watched'})
+            }).catch(next);
+            
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 module.exports = new NotificationController();
