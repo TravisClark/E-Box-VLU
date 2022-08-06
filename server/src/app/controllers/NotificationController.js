@@ -13,14 +13,15 @@ class NotificationController {
                 createdAt: 'desc',
             });
             const list_notification = [];
-            if(notification !== null) {
+            if (notification !== null) {
                 for (let i = 0; i < notification.length; i++) {
                     const info_mailbox = await MailboxModel.findOne({
                         id_question: notification[i].id_question,
                     });
                     list_notification.push({
                         id_notification: notification[i].id_notification,
-                        status_notification: notification[i].status_notification,
+                        status_notification:
+                            notification[i].status_notification,
                         username_sender: notification[i].username_sender,
                         id_question: notification[i].id_question,
                         question: info_mailbox.question,
@@ -39,16 +40,20 @@ class NotificationController {
         }
     };
     //[PATCH] http://localhost:5000/api/user/notification/watched
-    watched = async (req, res,next) => {
+    watched = async (req, res, next) => {
         try {
-            NotificationModel.findOneAndUpdate({id_notification: req.body.id_notification}, {watched: true})
-            .then(() => {res.status(201).json({message: 'Watched'})
-            }).catch(next);
-            
+            NotificationModel.findOneAndUpdate(
+                { id_notification: req.body.id_notification },
+                { watched: true },
+            )
+                .then(() => {
+                    res.status(201).json({ message: 'Watched' });
+                })
+                .catch(next);
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 }
 
 module.exports = new NotificationController();
