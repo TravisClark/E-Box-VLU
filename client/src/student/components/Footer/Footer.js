@@ -1,5 +1,4 @@
 import React from "react";
-import vluIcon from "../../../assets/_hjkj3598HJ_logo2.png";
 import ITIcon from "../../../assets/IT_Icon.png";
 import houseIcon from "../../../assets/house.png";
 import Container from "../UI/Container";

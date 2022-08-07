@@ -102,8 +102,6 @@ function QuestionList() {
 
         {currentItems.length > 0 && (
           <Pagination
-            prevBtn="Previous"
-            nextBtn="Next"
             activeBtnStyle="bg-lightBlue text-white rounded"
             containerStyle="bg-white py-2 px-6 rounded text-gray-400 drop-shadow-lg lg:w-fit"
             disabledBtnStyle="opacity-50"

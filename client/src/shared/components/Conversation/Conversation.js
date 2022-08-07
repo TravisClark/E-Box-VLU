@@ -108,7 +108,11 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
             className="flex flex-col space-y-2 w-96 min-w-full overflow-hidden hover:overflow-auto"
             style={{ maxHeight, minHeight }}
           >
-            {isSpinnerLoading && <div className="h-56 flex justify-center items-center"><LoadingDot className="m-auto" /></div>}
+            {isSpinnerLoading && (
+              <div className="h-56 flex justify-center items-center">
+                <LoadingDot className="m-auto" />
+              </div>
+            )}
             {conversations.map(function (conversation) {
               if (conversation.username_sender === account.username) {
                 return (
@@ -149,7 +153,6 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
           There is no conversation to display!
         </div>
       )}
-      
     </div>
   );
 };

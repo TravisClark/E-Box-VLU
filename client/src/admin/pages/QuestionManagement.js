@@ -11,14 +11,12 @@ import useHttpClient from "../../shared/hooks/http-hook";
 import { Notification } from "../../shared/components/UI/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
-// import { Error } from "../../shared/components/Error/Error";
-// import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
 
 const tableOptions = [
-  "New Question List",
-  "Disapproved Question List",
-  "Approved Question List",
-  "Replied Question List",
+  "Câu hỏi chưa được duyệt",
+  "Câu hỏi bị từ chối",
+  "Câu hỏi đã được duyệt",
+  "Câu hỏi đã được trả lời",
 ];
 
 function QuestionManagement() {
@@ -30,7 +28,6 @@ function QuestionManagement() {
   const { successNotification } = useSelector((state) => state.ui);
   const { newSortType } = useSelector((state) => state.item);
   const { isSortingItems } = useSelector((state) => state.page);
-  // const { isShowing } = useSelector((state) => state.ui.error);
   
 
   useEffect(() => {
@@ -92,7 +89,7 @@ function QuestionManagement() {
 
   return (
     <Container className="m-auto w-11/12 h-full py-14 px-20 space-y-6 relative">
-      <h1 className="text-2xl font-semibold">Question Management</h1>
+      <h1 className="text-2xl font-semibold">Quản lý câu hỏi</h1>
       <div className="flex flex-col bg-white py-6 pl-5 pr-28 rounded-md items-center space-y-5 relative xl:px-10">
         <div className="flex justify-between w-full">
           <h1 className="text-lg font-semibold self-center text-gray-500">
@@ -105,9 +102,6 @@ function QuestionManagement() {
           />
         </div>
         <div className="border w-full"></div>
-
-        {/* {isShowing && <Error />} */}
-        {/* {isSpinnerLoading && <LoadingDot />} */}
         {table}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />

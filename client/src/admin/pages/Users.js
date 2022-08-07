@@ -29,12 +29,12 @@ function Users() {
   return (
     <Container className="m-auto w-11/12 h-full py-14 px-20 space-y-6 relative">
       <div className="flex justify-between">
-        <h1 className="text-2xl font-semibold ">Users Management</h1>
+        <h1 className="text-2xl font-semibold ">Quản lý tài khoản</h1>
       </div>
       <div className="flex flex-col bg-white py-6 px-10 rounded-md items-center space-y-5 relative">
         <div className="flex justify-between w-full">
           <h1 className="text-lg font-semibold self-center text-gray-500">
-            User list
+            Danh sách tài khoản
           </h1>
           <div className="flex space-x-6 items-center">
             {/* <SearchItem/> */}
@@ -55,7 +55,7 @@ function Users() {
             {!(account.role_name === "Ban Chủ Nhiệm Khoa") && (
               <Link to="/E-boxVLU/admin/users/add">
                 <button className="btn-primary text-sm">
-                  Add User
+                  Thêm tài khoản
                 </button>
               </Link>
             )}

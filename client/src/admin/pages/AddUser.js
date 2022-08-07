@@ -40,25 +40,25 @@ function AddUser() {
 
   return (
     <Container className="m-auto w-11/12 h-full py-24 px-20 space-y-6">
-      <h1 className="text-2xl font-semibold ">Add User</h1>
+      <h1 className="text-2xl font-semibold ">Thêm tài khoản</h1>
       <div className="flex flex-col bg-white py-10 rounded-md items-center space-y-10">
-        <h1 className="text-2xl font-bold">Add User</h1>
+        <h1 className="text-2xl font-bold">Thêm tài khoản</h1>
         <form className="flex flex-col space-y-4" onSubmit={onSubmitHandler}>
           <div className="flex flex-col space-y-2">
-            <span className="">Username</span>
+            <span className="">Tài khoản</span>
             <input
               type="text"
               className="px-4 py-2 outline-none border rounded-md border-gray-300 w-72"
-              placeholder="Enter username"
+              placeholder="Nhập tài khoản"
               ref={inputRef}
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <span>Role</span>
+            <span>Vai trò</span>
             <RoleList className="border w-auto" selected="Sinh Viên" />
             {isShowing && <Error className="w-72" />}
           </div>
-          <button className="btn-primary w-fit mx-auto">Add User</button>
+          <button className="btn-primary w-fit mx-auto">Xác nhận</button>
         </form>
       </div>
     </Container>
