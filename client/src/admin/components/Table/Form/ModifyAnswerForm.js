@@ -38,13 +38,13 @@ export const ModifyAnswerForm = (props) => {
         <form onSubmit={onSubmitHandler} className="table-auto">
           <div className="flex flex-col space-y-6">
             <div className="flex w-full py-2 px-10 space-x-10 bg-gray-200 rounded-md">
-              <span className="text-xl font-semibold w-32">Người đặt</span>
+              <span className="text-xl font-semibold w-56">Người đặt</span>
               <span className="text-xl font-semibold w-32">Người trả lời</span>
               <span className="text-xl font-semibold w-96">Câu hỏi</span>
               <span className="text-xl font-semibold w-52">Gửi vào lúc</span>
             </div>
             <div className="flex w-full py-2 px-10 space-x-10 border items-center">
-              <span className="text-xl font-semibold w-32 m-auto">
+              <span className="text-xl font-semibold w-56 m-auto break-words">
                 {data.username_questioner}
               </span>
               <span className="text-xl font-semibold w-32 m-auto break-words">

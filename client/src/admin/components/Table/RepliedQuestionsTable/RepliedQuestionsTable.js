@@ -24,6 +24,7 @@ export const RepliedQuestionsTable = () => {
       <td className="py-2 px-4 whitespace-nowrap">{headItem[4]}</td>
     </>
   );
+  
   return (
     <div className="flex space-y-4 flex-col w-full">
       <div className="flex border rounded-lg px-2 py-2 space-x-2 h-10 w-96">

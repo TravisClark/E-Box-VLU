@@ -33,10 +33,6 @@ function Navbar() {
     setNavbarIsOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    
-  }, []);
-
   return (
     <nav>
       <Container

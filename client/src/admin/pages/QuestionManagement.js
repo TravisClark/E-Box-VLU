@@ -16,8 +16,8 @@ import { itemActions } from "../../shared/store/item-slice";
 
 const tableOptions = [
   "New Question List",
-  "Approved Question List",
   "Disapproved Question List",
+  "Approved Question List",
   "Replied Question List",
 ];
 
@@ -47,7 +47,6 @@ function QuestionManagement() {
         );
       };
       fetchQuestionList();
-      console.log("first");
     } catch (error) {}
   }, [
     sendRequest,
@@ -61,16 +60,15 @@ function QuestionManagement() {
     setSelectedTable(
       account.role_name !== "Ban Chủ Nhiệm Khoa"
         ? tableOptions[0]
-        : tableOptions[1]
+        : tableOptions[2]
     );
-    console.log("se");
   }, [account.role_name]);
 
+  
+  
   const onChangeSelectedTable = (selected) => {
     setSelectedTable(selected);
   };
-
-  console.count();
 
   useEffect(() => {
     switch (selectedTable) {
@@ -90,7 +88,6 @@ function QuestionManagement() {
         setTable(<RepliedQuestionsTable />);
       }
     }
-    console.log('th');
   }, [selectedTable]);
 
   return (
