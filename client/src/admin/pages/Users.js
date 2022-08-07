@@ -54,7 +54,7 @@ function Users() {
             </div>
             {!(account.role_name === "Ban Chủ Nhiệm Khoa") && (
               <Link to="/E-boxVLU/admin/users/add">
-                <button className="bg-lightBlue px-4 py-2 rounded-xl font-medium text-white text-sm">
+                <button className="btn-primary text-sm">
                   Add User
                 </button>
               </Link>

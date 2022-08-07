@@ -12,12 +12,9 @@ export const Notifications = ({ changeBgColor }) => {
   const [newNotifications, setNewNotifications] = useState([]);
   const { sendRequest } = useHttpClient();
 
-  console.log(isShowingNotifications)
-
   const onToggleNotificationsHandler = useCallback(() => {
     setIsShowNotifications((prevState) => !prevState);
-    console.log('se')
-  },[]);
+  }, []);
 
   const watchNotificationHandler = useCallback(
     ({ id_notification }) => {
@@ -29,24 +26,21 @@ export const Notifications = ({ changeBgColor }) => {
         );
       };
       request();
-      setRefresh(prevState => !prevState)
+      setRefresh((prevState) => !prevState);
     },
     [sendRequest]
   );
 
   const onOpenQuestionDetails = useCallback(
     (selectedItem) => {
-      const onClickNotification =  () => {
-         onToggleNotificationsHandler();
-         watchNotificationHandler(selectedItem);
+      const onClickNotification = () => {
+        onToggleNotificationsHandler();
+        watchNotificationHandler(selectedItem);
         if (selectedItem.status_notification === "Đã được trả lời") {
-           history.push(
-            `/E-boxVLU/Home/question/${selectedItem.id_question}`
-          );
+          history.push(`/E-boxVLU/Home/question/${selectedItem.id_question}`);
         }
       };
       onClickNotification();
-      console.log('first')
     },
     [history, watchNotificationHandler, onToggleNotificationsHandler]
   );
@@ -84,11 +78,13 @@ export const Notifications = ({ changeBgColor }) => {
   }, [sendRequest, onOpenQuestionDetails, refresh]);
 
   return (
-    <div className={`relative `}>
+    <div className={`relative`}>
       <div className="indicator">
-        <span className="indicator-item badge badge-secondary scale-75 bg-red-600">
-          {newNotifications.length}
-        </span>
+        {newNotifications.length > 0 && (
+          <span className="indicator-item badge badge-secondary scale-75 bg-red-600">
+            {newNotifications.length}
+          </span>
+        )}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
