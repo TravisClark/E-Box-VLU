@@ -29,6 +29,8 @@ class CommentController {
                 });
                 new_comment.save();
                 res.status(200).json(new_comment);
+            }else{
+                res.status(200).send('null');
             }
         } catch (err) {
             console.log(err);
