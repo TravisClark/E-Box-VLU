@@ -10,12 +10,14 @@ import classes from "./QuestionList.module.css";
 function QuestionList() {
   const [firstList, setFirstList] = useState([]);
   const [secondList, setSecondList] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [questionsDisplay, setQuestionsDisplay] = useState([]);
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
   const { isSpinnerLoading } = useSelector((state) => state.ui);
   const history = useHistory();
-  const { selectedType, itemSearching, newSortType } = useSelector(
+  const {  itemSearching, newSortType } = useSelector(
     (state) => state.item
   );
 
@@ -23,23 +25,34 @@ function QuestionList() {
     try {
       const request = async () => {
         const response = await sendRequest(Requests.fetchQuestionListUser);
-        const questions = response.filter((question) =>
-          question.question.toLowerCase().includes(itemSearching.toLowerCase())
-        );
-        const sortedQuestions = questions.filter((question) =>
-          question.type_name.includes(newSortType)
-        );
-        dispatch(
-          pageActions.setCurrentItems({
-            items: newSortType === "Tất cả" ? questions : sortedQuestions,
-            itemsPerPage: 10,
-            currentPage: 1,
-          })
-        );
+        setQuestions(response);
       };
       request();
     } catch (error) {}
-  }, [sendRequest, dispatch, selectedType, itemSearching, newSortType]);
+  }, [sendRequest, dispatch]);
+
+  useEffect(() => {
+    const sortedQuestions = questions.filter((question) =>
+      question.question.toLowerCase().includes(itemSearching.toLowerCase())
+    );
+    setQuestionsDisplay(
+      newSortType === "Tất cả"
+        ? sortedQuestions
+        : sortedQuestions.filter((question) =>
+            question.type_name.includes(newSortType)
+          )
+    );
+  }, [newSortType, itemSearching, questions]);
+
+  useEffect(() => {
+    dispatch(
+      pageActions.setCurrentItems({
+        items: questionsDisplay,
+        itemsPerPage: 10,
+        currentPage: 1,
+      })
+    );
+  }, [questionsDisplay, dispatch]);
 
   const onStoreSelectedItem = useCallback(
     (selectedItem) => {
@@ -101,10 +114,10 @@ function QuestionList() {
             </div>
           )}
           {isSpinnerLoading && (
-              <div className="h-28 flex justify-center items-center">
-                <LoadingDot className="m-auto" color='#fff'/>
-              </div>
-            )}
+            <div className="h-28 flex justify-center items-center">
+              <LoadingDot className="m-auto" color="#fff" />
+            </div>
+          )}
         </div>
 
         {currentItems.length > 0 && (
