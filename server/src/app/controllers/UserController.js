@@ -7,17 +7,17 @@ class UserController {
     list_users = async (req, res) => {
         try {
             if (req.query.hasOwnProperty('username')) {
-                //Lấy dang sách user
+                //Get all users
                 const users = await UserModel.find({});
-                //Tạo 2 biến để sử lý mảng
+
                 const list_users = [];
-                //Lọc các username theo ký tự được nhận
+                //filter users by username according to the character entered
                 for (var i = 0; i < users.length; i++) {
                     if (users[i].username.indexOf(req.query.username) !== -1) {
                         list_users[i] = users[i];
                     }
                 }
-                //Xóa các mảng bị null
+                //delete array is null
                 var dem = 0;
                 for (var i = 0; i < list_users.length; i++) {
                     if (list_users[i] === null || list_users[i] === undefined) {
@@ -89,7 +89,10 @@ class UserController {
                         message: 'Độ dài tài khoản từ 5 đến 20 ký tự',
                     }),
                 );
-            } else if (username.match(format) === null || username.match(format).length != username.length) {
+            } else if (
+                username.match(format) === null ||
+                username.match(format).length != username.length
+            ) {
                 //check username for correct format
                 return next(
                     res.status(412).json({
@@ -306,10 +309,7 @@ class UserController {
             var data_status_account = req.body.status_account;
 
             var password = data_password.replace(/\s+/g, '');
-            if (
-                password == null ||
-                password === ''
-            ) {
+            if (password == null || password === '') {
                 const user = UserModel.findOne({ username: req.body.username });
                 password = user.password;
             }

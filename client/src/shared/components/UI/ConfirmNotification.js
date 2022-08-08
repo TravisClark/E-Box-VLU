@@ -108,7 +108,7 @@ export const ConfirmNotification = (props) => {
   }
 
   return (
-    <div className={` w-full min-h-full absolute flex items-center z-50`}>
+    <div className={`w-full min-h-full absolute top-0 flex items-center z-50`}>
       <div className="absolute bg-black opacity-80 w-full min-h-full top-0 left-0 z-0"></div>
       {form}
     </div>

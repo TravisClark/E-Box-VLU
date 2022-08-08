@@ -26,6 +26,10 @@ const Notification = Schema({
         type: 'Date',
         default: Date.now,
     },
+    watched: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 Notification.plugin(AutoIncrement, { inc_field: 'id_notification' });

@@ -1,12 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../../shared/api/Requests";
+import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
 export const DisapprovedQuestionList = (props) => {
   const { currentItems } = useSelector((state) => state.page.pagination);
   const {isSpinnerLoading} = useSelector((state) => state.ui)
   const dispatch = useDispatch();
+  
   const onRestoreHandler = async (value) => {
     dispatch(
       uiActions.showNotification({
@@ -51,12 +53,19 @@ export const DisapprovedQuestionList = (props) => {
   });
   return (
     <tbody>
-      {questions.length > 0 && !isSpinnerLoading && questions}
-      {questions.length <= 0 && !isSpinnerLoading && (
-        <tr>
-          <td>There is no questions in this list</td>
+      {isSpinnerLoading && questions.length === 0 && (
+        <tr className="translate-x-1/2 h-44 translate-y-1/2">
+          <LoadingDot className="pt-20" />
         </tr>
       )}
+      {questions.length === 0 && !isSpinnerLoading && (
+        <div className="relative h-10">
+          <div className="h-20 absolute whitespace-nowrap top-4">
+            There is no questions in this list
+          </div>
+        </div>
+      )}
+      {questions}
     </tbody>
   );
 };

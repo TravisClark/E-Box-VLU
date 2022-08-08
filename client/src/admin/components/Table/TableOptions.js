@@ -7,14 +7,7 @@ import Select from "@mui/material/Select";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-const tableOptions = [
-  "New Question List",
-  "Approved Question List",
-  "Disapproved Question List",
-  "Replied Question List",
-];
-
-export default function TableList({ onChangeSelectedTable, selectedTable }) {
+export default function TableList({ onChangeSelectedTable, selectedTable, tableOptions }) {
   const [options, setOptions] = React.useState([]);
   const { account } = useSelector((state) => state.auth);
 
@@ -42,7 +35,7 @@ export default function TableList({ onChangeSelectedTable, selectedTable }) {
         </MenuItem>
       ))
     );
-  }, [account.role_name]);
+  }, [account.role_name, tableOptions]);
 
   return (
     <Box sx={{ minWidth: 220 }}>

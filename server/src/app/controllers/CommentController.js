@@ -4,7 +4,9 @@ class CommentController {
     //[GET] http://localhost:5000/api/user/comment/list_comments?id_question=??
     list_comments = async (req, res, next) => {
         try {
-            const list_comments = await CommentModel.find({id_question: req.query.id_question});
+            const list_comments = await CommentModel.find({
+                id_question: req.query.id_question,
+            });
             res.status(200).json(list_comments);
         } catch (err) {
             console.log(err);
@@ -19,7 +21,7 @@ class CommentController {
             const data_id_question = req.body.id_question;
             //format data_comment
             var comment = data_comment.replace(/\s+/g, '');
-            if(!(data_comment == null || comment === '')){
+            if (!(data_comment == null || comment === '')) {
                 const new_comment = new CommentModel({
                     id_question: data_id_question,
                     comment: data_comment,
@@ -27,11 +29,13 @@ class CommentController {
                 });
                 new_comment.save();
                 res.status(200).json(new_comment);
+            }else{
+                res.status(200).send('null');
             }
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 }
 
 module.exports = new CommentController();

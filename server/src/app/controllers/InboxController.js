@@ -4,7 +4,9 @@ class InboxController {
     //[GET] http://localhost:5000/api/user/inbox/list_messages?id_conversation=??
     list_messages = async (req, res, next) => {
         try {
-            const list_messages = await InboxModel.find({id_conversation: req.query.id_conversation});
+            const list_messages = await InboxModel.find({
+                id_conversation: req.query.id_conversation,
+            });
             res.status(201).json(list_messages);
         } catch (err) {
             console.log(err);
@@ -19,7 +21,7 @@ class InboxController {
             const data_message = req.body.message;
             //format data_message
             var message = data_message.replace(/\s+/g, '');
-            if(!(data_message == null || message === '')){
+            if (!(data_message === null || message === '' || data_id_conversation === null)) {
                 const new_message = new InboxModel({
                     id_conversation: data_id_conversation,
                     message: data_message,
@@ -27,11 +29,13 @@ class InboxController {
                 });
                 new_message.save();
                 res.status(200).json(new_message);
+            }else{
+                res.status(200).send('null');
             }
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 }
 
 module.exports = new InboxController();
