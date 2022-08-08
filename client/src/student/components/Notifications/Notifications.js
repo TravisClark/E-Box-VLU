@@ -12,12 +12,9 @@ export const Notifications = ({ changeBgColor }) => {
   const [newNotifications, setNewNotifications] = useState([]);
   const { sendRequest } = useHttpClient();
 
-  console.log(isShowingNotifications)
-
   const onToggleNotificationsHandler = useCallback(() => {
     setIsShowNotifications((prevState) => !prevState);
-    console.log('se')
-  },[]);
+  }, []);
 
   const watchNotificationHandler = useCallback(
     ({ id_notification }) => {
@@ -29,24 +26,21 @@ export const Notifications = ({ changeBgColor }) => {
         );
       };
       request();
-      setRefresh(prevState => !prevState)
+      setRefresh((prevState) => !prevState);
     },
     [sendRequest]
   );
 
   const onOpenQuestionDetails = useCallback(
     (selectedItem) => {
-      const onClickNotification =  () => {
-         onToggleNotificationsHandler();
-         watchNotificationHandler(selectedItem);
+      const onClickNotification = () => {
+        onToggleNotificationsHandler();
+        watchNotificationHandler(selectedItem);
         if (selectedItem.status_notification === "Đã được trả lời") {
-           history.push(
-            `/E-boxVLU/Home/question/${selectedItem.id_question}`
-          );
+          history.push(`/E-boxVLU/Home/question/${selectedItem.id_question}`);
         }
       };
       onClickNotification();
-      console.log('first')
     },
     [history, watchNotificationHandler, onToggleNotificationsHandler]
   );
@@ -66,8 +60,10 @@ export const Notifications = ({ changeBgColor }) => {
             <div className="flex flex-col space-y-1 py-2">
               <span
                 className={`${
-                  res.watched ? "opacity-70" : "opacity-100"
-                } w-64 font-medium`}
+                  res.watched
+                    ? "opacity-70 font-medium"
+                    : "opacity-100 font-semibold"
+                } w-64 `}
               >
                 {res.question}
               </span>
@@ -75,7 +71,19 @@ export const Notifications = ({ changeBgColor }) => {
                 {res.status_notification}
               </span>
             </div>
-            <span className="text-slate-400 text-sm">{res.time}</span>
+            <div className="flex flex-col space-y-2">
+              {!res.watched && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  className="fill-lightBlue self-end scale-50"
+                >
+                  <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2z"></path>
+                </svg>
+              )}
+              <span className="text-slate-400 text-sm">{res.time}</span>
+            </div>
           </li>
         ))
       );
@@ -84,11 +92,13 @@ export const Notifications = ({ changeBgColor }) => {
   }, [sendRequest, onOpenQuestionDetails, refresh]);
 
   return (
-    <div className={`relative `}>
+    <div className={`relative`}>
       <div className="indicator">
-        <span className="indicator-item badge badge-secondary scale-75 bg-red-600">
-          {newNotifications.length}
-        </span>
+        {newNotifications.length > 0 && (
+          <span className="indicator-item badge badge-secondary scale-75 bg-red-600">
+            {newNotifications.length}
+          </span>
+        )}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -105,7 +115,7 @@ export const Notifications = ({ changeBgColor }) => {
         <div
           className={`w-96 h-30 bg-white absolute -right-28 mt-10 rounded-md flex flex-col ${classes.item}`}
         >
-          <span className="font-medium p-4">Notifications</span>
+          <span className="font-medium p-4">Thông báo</span>
           <ul
             className={`max-h-44 mb-10 overflow-hidden ${
               notifications.length > 0 && "hover:overflow-y-scroll"
@@ -115,7 +125,7 @@ export const Notifications = ({ changeBgColor }) => {
               notifications
             ) : (
               <li className="text-black w-full text-center">
-                You don't have any notifications
+                Thông báo rỗng! 
               </li>
             )}
           </ul>

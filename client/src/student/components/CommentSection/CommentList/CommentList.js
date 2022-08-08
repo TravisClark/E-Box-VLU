@@ -30,7 +30,7 @@ export const CommentList = ({ id_question }) => {
         username: data.username,
         comment: data.comment
       });
-      console.log(data)
+      // console.log(data)
     });
   }, []);
 
@@ -45,7 +45,7 @@ export const CommentList = ({ id_question }) => {
       id_question,
     });
     socket.current.on("getUsers_question", (users) => {
-      console.log(users);
+      // console.log(users);
     });
   }, [account.username, id_question]);
 
@@ -85,8 +85,8 @@ export const CommentList = ({ id_question }) => {
         </div>
       </form>
       {comments.length > 0 && (
-        <div className="w-full flex flex-col space-y-5 p-4 bg-slate-100 rounded-sm">
-          {comments.map((comment) => <Comment comment={comment} />)}
+        <div className="w-full flex flex-col space-y-5 p-4 bg-slate-200 rounded-sm">
+          {comments.map((comment) => <Comment comment={comment} key={comment._id}/>)}
         </div>
       )}
     </>

@@ -37,7 +37,7 @@ export const DisapprovedQuestionsTable = () => {
         </svg>
         <SearchItem
           className="outline-none text-sm w-full"
-          placeholder="Search"
+          placeholder="Tìm kiếm"
         />
       </div>
       <Table conditionFilter="Đã bị từ chối" tableHeader={tableHeader}>

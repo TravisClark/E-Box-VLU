@@ -82,7 +82,7 @@ function AdminNav() {
               className={`transition duration-500 text-gray-500 w-2/3 flex hover:font-medium group-hover:text-black`}
               onClick={runUserModeHandler.bind(null, "Home")}
             >
-              Student Mode
+              Chế độ sinh viên
             </button>
           </div>
           <div className="flex min-w-full space-x-2 px-4 group">

@@ -21,8 +21,8 @@ export default function TableList({ onChangeSelectedTable, selectedTable, tableO
       case "Ban Chủ Nhiệm Khoa":
         roleList = tableOptions.filter(
           (option) =>
-            option !== "New Question List" &&
-            option !== "Disapproved Question List"
+            option !== tableOptions[0] &&
+            option !== tableOptions[1]
         );
         break;
       default:

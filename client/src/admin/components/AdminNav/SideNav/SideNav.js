@@ -117,7 +117,7 @@ function SideNav() {
             </h1>
           )}
         </NavLink>}
-        <NavLink
+        {account.role_name !== 'Ban Chủ Nhiệm Khoa' && <NavLink
           to="/E-boxVLU/admin/chat"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"
@@ -138,7 +138,7 @@ function SideNav() {
               Chat
             </h1>
           )}
-        </NavLink>
+        </NavLink>}
       </Container>
     </nav>
   );

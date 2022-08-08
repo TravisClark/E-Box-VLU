@@ -33,16 +33,16 @@ export const ApproveForm = (props) => {
         />
         <div className="flex w-full space-x-8 justify-center mt-10">
           <button
-            className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
+            className="btn-primary"
             onClick={onSubmitHandler}
           >
             Duyệt
           </button>
           <button
-            className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
+            className="btn-primary"
             onClick={props.onClose}
           >
-            Cancel
+            Hủy
           </button>
         </div>
       </div>
