@@ -61,11 +61,11 @@ export const RepliedQuestionList = () => {
         </tr>
       )}
       {questions.length === 0 && !isSpinnerLoading && (
-        <div className="relative h-10">
-          <div className="h-20 absolute whitespace-nowrap top-4">
+        <tr className="relative h-10">
+          <td className="h-20 absolute whitespace-nowrap top-4">
             There is no questions in this list
-          </div>
-        </div>
+          </td>
+        </tr>
       )}
       {questions}
     </tbody>

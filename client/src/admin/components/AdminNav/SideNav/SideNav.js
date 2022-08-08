@@ -68,7 +68,7 @@ function SideNav() {
           </svg>
           {navbarIsOpen && (
             <h1 className="font-medium text-gray-400 w-2/3 transition duration-700 group-hover:text-black">
-              Dashboard
+              Thống kê
             </h1>
           )}
         </NavLink>}
@@ -89,7 +89,7 @@ function SideNav() {
           </svg>
           {navbarIsOpen && (
             <h1 className="font-medium text-gray-400 w-2/3 transition duration-700 group-hover:text-black">
-              Question
+              Câu hỏi
             </h1>
           )}
         </NavLink>
@@ -111,7 +111,7 @@ function SideNav() {
           </svg>
           {navbarIsOpen && (
             <h1 className="font-medium text-gray-400 w-2/3 transition duration-700 group-hover:text-black">
-              User
+              Tài khoản
             </h1>
           )}
         </NavLink>}
