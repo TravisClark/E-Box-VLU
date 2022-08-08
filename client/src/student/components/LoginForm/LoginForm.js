@@ -38,7 +38,6 @@ function LoginForm() {
           "POST",
           JSON.stringify({ username, password }),
         );
-        // setAccount(requestData);
         dispatch(authActions.loginHandler({token: requestData}));
         history.push("/E-boxVLU/Home");
       } catch (error) {

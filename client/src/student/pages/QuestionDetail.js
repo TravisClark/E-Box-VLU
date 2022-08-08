@@ -18,6 +18,7 @@ export const QuestionDetail = () => {
   const [dates, setDates] = useState([]);
   const [stars, setStars] = useState([]);
   const { sendRequest } = useHttpClient();
+  const [firstLoading, setFirstLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const { isSpinnerLoading } = useSelector((state) => state.ui);
 
@@ -28,6 +29,7 @@ export const QuestionDetail = () => {
       );
       setQuestion(response);
       setStars(response.members_star);
+      setFirstLoading(true)
       const { createdAt, approvedAt, responsedAt } = response;
       setDates({
         createDate: new Date(createdAt).toDateString(),
@@ -69,7 +71,7 @@ export const QuestionDetail = () => {
 
       {/* Form */}
       <div className="flex relative rounded-lg space-y-8 flex-col w-full py-6 text-sm px-8 translate-y-20 bg-white drop-shadow-md sm:w-10/12 md:m-auto md:border md:h-fit md:max-w-xl lg:max-w-3xl">
-        {question && !isSpinnerLoading && (
+        {question && firstLoading && (
           <div className="flex flex-col p-3 space-y-6 border-black rounded-lg md:border md:px-6">
             <div className="flex flex-col space-y-4 ">
               <div className="flex justify-between">
@@ -113,7 +115,7 @@ export const QuestionDetail = () => {
             </div>
           </div>
         )}
-        {isSpinnerLoading && (
+        {isSpinnerLoading && !firstLoading && (
           <div className="h-56 flex justify-center items-center">
             <LoadingDot className="m-auto" />
           </div>

@@ -8,7 +8,6 @@ import QuestionManagement from "./admin/pages/QuestionManagement";
 import Users from "./admin/pages/Users";
 import Layout from "./shared/components/Layout/Layout";
 import { LoadingDot } from "./shared/components/LoadingDot/LoadingDot";
-import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
 import ChangePassword from "./student/pages/ChangePassword";
 import { QuestionDetail } from "./student/pages/QuestionDetail";
 
