@@ -55,7 +55,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
       id_conversation: selectedUser.id_conversation,
     });
     socket.current.on("getUsers", (users) => {
-      console.log(users);
+      // console.log(users);
     });
   }, [account.username, selectedUser]);
 

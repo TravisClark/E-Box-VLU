@@ -78,7 +78,7 @@ function AfterLoggedIn({
         </div>
 
         <div
-          className={`flex-col space-y-6 items-center py-4 px-10 absolute mt-8 bg-white rounded-xl text-gray-500  ${profileBoxStyle} ${
+          className={`flex-col space-y-6 items-center py-4 px-10 absolute mt-8 bg-white rounded-xl text-gray-500 shadow-md  ${profileBoxStyle} ${
             isMenuOpen ? ` flex` : "hidden"
           }`}
         >

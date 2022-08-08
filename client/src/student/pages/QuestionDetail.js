@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Requests from "../../shared/api/Requests";
 import useHttpClient from "../../shared/hooks/http-hook";
 import { CommentList } from "../components/CommentSection/CommentList/CommentList";
+import { Stars } from "../components/Stars/Stars";
 import CircleIcon from "../components/UI/CircleIcon";
 import Container from "../components/UI/Container";
 import SquareIcon from "../components/UI/SquareIcon";
@@ -13,8 +14,9 @@ export const QuestionDetail = () => {
   const params = useParams();
   const [question, setQuestion] = useState({});
   const [dates, setDates] = useState([]);
-
+  const [stars, setStars] = useState([]);
   const { sendRequest } = useHttpClient();
+  const [refresh, setRefresh] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +24,7 @@ export const QuestionDetail = () => {
         `${Requests.fetchQuestionDetail}${params.questionId}`
       );
       setQuestion(response);
+      setStars(response.members_star);
       const { createdAt, approvedAt, responsedAt } = response;
       setDates({
         createDate: new Date(createdAt).toDateString(),
@@ -30,7 +33,7 @@ export const QuestionDetail = () => {
       });
     };
     fetchData();
-  }, [params.questionId, sendRequest]);
+  }, [params.questionId, sendRequest, refresh]);
 
   return (
     <Container
@@ -65,11 +68,14 @@ export const QuestionDetail = () => {
       <div className="flex relative rounded-lg space-y-8 flex-col w-full py-6 text-sm px-8 translate-y-20 bg-white drop-shadow-md sm:w-10/12 md:m-auto md:border md:h-fit md:max-w-xl lg:max-w-3xl">
         <div className="flex flex-col p-3 space-y-6 border-black rounded-lg md:border md:px-6">
           <div className="flex flex-col space-y-4 ">
-            <div className="flex flex-col space-y-4 md:space-y-0">
-              <span className="text-xl break-words">{question.question}</span>
-              <span className="text-md break-words text-gray-500">
-                Đã hỏi vào {dates.createDate}
-              </span>
+            <div className="flex justify-between">
+              <div className="flex flex-col space-y-4 md:space-y-0">
+                <span className="text-xl break-words">{question.question}</span>
+                <span className="text-md break-words text-gray-500">
+                  Đã hỏi vào {dates.createDate}
+                </span>
+              </div>
+              <Stars stars={stars} id_question={params.questionId} refreshHandler={() => setRefresh(prevState => !prevState)}/>
             </div>
             <div className="h-full">
               <span className="text-blue-500 p-2 bg-blue-200 w-fit rounded-lg">

@@ -9,8 +9,8 @@ function Footer() {
         <div className="flex flex-col min-w-sm space-y-8 md:flex-row md:space-y-0 md:space-x-40 md:justify-around">
           <div className="flex flex-col space-y-12 md:w-1/2">
             <div className="flex flex-col space-y-6 items-center">
-              <img alt="" src={ITIcon} className=" h-28 mx-auto" />
-              <span className='text-white font-bold whitespace-nowrap text-xl md:text-2xl'>Khoa Công Nghệ Thông Tin</span>
+              <img alt="" src={ITIcon} className=" h-24 mx-auto" />
+              <span className='text-white font-bold whitespace-nowrap text-xl '>Khoa Công Nghệ Thông Tin</span>
             </div>
           </div>
           <div className="flex flex-col space-y-4 h-auto justify-center md:w-1/2">

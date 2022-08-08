@@ -1,16 +1,18 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../shared/api/Requests";
+import { Error } from "../../../shared/components/Error/Error";
 import { QuestionType } from "../../../shared/components/QuestionType/QuestionType";
 import useHttpClient from "../../../shared/hooks/http-hook";
 import { uiActions } from "../../../shared/store/ui-slice";
 import Container from "../UI/Container";
 
 function QuestionForm(props) {
-  const { sendRequest, error } = useHttpClient();
+  const { sendRequest } = useHttpClient();
   const questionInputRef = useRef();
   const { account } = useSelector((state) => state.auth);
   const {selectedTypeChanged} = useSelector((state) => state.item)
+  const {isShowing} = useSelector((state) => state.ui.notification)
   const dispatch = useDispatch();
   
   const onSubmitHandler = async (e) => {
@@ -34,7 +36,7 @@ function QuestionForm(props) {
         className="min-w-full flex justify-center"
         onSubmit={onSubmitHandler}
       >
-        <div className=" bg-white relative rounded-lg items-center z-20 p-4 space-y-4 flex flex-col w-full md:w-2/3 lg:w-1/3">
+        <div className=" bg-white relative rounded-lg items-center z-20 px-8 py-4 space-y-4 flex flex-col w-full md:w-2/3 lg:w-1/3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -61,10 +63,10 @@ function QuestionForm(props) {
               placeholder="Nội dung câu hỏi.."
               ref={questionInputRef}
             />
-            {error && <h3 className="text-red-500 text-sm">{error}</h3>}
+            {isShowing && <Error/>}
           </div>
-          <button className="bg-lightBlue text-white px-6 py-2 font-semibold rounded">
-            Submit
+          <button className="btn-primary">
+            Xác nhận
           </button>
         </div>
       </form>
