@@ -125,6 +125,17 @@ class MailboxController {
             const data_username = req.body.username;
             const data_question = req.body.question;
             const data_type_name = req.body.type_name;
+            const list_questions = await Mailbox.find({username_questioner: req.user.username});
+            let count_question = 0;
+            var realtime = new Date();
+            for (let i = 0; i < list_questions.length; i++) {
+                const createdAt = new Date(list_questions[i].createdAt);
+                if(createdAt.getFullYear() === realtime.getFullYear() && 
+                    createdAt.getMonth() === realtime.getMonth() &&
+                    createdAt.getDate() === realtime.getDate()){
+                        count_question = count_question + 1;
+                }
+            }
             if (data_type_name == null || data_type_name === '') {
                 //check type_name is null or ''
                 return next(
@@ -145,6 +156,14 @@ class MailboxController {
                     res.status(411).json({
                         message:
                             'Độ dài của câu hỏi quá dài. Chỉ có phép độ dài từ dưới 200 ký tự',
+                    }),
+                );
+            }else if (count_question >= 3) {
+                //check the number of times asked
+                return next(
+                    res.status(400).json({
+                        message:
+                            'Mỗi ngày chỉ được hỏi 3 câu hỏi',
                     }),
                 );
             } else {

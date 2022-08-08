@@ -111,7 +111,7 @@ io.on('connection', (socket) => {
             var data_message = message.replace(/\s+/g, '');
             if (
                 !(message === null || data_message === '') &&
-                info_username_receiver &&
+                info_username_receiver !== null &&
                 info_username_sender.id_conversation ===
                     info_username_receiver.id_conversation
             ) {
