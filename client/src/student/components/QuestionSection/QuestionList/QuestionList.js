@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Requests from "../../../../shared/api/Requests";
+import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { Pagination } from "../../../../shared/components/Pagination/Pagination";
 import useHttpClient from "../../../../shared/hooks/http-hook";
 import { pageActions } from "../../../../shared/store/page-slice";
@@ -9,11 +10,14 @@ import classes from "./QuestionList.module.css";
 function QuestionList() {
   const [firstList, setFirstList] = useState([]);
   const [secondList, setSecondList] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [questionsDisplay, setQuestionsDisplay] = useState([]);
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
+  const { isSpinnerLoading } = useSelector((state) => state.ui);
   const history = useHistory();
-  const { selectedType, itemSearching, newSortType } = useSelector(
+  const {  itemSearching, newSortType } = useSelector(
     (state) => state.item
   );
 
@@ -21,23 +25,34 @@ function QuestionList() {
     try {
       const request = async () => {
         const response = await sendRequest(Requests.fetchQuestionListUser);
-        const questions = response.filter((question) =>
-          question.question.toLowerCase().includes(itemSearching.toLowerCase())
-        );
-        const sortedQuestions = questions.filter((question) =>
-          question.type_name.includes(newSortType)
-        );
-        dispatch(
-          pageActions.setCurrentItems({
-            items: newSortType === "Tất cả" ? questions : sortedQuestions,
-            itemsPerPage: 10,
-            currentPage: 1,
-          })
-        );
+        setQuestions(response);
       };
       request();
     } catch (error) {}
-  }, [sendRequest, dispatch, selectedType, itemSearching, newSortType]);
+  }, [sendRequest, dispatch]);
+
+  useEffect(() => {
+    const sortedQuestions = questions.filter((question) =>
+      question.question.toLowerCase().includes(itemSearching.toLowerCase())
+    );
+    setQuestionsDisplay(
+      newSortType === "Tất cả"
+        ? sortedQuestions
+        : sortedQuestions.filter((question) =>
+            question.type_name.includes(newSortType)
+          )
+    );
+  }, [newSortType, itemSearching, questions]);
+
+  useEffect(() => {
+    dispatch(
+      pageActions.setCurrentItems({
+        items: questionsDisplay,
+        itemsPerPage: 10,
+        currentPage: 1,
+      })
+    );
+  }, [questionsDisplay, dispatch]);
 
   const onStoreSelectedItem = useCallback(
     (selectedItem) => {
@@ -83,19 +98,24 @@ function QuestionList() {
         <div
           className={`flex flex-col space-y-0.5 xl:flex-row xl:space-x-10 xl:justify-center xl:space-y-0`}
         >
-          {currentItems.length !== 0 && (
+          {currentItems.length !== 0 && !isSpinnerLoading && (
             <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
               {firstList}
             </ul>
           )}
-          {currentItems.length > 5 && (
+          {currentItems.length > 5 && !isSpinnerLoading && (
             <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
               {secondList}
             </ul>
           )}
-          {currentItems.length === 0 && (
+          {currentItems.length === 0 && !isSpinnerLoading && (
             <div className="w-96 bg-white p-4 rounded-md drop-shadow-lg">
               <h1>Không tìm thấy câu hỏi!</h1>
+            </div>
+          )}
+          {isSpinnerLoading && (
+            <div className="h-28 flex justify-center items-center">
+              <LoadingDot className="m-auto" color="#fff" />
             </div>
           )}
         </div>

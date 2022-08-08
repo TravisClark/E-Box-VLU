@@ -1,5 +1,5 @@
-import React, { useEffect,  useState } from "react";
-import {  useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Requests from "../../shared/api/Requests";
 import { SearchItem } from "../../shared/components/SearchItem/SearchItem";
@@ -12,19 +12,25 @@ function Users() {
   const { successNotification } = useSelector((state) => state.ui);
   const { itemSearching } = useSelector((state) => state.item);
   const [users, setUsers] = useState([]);
+  const [usersDisplay, setUsersDisplay] = useState([]);
   const { sendRequest } = useHttpClient();
   const { account } = useSelector((state) => state.auth);
+
   useEffect(() => {
     try {
       const fetchUserList = async () => {
         const response = await sendRequest(Requests.fetchUsersList);
-        setUsers(
-          response.filter((user) => user.username.includes(itemSearching))
-        );
+        setUsers(response);
       };
       fetchUserList();
     } catch (error) {}
-  }, [sendRequest, successNotification.refresh, itemSearching]);
+  }, [sendRequest, successNotification.refresh]);
+
+  useEffect(() => {
+    setUsersDisplay(
+      users.filter((user) => user.username.includes(itemSearching))
+    );
+  }, [itemSearching, users]);
 
   return (
     <Container className="m-auto w-11/12 h-full py-14 px-20 space-y-6 relative">
@@ -54,15 +60,13 @@ function Users() {
             </div>
             {!(account.role_name === "Ban Chủ Nhiệm Khoa") && (
               <Link to="/E-boxVLU/admin/users/add">
-                <button className="btn-primary text-sm">
-                  Thêm tài khoản
-                </button>
+                <button className="btn-primary text-sm">Thêm tài khoản</button>
               </Link>
             )}
           </div>
         </div>
         <div className="border w-full" />
-        <UserTable users={users} />
+        <UserTable users={usersDisplay} />
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />
         )}

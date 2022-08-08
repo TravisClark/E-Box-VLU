@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Requests from "../../../shared/api/Requests";
+import { LoadingDot } from "../../../shared/components/LoadingDot/LoadingDot";
 import useHttpClient from "../../../shared/hooks/http-hook";
 import classes from "../../../shared/styles/Styles.module.css";
 
@@ -11,6 +13,7 @@ export const Notifications = ({ changeBgColor }) => {
   const [notifications, setNotifications] = useState([]);
   const [newNotifications, setNewNotifications] = useState([]);
   const { sendRequest } = useHttpClient();
+  const { isSpinnerLoading } = useSelector((state) => state.ui);
 
   const onToggleNotificationsHandler = useCallback(() => {
     setIsShowNotifications((prevState) => !prevState);
@@ -121,12 +124,14 @@ export const Notifications = ({ changeBgColor }) => {
               notifications.length > 0 && "hover:overflow-y-scroll"
             }`}
           >
-            {notifications.length > 0 ? (
-              notifications
-            ) : (
-              <li className="text-black w-full text-center">
-                Thông báo rỗng! 
-              </li>
+            {notifications.length > 0 && notifications}
+            {notifications.length === 0 && !isSpinnerLoading && (
+              <li className="text-black w-full text-center">Thông báo rỗng!</li>
+            )}
+            {isSpinnerLoading && (
+              <div className="h-28 flex justify-center items-center">
+                <LoadingDot className="m-auto" />
+              </div>
             )}
           </ul>
         </div>
