@@ -8,6 +8,7 @@ import useHttpClient from "../../../shared/hooks/http-hook";
 import Requests from "../../../shared/api/Requests";
 import { uiActions } from "../../../shared/store/ui-slice";
 import { Error } from "../../../shared/components/Error/Error";
+import { LoadingDot } from "../../../shared/components/LoadingDot/LoadingDot";
 
 function LoginForm() {
   const usernameRef = useRef();
@@ -15,6 +16,7 @@ function LoginForm() {
   const dispatch = useDispatch();
   const history = useHistory();
   const {isShowing} = useSelector((state) => state.ui.error)
+  const { isSpinnerLoading } = useSelector((state) => state.ui);
   const { sendRequest } = useHttpClient();
 
   const onSubmitHandler = async (e) => {
@@ -45,15 +47,6 @@ function LoginForm() {
     await fetchData();
   };
 
-  // useEffect(() => {
-  //   if (account) {
-  //     const storeData = async () => {
-  //       await dispatch(authActions.loginHandler(account));
-  //       await history.push("/E-boxVLU/Home");
-  //     };
-  //     storeData();
-  //   }
-  // }, [account, dispatch, history]);
   return (
     <form onSubmit={onSubmitHandler}>
       <Container className="absolute min-w-full min-h-full p-0 top-0 flex items-center justify-center">
@@ -80,7 +73,12 @@ function LoginForm() {
               />
               {isShowing && <Error/>}
             </div>
-            <Button className={` text-white bg-heavyBlue`}>Đăng Nhập</Button>
+            {isSpinnerLoading && (
+          <div className="flex justify-center items-center">
+            <LoadingDot className="m-auto" />
+          </div>
+        )}
+            <Button className={` btn-primary bg-lightBlue`}>Đăng Nhập</Button>
             <span className="text-gray-500 italic">
               *Lưu ý: Chỉ sinh viên khoa CNTT được đăng nhập vào hệ thống!
             </span>
