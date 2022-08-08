@@ -13,6 +13,7 @@ export const ModifyAnswerForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
   const { isShowing } = useSelector((state) => state.ui.error);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(itemActions.getSelected({ type: data.type_name }));
   }, [dispatch, data]);
@@ -38,13 +39,13 @@ export const ModifyAnswerForm = (props) => {
         <form onSubmit={onSubmitHandler} className="table-auto">
           <div className="flex flex-col space-y-6">
             <div className="flex w-full py-2 px-10 space-x-10 bg-gray-200 rounded-md">
-              <span className="text-xl font-semibold w-32">Người đặt</span>
+              <span className="text-xl font-semibold w-56">Người đặt</span>
               <span className="text-xl font-semibold w-32">Người trả lời</span>
               <span className="text-xl font-semibold w-96">Câu hỏi</span>
               <span className="text-xl font-semibold w-52">Gửi vào lúc</span>
             </div>
             <div className="flex w-full py-2 px-10 space-x-10 border items-center">
-              <span className="text-xl font-semibold w-32 m-auto">
+              <span className="text-xl font-semibold w-56 m-auto break-words">
                 {data.username_questioner}
               </span>
               <span className="text-xl font-semibold w-32 m-auto break-words">
@@ -53,7 +54,9 @@ export const ModifyAnswerForm = (props) => {
               <span className="text-xl font-semibold w-96 break-words">
                 {data.question}
               </span>
-              <span className="text-xl font-semibold w-52 m-auto">{formatDate}</span>
+              <span className="text-xl font-semibold w-52 m-auto">
+                {formatDate}
+              </span>
             </div>
             <QuestionType selected={data.type_name} className="border" />
             <textarea
@@ -65,17 +68,9 @@ export const ModifyAnswerForm = (props) => {
             {isShowing && <Error />}
           </div>
           <div className="flex w-full space-x-8 justify-center mt-10">
-            <button
-              className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
-              // onClick={props.onSubmitHandler}
-            >
-              Xác nhận
-            </button>
-            <button
-              className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
-              onClick={props.onClose}
-            >
-              Cancel
+            <button className="btn-primary">Xác nhận</button>
+            <button className="btn-primary" onClick={props.onClose}>
+              Hủy
             </button>
           </div>
         </form>

@@ -40,10 +40,8 @@ export const Table = ({ conditionFilter, tableHeader, children, itemList }) => {
       </table>
       {currentItems.length > 0 && (
         <Pagination
-          prevBtn="Previous"
-          nextBtn="Next"
-          activeBtnStyle="bg-lightBlue text-white rounded"
-          containerStyle="bg-white py-2 px-6 rounded mx-auto text-gray-400 lg:w-fit"
+          activeBtnStyle="bg-lightBlue text-white rounded h-fit"
+          containerStyle="bg-white py-2 px-6 h-6 rounded mx-auto text-gray-400 lg:w-fit"
           disabledBtnStyle="opacity-50"
         />
       )}

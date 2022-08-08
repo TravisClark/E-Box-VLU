@@ -1,9 +1,10 @@
 
-const URL = 'http://localhost:5000'
+// const URL = 'http://localhost:5000'
+const URL = 'https://e-box-vlu.herokuapp.com'
 
 const Requests = {
     loginRequest: `${URL}/api/user/user/login`,
-    changePwRequest: `${URL}/api/user/user/change_password`,
+    changePwRequest: `${URL}/api/user/user/change_password`, 
     addUserRequest: `${URL}/api/admin/user/add_user`, 
     publishQuestion: `${URL}/api/user/mailbox/publish_question`,
     approveQuestion: `${URL}/api/admin/mailbox/approve_question`,
@@ -16,6 +17,7 @@ const Requests = {
     sendMessage:`${URL}/api/user/inbox/send_message`,
     sendComment: `${URL}/api/user/comment/send_comment`,
     watchNotification: `${URL}/api/user/notification/watched`,
+    likeQuestion: `${URL}/api/user/mailbox/like`,
     fetchQuestionTypes: `${URL}/api/admin/type/list_types_admin`,
     fetchAccount: `${URL}/api/user/account_info`, 
     fetchRoleList: `${URL}/api/admin/role/list_roles`, 
