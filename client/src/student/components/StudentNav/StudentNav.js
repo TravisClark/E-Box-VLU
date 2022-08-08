@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import classes from "./NavStyles.module.css";
 import Container from "../UI/Container";
@@ -32,10 +32,6 @@ function Navbar() {
   const openNavHandler = () => {
     setNavbarIsOpen((prevState) => !prevState);
   };
-
-  useEffect(() => {
-    
-  }, []);
 
   return (
     <nav>

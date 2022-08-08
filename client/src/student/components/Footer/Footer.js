@@ -1,5 +1,4 @@
 import React from "react";
-import vluIcon from "../../../assets/_hjkj3598HJ_logo2.png";
 import ITIcon from "../../../assets/IT_Icon.png";
 import houseIcon from "../../../assets/house.png";
 import Container from "../UI/Container";
@@ -9,10 +8,9 @@ function Footer() {
       <Container className="flex flex-col px-10 items-center pt-16 bg-black min-w-full relative z-20">
         <div className="flex flex-col min-w-sm space-y-8 md:flex-row md:space-y-0 md:space-x-40 md:justify-around">
           <div className="flex flex-col space-y-12 md:w-1/2">
-            <img alt="" src={vluIcon} className="w-60 md:w-80 mx-auto" />
             <div className="flex flex-col space-y-6 items-center">
-              <img alt="" src={ITIcon} className=" h-28 mx-auto" />
-              <span className='text-white font-bold whitespace-nowrap text-xl md:text-2xl'>Khoa Công Nghệ Thông Tin</span>
+              <img alt="" src={ITIcon} className=" h-24 mx-auto" />
+              <span className='text-white font-bold whitespace-nowrap text-xl '>Khoa Công Nghệ Thông Tin</span>
             </div>
           </div>
           <div className="flex flex-col space-y-4 h-auto justify-center md:w-1/2">

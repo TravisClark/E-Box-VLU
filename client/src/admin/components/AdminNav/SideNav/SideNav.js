@@ -22,7 +22,7 @@ function SideNav() {
         className={`flex flex-col relative w-fit px-4 items-center bg-white z-20 transition duration-1000 ${
           navbarIsOpen && "w-64"
         }`}
-        style={{minHeight:'880px'}}
+        style={{minHeight:'884px'}}
       >
         {/* Mobile hamburger */}
         <div
@@ -41,8 +41,6 @@ function SideNav() {
                 className="bg-cover bg-no-repeat bg-left-top w-9 h-10"
                 style={{ backgroundImage: `url(${logo})` }}
               ></div>
-
-              {/* <img src={logo} alt="logo" className="w-14 bg-cover"/> */}
               <h1
                 className={`font-semibold mr-4 text-xl self-center text-black
               }`}
@@ -117,7 +115,7 @@ function SideNav() {
             </h1>
           )}
         </NavLink>}
-        <NavLink
+        {account.role_name !== 'Ban Chủ Nhiệm Khoa' && <NavLink
           to="/E-boxVLU/admin/chat"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"
@@ -138,7 +136,7 @@ function SideNav() {
               Chat
             </h1>
           )}
-        </NavLink>
+        </NavLink>}
       </Container>
     </nav>
   );

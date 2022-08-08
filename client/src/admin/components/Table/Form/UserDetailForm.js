@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import RoleList from "../../RoleList/RoleList"
 import StatusList from "../../StatusList/StatusList";
 // import classes from "./Form.module.css";
@@ -9,6 +10,7 @@ export const UserDetailForm = (props) => {
   const [newPassword, setNewPassword]= useState('')
   const [isShowWarning, setIsShowWarning] = useState(false)
   const [isAbleToSubmit, setIsAbleToSubmit] = useState(false)
+  const { isSpinnerLoading } = useSelector((state) => state.ui);
   const [status, setStatus] = useState(data.status_account)
   const inputRef = useRef();
 
@@ -106,19 +108,24 @@ export const UserDetailForm = (props) => {
           />
           {isShowWarning && <span className="text-red-400 font-medium w-full">Nhập 'XÁC NHẬN' nếu muốn thay đổi thông tin tài khoản</span>}
         </div>
+        {isSpinnerLoading && (
+          <div className="flex justify-center items-center">
+            <LoadingDot className="m-auto" />
+          </div>
+        )}
         <div className="flex w-full space-x-8 justify-center mt-10">
           <button
-            className={`py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm ${!isAbleToSubmit ? 'bg-gray-300' : 'bg-lightBlue'}`}
+            className={`py-2 px-3 rounded-lg  text-white font-medium text-sm ${!isAbleToSubmit ? 'bg-gray-300' : 'bg-lightBlue'}`}
             onClick={onSubmitHandler}
             disabled={!isAbleToSubmit}
           >
             Xác nhận
           </button>
           <button
-            className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
+            className="btn-primary"
             onClick={props.onClose}
           >
-            Cancel
+            Hủy
           </button>
         </div>
       </div>

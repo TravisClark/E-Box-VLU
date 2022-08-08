@@ -7,7 +7,7 @@ import Dashboard from "./admin/pages/Dashboard";
 import QuestionManagement from "./admin/pages/QuestionManagement";
 import Users from "./admin/pages/Users";
 import Layout from "./shared/components/Layout/Layout";
-import LoadingSpinner from "./shared/components/LoadingSpinner/LoadingSpinner";
+import { LoadingDot } from "./shared/components/LoadingDot/LoadingDot";
 import ChangePassword from "./student/pages/ChangePassword";
 import { QuestionDetail } from "./student/pages/QuestionDetail";
 
@@ -33,7 +33,7 @@ function App() {
       <Suspense
         fallback={
           <div className="centered min-h-screen">
-            <LoadingSpinner className='fixed z-50'/>
+            <LoadingDot className='fixed z-50'/>
           </div>
         }
       >

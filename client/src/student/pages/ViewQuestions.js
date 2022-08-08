@@ -93,7 +93,7 @@ function ViewQuestions() {
             account.role_name === "Trợ Lý"
           ) && (
             <button
-              className="bg-black text-white px-4 mb-10 mx-auto py-3 z-10 font-semibold rounded"
+              className="bg-black text-white px-4 mb-10 mx-auto py-3 z-10 font-semibold transition duration-300 rounded hover:bg-blue-800"
               onClick={onOpenFormHandler}
             >
               Đặt câu hỏi
