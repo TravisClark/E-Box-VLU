@@ -100,12 +100,12 @@ function QuestionList() {
         <div
           className={`flex flex-col space-y-0.5 xl:flex-row xl:space-x-10 xl:justify-center xl:space-y-0`}
         >
-          {currentItems.length !== 0  && (
+          {currentItems.length !== 0 && (
             <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
               {firstList}
             </ul>
           )}
-          {currentItems.length > 5  && (
+          {currentItems.length > 5 && (
             <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
               {secondList}
             </ul>
