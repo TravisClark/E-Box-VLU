@@ -92,7 +92,6 @@ class MailboxController {
             });
             const list_questions = await Mailbox.find({
                 status_question: 'Đã được trả lời',
-                status_question: 'Đã được trả lời',
             });
             await list_questions.sort(function (a, b) {
                 if (a.members_star != null && b.members_star != null) {
