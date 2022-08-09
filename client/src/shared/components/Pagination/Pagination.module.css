@@ -1,0 +1,26 @@
+.paginationBtn {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationBtn a {
+  margin: 8px;
+  /* color: gray; */
+  cursor: pointer;
+}
+
+.paginationActive a {
+  /* color: black; */
+  /* font-weight: bold; */
+}
+
+.paginationBtn a:hover {
+  color: black;
+}
+
+.paginationDisabled a:hover {
+  color: rgb(149, 149, 149);
+  cursor: none;
+}

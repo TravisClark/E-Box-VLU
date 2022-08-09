@@ -1,0 +1,22 @@
+.disabled{
+    color: #909090;
+    background: #d3d3d3;
+    cursor: none;
+}
+.form-control {
+    min-width: 800px;
+}
+.item{
+    animation: faded .7s alternate forwards;
+}
+@keyframes faded {
+    from{
+        transform: translateY(-20%);
+        opacity: 0;
+
+    }
+    to{
+        transform: translateY(0%);
+        opacity: 100%;
+    }
+}

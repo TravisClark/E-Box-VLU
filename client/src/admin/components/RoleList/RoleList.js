@@ -1,54 +1,55 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { Controller } from "react-hook-form";
 import { useEffect } from "react";
 import { useState } from "react";
 import useHttpClient from "../../../shared/hooks/http-hook";
 import Requests from "../../../shared/api/Requests";
+import { itemActions } from "../../../shared/store/item-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../shared/api/LoadingList";
 
-export default function BasicSelect(props) {
-  // const [age, setAge] = React.useState("");
-  const [roles, setRoles] = useState();
-  const {sendRequest} = useHttpClient()
-  
+export default function BasicSelect({ selected, className, onShowWarning }) {
+  const [options, setOptions] = useState([]);
+  const { sendRequest } = useHttpClient();
+  const { selectedType, selectedTypeChanged } = useSelector(
+    (state) => state.item
+  );
+  const dispatch = useDispatch();
+
+  const onChangeHandler = (input) => {
+    dispatch(itemActions.changeSelectedType({ type: input.target.value }));
+    onShowWarning && onShowWarning();
+  };
+
   useEffect(() => {
-    const fetchRoles = async ()=>{
+    const request = async () => {
       try {
-        const response = await sendRequest(Requests.fetchRoleList)
-        const roleMap = response.map(role =><MenuItem value={role.role_name} key={role.id_role}>{role.role_name}</MenuItem>);
-        setRoles(roleMap);
-      } catch (error) {
-      }
-    }
-    fetchRoles();
-  }, [sendRequest]);
-  // const roles = DUMMY_ROLES.map(role => <MenuItem value={role} key={role}>{role}</MenuItem>)
+        const response = await sendRequest(
+          LoadingList.fetchRoleList,
+          Requests.fetchRoleList
+        );
+        setOptions(
+          response.map((res) => (
+            <option value={res.role_name} key={res.id_role}>
+              {res.role_name}
+            </option>
+          ))
+        );
+      } catch (error) {}
+    };
+    request();
+  }, [sendRequest, dispatch]);
+
+  useEffect(() => {
+    dispatch(itemActions.getSelected({ type: selected }));
+  }, [selected, dispatch]);
+
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Role</InputLabel>
-        <Controller
-          render={({ field }) => (
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={'Sinh vien'}
-              label="Role"
-              onChange={e => console.log(e)}
-              {...field}
-            >
-              {roles}
-            </Select>
-          )}
-          control={props.control}
-          name={props.name}
-          onChange={e => console.log(e)}
-        />
-      </FormControl>
-    </Box>
+    <select
+      value={selectedTypeChanged ? selectedTypeChanged : selectedType}
+      onChange={(e) => onChangeHandler(e)}
+      className={`w-fit px-4 py-2 rounded-md outline-none ${className}`}
+    >
+      {options}
+    </select>
   );
 }

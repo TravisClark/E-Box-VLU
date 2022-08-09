@@ -7,5 +7,6 @@
     "titleBar.inactiveBackground": "#2566a799",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "svn.ignoreMissingSvnWarning": true
+  "svn.ignoreMissingSvnWarning": true,
+  "cSpell.words": ["responsed"]
 }

@@ -7,7 +7,7 @@ const Role = new NewSchema({
     role_name: {
         type: 'string',
         maxlength: 20,
-        required: true,
+        required: [true, 'Vui lòng không bỏ trống'],
         unique: true,
     },
 });

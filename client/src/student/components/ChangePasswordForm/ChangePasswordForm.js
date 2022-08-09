@@ -1,4 +1,4 @@
-import React, { useRef} from "react";
+import React, { useRef } from "react";
 import Button from "../UI/Button";
 import Container from "../UI/Container";
 import useHttpClient from "../../../shared/hooks/http-hook";
@@ -6,24 +6,30 @@ import Requests from "../../../shared/api/Requests";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
+import { Error } from "../../../shared/components/Error/Error";
+import { LoadingList } from "../../../shared/api/LoadingList";
+import { LoadingDot } from "../../../shared/components/LoadingDot/LoadingDot";
 
 function ChangePasswordForm() {
   const oldPwRef = useRef();
   const newPwRef = useRef();
   const confirmNewPwRef = useRef();
-  const { sendRequest, error } = useHttpClient();
+  const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
   const history = useHistory();
   const account = useSelector((state) => state.auth.account);
+  const { isShowing } = useSelector((state) => state.ui.error);
+  const { loadingType } = useSelector((state) => state.ui);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const oldPw = oldPwRef.current.value.trim();
     const newPw = newPwRef.current.value.trim();
     const confirmNewPw = confirmNewPwRef.current.value.trim();
-    
+
     try {
       await sendRequest(
+        LoadingList.changePassword,
         Requests.changePwRequest,
         "PATCH",
         JSON.stringify({
@@ -31,15 +37,16 @@ function ChangePasswordForm() {
           password: oldPw,
           new_password: newPw,
           re_new_password: confirmNewPw,
-        }),
-        { "Content-Type": "application/json"}
+        })
       );
       await dispatch(
-        authActions.changePasswordHandler({ username: account.username, password: newPw })
+        authActions.changePasswordHandler({
+          username: account.username,
+          password: newPw,
+        })
       );
       history.push("/E-boxVLU/Home");
-    } catch (error) {
-    }
+    } catch (error) {}
   };
   return (
     <form onSubmit={onSubmitHandler}>
@@ -73,13 +80,16 @@ function ChangePasswordForm() {
                 placeholder="Nhập lại mật khẩu"
                 ref={confirmNewPwRef}
               />
-              {error && (
-                <h3 className="text-red-500 text-sm">
-                  {error}
-                </h3>
-              )}
+              {isShowing && <Error />}
             </div>
-            <Button title="Submit" className={` text-white bg-heavyBlue`} >Đổi mật khẩu</Button>
+            {loadingType === LoadingList.changePassword && (
+              <div className="w-full flex justify-center">
+                <LoadingDot />
+              </div>
+            )}
+            <Button title="Submit" className={` text-white bg-heavyBlue`}>
+              Đổi mật khẩu
+            </Button>
             <span className="text-gray-500 italic">
               *Lưu ý: Chỉ sinh viên khoa CNTT được đăng nhập vào hệ thống!
             </span>

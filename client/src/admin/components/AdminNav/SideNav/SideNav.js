@@ -3,8 +3,10 @@ import Container from "../../../../student/components/UI/Container";
 import classes from "./SideNav.module.css";
 import { NavLink } from "react-router-dom";
 import logo from "../../../../assets/logo.png";
+import { useSelector } from "react-redux";
 function SideNav() {
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
+  const {account} = useSelector((state) => state.auth);
 
   let hamBtnClass = `${classes.hamburger}`;
   if (navbarIsOpen) {
@@ -13,12 +15,14 @@ function SideNav() {
   const openNavHandler = () => {
     setNavbarIsOpen((prevState) => !prevState);
   };
+  // console.log(navbarIsOpen)
   return (
     <nav>
       <Container
-        className={`flex flex-col absolute w-20 h-screen px-4 items-center bg-white z-40 transition duration-1000 ${
+        className={`flex flex-col relative w-fit px-4 items-center bg-white z-20 transition duration-1000 ${
           navbarIsOpen && "w-64"
         }`}
+        style={{minHeight:'884px'}}
       >
         {/* Mobile hamburger */}
         <div
@@ -37,8 +41,6 @@ function SideNav() {
                 className="bg-cover bg-no-repeat bg-left-top w-9 h-10"
                 style={{ backgroundImage: `url(${logo})` }}
               ></div>
-
-              {/* <img src={logo} alt="logo" className="w-14 bg-cover"/> */}
               <h1
                 className={`font-semibold mr-4 text-xl self-center text-black
               }`}
@@ -49,7 +51,7 @@ function SideNav() {
           )}
         </div>
         <div className="w-4/5 border"></div>
-        <NavLink
+        {account.role_name !== 'Trợ Lý' &&<NavLink
           to="/E-boxVLU/admin/dashboard"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full cursor-pointer justify-center group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"
@@ -66,10 +68,10 @@ function SideNav() {
           </svg>
           {navbarIsOpen && (
             <h1 className="font-medium text-gray-400 w-2/3 transition duration-700 group-hover:text-black">
-              Dashboard
+              Thống kê
             </h1>
           )}
-        </NavLink>
+        </NavLink>}
         <NavLink
           to="/E-boxVLU/admin/questions"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${
@@ -87,11 +89,11 @@ function SideNav() {
           </svg>
           {navbarIsOpen && (
             <h1 className="font-medium text-gray-400 w-2/3 transition duration-700 group-hover:text-black">
-              Question
+              Câu hỏi
             </h1>
           )}
         </NavLink>
-        <NavLink
+        {account.role_name === 'Quản Trị Viên' && <NavLink
           to="/E-boxVLU/admin/users"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"
@@ -109,11 +111,11 @@ function SideNav() {
           </svg>
           {navbarIsOpen && (
             <h1 className="font-medium text-gray-400 w-2/3 transition duration-700 group-hover:text-black">
-              User
+              Tài khoản
             </h1>
           )}
-        </NavLink>
-        <NavLink
+        </NavLink>}
+        {account.role_name !== 'Ban Chủ Nhiệm Khoa' && <NavLink
           to="/E-boxVLU/admin/chat"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"
@@ -134,7 +136,7 @@ function SideNav() {
               Chat
             </h1>
           )}
-        </NavLink>
+        </NavLink>}
       </Container>
     </nav>
   );

@@ -5,21 +5,30 @@ const admin_mailboxRoute = require('./admin_mailboxRoute');
 const user_mailboxRoute = require('./user_mailboxRoute');
 const admin_typeRoute = require('./admin_typeRoute');
 const user_typeRoute = require('./user_typeRoute');
+const admin_statusRoute = require('./admin_statusRoute');
+const user_notificationRoute = require('./user_notificationRoute');
+const user_conversationRoute = require('./user_conversationRoute');
+const user_inboxRoute = require('./user_inboxRoute');
+const user_commentRoute = require('./user_commentRoute');
 
 const { checkLogin } = require('../middleware/Auth');
 
 function route(app) {
-    // app.use(checkLogin);
     //routes in admin
-    app.use('/api/admin/role', admin_roleRoute);
-    app.use('/api/admin/user', admin_userRoute);
-    app.use('/api/admin/mailbox', admin_mailboxRoute);
-    app.use('/api/admin/type', admin_typeRoute);
+    app.use('/api/admin/role', checkLogin, admin_roleRoute);
+    app.use('/api/admin/user', checkLogin, admin_userRoute);
+    app.use('/api/admin/mailbox', checkLogin, admin_mailboxRoute);
+    app.use('/api/admin/type', checkLogin, admin_typeRoute);
+    app.use('/api/admin/status', admin_statusRoute);
 
     //routes in user
     app.use('/api/user/user', user_userRoute);
-    app.use('/api/user/mailbox', user_mailboxRoute);
-    app.use('/api/user/type', user_typeRoute);
+    app.use('/api/user/mailbox', checkLogin, user_mailboxRoute);
+    app.use('/api/user/type', checkLogin, user_typeRoute);
+    app.use('/api/user/notification', checkLogin, user_notificationRoute);
+    app.use('/api/user/conversation', checkLogin, user_conversationRoute);
+    app.use('/api/user/inbox', checkLogin, user_inboxRoute);
+    app.use('/api/user/comment', checkLogin, user_commentRoute);
 }
 
 module.exports = route;

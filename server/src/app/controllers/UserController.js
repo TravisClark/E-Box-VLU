@@ -3,21 +3,42 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 class UserController {
-    //[GET] http://localhost:5000/api/admin/user/list_users
+    //[GET] http://localhost:5000/api/admin/user/list_users?username=???
     list_users = async (req, res) => {
         try {
-            const users = await UserModel.find({});
-            res.status(200).json(users);
+            if (req.query.hasOwnProperty('username')) {
+                //Get all users
+                const users = await UserModel.find({});
+
+                const list_users = [];
+                //filter users by username according to the character entered
+                for (var i = 0; i < users.length; i++) {
+                    if (users[i].username.indexOf(req.query.username) !== -1) {
+                        list_users[i] = users[i];
+                    }
+                }
+                //delete array is null
+                var dem = 0;
+                for (var i = 0; i < list_users.length; i++) {
+                    if (list_users[i] === null || list_users[i] === undefined) {
+                        await list_users.splice(i - dem, 1);
+                        dem = dem + 1;
+                    }
+                }
+                res.status(201).json(list_users);
+            } else {
+                const users = await UserModel.find({});
+                res.status(200).json(users);
+            }
         } catch (err) {
             console.log(err);
         }
     };
 
-    //[GET] http://localhost:5000/api/user/user/user/account_info
+    //[GET] http://localhost:5000/api/user/user/account_info
     account_info = async (req, res) => {
         try {
             //Search user by token
-            // console.log(req.user.username)
             const user = await UserModel.findOne({
                 username: req.user.username,
             });
@@ -26,6 +47,18 @@ class UserController {
                 username: user.username,
                 role_name: user.role_name,
             });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    //[GET] http://localhost:5000/api/admin/user/details_user?username=abc
+    details_user = async (req, res, next) => {
+        try {
+            const information = await UserModel.findOne({
+                username: req.query.username,
+            });
+            res.status(200).json(information);
         } catch (err) {
             console.log(err);
         }
@@ -56,7 +89,10 @@ class UserController {
                         message: 'Độ dài tài khoản từ 5 đến 20 ký tự',
                     }),
                 );
-            } else if (username.match(format).length != username.length) {
+            } else if (
+                username.match(format) === null ||
+                username.match(format).length != username.length
+            ) {
                 //check username for correct format
                 return next(
                     res.status(412).json({
@@ -67,11 +103,12 @@ class UserController {
             } else if (user) {
                 //check username unique
                 return next(
-                    res.status(500).json({
+                    res.status(405).json({
                         message: 'Tài khoản đã tồn tại',
                     }),
                 );
             } else {
+                formData.username = username;
                 //format password by username
                 formData.password = `VLU${username.trim().slice(-5)}`;
                 //Get data add new user
@@ -99,7 +136,6 @@ class UserController {
             var data_password = formData.password;
             //format data_username and password
             var username = data_username.replace(/\s+/g, '');
-            console.log(username);
             var password = data_password.replace(/\s+/g, '');
             if (
                 username == null ||
@@ -120,7 +156,7 @@ class UserController {
                     password,
                 });
 
-                if (!user) {
+                if (!user || user.status_account === 'Không hoạt động') {
                     //Check if the user is found
                     return next(
                         res.status(401).json({
@@ -130,8 +166,6 @@ class UserController {
                 } else {
                     //Return user info and generate token
                     res.status(200).json({
-                        username: user.username,
-                        role_name: user.role_name,
                         token: generateToken(user.username, user.role_name),
                     });
                 }
@@ -196,6 +230,7 @@ class UserController {
                     }),
                 );
             } else if (
+                new_password.match(format) == null ||
                 new_password.match(format).length != new_password.length
             ) {
                 //Check the new password for correct format
@@ -226,6 +261,74 @@ class UserController {
             }
         } catch (err) {
             console.log(err);
+        }
+    };
+
+    //[PATCH] http://localhost:5000/api/admin/user/deactivate_user
+    deactivate_user = async (req, res, next) => {
+        try {
+            UserModel.findOneAndUpdate(
+                { username: req.body.username },
+                { status: 'Không hoạt động' },
+            )
+                .then(() => {
+                    res.status(200).json({
+                        message: 'Vô hiệu hóa tài khoản thành công',
+                    });
+                })
+                .catch(next);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    //[PATCH] http://localhost:5000/api/admin/user/restore_user
+    restore_user = async (req, res, next) => {
+        try {
+            UserModel.findOneAndUpdate(
+                { username: req.body.username },
+                { status: 'Đang hoạt động' },
+            )
+                .then(() => {
+                    res.status(200).json({
+                        message: 'Khôi phục tài khoản thành công',
+                    });
+                })
+                .catch(next);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    //[PATCH] http://localhost:5000/api/admin/user/change_user_information
+    change_user_information = async (req, res, next) => {
+        try {
+            //get data form client
+            var data_password = req.body.password;
+            var data_role_name = req.body.role_name;
+            var data_status_account = req.body.status_account;
+
+            var password = data_password.replace(/\s+/g, '');
+            if (password == null || password === '') {
+                const user = UserModel.findOne({ username: req.body.username });
+                password = user.password;
+            }
+            UserModel.findOneAndUpdate(
+                { username: req.body.username },
+                {
+                    password: password,
+                    role_name: data_role_name,
+                    status_account: data_status_account,
+                },
+            )
+                .then(() => {
+                    res.status(200).json({
+                        message: 'Chỉnh sửa thông tin tài khoản thành công',
+                    });
+                })
+                .catch(next);
+        } catch (error) {
+            console.log(error);
         }
     };
 }

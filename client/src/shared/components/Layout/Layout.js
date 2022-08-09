@@ -1,32 +1,29 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import AdminFooter from "../../../admin/components/AdminFooter/AdminFooter";
-import AdminNav from "../../../admin/components/AdminNav/AdminNav";
-import SideNav from "../../../admin/components/AdminNav/SideNav/SideNav";
-import Background from "../../../admin/components/Background/Background";
-import StudentFooter from "../../../student/components/Footer/Footer";
-import StudentNavbar from "../../../student/components/StudentNav/StudentNav";
+import { AdminLayout } from "../../../admin/components/AdminLayout/AdminLayout";
+import { StudentLayout } from "../../../student/components/StudentLayout/StudentLayout";
 import { authActions } from "../../store/auth-slice";
+import { uiActions } from "../../store/ui-slice";
 
 function Layout(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const {isInAdminMode} = useSelector((state) => state.ui)
-
+  const { isInAdminMode } = useSelector((state) => state.ui);
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(authActions.autoLoginHandler());
-    // !isLoggedIn && history.push("/");
-  }, [dispatch, isLoggedIn, history]);
+    dispatch(uiActions.runAdminMode({ type: "REFRESH_ADMIN_PAGE" }));
+  }, [dispatch, isLoggedIn, history, isInAdminMode]);
 
   return (
     <>
-      {!isInAdminMode ? <StudentNavbar /> : <AdminNav/>}
-      {isInAdminMode && <SideNav/>}
-      {isInAdminMode ? <Background>{props.children}</Background> : props.children}
-      {!isInAdminMode ? <StudentFooter /> : <AdminFooter />}
+      {isInAdminMode ? (
+        <AdminLayout>{props.children}</AdminLayout>
+      ) : (
+        <StudentLayout>{props.children}</StudentLayout>
+      )}
     </>
   );
 }

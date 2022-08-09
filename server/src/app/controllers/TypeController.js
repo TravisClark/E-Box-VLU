@@ -25,17 +25,23 @@ class RoleController {
     add_type = async (req, res, next) => {
         try {
             const type_name = req.body.type_name;
-            if(type_name == null || type_name === ''){
+            if (type_name == null || type_name === '') {
                 return next(
                     res.status(401).json({
                         message: 'Loại câu hỏi không được bỏ trống',
                     }),
                 );
-            }else{
+            } else {
                 const type = new TypeModel(req.body);
                 await type
                     .save()
-                    .then(() => res.status(201).json(`Thêm thành công loại câu hỏi: ${req.body.type_name}`));
+                    .then(() =>
+                        res
+                            .status(201)
+                            .json(
+                                `Thêm thành công loại câu hỏi: ${req.body.type_name}`,
+                            ),
+                    );
             }
         } catch (err) {
             console.log(err);

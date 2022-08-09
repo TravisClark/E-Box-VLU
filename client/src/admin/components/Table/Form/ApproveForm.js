@@ -1,23 +1,49 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../../shared/api/LoadingList";
+import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
+import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
+import { itemActions } from "../../../../shared/store/item-slice";
 
 export const ApproveForm = (props) => {
+  const { data } = useSelector((state) => state.ui.notification);
+  const { selectedType, selectedTypeChanged } = useSelector(
+    (state) => state.item
+  );
+  const { loadingType } = useSelector((state) => state.ui);
+  const { account } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(itemActions.getSelected({ type: data.type_name }));
+  }, [dispatch, data]);
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    const body = JSON.stringify({
+      type_name: selectedTypeChanged ? selectedTypeChanged : selectedType,
+      id_question: data.id_question,
+      username: account.username,
+    });
+    props.onSubmitHandler(body);
+  };
   return (
     <>
-      <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10 ">
+      <div className="flex flex-col space-y-8 items-center bg-white px-14 py-4 rounded-lg mx-auto z-10">
         <span className="text-2xl font-bold">Xác nhận duyệt</span>
-        <h1>{props.message}</h1>
+        <h1 className="max-w-lg break-all">{data.question}</h1>
+        <QuestionType className="self-start border" selected={data.type_name} />
+        {loadingType === LoadingList.approveQuestion && (
+          <div className="w-full flex justify-center">
+            <LoadingDot/>
+          </div>
+        )}
         <div className="flex w-full space-x-8 justify-center mt-10">
-          <button
-            className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
-            onClick={props.onSubmitHandler}
-          >
-            Submit
+          <button className="btn-primary" onClick={onSubmitHandler}>
+            Duyệt
           </button>
-          <button
-            className="py-2 px-3 rounded-lg bg-lightBlue text-white font-medium text-sm"
-            onClick={props.onClose}
-          >
-            Cancel
+          <button className="btn-primary" onClick={props.onClose}>
+            Hủy
           </button>
         </div>
       </div>

@@ -6,18 +6,22 @@ import { useSelector } from "react-redux";
 import BeforeLogin from "./BeforeLogin";
 import AfterLoggedIn from "./AfterLoggedIn";
 import logo from "../../../assets/logo.png";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [changeBgColor, setChangeBgColor] = useState();
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { account } = useSelector((state) => state.auth);
+  const [profileBoxStyle, setProfileBoxStyle] = useState()
 
   const changeNavbarColor = () => {
     if (window.scrollY > 50) {
       setChangeBgColor("bg-white");
+      setProfileBoxStyle('translate-y-6')
     } else {
       setChangeBgColor();
+      setProfileBoxStyle()
     }
   };
   window.addEventListener("scroll", changeNavbarColor);
@@ -32,7 +36,7 @@ function Navbar() {
   return (
     <nav>
       <Container
-        className={`fixed flex z-20 justify-between px-20  min-w-full p-4 items-center transition duration-500 ${
+        className={`fixed flex z-20 justify-between min-w-full p-4 items-center transition duration-500 drop-shadow-md sm:px-20 ${
           changeBgColor && "bg-white"
         } md:justify-around md:px-0`}
       >
@@ -41,13 +45,14 @@ function Navbar() {
             className="bg-cover bg-no-repeat bg-left-top w-9 h-12"
             style={{ backgroundImage: `url(${logo})` }}
           />
-          <h1
-            className={`font-bold text-2xl transition duration-500 ${
+          <Link
+            className={`font-bold text-2xl transition duration-500 whitespace-nowrap ${
               changeBgColor ? "text-black" : "text-white"
             }`}
+            to={"/E-boxVLU"}
           >
             E-Box VLU
-          </h1>
+          </Link>
         </div>
         {!isLoggedIn ? (
           <BeforeLogin
@@ -61,6 +66,7 @@ function Navbar() {
             changeBgColor={changeBgColor}
             navbarIsOpen={navbarIsOpen}
             username={account.username}
+            profileBoxStyle={profileBoxStyle}
           />
         )}
 

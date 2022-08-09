@@ -1,22 +1,24 @@
-import React, { useEffect, useRef } from "react";
-import { useState } from "react";
+import React, {  useRef } from "react";
 import Button from "../UI/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { authActions } from "../../../shared/store/auth-slice";
 import Container from "../UI/Container";
 import useHttpClient from "../../../shared/hooks/http-hook";
 import Requests from "../../../shared/api/Requests";
+import { uiActions } from "../../../shared/store/ui-slice";
+import { Error } from "../../../shared/components/Error/Error";
+import { LoadingDot } from "../../../shared/components/LoadingDot/LoadingDot";
+import { LoadingList } from "../../../shared/api/LoadingList";
 
 function LoginForm() {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [IsUsernameEmpty, setUsernameEmpty] = useState(false);
-  const [isPasswordEmpty, setPasswordEmpty] = useState(false);
-  const [account, setAccount] = useState();
-  const { sendRequest, error } = useHttpClient();
+  const {isShowing} = useSelector((state) => state.ui.error)
+  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
+  const { sendRequest } = useHttpClient();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -24,40 +26,28 @@ function LoginForm() {
     const password = passwordRef.current.value.trim();
 
     if (!username) {
-      setUsernameEmpty(true);
-      password && setPasswordEmpty(false);
+      dispatch(uiActions.catchError({message: 'Vui lòng nhập tài khoản!'}))
       return;
     } else if (!password) {
-      setPasswordEmpty(true);
-      username && setUsernameEmpty(false);
+      dispatch(uiActions.catchError({message: 'Vui lòng nhập mật khẩu!'}))
       return;
     }
-    setUsernameEmpty(false);
-    setPasswordEmpty(false);
     const fetchData = async () => {
       try {
         const requestData = await sendRequest(
+          LoadingList.login,
           Requests.loginRequest,
           "POST",
           JSON.stringify({ username, password }),
-          { "Content-Type": "application/json" }
         );
-        setAccount(requestData);
+        dispatch(authActions.loginHandler({token: requestData}));
+        history.push("/E-boxVLU/Home");
       } catch (error) {
       }
     };
     await fetchData();
   };
 
-  useEffect(() => {
-    if (account) {
-      const storeData = async () => {
-        await dispatch(authActions.loginHandler(account));
-        await history.push("/E-boxVLU/Home");
-      };
-      storeData();
-    }
-  }, [account, dispatch, history]);
   return (
     <form onSubmit={onSubmitHandler}>
       <Container className="absolute min-w-full min-h-full p-0 top-0 flex items-center justify-center">
@@ -74,11 +64,6 @@ function LoginForm() {
                 placeholder="Nhập tài khoản"
                 ref={usernameRef}
               />
-              {IsUsernameEmpty && (
-                <h3 className="text-red-500 text-sm">
-                  Vui lòng nhập tài khoản!
-                </h3>
-              )}
             </div>
             <div className="flex flex-col space-y-2">
               <input
@@ -87,14 +72,14 @@ function LoginForm() {
                 placeholder="Nhập mật khẩu"
                 ref={passwordRef}
               />
-              {isPasswordEmpty && (
-                <h3 className="text-red-500 text-sm">
-                  Vui lòng nhập mật khẩu!
-                </h3>
-              )}
-              {error && <h3 className="text-red-500 text-sm">{error}</h3>}
+              {isShowing && <Error/>}
             </div>
-            <Button className={` text-white bg-heavyBlue`}>Đăng Nhập</Button>
+            {isSpinnerLoading && loadingType === LoadingList.login && (
+          <div className="flex justify-center items-center">
+            <LoadingDot className="m-auto" />
+          </div>
+        )}
+            <Button className={` btn-primary bg-lightBlue`}>Đăng Nhập</Button>
             <span className="text-gray-500 italic">
               *Lưu ý: Chỉ sinh viên khoa CNTT được đăng nhập vào hệ thống!
             </span>

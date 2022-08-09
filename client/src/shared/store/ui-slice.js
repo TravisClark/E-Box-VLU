@@ -8,7 +8,7 @@ const uiSlice = createSlice({
       message: "",
       isShowing: false,
       data: {},
-      request: { url: "", method: "GET", body: null, headers: {} },
+      request: { url: "", method: "GET", body: null, headers: {}, loadingType: '' },
       successMessage:'',
       type: ''
     },
@@ -17,10 +17,27 @@ const uiSlice = createSlice({
       message: "",
       refresh: false
     },
+    error: {
+      isShowing: false,
+      message: "",
+    }
+    ,
+    isSpinnerLoading: false,
+    loadingType: '',
   },
   reducers: {
-    runAdminMode(state) {
-      state.isInAdminMode = !state.isInAdminMode;
+    runAdminMode(state, action) {
+      if(action.payload.type === 'RUN_ADMIN_MODE'){
+        state.isInAdminMode = true;
+        sessionStorage.setItem('isInAdminMode', state.isInAdminMode);
+      }
+      else if(action.payload.type === 'REFRESH_ADMIN_PAGE'){
+        state.isInAdminMode = JSON.parse(sessionStorage.getItem('isInAdminMode'))
+      }
+    },
+    runStudentMode(state) {
+      state.isInAdminMode = false;
+      sessionStorage.removeItem('isInAdminMode');
     },
     showNotification(state, action) {
       state.notification.isShowing = true;
@@ -45,6 +62,24 @@ const uiSlice = createSlice({
     closeSuccessNotification(state){
         state.successNotification.isShowing = false;
         state.successNotification.message = ''
+    },
+    catchError (state, action){
+      state.error.isShowing = true;
+      state.error.message = action.payload.message;
+    },
+    clearError(state){
+      state.error.isShowing = false;
+      state.error.message = ''
+    },
+    setSpinnerState(state, action){
+      if(action.payload.type === "LOADING"){
+        state.isSpinnerLoading = true
+        state.loadingType = action.payload.loadingType
+      }
+      else if(action.payload.type === "DONE"){
+        state.isSpinnerLoading = false;
+        state.loadingType = ''
+      }
     }
   },
 });
