@@ -1,7 +1,9 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../shared/api/LoadingList";
 import Requests from "../../../shared/api/Requests";
 import { Error } from "../../../shared/components/Error/Error";
+import { LoadingDot } from "../../../shared/components/LoadingDot/LoadingDot";
 import { QuestionType } from "../../../shared/components/QuestionType/QuestionType";
 import useHttpClient from "../../../shared/hooks/http-hook";
 import { uiActions } from "../../../shared/store/ui-slice";
@@ -11,19 +13,24 @@ function QuestionForm(props) {
   const { sendRequest } = useHttpClient();
   const questionInputRef = useRef();
   const { account } = useSelector((state) => state.auth);
-  const {selectedTypeChanged} = useSelector((state) => state.item)
-  const {isShowing} = useSelector((state) => state.ui.notification)
+  const { selectedTypeChanged } = useSelector((state) => state.item);
+  const { isShowing } = useSelector((state) => state.ui.notification);
+  const { loadingType } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
-  
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const question = questionInputRef.current.value;
     try {
       await sendRequest(
+        LoadingList.publishQuestion,
         Requests.publishQuestion,
         "POST",
-        JSON.stringify({ username: account.username, question, type_name: selectedTypeChanged   }),
-
+        JSON.stringify({
+          username: account.username,
+          question,
+          type_name: selectedTypeChanged,
+        })
       );
       props.onClose();
       dispatch(uiActions.showSuccessNotification("Đặt câu hỏi thành công"));
@@ -51,11 +58,9 @@ function QuestionForm(props) {
             <label className="text-sm text-black italic">
               *Lưu ý: sau khi đặt câu hỏi vui lòng đợi duyệt
             </label>
-            <div className='flex space-x-3'>
-            <label className="text-md text-black self-center">
-              Loại:
-            </label>
-            <QuestionType className="border"/>
+            <div className="flex space-x-3">
+              <label className="text-md text-black self-center">Loại:</label>
+              <QuestionType className="border" />
             </div>
             <textarea
               type="text"
@@ -63,11 +68,14 @@ function QuestionForm(props) {
               placeholder="Nội dung câu hỏi.."
               ref={questionInputRef}
             />
-            {isShowing && <Error/>}
+            {isShowing && <Error />}
           </div>
-          <button className="btn-primary">
-            Xác nhận
-          </button>
+          {loadingType === LoadingList.publishQuestion && (
+            <div className="w-full flex justify-center">
+              <LoadingDot />
+            </div>
+          )}
+          <button className="btn-primary">Xác nhận</button>
         </div>
       </form>
       <div className="w-full h-full absolute bg-black opacity-70 z-0"></div>

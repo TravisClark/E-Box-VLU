@@ -1,12 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../../shared/api/LoadingList";
 import Requests from "../../../../shared/api/Requests";
 import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
 export const RepliedQuestionList = () => {
   const { currentItems } = useSelector((state) => state.page.pagination);
-  const {isSpinnerLoading} = useSelector((state) => state.ui)
+  const {isSpinnerLoading, loadingType} = useSelector((state) => state.ui)
   const dispatch = useDispatch();
 
   const onOpenFormHandler = async (value) => {
@@ -15,6 +16,7 @@ export const RepliedQuestionList = () => {
         message: value.question,
         data: value,
         request: {
+          loadingType: LoadingList.replyQuestion,
           url: Requests.replyQuestion,
           method: "PATCH",
           body: null,
@@ -55,19 +57,19 @@ export const RepliedQuestionList = () => {
   });
   return (
     <tbody>
-      {isSpinnerLoading && questions.length === 0 && (
+      {loadingType === LoadingList.fetchQuestionList && (
         <tr className="translate-x-1/2 h-44 translate-y-1/2">
           <LoadingDot className="pt-20" />
         </tr>
       )}
       {questions.length === 0 && !isSpinnerLoading && (
-        <tr className="relative h-10">
-          <td className="h-20 absolute whitespace-nowrap top-4">
+        <div className="relative h-10">
+          <div className="h-20 absolute whitespace-nowrap top-4">
             There is no questions in this list
-          </td>
-        </tr>
+          </div>
+        </div>
       )}
-      {questions}
+      {loadingType !== LoadingList.fetchQuestionList && questions}
     </tbody>
   );
 };

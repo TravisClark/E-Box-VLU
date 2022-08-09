@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { LoadingList } from "../../../../shared/api/LoadingList";
 import Requests from "../../../../shared/api/Requests";
 import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { Pagination } from "../../../../shared/components/Pagination/Pagination";
@@ -15,16 +16,17 @@ function QuestionList() {
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
-  const { isSpinnerLoading } = useSelector((state) => state.ui);
+  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
   const history = useHistory();
-  const {  itemSearching, newSortType } = useSelector(
-    (state) => state.item
-  );
+  const { itemSearching, newSortType } = useSelector((state) => state.item);
 
   useEffect(() => {
     try {
       const request = async () => {
-        const response = await sendRequest(Requests.fetchQuestionListUser);
+        const response = await sendRequest(
+          LoadingList.fetchQuestionListUser,
+          Requests.fetchQuestionListUser
+        );
         setQuestions(response);
       };
       request();
@@ -98,12 +100,12 @@ function QuestionList() {
         <div
           className={`flex flex-col space-y-0.5 xl:flex-row xl:space-x-10 xl:justify-center xl:space-y-0`}
         >
-          {currentItems.length !== 0 && !isSpinnerLoading && (
+          {currentItems.length !== 0  && (
             <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
               {firstList}
             </ul>
           )}
-          {currentItems.length > 5 && !isSpinnerLoading && (
+          {currentItems.length > 5  && (
             <ul className={`flex flex-col space-y-0.5 ${classes.item}`}>
               {secondList}
             </ul>
@@ -113,11 +115,12 @@ function QuestionList() {
               <h1>Không tìm thấy câu hỏi!</h1>
             </div>
           )}
-          {isSpinnerLoading && (
-            <div className="h-28 flex justify-center items-center">
-              <LoadingDot className="m-auto" color="#fff" />
-            </div>
-          )}
+          {isSpinnerLoading &&
+            loadingType === LoadingList.fetchQuestionListUser && (
+              <div className="h-28 flex justify-center items-center">
+                <LoadingDot className="m-auto" color="#fff" />
+              </div>
+            )}
         </div>
 
         {currentItems.length > 0 && (

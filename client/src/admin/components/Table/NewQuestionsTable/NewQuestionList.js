@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../../shared/api/LoadingList";
 import Requests from "../../../../shared/api/Requests";
 import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { uiActions } from "../../../../shared/store/ui-slice";
@@ -7,14 +8,15 @@ import { uiActions } from "../../../../shared/store/ui-slice";
 function NewQuestionList() {
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
-  const { isSpinnerLoading } = useSelector((state) => state.ui);
-
+  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
+  
   const onApproveHandler = (value) => {
     dispatch(
       uiActions.showNotification({
         message: value.question,
         data: value,
         request: {
+          loadingType: LoadingList.approveQuestion,
           url: Requests.approveQuestion,
           method: "PATCH",
           body: null,
@@ -31,6 +33,7 @@ function NewQuestionList() {
         message: value.question,
         data: value,
         request: {
+          loadingType: LoadingList.refuseQuestion,
           url: Requests.refuseQuestion,
           method: "PATCH",
           body: null,
@@ -82,11 +85,11 @@ function NewQuestionList() {
   });
   return (
     <tbody>
-      {isSpinnerLoading && questions.length === 0 && (
-        <tr className="translate-x-1/2 h-44 translate-y-1/2">
-          <LoadingDot className="pt-20" />
-        </tr>
-      )}
+      {loadingType === LoadingList.fetchQuestionList && (
+          <tr className="translate-x-1/2 h-44 translate-y-1/2">
+            <LoadingDot className="pt-20" />
+          </tr>
+        )}
       {questions.length === 0 && !isSpinnerLoading && (
         <tr className="relative h-10">
           <td className="h-20 absolute whitespace-nowrap top-4">
@@ -94,7 +97,7 @@ function NewQuestionList() {
           </td>
         </tr>
       )}
-      {questions}
+      {loadingType !== LoadingList.fetchQuestionList && questions}
     </tbody>
   );
 }

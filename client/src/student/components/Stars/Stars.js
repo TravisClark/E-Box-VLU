@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { LoadingList } from "../../../shared/api/LoadingList";
 import Requests from "../../../shared/api/Requests";
 import { LoadingDot } from "../../../shared/components/LoadingDot/LoadingDot";
 import useHttpClient from "../../../shared/hooks/http-hook";
@@ -10,7 +11,7 @@ const unCheckedStyles = `stroke-orange-400 fill-white group-hover:fill-orange-40
 export const Stars = ({ stars, id_question, refreshHandler }) => {
   const { account } = useSelector((state) => state.auth);
   const { sendRequest } = useHttpClient();
-  const { isSpinnerLoading } = useSelector((state) => state.ui);
+  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
   // console.log(stars)
   const checkUsername = stars.filter(
     (star) => star.username === account.username
@@ -18,6 +19,7 @@ export const Stars = ({ stars, id_question, refreshHandler }) => {
   const onCheckHandler = async () => {
     try {
       await sendRequest(
+        LoadingList.likeQuestion,
         Requests.likeQuestion,
         "PUT",
         JSON.stringify({ id_question, username: account.username })
@@ -33,7 +35,7 @@ export const Stars = ({ stars, id_question, refreshHandler }) => {
       className="rating flex space-x-2 border border-slate-300 h-fit py-1 px-2 justify-center rounded-md cursor-pointer group"
       onClick={onCheckHandler}
     >
-      {!isSpinnerLoading && (
+      {!loadingType && (
         <>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -50,8 +52,8 @@ export const Stars = ({ stars, id_question, refreshHandler }) => {
           </span>
         </>
       )}
-      {isSpinnerLoading && (
-        <LoadingDot className="m-auto py-3 px-4" size='10px'/>
+      {loadingType === LoadingList.likeQuestion && (
+        <LoadingDot className="m-auto py-3 px-4" size="10px" />
       )}
     </div>
   );

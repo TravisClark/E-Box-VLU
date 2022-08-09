@@ -4,7 +4,6 @@ import { Chart } from "../components/Chart/PieChart";
 import { BarCharts } from "../components/Chart/BarCharts";
 
 function Dashboard() {
-
   return (
     <Container className="m-auto w-11/12 h-full py-24 px-20 bg-transparent space-y-4">
       <div className="flex justify-between">
@@ -75,7 +74,8 @@ function Dashboard() {
             </li>
           </ul>
         </div>
-        <div className="flex flex-col rounded-md bg-white p-6 h-fit">
+        <div className="flex flex-col rounded-md bg-white p-6 h-fit space-y-3">
+          <span className="font-bold text-xl text-center">Câu hỏi</span>
           <BarCharts />
         </div>
       </div>

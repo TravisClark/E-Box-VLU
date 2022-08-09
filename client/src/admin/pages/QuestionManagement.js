@@ -11,6 +11,7 @@ import useHttpClient from "../../shared/hooks/http-hook";
 import { Notification } from "../../shared/components/UI/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
+import { LoadingList } from "../../shared/api/LoadingList";
 
 const tableOptions = [
   "Câu hỏi chưa được duyệt",
@@ -28,12 +29,14 @@ function QuestionManagement() {
   const { successNotification } = useSelector((state) => state.ui);
   const { newSortType } = useSelector((state) => state.item);
   const { isSortingItems } = useSelector((state) => state.page);
-  
 
   useEffect(() => {
     try {
       const fetchQuestionList = async () => {
-        const response = await sendRequest(Requests.fetchQuestionList);
+        const response = await sendRequest(
+          LoadingList.fetchQuestionList,
+          Requests.fetchQuestionList
+        );
         let questions = response;
         newSortType &&
           (questions = response.filter((res) => res.type_name === newSortType));
@@ -61,8 +64,6 @@ function QuestionManagement() {
     );
   }, [account.role_name]);
 
-  
-  
   const onChangeSelectedTable = (selected) => {
     setSelectedTable(selected);
   };
