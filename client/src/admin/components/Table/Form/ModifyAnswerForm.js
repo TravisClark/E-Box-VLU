@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../../shared/api/LoadingList";
 import { Error } from "../../../../shared/components/Error/Error";
+import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
 import { itemActions } from "../../../../shared/store/item-slice";
 
@@ -13,6 +15,7 @@ export const ModifyAnswerForm = (props) => {
   const { data } = useSelector((state) => state.ui.notification);
   const { isShowing } = useSelector((state) => state.ui.error);
   const dispatch = useDispatch();
+  const { loadingType } = useSelector((state) => state.ui);
 
   useEffect(() => {
     dispatch(itemActions.getSelected({ type: data.type_name }));
@@ -67,6 +70,11 @@ export const ModifyAnswerForm = (props) => {
             />
             {isShowing && <Error />}
           </div>
+          {loadingType === LoadingList.replyQuestion && (
+            <div className="w-full mt-10 flex justify-center">
+              <LoadingDot />
+            </div>
+          )}
           <div className="flex w-full space-x-8 justify-center mt-10">
             <button className="btn-primary">Xác nhận</button>
             <button className="btn-primary" onClick={props.onClose}>

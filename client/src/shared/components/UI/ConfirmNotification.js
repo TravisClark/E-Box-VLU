@@ -17,6 +17,7 @@ export const ConfirmNotification = (props) => {
   );
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
+  console.log(request)
 
   const onCloseNotificationHandler = () => {
     dispatch(uiActions.closeNotification());
@@ -25,6 +26,7 @@ export const ConfirmNotification = (props) => {
   const onSubmitHandler = async (input) => {
     try {
       await sendRequest(
+        request.loadingType,
         request.url,
         request.method,
         request.body ? request.body : input,
@@ -32,11 +34,10 @@ export const ConfirmNotification = (props) => {
       );
       dispatch(uiActions.closeNotification());
       dispatch(uiActions.showSuccessNotification(successMessage));
-      dispatch(pageActions.setCurrentPage(1))
+      dispatch(pageActions.setCurrentPage(1));
     } catch (error) {
       // dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
     }
-    
   };
 
   let form;
@@ -59,37 +60,30 @@ export const ConfirmNotification = (props) => {
       <ModifyAnswerForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        
       />
     );
-  }
-  else if (type === "USER_DETAIL_FORM") {
+  } else if (type === "USER_DETAIL_FORM") {
     form = (
       <UserDetailForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        
       />
     );
-  }
-  else if(type === "REJECT_FORM"){
+  } else if (type === "REJECT_FORM") {
     form = (
       <RejectForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        
       />
     );
-  }
-  else if(type === "RESTORE_QUESTION_FORM"){
+  } else if (type === "RESTORE_QUESTION_FORM") {
     form = (
       <RestoreQuestionForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
       />
     );
-  }
-  else if(type === "PUBLISH_QUESTION_FORM"){
+  } else if (type === "PUBLISH_QUESTION_FORM") {
     form = (
       <QuestionForm
         onClose={onCloseNotificationHandler}

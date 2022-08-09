@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { useParams } from "react-router-dom";
+import { LoadingList } from "../../shared/api/LoadingList";
 import Requests from "../../shared/api/Requests";
 import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
 import useHttpClient from "../../shared/hooks/http-hook";
@@ -20,16 +21,18 @@ export const QuestionDetail = () => {
   const { sendRequest } = useHttpClient();
   const [firstLoading, setFirstLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const { isSpinnerLoading } = useSelector((state) => state.ui);
+  const { loadingType } = useSelector((state) => state.ui);
+  const { account } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await sendRequest(
+        LoadingList.fetchQuestionDetail,
         `${Requests.fetchQuestionDetail}${params.questionId}`
       );
       setQuestion(response);
       setStars(response.members_star);
-      setFirstLoading(true)
+      setFirstLoading(true);
       const { createdAt, approvedAt, responsedAt } = response;
       setDates({
         createDate: new Date(createdAt).toDateString(),
@@ -83,11 +86,13 @@ export const QuestionDetail = () => {
                     Đã hỏi vào {dates.createDate}
                   </span>
                 </div>
-                <Stars
-                  stars={stars}
-                  id_question={params.questionId}
-                  refreshHandler={() => setRefresh((prevState) => !prevState)}
-                />
+                {account.role_name === "Sinh Viên" && (
+                  <Stars
+                    stars={stars}
+                    id_question={params.questionId}
+                    refreshHandler={() => setRefresh((prevState) => !prevState)}
+                  />
+                )}
               </div>
               <div className="h-full">
                 <span className="text-blue-500 p-2 bg-blue-200 w-fit rounded-lg">
@@ -115,7 +120,7 @@ export const QuestionDetail = () => {
             </div>
           </div>
         )}
-        {isSpinnerLoading && !firstLoading && (
+        {loadingType === LoadingList.fetchQuestionDetail && !firstLoading && (
           <div className="h-56 flex justify-center items-center">
             <LoadingDot className="m-auto" />
           </div>

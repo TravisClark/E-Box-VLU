@@ -6,14 +6,21 @@ import { MessageReceiver } from "./MessageReceiver/MessageReceiver";
 import { MessageSender } from "./MessageSender/MessageSender";
 import { io } from "socket.io-client";
 import { LoadingDot } from "../LoadingDot/LoadingDot";
+import { LoadingList } from "../../api/LoadingList";
 
-export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
+const URL = "ws://localhost:8900";
+
+export const Conversation = ({
+  selectedUser,
+  minHeight,
+  maxHeight,
+}) => {
   const { account } = useSelector((state) => state.auth);
   const [conversations, setConversations] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [receiver, setReceiver] = useState(null);
-  const { isSpinnerLoading } = useSelector((state) => state.ui);
+  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
   const socket = useRef();
   const scrollRef = useRef();
   const { sendRequest } = useHttpClient();
@@ -21,6 +28,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
   useEffect(() => {
     const request = async () => {
       const response = await sendRequest(
+        LoadingList.fetchConversation,
         `${Requests.fetchConversation}${selectedUser.id_conversation}`
       );
       setConversations(response);
@@ -34,7 +42,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
   }, [selectedUser, sendRequest, account.username]);
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io(URL);
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         username_sender: data.username_sender,
@@ -72,9 +80,8 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
       message: newMessage,
     };
     socket.current.emit("sendMessage", socketItem);
-
     try {
-      const res = await sendRequest(
+      const res = await sendRequest('',
         Requests.sendMessage,
         "POST",
         JSON.stringify(message)
@@ -103,31 +110,33 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
           <span className="font-semibold">{receiver}</span>
         </div>
 
-        {isSpinnerLoading && (
+        {loadingType === LoadingList.fetchConversation && (
           <div className="h-56 flex justify-center items-center">
             <LoadingDot className="m-auto" />
           </div>
         )}
-        {!isSpinnerLoading && conversations && <div
-          className="flex flex-col space-y-2 w-96 min-w-full overflow-hidden hover:overflow-auto"
-          style={{ maxHeight, minHeight }}
-        >
-          {conversations.map(function (conversation) {
-            if (conversation.username_sender === account.username) {
-              return (
-                <div ref={scrollRef} key={conversation._id}>
-                  <MessageSender chat={conversation} />
-                </div>
-              );
-            } else {
-              return (
-                <div ref={scrollRef} key={conversation._id}>
-                  <MessageReceiver chat={conversation} />
-                </div>
-              );
-            }
-          })}
-        </div>}
+        {loadingType !== LoadingList.fetchConversation && (
+          <div
+            className="flex flex-col space-y-2 w-96 min-w-full overflow-hidden hover:overflow-auto"
+            style={{ maxHeight, minHeight }}
+          >
+            {conversations.map(function (conversation) {
+              if (conversation.username_sender === account.username) {
+                return (
+                  <div ref={scrollRef} key={conversation._id}>
+                    <MessageSender chat={conversation} />
+                  </div>
+                );
+              } else {
+                return (
+                  <div ref={scrollRef} key={conversation._id}>
+                    <MessageReceiver chat={conversation} />
+                  </div>
+                );
+              }
+            })}
+          </div>
+        )}
         <form onSubmit={onSubmitHandler}>
           <div
             className="flex justify-self-end justify-between px-4 space-x-4 items-end py-4"
@@ -143,7 +152,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
           </div>
         </form>
       </>
-      
+
       {!isSpinnerLoading && !conversations && (
         <div
           style={{ minHeight }}

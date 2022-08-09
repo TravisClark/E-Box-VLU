@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { LoadingList } from "../../shared/api/LoadingList";
 import Requests from "../../shared/api/Requests";
 import { SearchItem } from "../../shared/components/SearchItem/SearchItem";
 import { Notification } from "../../shared/components/UI/Notification";
@@ -19,7 +20,10 @@ function Users() {
   useEffect(() => {
     try {
       const fetchUserList = async () => {
-        const response = await sendRequest(Requests.fetchUsersList);
+        const response = await sendRequest(
+          LoadingList.fetchUsersList,
+          Requests.fetchUsersList
+        );
         setUsers(response);
       };
       fetchUserList();
