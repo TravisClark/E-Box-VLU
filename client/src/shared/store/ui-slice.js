@@ -8,7 +8,7 @@ const uiSlice = createSlice({
       message: "",
       isShowing: false,
       data: {},
-      request: { url: "", method: "GET", body: null, headers: {} },
+      request: { url: "", method: "GET", body: null, headers: {}, loadingType: '' },
       successMessage:'',
       type: ''
     },
@@ -23,6 +23,7 @@ const uiSlice = createSlice({
     }
     ,
     isSpinnerLoading: false,
+    loadingType: '',
   },
   reducers: {
     runAdminMode(state, action) {
@@ -73,9 +74,11 @@ const uiSlice = createSlice({
     setSpinnerState(state, action){
       if(action.payload.type === "LOADING"){
         state.isSpinnerLoading = true
+        state.loadingType = action.payload.loadingType
       }
       else if(action.payload.type === "DONE"){
         state.isSpinnerLoading = false;
+        state.loadingType = ''
       }
     }
   },

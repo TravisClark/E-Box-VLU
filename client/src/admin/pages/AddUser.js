@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 import { uiActions } from "../../shared/store/ui-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { Error } from "../../shared/components/Error/Error";
+import { LoadingList } from "../../shared/api/LoadingList";
+import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
 
 function AddUser() {
   const { sendRequest } = useHttpClient();
@@ -14,6 +16,7 @@ function AddUser() {
   const inputRef = useRef();
   const dispatch = useDispatch();
   const { isShowing } = useSelector((state) => state.ui.error);
+  const { loadingType } = useSelector((state) => state.ui);
   const { selectedType, selectedTypeChanged } = useSelector(
     (state) => state.item
   );
@@ -23,6 +26,7 @@ function AddUser() {
     const username = inputRef.current.value;
     try {
       await sendRequest(
+        LoadingList.addUser,
         Requests.addUserRequest,
         "POST",
         JSON.stringify({
@@ -55,9 +59,19 @@ function AddUser() {
           </div>
           <div className="flex flex-col space-y-2">
             <span>Vai trò</span>
-            <RoleList className="border w-auto" selected="Sinh Viên" />
+            <div className="flex items-center">
+              <RoleList className="border w-full" selected="Sinh Viên" />
+              {loadingType === LoadingList.fetchRoleList && (
+                <LoadingDot className="ml-4" />
+              )}
+            </div>
             {isShowing && <Error className="w-72" />}
           </div>
+          {loadingType === LoadingList.addUser && (
+            <div className="w-full flex justify-center">
+              <LoadingDot />
+            </div>
+          )}
           <button className="btn-primary w-fit mx-auto">Xác nhận</button>
         </form>
       </div>

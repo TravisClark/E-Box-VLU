@@ -5,13 +5,10 @@ import Container from "../../student/components/UI/Container";
 
 export const Chat = () => {
   const [selectedUser, setSelectedUser] = useState({});
-  // const [conversations, setConversations] = useState([]);
 
   const onSelectUser = useCallback((selected) => {
     setSelectedUser(selected);
   }, []);
-
-  // const clearConversations = useCallback(() => setConversations([]), []);
 
   return (
     <Container className="m-auto w-11/12 h-full py-24 px-20 space-y-6">
@@ -20,16 +17,12 @@ export const Chat = () => {
         <ContactList
           onSelectUser={onSelectUser}
           selectedUser={selectedUser}
-          // clearConversations={clearConversations}
         />
         <Conversation
           onSelectUser={onSelectUser}
           selectedUser={selectedUser}
-          // clearConversations={clearConversations}
           maxHeight="400px"
           minHeight="400px"
-          // conversations={conversations}
-          // setConversations={}
         />
       </div>
     </Container>

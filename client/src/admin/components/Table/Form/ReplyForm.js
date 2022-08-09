@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../../shared/api/LoadingList";
 import { Error } from "../../../../shared/components/Error/Error";
+import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { QuestionType } from "../../../../shared/components/QuestionType/QuestionType";
 import { itemActions } from "../../../../shared/store/item-slice";
 
@@ -13,6 +15,7 @@ export const ReplyForm = (props) => {
   const { isShowing } = useSelector((state) => state.ui.error);
   const { data } = useSelector((state) => state.ui.notification);
   const dispatch = useDispatch();
+  const { loadingType } = useSelector((state) => state.ui);
 
   useEffect(() => {
     dispatch(itemActions.getSelected({ type: data.type_name }));
@@ -49,7 +52,9 @@ export const ReplyForm = (props) => {
               <span className="text-xl font-semibold w-96 break-words">
                 {data.question}
               </span>
-              <span className="text-xl font-semibold w-52 m-auto">{formatDate}</span>
+              <span className="text-xl font-semibold w-52 m-auto">
+                {formatDate}
+              </span>
             </div>
             <QuestionType selected={data.type_name} className="border" />
             <div className="flex flex-col w-full">
@@ -58,19 +63,17 @@ export const ReplyForm = (props) => {
                 ref={inputRef}
                 placeholder="Nhập câu trả lời..."
               />
-              {isShowing && <Error className="mt-2"/>}
+              {isShowing && <Error className="mt-2" />}
             </div>
           </div>
+          {loadingType === LoadingList.replyQuestion && (
+            <div className="w-full mt-10 flex justify-center">
+              <LoadingDot />
+            </div>
+          )}
           <div className="flex w-full space-x-8 justify-center mt-10">
-            <button
-              className="btn-primary"
-            >
-              Trả lời
-            </button>
-            <button
-              className="btn-primary"
-              onClick={props.onClose}
-            >
+            <button className="btn-primary">Trả lời</button>
+            <button className="btn-primary" onClick={props.onClose}>
               Hủy
             </button>
           </div>

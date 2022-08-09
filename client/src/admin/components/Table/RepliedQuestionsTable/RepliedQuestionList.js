@@ -1,12 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../../shared/api/LoadingList";
 import Requests from "../../../../shared/api/Requests";
 import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
 export const RepliedQuestionList = () => {
   const { currentItems } = useSelector((state) => state.page.pagination);
-  const {isSpinnerLoading} = useSelector((state) => state.ui)
+  const {isSpinnerLoading, loadingType} = useSelector((state) => state.ui)
   const dispatch = useDispatch();
 
   const onOpenFormHandler = async (value) => {
@@ -15,6 +16,7 @@ export const RepliedQuestionList = () => {
         message: value.question,
         data: value,
         request: {
+          loadingType: LoadingList.replyQuestion,
           url: Requests.replyQuestion,
           method: "PATCH",
           body: null,
@@ -55,7 +57,7 @@ export const RepliedQuestionList = () => {
   });
   return (
     <tbody>
-      {isSpinnerLoading && questions.length === 0 && (
+      {loadingType === LoadingList.fetchQuestionList && (
         <tr className="translate-x-1/2 h-44 translate-y-1/2">
           <LoadingDot className="pt-20" />
         </tr>
@@ -67,7 +69,7 @@ export const RepliedQuestionList = () => {
           </div>
         </div>
       )}
-      {questions}
+      {loadingType !== LoadingList.fetchQuestionList && questions}
     </tbody>
   );
 };
