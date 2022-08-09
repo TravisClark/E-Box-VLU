@@ -90,7 +90,7 @@ function NewQuestionList() {
             <LoadingDot className="pt-20" />
           </tr>
         )}
-      {questions.length === 0 && !isSpinnerLoading && (
+      {questions.length === 0 && !loadingType && (
         <tr className="relative h-10">
           <td className="h-20 absolute whitespace-nowrap top-4">
             There is no questions in this list

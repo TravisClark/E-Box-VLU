@@ -6,6 +6,7 @@ import { LoadingList } from "../../shared/api/LoadingList";
 import Requests from "../../shared/api/Requests";
 import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
 import useHttpClient from "../../shared/hooks/http-hook";
+import { Roles } from "../../shared/roles/roles";
 import { CommentList } from "../components/CommentSection/CommentList/CommentList";
 import { Stars } from "../components/Stars/Stars";
 import CircleIcon from "../components/UI/CircleIcon";
@@ -86,7 +87,7 @@ export const QuestionDetail = () => {
                     Đã hỏi vào {dates.createDate}
                   </span>
                 </div>
-                {account.role_name === "Sinh Viên" && (
+                {account.role_name === Roles.student && (
                   <Stars
                     stars={stars}
                     id_question={params.questionId}

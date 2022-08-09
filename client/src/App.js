@@ -8,6 +8,7 @@ import QuestionManagement from "./admin/pages/QuestionManagement";
 import Users from "./admin/pages/Users";
 import Layout from "./shared/components/Layout/Layout";
 import { LoadingDot } from "./shared/components/LoadingDot/LoadingDot";
+import { Roles } from "./shared/roles/roles";
 import ChangePassword from "./student/pages/ChangePassword";
 import { QuestionDetail } from "./student/pages/QuestionDetail";
 
@@ -24,9 +25,9 @@ function App() {
     window.scrollTo(0, 0);
   }, [location]);
   const accessConditions =
-    account?.role_name === "Quản Trị Viên" ||
-    account?.role_name === "Ban Chủ Nhiệm Khoa" ||
-    account?.role_name === "Trợ Lý";
+    account?.role_name === Roles.admin ||
+    account?.role_name === Roles.supervisor ||
+    account?.role_name === Roles.assistant;
 
   return (
     <Layout>
