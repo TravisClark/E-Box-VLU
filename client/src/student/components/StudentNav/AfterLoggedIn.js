@@ -6,6 +6,7 @@ import { authActions } from "../../../shared/store/auth-slice";
 import { uiActions } from "../../../shared/store/ui-slice";
 import { Notifications } from "../Notifications/Notifications";
 import classes from "./NavStyles.module.css";
+
 function AfterLoggedIn({
   changeBgColor,
   openNavHandler,

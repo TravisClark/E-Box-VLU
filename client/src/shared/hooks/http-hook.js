@@ -33,7 +33,10 @@ const useHttpClient = () => {
         
         return responseData;
       } catch (error) {
-        const err = error.toString().replace("Error:", "");
+        let err = error.toString().replace("Error:", "");
+        if(err === 'Type Failed to fetch'){
+          err = ''
+        }
         dispatch(uiActions.catchError({ message: err }));
         throw error;
       }

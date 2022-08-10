@@ -75,6 +75,7 @@ export const CommentList = ({ id_question }) => {
       })
     );
     setComments([...comments, response]);
+    dispatch(uiActions.setSpinnerState({ type: "DONE" }));
     setInputComment("");
   };
 

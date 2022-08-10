@@ -121,7 +121,7 @@ function QuestionManagement() {
         {table}
         {isSpinnerLoading && !firstLoading && (
           <div className="flex justify-center h-20 items-center">
-            <LoadingDot className="" />
+            <LoadingDot />
           </div>
         )}
         {successNotification.isShowing && (

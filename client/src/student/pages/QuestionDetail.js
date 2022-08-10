@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useParams } from "react-router-dom";
 import { LoadingList } from "../../shared/api/LoadingList";
@@ -7,6 +7,7 @@ import Requests from "../../shared/api/Requests";
 import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
 import useHttpClient from "../../shared/hooks/http-hook";
 import { Roles } from "../../shared/roles/roles";
+import { uiActions } from "../../shared/store/ui-slice";
 import { CommentList } from "../components/CommentSection/CommentList/CommentList";
 import { Stars } from "../components/Stars/Stars";
 import CircleIcon from "../components/UI/CircleIcon";
@@ -24,7 +25,7 @@ export const QuestionDetail = () => {
   const [refresh, setRefresh] = useState(false);
   const { loadingType } = useSelector((state) => state.ui);
   const { account } = useSelector((state) => state.auth);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
       const response = await sendRequest(
@@ -40,9 +41,10 @@ export const QuestionDetail = () => {
         approveDate: new Date(approvedAt).toDateString(),
         responseDate: new Date(responsedAt).toDateString(),
       });
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
     };
     fetchData();
-  }, [params.questionId, sendRequest, refresh]);
+  }, [params.questionId, sendRequest, refresh,dispatch]);
 
   return (
     <Container
