@@ -23,8 +23,6 @@ export const NewQuestionsTable = () => {
     </>
   );
 
-  console.log('in')
-
   return (
     <Table tableHeader={tableHeader} conditionFilter="Chưa được duyệt">
       <NewQuestionList />

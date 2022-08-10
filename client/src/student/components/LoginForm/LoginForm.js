@@ -9,6 +9,7 @@ import Requests from "../../../shared/api/Requests";
 import { uiActions } from "../../../shared/store/ui-slice";
 import { Error } from "../../../shared/components/Error/Error";
 import { LoadingDot } from "../../../shared/components/LoadingDot/LoadingDot";
+import { LoadingList } from "../../../shared/api/LoadingList";
 
 function LoginForm() {
   const usernameRef = useRef();
@@ -16,7 +17,7 @@ function LoginForm() {
   const dispatch = useDispatch();
   const history = useHistory();
   const {isShowing} = useSelector((state) => state.ui.error)
-  const { isSpinnerLoading } = useSelector((state) => state.ui);
+  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
   const { sendRequest } = useHttpClient();
 
   const onSubmitHandler = async (e) => {
@@ -34,6 +35,7 @@ function LoginForm() {
     const fetchData = async () => {
       try {
         const requestData = await sendRequest(
+          LoadingList.login,
           Requests.loginRequest,
           "POST",
           JSON.stringify({ username, password }),
@@ -72,7 +74,7 @@ function LoginForm() {
               />
               {isShowing && <Error/>}
             </div>
-            {isSpinnerLoading && (
+            {isSpinnerLoading && loadingType === LoadingList.login && (
           <div className="flex justify-center items-center">
             <LoadingDot className="m-auto" />
           </div>

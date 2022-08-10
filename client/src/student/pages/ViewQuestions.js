@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SearchItem } from "../../shared/components/SearchItem/SearchItem";
 import { Notification } from "../../shared/components/UI/Notification";
+import { Roles } from "../../shared/roles/roles";
 import { uiActions } from "../../shared/store/ui-slice";
 import MenuType from "../components/QuestionSection/MenuType/MenuType";
 import QuestionForm from "../components/QuestionSection/QuestionForm";
@@ -88,9 +89,9 @@ function ViewQuestions() {
             <QuestionList />
           </div>
           {!(
-            account.role_name === "Quản Trị Viên" ||
-            account.role_name === "Ban Chủ Nhiệm Khoa" ||
-            account.role_name === "Trợ Lý"
+            account.role_name === Roles.admin ||
+            account.role_name === Roles.supervisor ||
+            account.role_name === Roles.assistant
           ) && (
             <button
               className="bg-black text-white px-4 mb-10 mx-auto py-3 z-10 font-semibold transition duration-300 rounded hover:bg-blue-800"

@@ -101,7 +101,7 @@ export const UserDetailForm = (props) => {
         <div className="flex flex-col text-sm space-y-2 w-96">
           <input
             type="text"
-            className={`py-2 px-4 border rounded-lg outline-red-300 w-full ${isShowWarning && 'border-red-400'}`}
+            className={`py-2 px-4 border rounded-lg outline-none w-full ${isShowWarning && 'border-red-400 '}`}
             disabled={!isShowWarning && !isAbleToSubmit}
             onChange={onCheckWarningHandler}
             ref={inputRef}
@@ -115,7 +115,7 @@ export const UserDetailForm = (props) => {
         )}
         <div className="flex w-full space-x-8 justify-center mt-10">
           <button
-            className={`py-2 px-3 rounded-lg  text-white font-medium text-sm ${!isAbleToSubmit ? 'bg-gray-300' : 'bg-lightBlue'}`}
+            className={`py-2 px-3 rounded-lg text-white font-medium text-sm ${!isAbleToSubmit ? 'bg-gray-300' : 'bg-lightBlue'}`}
             onClick={onSubmitHandler}
             disabled={!isAbleToSubmit}
           >

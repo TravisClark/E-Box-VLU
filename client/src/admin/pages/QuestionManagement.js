@@ -11,6 +11,8 @@ import useHttpClient from "../../shared/hooks/http-hook";
 import { Notification } from "../../shared/components/UI/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
+import { LoadingList } from "../../shared/api/LoadingList";
+import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
 
 const tableOptions = [
   "Câu hỏi chưa được duyệt",
@@ -23,25 +25,33 @@ function QuestionManagement() {
   const dispatch = useDispatch();
   const [table, setTable] = useState(null);
   const [selectedTable, setSelectedTable] = useState();
+  const [questions, setQuestions] = useState([]);
+  const [questionsDisplay, setQuestionsDisplay] = useState([]);
   const { sendRequest } = useHttpClient();
   const { account } = useSelector((state) => state.auth);
   const { successNotification } = useSelector((state) => state.ui);
+  const [firstLoading, setFirstLoading] = useState(false);
   const { newSortType } = useSelector((state) => state.item);
   const { isSortingItems } = useSelector((state) => state.page);
-  
+  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
 
   useEffect(() => {
     try {
       const fetchQuestionList = async () => {
-        const response = await sendRequest(Requests.fetchQuestionList);
-        let questions = response;
-        newSortType &&
-          (questions = response.filter((res) => res.type_name === newSortType));
-        dispatch(
-          itemActions.fetchItems({
-            items: newSortType === "Tất cả" ? response : questions,
-          })
+        const response = await sendRequest(
+          LoadingList.fetchQuestionList,
+          Requests.fetchQuestionList
         );
+        setQuestions(response);
+        setFirstLoading(true);
+        // let questions = response;
+        // newSortType &&
+        //   (questions = response.filter((res) => res.type_name === newSortType));
+        // dispatch(
+        //   itemActions.fetchItems({
+        //     items: newSortType === "Tất cả" ? response : questions,
+        //   })
+        // );
       };
       fetchQuestionList();
     } catch (error) {}
@@ -49,9 +59,24 @@ function QuestionManagement() {
     sendRequest,
     successNotification.refresh,
     dispatch,
-    isSortingItems,
-    newSortType,
   ]);
+
+  useEffect(() => {
+    let sortedQuestions = questions;
+    newSortType &&
+      (sortedQuestions = questions.filter(
+        (res) => res.type_name === newSortType
+      ));
+    setQuestionsDisplay(newSortType === "Tất cả" ? questions : sortedQuestions);
+  }, [questions, newSortType]);
+
+  useEffect(() => {
+    dispatch(
+      itemActions.fetchItems({
+        items: questionsDisplay,
+      })
+    );
+  }, [questionsDisplay, dispatch]);
 
   useEffect(() => {
     setSelectedTable(
@@ -61,8 +86,6 @@ function QuestionManagement() {
     );
   }, [account.role_name]);
 
-  
-  
   const onChangeSelectedTable = (selected) => {
     setSelectedTable(selected);
   };
@@ -103,6 +126,11 @@ function QuestionManagement() {
         </div>
         <div className="border w-full"></div>
         {table}
+        {isSpinnerLoading && !firstLoading && (
+          <tr className="translate-x-1/2 h-44 translate-y-1/2">
+            <LoadingDot className="pt-20" />
+          </tr>
+        )}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />
         )}
