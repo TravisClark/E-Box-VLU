@@ -6,6 +6,7 @@ import Requests from "../../../shared/api/Requests";
 import { itemActions } from "../../../shared/store/item-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadingList } from "../../../shared/api/LoadingList";
+import { uiActions } from "../../../shared/store/ui-slice";
 
 export default function BasicSelect({ selected, className, onShowWarning }) {
   const [options, setOptions] = useState([]);
@@ -34,6 +35,7 @@ export default function BasicSelect({ selected, className, onShowWarning }) {
             </option>
           ))
         );
+        dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       } catch (error) {}
     };
     request();

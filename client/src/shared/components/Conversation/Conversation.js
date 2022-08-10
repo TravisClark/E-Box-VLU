@@ -11,7 +11,7 @@ import { uiActions } from "../../store/ui-slice";
 
 const URL = "ws://localhost:8900";
 
-export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
+export const Conversation = ({ selectedUser, minHeight, maxHeight, minWidth}) => {
   const { account } = useSelector((state) => state.auth);
   const [conversations, setConversations] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -89,7 +89,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
       setConversations([...conversations, res]);
     } catch (error) {
       console.log(error);
-    } 
+    }
     setNewMessage("");
   };
 
@@ -98,7 +98,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
   }, [conversations]);
 
   return (
-    <div className="w-full bg-white rounded-md flex flex-col">
+    <div className="w-full bg-white rounded-md flex flex-col" style={{minWidth}}>
       <>
         <div
           className="p-4 flex space-x-2"

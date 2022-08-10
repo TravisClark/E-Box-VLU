@@ -120,9 +120,9 @@ function QuestionManagement() {
         <div className="border w-full"></div>
         {table}
         {isSpinnerLoading && !firstLoading && (
-          <tr className="translate-x-1/2 h-44 translate-y-1/2">
-            <LoadingDot className="pt-20" />
-          </tr>
+          <div className="flex justify-center h-20 items-center">
+            <LoadingDot className="" />
+          </div>
         )}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />
