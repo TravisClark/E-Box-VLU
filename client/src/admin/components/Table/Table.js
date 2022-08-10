@@ -4,7 +4,7 @@ import { Pagination } from "../../../shared/components/Pagination/Pagination";
 import { itemActions } from "../../../shared/store/item-slice";
 import { pageActions } from "../../../shared/store/page-slice";
 
-export const Table = ({ conditionFilter, tableHeader, children, itemList }) => {
+export const Table = ({ conditionFilter, tableHeader, children }) => {
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
   const { items, itemSearching } = useSelector((state) => state.item);
@@ -12,17 +12,16 @@ export const Table = ({ conditionFilter, tableHeader, children, itemList }) => {
   useEffect(() => {
     const questions = items.filter(
       (question) =>
-        question.status_question === conditionFilter &&
-        question.question.includes(itemSearching)
+        question.status_question === conditionFilter 
     );
     dispatch(
       pageActions.setCurrentItems({
-        items: itemList ? itemList : questions,
+        items: questions,
         itemsPerPage: 10,
         currentPage: 1,
       })
     );
-  }, [dispatch, items, conditionFilter, itemSearching, itemList]);
+  }, [dispatch, items, conditionFilter, itemSearching]);
 
   useEffect(() => {
     return () => {

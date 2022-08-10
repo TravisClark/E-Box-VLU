@@ -9,7 +9,7 @@ function NewQuestionList() {
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
   const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
-  
+
   const onApproveHandler = (value) => {
     dispatch(
       uiActions.showNotification({
@@ -86,14 +86,14 @@ function NewQuestionList() {
   return (
     <tbody>
       {loadingType === LoadingList.fetchQuestionList && (
-          <tr className="translate-x-1/2 h-44 translate-y-1/2">
-            <LoadingDot className="pt-20" />
-          </tr>
-        )}
+        <tr className="translate-x-1/2 h-44 translate-y-1/2">
+          <LoadingDot className="pt-20" />
+        </tr>
+      )}
       {questions.length === 0 && !loadingType && (
         <tr className="relative h-10">
           <td className="h-20 absolute whitespace-nowrap top-4">
-            There is no questions in this list
+            Không có câu hỏi nào phù hợp trong bảng
           </td>
         </tr>
       )}

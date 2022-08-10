@@ -4,7 +4,7 @@ import { LoadingList } from "../../../api/LoadingList";
 import Requests from "../../../api/Requests";
 import useHttpClient from "../../../hooks/http-hook";
 
-export const ContactList = ({ onSelectUser, selectedUser }) => {
+export const ContactList = ({ onSelectUser, selectedUser, maxHeight }) => {
   const { sendRequest } = useHttpClient();
   const { account } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
@@ -60,8 +60,8 @@ export const ContactList = ({ onSelectUser, selectedUser }) => {
   return (
     <>
       {userList.length !==0 && (
-        <div className="h-auto min-w-1/3 bg-white rounded-md border ">
-          <ul className="flex flex-col space-y-2 p-4 min-w-full h-full overflow-hidden hover:overflow-auto">
+        <div className="h-auto min-w-1/3 bg-white rounded-md border " >
+          <ul className="flex flex-col space-y-2 p-4 min-w-full h-full overflow-hidden hover:overflow-auto" style={{ maxHeight}}>
             {userList}
           </ul>
         </div>

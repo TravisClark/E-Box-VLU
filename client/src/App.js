@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Route, Switch, Redirect, useLocation } from "react-router-dom";
-import AddUser from "./admin/pages/AddUser";
+
 import { Chat } from "./admin/pages/Chat";
 import Dashboard from "./admin/pages/Dashboard";
 import QuestionManagement from "./admin/pages/QuestionManagement";
@@ -16,6 +16,8 @@ const Login = React.lazy(() => import("./student/pages/Login"));
 const Ebox = React.lazy(() => import("./student/pages/Ebox"));
 const PageNotFound = React.lazy(() => import("./student/pages/PageNotFound"));
 const ViewQuestions = React.lazy(() => import("./student/pages/ViewQuestions"));
+const AddUser = React.lazy(() => import("./admin/pages/AddUser"))
+
 
 function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);

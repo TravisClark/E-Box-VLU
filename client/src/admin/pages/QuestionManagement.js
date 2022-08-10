@@ -31,9 +31,8 @@ function QuestionManagement() {
   const { account } = useSelector((state) => state.auth);
   const { successNotification } = useSelector((state) => state.ui);
   const [firstLoading, setFirstLoading] = useState(false);
-  const { newSortType } = useSelector((state) => state.item);
-  const { isSortingItems } = useSelector((state) => state.page);
-  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
+  const { newSortType, itemSearching } = useSelector((state) => state.item);
+  const { isSpinnerLoading } = useSelector((state) => state.ui);
 
   useEffect(() => {
     try {
@@ -44,31 +43,23 @@ function QuestionManagement() {
         );
         setQuestions(response);
         setFirstLoading(true);
-        // let questions = response;
-        // newSortType &&
-        //   (questions = response.filter((res) => res.type_name === newSortType));
-        // dispatch(
-        //   itemActions.fetchItems({
-        //     items: newSortType === "Tất cả" ? response : questions,
-        //   })
-        // );
       };
       fetchQuestionList();
     } catch (error) {}
-  }, [
-    sendRequest,
-    successNotification.refresh,
-    dispatch,
-  ]);
+  }, [sendRequest, successNotification.refresh, dispatch]);
 
   useEffect(() => {
-    let sortedQuestions = questions;
-    newSortType &&
-      (sortedQuestions = questions.filter(
-        (res) => res.type_name === newSortType
-      ));
-    setQuestionsDisplay(newSortType === "Tất cả" ? questions : sortedQuestions);
-  }, [questions, newSortType]);
+    const sortedQuestions = questions.filter((question) =>
+      question.question.toLowerCase().includes(itemSearching.toLowerCase())
+    );
+    setQuestionsDisplay(
+      newSortType === "Tất cả"
+        ? sortedQuestions
+        : sortedQuestions.filter((question) =>
+            question.type_name.includes(newSortType)
+          )
+    );
+  }, [questions, newSortType, itemSearching]);
 
   useEffect(() => {
     dispatch(
