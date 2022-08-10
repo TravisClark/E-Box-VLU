@@ -1,20 +1,22 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../../shared/api/LoadingList";
 import Requests from "../../../../shared/api/Requests";
+import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
 function NewQuestionList() {
   const dispatch = useDispatch();
   const { currentItems } = useSelector((state) => state.page.pagination);
-  const {isSpinnerLoading} = useSelector((state) => state.ui)
-
-  const onApproveHandler = (value,a) => {
-    console.log(a)
+  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
+  
+  const onApproveHandler = (value) => {
     dispatch(
       uiActions.showNotification({
         message: value.question,
         data: value,
         request: {
+          loadingType: LoadingList.approveQuestion,
           url: Requests.approveQuestion,
           method: "PATCH",
           body: null,
@@ -31,6 +33,7 @@ function NewQuestionList() {
         message: value.question,
         data: value,
         request: {
+          loadingType: LoadingList.refuseQuestion,
           url: Requests.refuseQuestion,
           method: "PATCH",
           body: null,
@@ -43,7 +46,7 @@ function NewQuestionList() {
 
   const questions = currentItems.map((question, index) => {
     const date = new Date(question.createdAt);
-    const formatDate = date.toUTCString().replace('GMT','');
+    const formatDate = date.toUTCString().replace("GMT", "");
     return (
       <tr key={question._id}>
         <td className="py-2 px-4">{++index}</td>
@@ -53,7 +56,7 @@ function NewQuestionList() {
         <td className="py-2 px-4">{formatDate}</td>
         <td className="py-2 px-10">{question.type_name}</td>
         <td className="py-2 px-4">
-          <button onClick={onApproveHandler.bind(null, question,1)}>
+          <button onClick={onApproveHandler.bind(null, question, 1)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -82,12 +85,19 @@ function NewQuestionList() {
   });
   return (
     <tbody>
-      {questions.length > 0 && !isSpinnerLoading && questions}
-      {questions.length <= 0 && !isSpinnerLoading && (
-        <tr>
-          <td>There is no questions in this list</td>
+      {loadingType === LoadingList.fetchQuestionList && (
+          <tr className="translate-x-1/2 h-44 translate-y-1/2">
+            <LoadingDot className="pt-20" />
+          </tr>
+        )}
+      {questions.length === 0 && !isSpinnerLoading && (
+        <tr className="relative h-10">
+          <td className="h-20 absolute whitespace-nowrap top-4">
+            There is no questions in this list
+          </td>
         </tr>
       )}
+      {loadingType !== LoadingList.fetchQuestionList && questions}
     </tbody>
   );
 }

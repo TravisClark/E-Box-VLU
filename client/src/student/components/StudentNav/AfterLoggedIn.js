@@ -38,7 +38,9 @@ function AfterLoggedIn({
       {/* Desktop nav */}
       <div className="hidden md:flex md:flex-col md:items-center md:w-52">
         <div className="flex space-x-4">
-          {account.role_name === 'Sinh Viên' && <Notifications changeBgColor={changeBgColor}/>}
+          {account.role_name === "Sinh Viên" && (
+            <Notifications changeBgColor={changeBgColor} />
+          )}
           <div
             className={`flex space-x-2 cursor-pointer`}
             onClick={toggleMenuHandler}
@@ -76,7 +78,7 @@ function AfterLoggedIn({
         </div>
 
         <div
-          className={`flex-col space-y-6 items-center py-4 px-10 absolute mt-8 bg-white rounded-xl text-gray-500  ${profileBoxStyle} ${
+          className={`flex-col space-y-6 items-center py-4 px-10 absolute mt-8 bg-white rounded-xl text-gray-500 shadow-md  ${profileBoxStyle} ${
             isMenuOpen ? ` flex` : "hidden"
           }`}
         >

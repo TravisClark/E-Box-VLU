@@ -5,30 +5,42 @@ import useHttpClient from "../../../shared/hooks/http-hook";
 import Requests from "../../../shared/api/Requests";
 import { itemActions } from "../../../shared/store/item-slice";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../../shared/api/LoadingList";
 
-export default function BasicSelect({selected, className, onShowWarning}) {
+export default function BasicSelect({ selected, className, onShowWarning }) {
   const [options, setOptions] = useState([]);
   const { sendRequest } = useHttpClient();
-  const {selectedType, selectedTypeChanged} = useSelector((state) => state.item)
+  const { selectedType, selectedTypeChanged } = useSelector(
+    (state) => state.item
+  );
   const dispatch = useDispatch();
 
-  const onChangeHandler = (input)=>{
-    dispatch(itemActions.changeSelectedType({type:input.target.value}));
-    onShowWarning && onShowWarning()
-  }
+  const onChangeHandler = (input) => {
+    dispatch(itemActions.changeSelectedType({ type: input.target.value }));
+    onShowWarning && onShowWarning();
+  };
 
   useEffect(() => {
     const request = async () => {
       try {
-        const response = await sendRequest(Requests.fetchRoleList);
-        setOptions(response.map(res => <option value={res.role_name} key={res.id_role}>{res.role_name}</option>));
+        const response = await sendRequest(
+          LoadingList.fetchRoleList,
+          Requests.fetchRoleList
+        );
+        setOptions(
+          response.map((res) => (
+            <option value={res.role_name} key={res.id_role}>
+              {res.role_name}
+            </option>
+          ))
+        );
       } catch (error) {}
     };
     request();
   }, [sendRequest, dispatch]);
 
   useEffect(() => {
-    dispatch(itemActions.getSelected({type:selected}))
+    dispatch(itemActions.getSelected({ type: selected }));
   }, [selected, dispatch]);
 
   return (

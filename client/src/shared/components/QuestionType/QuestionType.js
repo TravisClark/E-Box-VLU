@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { LoadingList } from "../../api/LoadingList";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { itemActions } from "../../store/item-slice";
@@ -24,7 +25,10 @@ export const QuestionType = ({ className, isSorting }) => {
   useEffect(() => {
     const request = async () => {
       try {
-        const response = await sendRequest(Requests.fetchQuestionTypes);
+        const response = await sendRequest(
+          LoadingList.fetchQuestionTypes,
+          Requests.fetchQuestionTypes
+        );
         dispatch(
           itemActions.storeTypes({
             typeList: response.map((item) => item.type_name),
@@ -42,10 +46,14 @@ export const QuestionType = ({ className, isSorting }) => {
         </option>
       )}
       {typeList.map((res, index) => (
-          <option value={res} key={index} selected={selectedType === res && !isSorting}>
-            {res}
-          </option>
-        ))}
+        <option
+          value={res}
+          key={index}
+          selected={selectedType === res && !isSorting}
+        >
+          {res}
+        </option>
+      ))}
     </>
   );
 

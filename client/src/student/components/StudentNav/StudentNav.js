@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import classes from "./NavStyles.module.css";
 import Container from "../UI/Container";
@@ -33,14 +33,10 @@ function Navbar() {
     setNavbarIsOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    
-  }, []);
-
   return (
     <nav>
       <Container
-        className={`fixed flex z-20 justify-between min-w-full p-4 items-center  transition duration-500 drop-shadow-md sm:px-20 ${
+        className={`fixed flex z-20 justify-between min-w-full p-4 items-center transition duration-500 drop-shadow-md sm:px-20 ${
           changeBgColor && "bg-white"
         } md:justify-around md:px-0`}
       >

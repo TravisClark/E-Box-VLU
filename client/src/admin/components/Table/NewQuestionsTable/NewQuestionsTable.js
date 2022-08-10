@@ -5,7 +5,7 @@ import { TableHeader } from "../TableHeader";
 import { Table } from "../Table";
 import { Sort } from "../../Sort/Sort";
 
-function TableQuestionList() {
+export const NewQuestionsTable = () => {
   const headItem = TableHeader.newQuestionTable;
   const tableHeader = (
     <>
@@ -29,5 +29,3 @@ function TableQuestionList() {
     </Table>
   );
 }
-
-export default TableQuestionList;

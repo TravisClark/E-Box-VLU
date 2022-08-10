@@ -1,6 +1,7 @@
-import React, { useEffect,  useState } from "react";
-import {  useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { LoadingList } from "../../shared/api/LoadingList";
 import Requests from "../../shared/api/Requests";
 import { SearchItem } from "../../shared/components/SearchItem/SearchItem";
 import { Notification } from "../../shared/components/UI/Notification";
@@ -12,29 +13,38 @@ function Users() {
   const { successNotification } = useSelector((state) => state.ui);
   const { itemSearching } = useSelector((state) => state.item);
   const [users, setUsers] = useState([]);
+  const [usersDisplay, setUsersDisplay] = useState([]);
   const { sendRequest } = useHttpClient();
   const { account } = useSelector((state) => state.auth);
+
   useEffect(() => {
     try {
       const fetchUserList = async () => {
-        const response = await sendRequest(Requests.fetchUsersList);
-        setUsers(
-          response.filter((user) => user.username.includes(itemSearching))
+        const response = await sendRequest(
+          LoadingList.fetchUsersList,
+          Requests.fetchUsersList
         );
+        setUsers(response);
       };
       fetchUserList();
     } catch (error) {}
-  }, [sendRequest, successNotification.refresh, itemSearching]);
+  }, [sendRequest, successNotification.refresh]);
+
+  useEffect(() => {
+    setUsersDisplay(
+      users.filter((user) => user.username.includes(itemSearching))
+    );
+  }, [itemSearching, users]);
 
   return (
     <Container className="m-auto w-11/12 h-full py-14 px-20 space-y-6 relative">
       <div className="flex justify-between">
-        <h1 className="text-2xl font-semibold ">Users Management</h1>
+        <h1 className="text-2xl font-semibold ">Quản lý tài khoản</h1>
       </div>
       <div className="flex flex-col bg-white py-6 px-10 rounded-md items-center space-y-5 relative">
         <div className="flex justify-between w-full">
           <h1 className="text-lg font-semibold self-center text-gray-500">
-            User list
+            Danh sách tài khoản
           </h1>
           <div className="flex space-x-6 items-center">
             {/* <SearchItem/> */}
@@ -54,15 +64,13 @@ function Users() {
             </div>
             {!(account.role_name === "Ban Chủ Nhiệm Khoa") && (
               <Link to="/E-boxVLU/admin/users/add">
-                <button className="bg-lightBlue px-4 py-2 rounded-xl font-medium text-white text-sm">
-                  Add User
-                </button>
+                <button className="btn-primary text-sm">Thêm tài khoản</button>
               </Link>
             )}
           </div>
         </div>
         <div className="border w-full" />
-        <UserTable users={users} />
+        <UserTable users={usersDisplay} />
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />
         )}

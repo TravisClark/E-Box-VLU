@@ -1,13 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 export const Comment = ({ comment }) => {
-  const [replyIsOpen, setReplyIsOpen] = useState(false);
-
-  const toggleReply = () => {
-    setReplyIsOpen((prevState) => !prevState);
-  };
-
-  const onSubmitHandler = () => {};
   return (
     <div className="flex flex-col space-y-2 w-full">
       <div className="flex space-x-2 items-center">
@@ -16,26 +9,12 @@ export const Comment = ({ comment }) => {
         </svg>
         <span className="font-medium">{comment.username}</span>
       </div>
-      <div className="rounded-md bg-white p-4 h-28 break-words shadow-md">
-        {comment.comment}
-      </div>
-      <button className="self-end font-medium" onClick={toggleReply}>
-        Trả lời
-      </button>
-      {replyIsOpen && <form onSubmit={onSubmitHandler}>
-        <div
-          className="flex justify-self-end justify-between  space-x-4 items-end py-4"
-          style={{ border: "1px solid #f1f2f6", borderRight: "2px" }}
-        >
-          <input
-            className="border p-4 h-20 rounded-md w-full outline-none text-sm"
-            placeholder="Input Message"
-            // value={newMessage}
-            // onChange={(e) => setNewMessage(e.target.value)}
-          />
-          <button className="btn-primary">Gửi</button>
+      <div className="p-2 bg-white shadow-md rounded-md">
+        <div className=" h-28 break-words p-2 overflow-hidden hover:overflow-auto">
+          {comment.comment}
         </div>
-      </form>}
+      </div>
+      
     </div>
   );
 };

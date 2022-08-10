@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ApproveForm } from "../../../admin/components/Table/Form/ApproveForm";
-import { DeactivateForm } from "../../../admin/components/Table/Form/DeactivateForm";
 import { ModifyAnswerForm } from "../../../admin/components/Table/Form/ModifyAnswerForm";
 import { RejectForm } from "../../../admin/components/Table/Form/RejectForm";
 import { ReplyForm } from "../../../admin/components/Table/Form/ReplyForm";
@@ -18,6 +17,7 @@ export const ConfirmNotification = (props) => {
   );
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
+  console.log(request)
 
   const onCloseNotificationHandler = () => {
     dispatch(uiActions.closeNotification());
@@ -26,6 +26,7 @@ export const ConfirmNotification = (props) => {
   const onSubmitHandler = async (input) => {
     try {
       await sendRequest(
+        request.loadingType,
         request.url,
         request.method,
         request.body ? request.body : input,
@@ -33,11 +34,10 @@ export const ConfirmNotification = (props) => {
       );
       dispatch(uiActions.closeNotification());
       dispatch(uiActions.showSuccessNotification(successMessage));
-      dispatch(pageActions.setCurrentPage(1))
+      dispatch(pageActions.setCurrentPage(1));
     } catch (error) {
       // dispatch(uiActions.catchError(error.toString().replace('Error:', '')));
     }
-    
   };
 
   let form;
@@ -60,45 +60,30 @@ export const ConfirmNotification = (props) => {
       <ModifyAnswerForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        
       />
     );
-  }
-  else if (type === "USER_DETAIL_FORM") {
+  } else if (type === "USER_DETAIL_FORM") {
     form = (
       <UserDetailForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        
       />
     );
-  }
-  else if(type === "REJECT_FORM"){
+  } else if (type === "REJECT_FORM") {
     form = (
       <RejectForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
-        
       />
     );
-  }
-  else if(type === "DEACTIVATE_FORM"){
-    form = (
-      <DeactivateForm
-        onClose={onCloseNotificationHandler}
-        onSubmitHandler={onSubmitHandler}
-      />
-    );
-  }
-  else if(type === "RESTORE_QUESTION_FORM"){
+  } else if (type === "RESTORE_QUESTION_FORM") {
     form = (
       <RestoreQuestionForm
         onClose={onCloseNotificationHandler}
         onSubmitHandler={onSubmitHandler}
       />
     );
-  }
-  else if(type === "PUBLISH_QUESTION_FORM"){
+  } else if (type === "PUBLISH_QUESTION_FORM") {
     form = (
       <QuestionForm
         onClose={onCloseNotificationHandler}
@@ -108,7 +93,7 @@ export const ConfirmNotification = (props) => {
   }
 
   return (
-    <div className={` w-full min-h-full absolute flex items-center z-50`}>
+    <div className={`w-full min-h-full absolute top-0 flex items-center z-50`}>
       <div className="absolute bg-black opacity-80 w-full min-h-full top-0 left-0 z-0"></div>
       {form}
     </div>

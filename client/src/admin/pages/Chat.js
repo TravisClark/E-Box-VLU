@@ -14,8 +14,16 @@ export const Chat = () => {
     <Container className="m-auto w-11/12 h-full py-24 px-20 space-y-6">
       <h1 className="text-2xl font-semibold">Chat</h1>
       <div className="flex rounded-md space-x-10 relative">
-        <ContactList onSelectUser={onSelectUser} selectedUser={selectedUser} />
-        <Conversation onSelectUser={onSelectUser} selectedUser={selectedUser} maxHeight='400px' minHeight='400px'/>
+        <ContactList
+          onSelectUser={onSelectUser}
+          selectedUser={selectedUser}
+        />
+        <Conversation
+          onSelectUser={onSelectUser}
+          selectedUser={selectedUser}
+          maxHeight="400px"
+          minHeight="400px"
+        />
       </div>
     </Container>
   );
