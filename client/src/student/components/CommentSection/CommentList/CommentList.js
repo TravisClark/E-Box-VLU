@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../../../shared/api/Requests";
 import useHttpClient from "../../../../shared/hooks/http-hook";
 import { Comment } from "../Comment/Comment";
 import { io } from "socket.io-client";
 import { LoadingList } from "../../../../shared/api/LoadingList";
 import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
+import { uiActions } from "../../../../shared/store/ui-slice";
 
 export const CommentList = ({ id_question }) => {
   const [comments, setComments] = useState([]);
@@ -15,6 +16,7 @@ export const CommentList = ({ id_question }) => {
   const socket = useRef();
   const { account } = useSelector((state) => state.auth);
   const { loadingType } = useSelector((state) => state.ui);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const request = async () => {
@@ -23,9 +25,10 @@ export const CommentList = ({ id_question }) => {
         `${Requests.fetchComments}${id_question}`
       );
       setComments(response);
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
     };
     request();
-  }, [sendRequest, id_question]);
+  }, [sendRequest, id_question, dispatch]);
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");

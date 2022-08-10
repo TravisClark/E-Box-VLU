@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LoadingList } from "../../../api/LoadingList";
 import Requests from "../../../api/Requests";
 import useHttpClient from "../../../hooks/http-hook";
+import { uiActions } from "../../../store/ui-slice";
 
 export const ContactList = ({ onSelectUser, selectedUser, maxHeight }) => {
   const { sendRequest } = useHttpClient();
   const { account } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const request = async () => {
@@ -23,11 +25,11 @@ export const ContactList = ({ onSelectUser, selectedUser, maxHeight }) => {
         }
       }
       setUsers(response);
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       onSelectUser(response[0]);
-      console.log(response);
     };
     request();
-  }, [sendRequest, onSelectUser, account.username]);
+  }, [sendRequest, onSelectUser, account.username, dispatch]);
 
   const userList = users.map((user) => (
     <li

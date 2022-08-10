@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { LoadingList } from "../../shared/api/LoadingList";
 import Requests from "../../shared/api/Requests";
 import { SearchItem } from "../../shared/components/SearchItem/SearchItem";
 import { Notification } from "../../shared/components/UI/Notification";
 import useHttpClient from "../../shared/hooks/http-hook";
+import { uiActions } from "../../shared/store/ui-slice";
 import Container from "../../student/components/UI/Container";
 import { UserTable } from "../components/Table/UserTable/UserTable";
 
@@ -16,6 +17,7 @@ function Users() {
   const [usersDisplay, setUsersDisplay] = useState([]);
   const { sendRequest } = useHttpClient();
   const { account } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     try {
@@ -25,10 +27,11 @@ function Users() {
           Requests.fetchUsersList
         );
         setUsers(response);
+        dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       };
       fetchUserList();
     } catch (error) {}
-  }, [sendRequest, successNotification.refresh]);
+  }, [sendRequest, successNotification.refresh, dispatch]);
 
   useEffect(() => {
     setUsersDisplay(

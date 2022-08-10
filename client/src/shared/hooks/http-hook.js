@@ -30,7 +30,7 @@ const useHttpClient = () => {
           dispatch(uiActions.setSpinnerState({ type: "DONE" }));
           throw new Error(responseData.message);
         }
-        dispatch(uiActions.setSpinnerState({ type: "DONE" }));
+        
         return responseData;
       } catch (error) {
         const err = error.toString().replace("Error:", "");

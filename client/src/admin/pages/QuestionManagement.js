@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
 import { LoadingList } from "../../shared/api/LoadingList";
 import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
+import { uiActions } from "../../shared/store/ui-slice";
 
 const tableOptions = [
   "Câu hỏi chưa được duyệt",
@@ -42,6 +43,7 @@ function QuestionManagement() {
           Requests.fetchQuestionList
         );
         setQuestions(response);
+        dispatch(uiActions.setSpinnerState({ type: "DONE" }));
         setFirstLoading(true);
       };
       fetchQuestionList();

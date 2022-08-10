@@ -41,6 +41,7 @@ function LoginForm() {
           JSON.stringify({ username, password }),
         );
         dispatch(authActions.loginHandler({token: requestData}));
+        dispatch(uiActions.setSpinnerState({ type: "DONE" }));
         history.push("/E-boxVLU/Home");
       } catch (error) {
       }

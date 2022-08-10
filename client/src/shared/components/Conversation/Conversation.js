@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { MessageReceiver } from "./MessageReceiver/MessageReceiver";
@@ -7,6 +7,7 @@ import { MessageSender } from "./MessageSender/MessageSender";
 import { io } from "socket.io-client";
 import { LoadingDot } from "../LoadingDot/LoadingDot";
 import { LoadingList } from "../../api/LoadingList";
+import { uiActions } from "../../store/ui-slice";
 
 const URL = "ws://localhost:8900";
 
@@ -20,6 +21,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
   const socket = useRef();
   const scrollRef = useRef();
   const { sendRequest } = useHttpClient();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const request = async () => {
@@ -28,6 +30,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
         `${Requests.fetchConversation}${selectedUser.id_conversation}`
       );
       setConversations(response);
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       setReceiver(
         selectedUser.members
           .filter((member) => member !== account.username)
@@ -35,7 +38,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight }) => {
       );
     };
     request();
-  }, [selectedUser, sendRequest, account.username]);
+  }, [selectedUser, sendRequest, account.username, dispatch]);
 
   useEffect(() => {
     socket.current = io(URL);
