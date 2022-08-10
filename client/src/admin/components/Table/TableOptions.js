@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { Roles } from "../../../shared/roles/roles";
 
 export default function TableList({ onChangeSelectedTable, selectedTable, tableOptions }) {
   const [options, setOptions] = React.useState([]);
@@ -18,7 +19,7 @@ export default function TableList({ onChangeSelectedTable, selectedTable, tableO
   useEffect(() => {
     let roleList;
     switch (account.role_name) {
-      case "Ban Chủ Nhiệm Khoa":
+      case Roles.supervisor:
         roleList = tableOptions.filter(
           (option) =>
             option !== tableOptions[0] &&

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { itemActions } from "../../shared/store/item-slice";
 import { LoadingList } from "../../shared/api/LoadingList";
 import { LoadingDot } from "../../shared/components/LoadingDot/LoadingDot";
+import { uiActions } from "../../shared/store/ui-slice";
 
 const tableOptions = [
   "Câu hỏi chưa được duyệt",
@@ -31,9 +32,8 @@ function QuestionManagement() {
   const { account } = useSelector((state) => state.auth);
   const { successNotification } = useSelector((state) => state.ui);
   const [firstLoading, setFirstLoading] = useState(false);
-  const { newSortType } = useSelector((state) => state.item);
-  const { isSortingItems } = useSelector((state) => state.page);
-  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
+  const { newSortType, itemSearching } = useSelector((state) => state.item);
+  const { isSpinnerLoading } = useSelector((state) => state.ui);
 
   useEffect(() => {
     try {
@@ -43,32 +43,25 @@ function QuestionManagement() {
           Requests.fetchQuestionList
         );
         setQuestions(response);
+        dispatch(uiActions.setSpinnerState({ type: "DONE" }));
         setFirstLoading(true);
-        // let questions = response;
-        // newSortType &&
-        //   (questions = response.filter((res) => res.type_name === newSortType));
-        // dispatch(
-        //   itemActions.fetchItems({
-        //     items: newSortType === "Tất cả" ? response : questions,
-        //   })
-        // );
       };
       fetchQuestionList();
     } catch (error) {}
-  }, [
-    sendRequest,
-    successNotification.refresh,
-    dispatch,
-  ]);
+  }, [sendRequest, successNotification.refresh, dispatch]);
 
   useEffect(() => {
-    let sortedQuestions = questions;
-    newSortType &&
-      (sortedQuestions = questions.filter(
-        (res) => res.type_name === newSortType
-      ));
-    setQuestionsDisplay(newSortType === "Tất cả" ? questions : sortedQuestions);
-  }, [questions, newSortType]);
+    const sortedQuestions = questions.filter((question) =>
+      question.question.toLowerCase().includes(itemSearching.toLowerCase())
+    );
+    setQuestionsDisplay(
+      newSortType === "Tất cả"
+        ? sortedQuestions
+        : sortedQuestions.filter((question) =>
+            question.type_name.includes(newSortType)
+          )
+    );
+  }, [questions, newSortType, itemSearching]);
 
   useEffect(() => {
     dispatch(
@@ -127,9 +120,9 @@ function QuestionManagement() {
         <div className="border w-full"></div>
         {table}
         {isSpinnerLoading && !firstLoading && (
-          <tr className="translate-x-1/2 h-44 translate-y-1/2">
-            <LoadingDot className="pt-20" />
-          </tr>
+          <div className="flex justify-center h-20 items-center">
+            <LoadingDot />
+          </div>
         )}
         {successNotification.isShowing && (
           <Notification className="w-full h-full" />

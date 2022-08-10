@@ -7,7 +7,7 @@ export const UserTable = ({users}) => {
   const tableHeader = TableHeader.userTable.map(item => <td className="py-2 px-4">{item}</td>)
 
   return (
-    <Table tableHeader={tableHeader} itemList={useMemo(()=>users, [users])}>
+    <Table tableHeader={tableHeader} itemList={users}>
       <UserList />
     </Table>
   );

@@ -7,6 +7,7 @@ import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot"
 import { Pagination } from "../../../../shared/components/Pagination/Pagination";
 import useHttpClient from "../../../../shared/hooks/http-hook";
 import { pageActions } from "../../../../shared/store/page-slice";
+import { uiActions } from "../../../../shared/store/ui-slice";
 import classes from "./QuestionList.module.css";
 function QuestionList() {
   const [firstList, setFirstList] = useState([]);
@@ -28,6 +29,7 @@ function QuestionList() {
           Requests.fetchQuestionListUser
         );
         setQuestions(response);
+        dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       };
       request();
     } catch (error) {}

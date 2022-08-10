@@ -8,7 +8,7 @@ const data = [
   { name: "Group D", value: 200 },
 ];
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+;
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -37,11 +37,12 @@ const renderCustomizedLabel = ({
   );
 };
 
-export const Chart = () => {
+export const Chart = ({valuesOfChart, colors}) => {
+  console.table(valuesOfChart)
   return (
     <PieChart width={200} height={200} className='self-center'>
       <Pie
-        data={data}
+        data={valuesOfChart}
         cx="50%"
         cy="50%"
         labelLine={false}
@@ -50,8 +51,8 @@ export const Chart = () => {
         fill="#8884d8"
         dataKey="value"
       >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        {valuesOfChart.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
         ))}
       </Pie>
     </PieChart>

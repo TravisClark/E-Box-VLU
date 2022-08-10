@@ -12,8 +12,7 @@ export const Table = ({ conditionFilter, tableHeader, children, itemList }) => {
   useEffect(() => {
     const questions = items.filter(
       (question) =>
-        question.status_question === conditionFilter &&
-        question.question.includes(itemSearching)
+        question.status_question === conditionFilter
     );
     dispatch(
       pageActions.setCurrentItems({

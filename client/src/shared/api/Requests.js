@@ -30,6 +30,7 @@ const Requests = {
     fetchNotifications: `${URL}/api/user/notification/list_notification`,
     fetchUsersContact: `${URL}/api/user/conversation/list_conversations`,
     fetchConversation: `${URL}/api/user/inbox/list_messages?id_conversation=`,
-    fetchComments: `${URL}/api/user/comment/list_comments?id_question=`
+    fetchComments: `${URL}/api/user/comment/list_comments?id_question=`,
+    fetchStatistics: `${URL}/api/admin/mailbox/statistical`
 }
 export default Requests;
