@@ -46,6 +46,8 @@ route(app);
 const io = require('socket.io')(8900, {
     cors: {
         origin: 'http://localhost:3000',
+        credentials:true,
+        allowedHeaders: ["access-token"],
     },
 });
 
@@ -111,9 +113,8 @@ io.on('connection', (socket) => {
             var data_message = message.replace(/\s+/g, '');
             if (
                 !(message === null || data_message === '') &&
-                info_username_receiver !== null &&
-                info_username_sender.id_conversation ===
-                    info_username_receiver.id_conversation
+                (info_username_receiver !== undefined &&
+                info_username_sender.id_conversation === info_username_receiver.id_conversation)
             ) {
                 io.to(info_username_receiver.socketId).emit('getMessage', {
                     username_sender,
