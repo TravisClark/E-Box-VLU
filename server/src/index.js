@@ -14,7 +14,7 @@ const route = require('./routes/index');
 const URI_DATABASE = process.env.URI_DATABASE || 8080;
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader(
         'Access-Control-Allow-Headers',
@@ -51,7 +51,7 @@ route(app);
 //connect socket
 const io = require('socket.io')(8900, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: '*',
         credentials:true,
         allowedHeaders: ["access-token"],
     },
