@@ -110,7 +110,7 @@ function AfterLoggedIn({
       <div
         className={`${
           navbarIsOpen ? classes.mobileNavOpen : classes.mobileNavClose
-        } z-10 absolute left-0 top-0 text-white font-semibold flex-col space-y-6 bg-black w-full h-screen items-center justify-center`}
+        } z-20 absolute left-0 top-0 text-white font-semibold flex-col space-y-6 bg-black w-full h-screen items-center justify-center`}
       >
         <span onClick={openNavHandler} to={"E-boxVlu/login"}>
           {username}

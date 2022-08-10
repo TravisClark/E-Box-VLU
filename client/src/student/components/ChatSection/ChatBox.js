@@ -17,7 +17,7 @@ export const ChatBox = () => {
     <>
       {!isOpenChatBox && <ChatButton onClick={toggleChatBox} />}
       {isOpenChatBox && (
-        <div className="fixed bg-white max-h-96 right-4 bottom-4 z-40 rounded-md shadow-md flex">
+        <div className="fixed bg-white max-h-96 right-4 bottom-4 z-20 rounded-md shadow-md flex">
           <ContactList
             onSelectUser={onSelectUser}
             selectedUser={selectedUser}
