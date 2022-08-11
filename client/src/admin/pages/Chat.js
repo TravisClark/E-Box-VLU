@@ -17,7 +17,7 @@ export const Chat = () => {
         <ContactList
           onSelectUser={onSelectUser}
           selectedUser={selectedUser}
-          maxHeight="500px"
+          maxHeight="305px"
         />
         <Conversation
           onSelectUser={onSelectUser}

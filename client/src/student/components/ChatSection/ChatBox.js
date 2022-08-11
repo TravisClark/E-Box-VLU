@@ -21,6 +21,7 @@ export const ChatBox = () => {
           <ContactList
             onSelectUser={onSelectUser}
             selectedUser={selectedUser}
+            minWidth={'270px'}
           />
           <Conversation
             onSelectUser={onSelectUser}
