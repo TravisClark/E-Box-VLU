@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { LoadingList } from "../../../shared/api/LoadingList";
 import Requests from "../../../shared/api/Requests";
 import { LoadingDot } from "../../../shared/components/LoadingDot/LoadingDot";
 import useHttpClient from "../../../shared/hooks/http-hook";
+import { uiActions } from "../../../shared/store/ui-slice";
 import classes from "../../../shared/styles/Styles.module.css";
 
 export const Notifications = ({ changeBgColor }) => {
@@ -15,6 +16,7 @@ export const Notifications = ({ changeBgColor }) => {
   const [newNotifications, setNewNotifications] = useState([]);
   const { sendRequest } = useHttpClient();
   const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
+  const dispatch = useDispatch();
 
   const onToggleNotificationsHandler = useCallback(() => {
     setIsShowNotifications((prevState) => !prevState);
@@ -32,8 +34,9 @@ export const Notifications = ({ changeBgColor }) => {
       };
       request();
       setRefresh((prevState) => !prevState);
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
     },
-    [sendRequest]
+    [sendRequest, dispatch]
   );
 
   const onOpenQuestionDetails = useCallback(
@@ -56,6 +59,7 @@ export const Notifications = ({ changeBgColor }) => {
         LoadingList.fetchNotifications,
         Requests.fetchNotifications
       );
+      
       setNewNotifications(response.filter((res) => !res.watched));
       setNotifications(
         response.map((res) => (
@@ -95,9 +99,11 @@ export const Notifications = ({ changeBgColor }) => {
           </li>
         ))
       );
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
     };
     response();
-  }, [sendRequest, onOpenQuestionDetails, refresh]);
+  }, [sendRequest, onOpenQuestionDetails, refresh, dispatch]);
+
 
   return (
     <div className={`relative`}>
@@ -133,13 +139,12 @@ export const Notifications = ({ changeBgColor }) => {
             {notifications.length === 0 && !isSpinnerLoading && (
               <li className="text-black w-full text-center">Thông báo rỗng!</li>
             )}
-            {isSpinnerLoading &&
-              loadingType ===
-                LoadingList.fetchNotifications && (
-                  <div className="h-28 flex justify-center items-center">
-                    <LoadingDot className="m-auto" />
-                  </div>
-                )}
+            {(loadingType === LoadingList.fetchNotifications ||
+              loadingType === LoadingList.watchNotification) && (
+              <li className="h-28 flex justify-center items-center">
+                <LoadingDot className="m-auto" />
+              </li>
+            )}
           </ul>
         </div>
       )}

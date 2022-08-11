@@ -21,12 +21,14 @@ export const ChatBox = () => {
           <ContactList
             onSelectUser={onSelectUser}
             selectedUser={selectedUser}
+            minWidth={'270px'}
           />
           <Conversation
             onSelectUser={onSelectUser}
             selectedUser={selectedUser}
             minHeight='250px'
             maxHeight='280px'
+            minWidth='300px'
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -13,10 +13,11 @@ export const Chat = () => {
   return (
     <Container className="m-auto w-11/12 h-full py-24 px-20 space-y-6">
       <h1 className="text-2xl font-semibold">Chat</h1>
-      <div className="flex rounded-md space-x-10 relative">
+      <div className="flex rounded-md space-x-10 relative" >
         <ContactList
           onSelectUser={onSelectUser}
           selectedUser={selectedUser}
+          maxHeight="305px"
         />
         <Conversation
           onSelectUser={onSelectUser}

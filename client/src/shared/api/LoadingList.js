@@ -27,4 +27,5 @@ export const LoadingList = {
   fetchUsersContact: "fetchUsersContact",
   fetchConversation: "fetchConversation",
   fetchComments: "fetchComments",
+  fetchStatistics: "fetchStatistics",
 };
