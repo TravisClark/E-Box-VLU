@@ -37,12 +37,14 @@ export const CommentList = ({ id_question }) => {
       setNewComment({
         username: data.username,
         comment: data.comment,
+        createdAt: new Date()
       });
       // console.log(data)
     });
   }, []);
 
   useEffect(() => {
+    console.log(newComment)
     newComment && setComments((prevState) => [...prevState, newComment]);
   }, [newComment]);
 
