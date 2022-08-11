@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LoadingList } from "../../../api/LoadingList";
 import Requests from "../../../api/Requests";
 import useHttpClient from "../../../hooks/http-hook";
+import { uiActions } from "../../../store/ui-slice";
 
-export const ContactList = ({ onSelectUser, selectedUser }) => {
+export const ContactList = ({ onSelectUser, selectedUser, maxHeight }) => {
   const { sendRequest } = useHttpClient();
   const { account } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const request = async () => {
@@ -23,11 +25,11 @@ export const ContactList = ({ onSelectUser, selectedUser }) => {
         }
       }
       setUsers(response);
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       onSelectUser(response[0]);
-      console.log(response);
     };
     request();
-  }, [sendRequest, onSelectUser, account.username]);
+  }, [sendRequest, onSelectUser, account.username, dispatch]);
 
   const userList = users.map((user) => (
     <li
@@ -60,8 +62,8 @@ export const ContactList = ({ onSelectUser, selectedUser }) => {
   return (
     <>
       {userList.length !==0 && (
-        <div className="h-auto min-w-1/3 bg-white rounded-md border ">
-          <ul className="flex flex-col space-y-2 p-4 min-w-full h-full overflow-hidden hover:overflow-auto">
+        <div className="h-auto min-w-1/3 bg-white rounded-md border " >
+          <ul className="flex flex-col space-y-2 p-4 min-w-full h-full overflow-hidden hover:overflow-auto" style={{ maxHeight}}>
             {userList}
           </ul>
         </div>

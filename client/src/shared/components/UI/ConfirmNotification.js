@@ -17,7 +17,6 @@ export const ConfirmNotification = (props) => {
   );
   const { sendRequest } = useHttpClient();
   const dispatch = useDispatch();
-  console.log(request)
 
   const onCloseNotificationHandler = () => {
     dispatch(uiActions.closeNotification());
@@ -32,6 +31,7 @@ export const ConfirmNotification = (props) => {
         request.body ? request.body : input,
         request.headers
       );
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       dispatch(uiActions.closeNotification());
       dispatch(uiActions.showSuccessNotification(successMessage));
       dispatch(pageActions.setCurrentPage(1));

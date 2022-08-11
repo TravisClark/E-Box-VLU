@@ -8,7 +8,7 @@ const useHttpClient = () => {
 
   const sendRequest = useCallback(
     async (
-      loadingType ='loading',
+      loadingType = "loading",
       url,
       method = "GET",
       body = null,
@@ -17,7 +17,7 @@ const useHttpClient = () => {
         Authorization: `Bearer ${token && token}`,
       }
     ) => {
-      dispatch(uiActions.setSpinnerState({ type: "LOADING",  loadingType}));
+      dispatch(uiActions.setSpinnerState({ type: "LOADING", loadingType }));
       try {
         const response = await fetch(url, {
           method,
@@ -27,13 +27,16 @@ const useHttpClient = () => {
         const responseData = await response.json();
 
         if (!response.ok) {
-          await dispatch(uiActions.setSpinnerState({ type: "DONE" }));
+          dispatch(uiActions.setSpinnerState({ type: "DONE" }));
           throw new Error(responseData.message);
         }
-        await dispatch(uiActions.setSpinnerState({ type: "DONE" }));
+        
         return responseData;
       } catch (error) {
-        const err = error.toString().replace("Error:", "");
+        let err = error.toString().replace("Error:", "");
+        if(err === 'Type Failed to fetch'){
+          err = ''
+        }
         dispatch(uiActions.catchError({ message: err }));
         throw error;
       }

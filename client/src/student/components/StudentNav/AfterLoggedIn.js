@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { Roles } from "../../../shared/roles/roles";
 import { authActions } from "../../../shared/store/auth-slice";
 import { uiActions } from "../../../shared/store/ui-slice";
 import { Notifications } from "../Notifications/Notifications";
 import classes from "./NavStyles.module.css";
+
 function AfterLoggedIn({
   changeBgColor,
   openNavHandler,
@@ -38,7 +40,7 @@ function AfterLoggedIn({
       {/* Desktop nav */}
       <div className="hidden md:flex md:flex-col md:items-center md:w-52">
         <div className="flex space-x-4">
-          {account.role_name === "Sinh Viên" && (
+          {account.role_name === Roles.student && (
             <Notifications changeBgColor={changeBgColor} />
           )}
           <div
@@ -82,9 +84,7 @@ function AfterLoggedIn({
             isMenuOpen ? ` flex` : "hidden"
           }`}
         >
-          {(account.role_name === "Quản Trị Viên" ||
-            account.role_name === "Ban Chủ Nhiệm Khoa" ||
-            account.role_name === "Trợ Lý") && (
+          {account.role_name !== Roles.student && (
             <button
               className={`font-medium  transition duration-500 hover:text-black`}
               onClick={runAdminModeHandler}
@@ -111,7 +111,7 @@ function AfterLoggedIn({
       <div
         className={`${
           navbarIsOpen ? classes.mobileNavOpen : classes.mobileNavClose
-        } z-10 absolute left-0 top-0 text-white font-semibold flex-col space-y-6 bg-black w-full h-screen items-center justify-center`}
+        } z-20 absolute left-0 top-0 text-white font-semibold flex-col space-y-6 bg-black w-full h-screen items-center justify-center`}
       >
         <span onClick={openNavHandler} to={"E-boxVlu/login"}>
           {username}

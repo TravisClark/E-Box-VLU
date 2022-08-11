@@ -4,6 +4,7 @@ import classes from "./SideNav.module.css";
 import { NavLink } from "react-router-dom";
 import logo from "../../../../assets/logo.png";
 import { useSelector } from "react-redux";
+import { Roles } from "../../../../shared/roles/roles";
 function SideNav() {
   const [navbarIsOpen, setNavbarIsOpen] = useState(false);
   const {account} = useSelector((state) => state.auth);
@@ -15,7 +16,7 @@ function SideNav() {
   const openNavHandler = () => {
     setNavbarIsOpen((prevState) => !prevState);
   };
-  // console.log(navbarIsOpen)
+  
   return (
     <nav>
       <Container
@@ -51,7 +52,7 @@ function SideNav() {
           )}
         </div>
         <div className="w-4/5 border"></div>
-        {account.role_name !== 'Trợ Lý' &&<NavLink
+        {account.role_name !== Roles.assistant && <NavLink
           to="/E-boxVLU/admin/dashboard"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full cursor-pointer justify-center group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"
@@ -93,7 +94,7 @@ function SideNav() {
             </h1>
           )}
         </NavLink>
-        {account.role_name === 'Quản Trị Viên' && <NavLink
+        {account.role_name === Roles.admin && <NavLink
           to="/E-boxVLU/admin/users"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"
@@ -115,7 +116,7 @@ function SideNav() {
             </h1>
           )}
         </NavLink>}
-        {account.role_name !== 'Ban Chủ Nhiệm Khoa' && <NavLink
+        {account.role_name !== Roles.supervisor && <NavLink
           to="/E-boxVLU/admin/chat"
           className={`flex space-x-4 py-2 rounded-lg mt-4 w-full justify-around cursor-pointer group transition duration-700 ${
             navbarIsOpen && "px-8 hover:translate-x-2"

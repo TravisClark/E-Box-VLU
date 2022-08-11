@@ -9,6 +9,7 @@ import { authActions } from "../../../shared/store/auth-slice";
 import { Error } from "../../../shared/components/Error/Error";
 import { LoadingList } from "../../../shared/api/LoadingList";
 import { LoadingDot } from "../../../shared/components/LoadingDot/LoadingDot";
+import { uiActions } from "../../../shared/store/ui-slice";
 
 function ChangePasswordForm() {
   const oldPwRef = useRef();
@@ -45,6 +46,7 @@ function ChangePasswordForm() {
           password: newPw,
         })
       );
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       history.push("/E-boxVLU/Home");
     } catch (error) {}
   };
