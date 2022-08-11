@@ -1,18 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 export const ListQuestions = ({ listQuestions }) => {
-  const { loadingType } = useSelector((state) => state.ui);
+
   return (
     <ul
       className={`flex flex-col space-y-2 overflow-hidden hover:overflow-auto`}
       style={{ maxHeight: "500px" }}
     >
-        {}
       {listQuestions.map((question) => (
         <li className="break-all border-b-2 border-b-slate-100 p-3" key={question._id}>
           <div className="flex justify-between items-center">
-            <span>{question.question}</span>
+            <span className='w-10/12'>{question.question}</span>
             <div className="rating flex space-x-2  bg-slate-100 h-fit py-1 px-2 justify-center rounded-md cursor-pointer group">
               <>
                 <svg
