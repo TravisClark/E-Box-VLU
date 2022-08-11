@@ -11,11 +11,12 @@ const unCheckedStyles = `stroke-orange-400 fill-white group-hover:fill-orange-40
 export const Stars = ({ stars, id_question, refreshHandler }) => {
   const { account } = useSelector((state) => state.auth);
   const { sendRequest } = useHttpClient();
-  const { isSpinnerLoading, loadingType } = useSelector((state) => state.ui);
+  const { loadingType } = useSelector((state) => state.ui);
   // console.log(stars)
   const checkUsername = stars.filter(
     (star) => star.username === account.username
   );
+  
   const onCheckHandler = async () => {
     try {
       await sendRequest(
@@ -35,7 +36,7 @@ export const Stars = ({ stars, id_question, refreshHandler }) => {
       className="rating flex space-x-2 border border-slate-300 h-fit py-1 px-2 justify-center rounded-md cursor-pointer group"
       onClick={onCheckHandler}
     >
-      {!loadingType && (
+      {
         <>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +52,7 @@ export const Stars = ({ stars, id_question, refreshHandler }) => {
             {stars.length}
           </span>
         </>
-      )}
+      }
       {loadingType === LoadingList.likeQuestion && (
         <LoadingDot className="m-auto py-3 px-4" size="10px" />
       )}
