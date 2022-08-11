@@ -63,22 +63,41 @@ class MailboxController {
     //[GET] http://localhost:5000/api/admin/mailbox/statistical
     statistical = async (req, res) => {
         try {
-            var count_unchecked = await Mailbox.count({status_question: 'Chưa được duyệt'});
-            var count_approved = await Mailbox.count({status_question: 'Đã được duyệt'});
-            var count_answered = await Mailbox.count({status_question: 'Đã được trả lời'});
-            var count_refused = await Mailbox.count({status_question: 'Đã bị từ chối'});
-            var count_type1 = await Mailbox.count({type_name: 'Học phần'});
-            var count_type2 = await Mailbox.count({type_name: 'Học phí'});
-            var count_type3 = await Mailbox.count({type_name: 'Học bổng'});
-            var count_type4 = await Mailbox.count({type_name: 'Chương trình đào tạo'});
-            var count_type5 = await Mailbox.count({type_name: 'Hướng nghiệp'});
-            var count_type6 = await Mailbox.count({type_name: 'Câu hỏi khác'});
-            const list_questions = await Mailbox.find({status_question: 'Đã được trả lời'});
-            await list_questions.sort(function(a, b){
-                if(a.members_star != null && b.members_star != null){
-                    if(a.members_star.length > b.members_star.length){
+            var count_unchecked = await Mailbox.count({
+                status_question: 'Chưa được duyệt',
+            });
+            var count_approved = await Mailbox.count({
+                status_question: 'Đã được duyệt',
+            });
+            var count_answered = await Mailbox.count({
+                status_question: 'Đã được trả lời',
+            });
+            var count_refused = await Mailbox.count({
+                status_question: 'Đã bị từ chối',
+            });
+            var count_type1 = await Mailbox.count({status_question: 'Đã được trả lời', type_name: 'Học phần' });
+            var count_type2 = await Mailbox.count({status_question: 'Đã được trả lời', type_name: 'Học phí' });
+            var count_type3 = await Mailbox.count({status_question: 'Đã được trả lời', type_name: 'Học bổng' });
+            var count_type4 = await Mailbox.count({
+                status_question: 'Đã được trả lời',
+                type_name: 'Chương trình đào tạo',
+            });
+            var count_type5 = await Mailbox.count({
+                status_question: 'Đã được trả lời',
+                type_name: 'Hướng nghiệp',
+            });
+            var count_type6 = await Mailbox.count({
+                status_question: 'Đã được trả lời',
+                type_name: 'Câu hỏi khác',
+            });
+            const list_questions = await Mailbox.find({
+                status_question: 'Đã được trả lời',
+            });
+            await list_questions.sort(function (a, b) {
+                if (a.members_star != null && b.members_star != null) {
+                    if (a.members_star.length > b.members_star.length) {
                         return -1;
-                    }else{
+                    } else {
                         return 1;
                     }
                 }
@@ -100,7 +119,7 @@ class MailboxController {
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
     //[POST] http://localhost:5000/api/user/mailbox/publish_question
     publish_question = async (req, res, next) => {
@@ -109,6 +128,17 @@ class MailboxController {
             const data_username = req.body.username;
             const data_question = req.body.question;
             const data_type_name = req.body.type_name;
+            const list_questions = await Mailbox.find({username_questioner: req.user.username});
+            let count_question = 0;
+            var realtime = new Date();
+            for (let i = 0; i < list_questions.length; i++) {
+                const createdAt = new Date(list_questions[i].createdAt);
+                if(createdAt.getFullYear() === realtime.getFullYear() && 
+                    createdAt.getMonth() === realtime.getMonth() &&
+                    createdAt.getDate() === realtime.getDate()){
+                        count_question = count_question + 1;
+                }
+            }
             if (data_type_name == null || data_type_name === '') {
                 //check type_name is null or ''
                 return next(
@@ -129,6 +159,14 @@ class MailboxController {
                     res.status(411).json({
                         message:
                             'Độ dài của câu hỏi quá dài. Chỉ có phép độ dài từ dưới 200 ký tự',
+                    }),
+                );
+            }else if (count_question >= 3) {
+                //check the number of times asked
+                return next(
+                    res.status(400).json({
+                        message:
+                            'Mỗi ngày chỉ được hỏi 3 câu hỏi',
                     }),
                 );
             } else {
@@ -158,31 +196,48 @@ class MailboxController {
     //[PUT] http://localhost:5000/api/user/mailbox/like
     like = async (req, res, next) => {
         try {
-            const info_mailbox = await Mailbox.findOne({id_question: req.body.id_question});
-            
+            const info_mailbox = await Mailbox.findOne({
+                id_question: req.body.id_question,
+            });
+
             let list_users_like = [];
-            if(info_mailbox.members_star !== null){
+            if (info_mailbox.members_star !== null) {
                 list_users_like = info_mailbox.members_star;
             }
-            if(!(list_users_like.find(user => user.username === req.user.username))){
-                await list_users_like === list_users_like.push({username: req.user.username})
-                Mailbox.findOneAndUpdate({id_question: req.body.id_question}, {members_star: list_users_like})
+            if (
+                !list_users_like.find(
+                    (user) => user.username === req.user.username,
+                )
+            ) {
+                (await list_users_like) ===
+                    list_users_like.push({ username: req.user.username });
+                Mailbox.findOneAndUpdate(
+                    { id_question: req.body.id_question },
+                    { members_star: list_users_like },
+                )
                     .then(() => {
-                        res.status(201).json({message: 'Thả sao thành công'})
+                        res.status(201).json({ message: 'Thả sao thành công' });
                     })
                     .catch(next);
-            }else{
-                list_users_like = list_users_like.filter(user => user.username !== req.user.username)
-                Mailbox.findOneAndUpdate({id_question: req.body.id_question}, {members_star: list_users_like})
+            } else {
+                list_users_like = list_users_like.filter(
+                    (user) => user.username !== req.user.username,
+                );
+                Mailbox.findOneAndUpdate(
+                    { id_question: req.body.id_question },
+                    { members_star: list_users_like },
+                )
                     .then(() => {
-                        res.status(201).json({message: 'Bỏ thả sao thành công'})
+                        res.status(201).json({
+                            message: 'Bỏ thả sao thành công',
+                        });
                     })
                     .catch(next);
             }
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     //[PATCH] http://localhost:5000/api/admin/mailbox/approve_question
     approve_question = async (req, res, next) => {
@@ -245,16 +300,23 @@ class MailboxController {
                     id_question: data_id_question,
                 });
                 //check Conversation exist or not
-                const checkConversation = await Conversation.findOne({members: [data_username, info_mailbox.username_questioner]});
-                if(!checkConversation){
+                const checkConversation = await Conversation.findOne({
+                    members: [data_username, info_mailbox.username_questioner],
+                });
+                if (!checkConversation) {
                     //create data Conversation
                     const newConversation = new Conversation({
-                        members: [data_username, info_mailbox.username_questioner]
+                        members: [
+                            data_username,
+                            info_mailbox.username_questioner,
+                        ],
                     });
                     await newConversation.save();
                 }
                 //get id of conversation
-                const info_Conversation = await Conversation.findOne({members: [data_username, info_mailbox.username_questioner]});
+                const info_Conversation = await Conversation.findOne({
+                    members: [data_username, info_mailbox.username_questioner],
+                });
                 //create data message
                 const info_inbox = {
                     id_conversation: info_Conversation.id_conversation,

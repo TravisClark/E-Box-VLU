@@ -1,16 +1,19 @@
 const request = require('supertest');
 const app = require('../index');
 const UserModel = require('../app/models/UserModel');
-/*
+
 describe('Unit test of Generate account when entering complete information', () => {
     test('Status is 200, format json and Return message"Tạo tài khoản thành công"', async () => {
         const response = await request(app)
             .post('/api/admin/user/add_user')
             .send({
-                username: '197pm09300',
-                role_name: 'Sinh viên',
+                username: '197pm28901',
+                role_name: 'Sinh Viên',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(201);
         expect(response.type).toEqual('application/json');
@@ -25,9 +28,12 @@ describe('Unit test of Generate account when the username data is empty', () => 
             .post('/api/admin/user/add_user')
             .send({
                 username: '',
-                role_name: 'Sinh viên',
+                role_name: 'Sinh Viên',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -44,9 +50,12 @@ describe('Unit test of Generate account when entering the incorrect length of us
             .post('/api/admin/user/add_user')
             .send({
                 username: '1234',
-                role_name: 'Sinh viên',
+                role_name: 'Sinh Viên',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(411);
         expect(response.type).toEqual('application/json');
@@ -60,9 +69,12 @@ describe('Unit test of Generate account when entering the incorrect length of us
             .post('/api/admin/user/add_user')
             .send({
                 username: 'VLU012345678910111213141516',
-                role_name: 'Sinh viên',
+                role_name: 'Sinh Viên',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(411);
         expect(response.type).toEqual('application/json');
@@ -79,9 +91,12 @@ describe('Unit test of Generate account when entering the wrong format of the us
             .post('/api/admin/user/add_user')
             .send({
                 username: '1234ac&&',
-                role_name: 'Sinh viên',
-            })            
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+                role_name: 'Sinh Viên',
+            })
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(412);
         expect(response.type).toEqual('application/json');
@@ -98,9 +113,12 @@ describe('Unit test of Generate account when entering an existing account name',
             .post('/api/admin/user/add_user')
             .send({
                 username: '197pm33529',
-                role_name: 'Sinh viên',
+                role_name: 'Sinh Viên',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(405);
         expect(response.type).toEqual('application/json');
@@ -111,18 +129,18 @@ describe('Unit test of Generate account when entering an existing account name',
 describe('Unit test of login when entering complete information', () => {
     test('Status is 200, format json', async () => {
         const response = await request(app).post('/api/user/user/login').send({
-            username: '197pm09300',
-            password: 'VLU09300',
-        })            
+            username: '197pm28901',
+            password: 'VLU28901',
+        });
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
     });
     test('Return data user', async () => {
         const response = await request(app).post('/api/user/user/login').send({
-            username: '197pm09300',
-            password: 'VLU09300',
-        })
+            username: '197pm28901',
+            password: 'VLU28901',
+        });
 
         expect(response.text).toMatch('token');
     });
@@ -133,9 +151,9 @@ describe('Unit test of login when you enter the wrong request', () => {
     test('Status is 401, format json and Return message "Tài khoản và mật khẩu không được bỏ trống" when username is blank', async () => {
         const response = await request(app).post('/api/user/user/login').send({
             username: '',
-            password: 'VLU09300',
-        })
-        
+            password: 'VLU28901',
+        });
+
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
         expect(response.body).toEqual({
@@ -145,7 +163,7 @@ describe('Unit test of login when you enter the wrong request', () => {
     //Unit test of check password is null or ''
     test('Status is 401, format json and Return message "Tài khoản và mật khẩu không được bỏ trống" when password is blank', async () => {
         const response = await request(app).post('/api/user/user/login').send({
-            username: '197pm09300',
+            username: '197pm28901',
             password: '',
         });
 
@@ -160,7 +178,7 @@ describe('Unit test of login when you enter the wrong request', () => {
 describe('Unit test of login when entering wrong account information', () => {
     test('Status is 401, format json and return message "Tài khoản hoặc mật khẩu không chính xác"', async () => {
         const response = await request(app).post('/api/user/user/login').send({
-            username: '197pm09300',
+            username: '197pm28901',
             password: 'VLU70000',
         });
 
@@ -177,12 +195,15 @@ describe('Unit test of change password when entering complete information', () =
         const response = await request(app)
             .patch('/api/user/user/change_password')
             .send({
-                username: '197pm09300',
-                password: 'VLU09300',
-                new_password: 'VLU09300',
-                re_new_password: 'VLU09300',
+                username: '197pm28901',
+                password: 'VLU28901',
+                new_password: 'VLU28901',
+                re_new_password: 'VLU28901',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(201);
         expect(response.type).toEqual('application/json');
@@ -201,10 +222,13 @@ describe('Unit test of change password when entering the wrong request of the ol
             .send({
                 username: '197pm33529',
                 password: '',
-                new_password: 'VLU09300',
-                re_new_password: 'VLU09300',
+                new_password: 'VLU28901',
+                re_new_password: 'VLU28901',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -220,10 +244,13 @@ describe('Unit test of change password when entering the wrong request of the ol
             .send({
                 username: '197pm33529',
                 password: 'dsadsad',
-                new_password: 'VLU09300',
-                re_new_password: 'VLU09300',
+                new_password: 'VLU28901',
+                re_new_password: 'VLU28901',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(412);
         expect(response.type).toEqual('application/json');
@@ -244,7 +271,10 @@ describe('Unit test of change password when new password data or re-enter passwo
                 new_password: '',
                 re_new_password: 'VLU77770',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -262,7 +292,10 @@ describe('Unit test of change password when new password data or re-enter passwo
                 new_password: 'VLU77770',
                 re_new_password: '',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(401);
         expect(response.type).toEqual('application/json');
@@ -281,9 +314,12 @@ describe('Unit test of change password when entering the incorrect length of new
                 username: '197pm33529',
                 password: 'VLU33529',
                 new_password: 'VLU7',
-                re_new_password: 'VLU09300',
+                re_new_password: 'VLU28901',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(411);
         expect(response.type).toEqual('application/json');
@@ -300,9 +336,12 @@ describe('Unit test of change password when entering the incorrect length of new
                 username: '197pm33529',
                 password: 'VLU33529',
                 new_password: 'VLU012345678910111213141516',
-                re_new_password: 'VLU09300',
+                re_new_password: 'VLU28901',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(411);
         expect(response.type).toEqual('application/json');
@@ -321,9 +360,12 @@ describe('Unit test of change password when the new password is not in the corre
                 username: '197pm33529',
                 password: 'VLU33529',
                 new_password: 'VLU7**77',
-                re_new_password: 'VLU09300',
+                re_new_password: 'VLU28901',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(405);
         expect(response.type).toEqual('application/json');
@@ -341,10 +383,13 @@ describe('Unit test of change password when the new password and re-entering the
             .send({
                 username: '197pm33529',
                 password: 'VLU33529',
-                new_password: 'VLU09300',
+                new_password: 'VLU28901',
                 re_new_password: 'VLU11111',
             })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(405);
         expect(response.type).toEqual('application/json');
@@ -358,16 +403,22 @@ describe('Unit test of change password when the new password and re-entering the
 describe('Unit Tests of View and search accounts function when the user does not pass the query', () => {
     test('Status is 200, format json', async () => {
         const response = await request(app)
-        .get('/api/admin/user/list_users')
-        .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .get('/api/admin/user/list_users')
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
     });
     test('Number of questions returned', async () => {
         const response = await request(app)
-        .get('/api/admin/user/list_users')
-        .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .get('/api/admin/user/list_users')
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         const users = await UserModel.find({});
         expect(response.body.length).toEqual(users.length);
@@ -379,7 +430,10 @@ describe('Unit Tests of View and search accounts function when the user passes t
         const response = await request(app)
             .get('/api/admin/user/list_users')
             .query({ username: '197' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(201);
         expect(response.type).toEqual('application/json');
@@ -388,7 +442,10 @@ describe('Unit Tests of View and search accounts function when the user passes t
         const response = await request(app)
             .get('/api/admin/user/list_users')
             .query({ username: '197' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         const users = await UserModel.find({});
         //Tạo 2 biến để sử lý mảng
@@ -416,7 +473,10 @@ describe('Unit Tests of View account detail function', () => {
         const response = await request(app)
             .get('/api/admin/user/details_user')
             .query({ username: '197pm33529' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
@@ -425,7 +485,10 @@ describe('Unit Tests of View account detail function', () => {
         const response = await request(app)
             .get('/api/admin/user/details_user')
             .query({ username: '197pm33529' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         const information = await UserModel.findOne({
             username: '197pm33529',
@@ -439,14 +502,19 @@ describe('Unit Tests of Deactivate account function', () => {
         const response = await request(app)
             .patch('/api/admin/user/deactivate_user')
             .send({ username: '197pm33529' })
-            .set({Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM'});
+            .set({
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
+            });
 
         expect(response.statusCode).toBe(200);
         expect(response.type).toEqual('application/json');
-        expect(response.body).toEqual({message: 'Vô hiệu hóa tài khoản thành công'});
+        expect(response.body).toEqual({
+            message: 'Vô hiệu hóa tài khoản thành công',
+        });
     });
 });
-*/
+
 describe('Unit Tests of change account information function', () => {
     test('Status is 200, format json and Return message:"Chỉnh sửa thông tin tài khoản thành công"', async () => {
         const response = await request(app)
@@ -455,11 +523,11 @@ describe('Unit Tests of change account information function', () => {
                 username: '197pm33529',
                 password: 'VLU33529',
                 status_account: 'Đang hoạt động',
-                role: 'Sinh viên',
+                role: 'Sinh Viên',
             })
             .set({
                 Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTAyOTQwLCJleHAiOjE2Njc3NDI5NDB9.syPNudxXo4UT48e-uaen2K7uVolU5H6hCE2oMra0OoM',
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjE5N3BtMzM1MjkiLCJyb2xlX25hbWUiOiJTaW5oIFZpw6puIiwiaWF0IjoxNjU5MTk0MDAzLCJleHAiOjE2Njc4MzQwMDN9.617lpi6MDEZhaJKQq9R7cH-MxQZaznTIt_F35q445BA',
             });
 
         expect(response.statusCode).toBe(200);
