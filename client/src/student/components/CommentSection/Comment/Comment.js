@@ -1,6 +1,7 @@
 import React from "react";
 
 export const Comment = ({ comment }) => {
+  console.log(comment)
   return (
     <div className="flex flex-col space-y-2 w-full">
       <div className="flex space-x-2 items-center">

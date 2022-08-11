@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-const tableOptions = [
-  "Câu hỏi chưa được duyệt",
-  "Câu hỏi bị từ chối",
-  "Câu hỏi đã được duyệt",
-  "Câu hỏi đã được trả lời",
-];
-export const ListCellInfo = ({ questions, colors, questionTypes }) => {
+import React from "react";
+
+export const ListCellInfo = ({ questions, colors}) => {
   const items = questions.map((question, index) => (
     <li className="border-b-2 border-slate-100 py-3">
       {console.log(question)}

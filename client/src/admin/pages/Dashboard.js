@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Container from "../../student/components/UI/Container";
 import { Chart } from "../components/Chart/PieChart";
-import { BarCharts } from "../components/Chart/BarCharts";
 import useHttpClient from "../../shared/hooks/http-hook";
 import { LoadingList } from "../../shared/api/LoadingList";
 import Requests from "../../shared/api/Requests";
@@ -11,12 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../shared/store/ui-slice";
 import { ListCellInfo } from "../components/Chart/ListCellInfo";
 
-const questionTypes = {
-  unchecked: "unchecked",
-  refused: "refused",
-  approved: "approved",
-  answered: "answered",
-};
+// const questionTypes = {
+//   unchecked: "unchecked",
+//   refused: "refused",
+//   approved: "approved",
+//   answered: "answered",
+// };
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 const listColors = [
@@ -30,12 +29,12 @@ const listColors = [
 
 function Dashboard() {
   const { sendRequest } = useHttpClient();
-  const [questions, setQuestions] = useState({
-    unchecked: "",
-    refused: "",
-    answered: "",
-    approved: "",
-  });
+  // const [questions, setQuestions] = useState({
+  //   unchecked: "",
+  //   refused: "",
+  //   answered: "",
+  //   approved: "",
+  // });
   const [listQuestions, setListQuestions] = useState([]);
   const [valuesOfChart, setValuesOfChart] = useState([]);
   const [listQuestionType, setListQuestionType] = useState([]);
@@ -78,7 +77,7 @@ function Dashboard() {
         { name: "Hướng nghiệp", value: HuongNghiep },
       ];
       setValuesOfChart(chartValues);
-      setQuestions({ unchecked, refused, answered, approved });
+      // setQuestions({ unchecked, refused, answered, approved });
       setListQuestions(charts);
       setListQuestionType(listTypeValues);
       dispatch(uiActions.setSpinnerState({ type: "DONE" }));
@@ -107,7 +106,6 @@ function Dashboard() {
               <ListCellInfo
                 questions={valuesOfChart}
                 colors={COLORS}
-                questionTypes={questionTypes}
               />
             </div>
 
@@ -119,7 +117,6 @@ function Dashboard() {
               <ListCellInfo
                 questions={listQuestionType}
                 colors={listColors}
-                questionTypes={questionTypes}
               />
             </div>
           </div>
