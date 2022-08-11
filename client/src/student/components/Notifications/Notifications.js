@@ -59,6 +59,7 @@ export const Notifications = ({ changeBgColor }) => {
         LoadingList.fetchNotifications,
         Requests.fetchNotifications
       );
+      
       setNewNotifications(response.filter((res) => !res.watched));
       setNotifications(
         response.map((res) => (

@@ -25,6 +25,7 @@ export const CommentList = ({ id_question }) => {
         `${Requests.fetchComments}${id_question}`
       );
       setComments(response);
+      console.log(response)
       dispatch(uiActions.setSpinnerState({ type: "DONE" }));
     };
     request();
