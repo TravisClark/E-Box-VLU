@@ -15,7 +15,7 @@ export const SearchItem = (props) => {
         dispatch(itemActions.clearItems())
     }
   }, [dispatch]);
-  
+
   return (
     <input
       type="text"

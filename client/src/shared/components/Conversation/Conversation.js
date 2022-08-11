@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Requests from "../../api/Requests";
 import useHttpClient from "../../hooks/http-hook";
 import { MessageReceiver } from "./MessageReceiver/MessageReceiver";
@@ -7,14 +7,11 @@ import { MessageSender } from "./MessageSender/MessageSender";
 import { io } from "socket.io-client";
 import { LoadingDot } from "../LoadingDot/LoadingDot";
 import { LoadingList } from "../../api/LoadingList";
+import { uiActions } from "../../store/ui-slice";
 
 const URL = "ws://localhost:8900";
 
-export const Conversation = ({
-  selectedUser,
-  minHeight,
-  maxHeight,
-}) => {
+export const Conversation = ({ selectedUser, minHeight, maxHeight, minWidth}) => {
   const { account } = useSelector((state) => state.auth);
   const [conversations, setConversations] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -24,6 +21,7 @@ export const Conversation = ({
   const socket = useRef();
   const scrollRef = useRef();
   const { sendRequest } = useHttpClient();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const request = async () => {
@@ -32,6 +30,7 @@ export const Conversation = ({
         `${Requests.fetchConversation}${selectedUser.id_conversation}`
       );
       setConversations(response);
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       setReceiver(
         selectedUser.members
           .filter((member) => member !== account.username)
@@ -39,7 +38,7 @@ export const Conversation = ({
       );
     };
     request();
-  }, [selectedUser, sendRequest, account.username]);
+  }, [selectedUser, sendRequest, account.username, dispatch]);
 
   useEffect(() => {
     socket.current = io(URL);
@@ -81,7 +80,8 @@ export const Conversation = ({
     };
     socket.current.emit("sendMessage", socketItem);
     try {
-      const res = await sendRequest('',
+      const res = await sendRequest(
+        "",
         Requests.sendMessage,
         "POST",
         JSON.stringify(message)
@@ -98,7 +98,7 @@ export const Conversation = ({
   }, [conversations]);
 
   return (
-    <div className=" w-full bg-white rounded-md flex flex-col">
+    <div className="w-full bg-white rounded-md flex flex-col" style={{minWidth}}>
       <>
         <div
           className="p-4 flex space-x-2"
@@ -115,50 +115,53 @@ export const Conversation = ({
             <LoadingDot className="m-auto" />
           </div>
         )}
-        {loadingType !== LoadingList.fetchConversation && (
-          <div
-            className="flex flex-col space-y-2 w-96 min-w-full overflow-hidden hover:overflow-auto"
-            style={{ maxHeight, minHeight }}
-          >
-            {conversations.map(function (conversation) {
-              if (conversation.username_sender === account.username) {
-                return (
-                  <div ref={scrollRef} key={conversation._id}>
-                    <MessageSender chat={conversation} />
-                  </div>
-                );
-              } else {
-                return (
-                  <div ref={scrollRef} key={conversation._id}>
-                    <MessageReceiver chat={conversation} />
-                  </div>
-                );
-              }
-            })}
-          </div>
-        )}
-        <form onSubmit={onSubmitHandler}>
-          <div
-            className="flex justify-self-end justify-between px-4 space-x-4 items-end py-4"
-            style={{ border: "1px solid #f1f2f6", borderRight: "2px" }}
-          >
-            <input
-              className="border px-2 py-2 rounded-md w-full outline-none text-sm"
-              placeholder="Input Message"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-            />
-            <button className="btn-primary">Gửi</button>
-          </div>
-        </form>
+        {loadingType !== LoadingList.fetchConversation &&
+          conversations.length > 0 && (
+            <>
+              <div
+                className="flex flex-col space-y-2 w-96 min-w-full overflow-hidden hover:overflow-auto"
+                style={{ maxHeight, minHeight }}
+              >
+                {conversations.map(function (conversation) {
+                  if (conversation.username_sender === account.username) {
+                    return (
+                      <div ref={scrollRef} key={conversation._id}>
+                        <MessageSender chat={conversation} />
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div ref={scrollRef} key={conversation._id}>
+                        <MessageReceiver chat={conversation} />
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+              <form onSubmit={onSubmitHandler}>
+                <div
+                  className="flex justify-self-end justify-between px-4 space-x-4 items-end py-4"
+                  style={{ border: "1px solid #f1f2f6", borderRight: "2px" }}
+                >
+                  <input
+                    className="border px-2 py-2 rounded-md w-full outline-none text-sm"
+                    placeholder="Input Message"
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                  />
+                  <button className="btn-primary">Gửi</button>
+                </div>
+              </form>
+            </>
+          )}
       </>
 
-      {!isSpinnerLoading && !conversations && (
+      {!isSpinnerLoading && conversations.length === 0 && (
         <div
           style={{ minHeight }}
-          className="flex items-center justify-center font-bold"
+          className="flex items-center justify-center font-bold p-4"
         >
-          There is no conversation to display!
+          Không có cuộc hội thoại nào tồn tại!
         </div>
       )}
     </div>

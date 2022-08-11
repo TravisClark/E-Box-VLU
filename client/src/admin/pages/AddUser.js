@@ -57,10 +57,10 @@ function AddUser() {
               ref={inputRef}
             />
           </div>
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 l">
             <span>Vai trò</span>
             <div className="flex items-center">
-              <RoleList className="border w-full" selected="Sinh Viên" />
+              <RoleList className="border min-w-full" selected="Sinh Viên" />
               {loadingType === LoadingList.fetchRoleList && (
                 <LoadingDot className="ml-4" />
               )}
