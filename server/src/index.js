@@ -1,17 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const helmet = require('helmet');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 const route = require('./routes/index');
 
-const URI_DATABASE = process.env.URI_DATABASE || 8080;
+const URI_DATABASE = process.env.URI_DATABASE;
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -42,7 +41,6 @@ const corsOptions ={
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
-app.use(helmet());
 app.use(morgan('common'));
 
 //Connecting router
