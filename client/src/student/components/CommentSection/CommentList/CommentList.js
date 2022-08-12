@@ -41,7 +41,6 @@ export const CommentList = ({ id_question }) => {
         comment: data.comment,
         createdAt: new Date()
       });
-      // console.log(data)
     });
   }, []);
 
