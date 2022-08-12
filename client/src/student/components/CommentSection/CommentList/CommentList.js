@@ -8,6 +8,8 @@ import { LoadingList } from "../../../../shared/api/LoadingList";
 import { LoadingDot } from "../../../../shared/components/LoadingDot/LoadingDot";
 import { uiActions } from "../../../../shared/store/ui-slice";
 
+const URL = "https://e-box-vlu.herokuapp.com";
+
 export const CommentList = ({ id_question }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -32,7 +34,7 @@ export const CommentList = ({ id_question }) => {
   }, [sendRequest, id_question, dispatch]);
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io(URL);
     socket.current.on("getComment", (data) => {
       setNewComment({
         username: data.username,
