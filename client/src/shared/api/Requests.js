@@ -1,6 +1,6 @@
 
-// const URL = 'http://localhost:5000'
-const URL = 'https://e-box-vlu.herokuapp.com'
+const URL = 'http://localhost:5000'
+// const URL = 'https://e-box-vlu.herokuapp.com'
 
 const Requests = {
     loginRequest: `${URL}/api/user/user/login`,
