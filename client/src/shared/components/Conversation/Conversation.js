@@ -9,7 +9,7 @@ import { LoadingDot } from "../LoadingDot/LoadingDot";
 import { LoadingList } from "../../api/LoadingList";
 import { uiActions } from "../../store/ui-slice";
 
-const URL = "ws://localhost:8900";
+const URL = "https://e-box-vlu.herokuapp.com";
 
 export const Conversation = ({ selectedUser, minHeight, maxHeight, minWidth}) => {
   const { account } = useSelector((state) => state.auth);
@@ -119,7 +119,7 @@ export const Conversation = ({ selectedUser, minHeight, maxHeight, minWidth}) =>
           conversations.length > 0 && (
             <>
               <div
-                className="flex flex-col space-y-2 w-96 min-w-full overflow-hidden hover:overflow-auto"
+                className="flex flex-col space-y-2 w-32 min-w-full overflow-hidden hover:overflow-auto"
                 style={{ maxHeight, minHeight }}
               >
                 {conversations.map(function (conversation) {

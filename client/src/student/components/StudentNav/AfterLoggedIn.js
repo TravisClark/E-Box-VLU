@@ -32,7 +32,7 @@ function AfterLoggedIn({
   const runAdminModeHandler = () => {
     dispatch(uiActions.runAdminMode({ type: "RUN_ADMIN_MODE" }));
     toggleMenuHandler();
-    history.push("/E-boxVLU/admin/dashboard");
+    history.push(`${account.role_name !== Roles.assistant ? '/E-boxVLU/admin/dashboard' : '/E-boxVLU/admin/questions'}`);
   };
 
   return (

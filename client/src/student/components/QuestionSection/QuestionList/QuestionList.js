@@ -95,7 +95,7 @@ function QuestionList() {
 
   return (
     <section id="questions">
-      <div className="flex flex-col space-y-6 items-center">
+      <div className="flex flex-col space-y-6 items-center w-screen">
         <h1 className=" font-semibold uppercase text-white">
           Câu Hỏi Theo Danh Mục
         </h1>

@@ -5,7 +5,7 @@ import Container from "../UI/Container";
 import { useSelector } from "react-redux";
 import BeforeLogin from "./BeforeLogin";
 import AfterLoggedIn from "./AfterLoggedIn";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/education.png";
 import { Link } from "react-router-dom";
 
 function Navbar() {
@@ -25,7 +25,7 @@ function Navbar() {
     }
   };
   window.addEventListener("scroll", changeNavbarColor);
-  let hamBtnClass = `${classes.hamburger} block z-20  && !navbarIsOpen md:hidden`;
+  let hamBtnClass = `${classes.hamburger} block z-20 ${!navbarIsOpen && 'md:hidden'}`;
   if (navbarIsOpen) {
     hamBtnClass = `${classes.open} ${classes.hamburger} block z-20 `;
   }
@@ -34,17 +34,14 @@ function Navbar() {
   };
 
   return (
-    <nav>
+    <nav  >
       <Container
-        className={`fixed flex z-30 justify-between min-w-full p-4 items-center transition duration-500 drop-shadow-md sm:px-20 ${
+        className={`fixed flex z-30 w-screen justify-around p-4 items-center transition duration-500 drop-shadow-md sm:px-20 ${
           changeBgColor && "bg-white"
-        } md:justify-around md:px-0`}
+        }  md:px-0 sm:min-w-full`}
       >
         <div className="flex space-x-4 items-center z-50">
-          <div
-            className="bg-cover bg-no-repeat bg-left-top w-9 h-12"
-            style={{ backgroundImage: `url(${logo})` }}
-          />
+          <img src={logo} alt=''/>
           <Link
             className={`font-bold text-2xl transition duration-500 whitespace-nowrap ${
               changeBgColor && !navbarIsOpen ? "text-black" : "text-white"
