@@ -46,8 +46,9 @@ function ChangePasswordForm() {
           password: newPw,
         })
       );
+      dispatch(uiActions.showSuccessNotification("Đổi mật khẩu thành công"));
       dispatch(uiActions.setSpinnerState({ type: "DONE" }));
-      history.push("/E-boxVLU/Home");
+        history.push("/E-boxVLU/Home");
     } catch (error) {}
   };
   return (
