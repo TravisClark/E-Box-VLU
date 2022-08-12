@@ -46,8 +46,12 @@ app.use(morgan('common'));
 //Connecting router
 route(app);
 
+const server = app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+});
+
 //connect socket
-const io = require('socket.io')(8900, {
+const io = require('socket.io')(server, {
     cors: {
         origin: '*',
         credentials:true,
@@ -156,10 +160,6 @@ io.on('connection', (socket) => {
         removeUser_question(socket.id);
         io.emit('getUsers_question', users_question);
     });
-});
-
-app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
 });
 
 module.exports = app;
