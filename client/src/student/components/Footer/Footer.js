@@ -42,7 +42,7 @@ function Footer() {
         </div>
 
         <div className="h-0.5 w-full md:w-9/12 bg-gray-700 my-10"></div>
-        <h1 className="text-sm text-lightGray mb-4">
+        <h1 className="text-sm text-lightGray mb-4 text-center">
           2022 - Bản Quyền Thuộc Về K25PM - SEP - Team 11
         </h1>
       </Container>

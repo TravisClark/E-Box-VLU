@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Container from "../../../../student/components/UI/Container";
 import classes from "./SideNav.module.css";
 import { NavLink } from "react-router-dom";
-import logo from "../../../../assets/logo.png";
+import logo from "../../../../assets/education.png";
 import { useSelector } from "react-redux";
 import { Roles } from "../../../../shared/roles/roles";
 function SideNav() {
@@ -27,7 +27,7 @@ function SideNav() {
       >
         {/* Mobile hamburger */}
         <div
-          className={`flex items-center p-4 border-gray-300 flex-wrap-reverse ${
+          className={`flex items-center w-full justify-between p-4 border-gray-300 flex-wrap-reverse ${
             navbarIsOpen && "flex-row-reverse"
           }`}
         >
@@ -37,11 +37,8 @@ function SideNav() {
             <span className={`${classes["hamburger-bottom"]} bg-black`}></span>
           </button>
           {navbarIsOpen && (
-            <div className="flex">
-              <div
-                className="bg-cover bg-no-repeat bg-left-top w-9 h-10"
-                style={{ backgroundImage: `url(${logo})` }}
-              ></div>
+            <div className="flex space-x-2">
+              <img src={logo} alt='' className="scale-75"/>
               <h1
                 className={`font-semibold mr-4 text-xl self-center text-black
               }`}
