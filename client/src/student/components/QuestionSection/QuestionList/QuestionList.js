@@ -28,8 +28,8 @@ function QuestionList() {
           LoadingList.fetchQuestionListUser,
           Requests.fetchQuestionListUser
         );
-        setQuestions(response);
-        dispatch(uiActions.setSpinnerState({ type: "DONE" }));
+         setQuestions(response);
+         dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       };
       request();
     } catch (error) {}
@@ -95,7 +95,7 @@ function QuestionList() {
 
   return (
     <section id="questions">
-      <div className="flex flex-col space-y-6 items-center w-screen">
+      <div className="flex flex-col space-y-6 items-center">
         <h1 className=" font-semibold uppercase text-white">
           Câu Hỏi Theo Danh Mục
         </h1>
@@ -112,12 +112,12 @@ function QuestionList() {
               {secondList}
             </ul>
           )}
-          {currentItems.length === 0 && !isSpinnerLoading && (
-            <div className="w-96 bg-white p-4 rounded-md drop-shadow-lg">
+          {(questions.length === 0 && !isSpinnerLoading) && (
+            <div className=" sm:w-96 bg-white p-4 rounded-md drop-shadow-lg">
               <h1>Không tìm thấy câu hỏi!</h1>
             </div>
           )}
-          {isSpinnerLoading &&
+          {currentItems.length === 0 &&
             loadingType === LoadingList.fetchQuestionListUser && (
               <div className="h-28 flex justify-center items-center">
                 <LoadingDot className="m-auto" color="#fff" />

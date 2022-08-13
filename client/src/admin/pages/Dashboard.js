@@ -17,11 +17,11 @@ import { ListCellInfo } from "../components/Chart/ListCellInfo";
 //   answered: "answered",
 // };
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#0088FE", "#00C49F", "#3c6382", "#FF8042"];
 const listColors = [
   "#0984e3",
   "#6c5ce7",
-  "#ffb142",
+  "#3c6382",
   "#e84393",
   "#00cec9",
   "#706fd3",
@@ -102,7 +102,7 @@ function Dashboard() {
               className="flex flex-col rounded-md  p-6 w-2/5"
             >
               <span className="font-bold text-xl text-center">Loại câu hỏi</span>
-              <Chart valuesOfChart={valuesOfChart} colors={COLORS} />
+              <Chart valuesOfChart={valuesOfChart.filter(question => question.value !== 0)} colors={COLORS} />
               <ListCellInfo
                 questions={valuesOfChart}
                 colors={COLORS}
@@ -113,7 +113,7 @@ function Dashboard() {
               className="flex flex-col rounded-md  p-6 w-2/5"
             >
               <span className="font-bold text-xl text-center">Câu hỏi theo danh mục</span>
-              <Chart valuesOfChart={listQuestionType} colors={listColors} />
+              <Chart valuesOfChart={listQuestionType.filter(question => question.value !== 0)} colors={listColors} />
               <ListCellInfo
                 questions={listQuestionType}
                 colors={listColors}

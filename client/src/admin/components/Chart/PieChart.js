@@ -70,8 +70,6 @@ const CustomTooltip = ({ active, payload, label }) => {
 // };
 
 export const Chart = ({ valuesOfChart, colors }) => {
-  // console.table(valuesOfChart);
-
   return (
     <PieChart width={300} height={300} className="self-center ">
       <Pie
