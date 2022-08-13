@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { ConfirmNotification } from "../../../shared/components/UI/ConfirmNotification";
 import { Roles } from "../../../shared/roles/roles";
 import { ChatBox } from "../ChatSection/ChatBox";
+import { ChatBoxMobile } from "../ChatSection/ChatBoxMobile";
 import StudentFooter from "../Footer/Footer";
 import StudentNavbar from "../StudentNav/StudentNav";
 export const StudentLayout = (props) => {
@@ -13,7 +14,14 @@ export const StudentLayout = (props) => {
     <div className="flex flex-col relative">
       <StudentNavbar />
       {props.children}
-      {account.role_name === Roles.student && <ChatBox />}
+      {account.role_name === Roles.student && (
+        <div className="hidden md:block">
+          <ChatBox />
+        </div>
+      )}
+      <div className="block md:hidden">
+        <ChatBoxMobile />
+      </div>
       <StudentFooter />
       {isShowing && <ConfirmNotification />}
     </div>
