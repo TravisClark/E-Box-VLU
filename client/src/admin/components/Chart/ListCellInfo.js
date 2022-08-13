@@ -7,7 +7,7 @@ export const ListCellInfo = ({ questions, colors}) => {
       <div className="flex justify-between items-center">
         <div className="flex flex-col space-y-1">
           <span className="font-semibold">{question.name}</span>
-          <span className="opacity-70">Tổng: {question.value} (?)</span>
+          <span className="opacity-70">Tổng: {question.value} câu hỏi.</span>
         </div>
         <div
           className={`w-8 h-8 rounded-md`}

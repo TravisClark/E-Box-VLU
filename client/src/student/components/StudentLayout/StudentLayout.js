@@ -8,7 +8,7 @@ import StudentFooter from "../Footer/Footer";
 import StudentNavbar from "../StudentNav/StudentNav";
 export const StudentLayout = (props) => {
   const { isShowing } = useSelector((state) => state.ui.notification);
-  const { account } = useSelector((state) => state.auth);
+  const { account} = useSelector((state) => state.auth);
 
   return (
     <div className="flex flex-col relative">
@@ -19,9 +19,9 @@ export const StudentLayout = (props) => {
           <ChatBox />
         </div>
       )}
-      <div className="block md:hidden">
+      {account.role_name === Roles.student && <div className="block md:hidden">
         <ChatBoxMobile />
-      </div>
+      </div>}
       <StudentFooter />
       {isShowing && <ConfirmNotification />}
     </div>

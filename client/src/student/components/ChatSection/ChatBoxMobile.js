@@ -3,7 +3,7 @@ import { ContactList } from "../../../shared/components/Conversation/ContactList
 import { Conversation } from "../../../shared/components/Conversation/Conversation";
 import { ChatButton } from "./ChatButton";
 export const ChatBoxMobile = () => {
-  const [isOpenChatBox, setIsOpenChatBox] = useState(true);
+  const [isOpenChatBox, setIsOpenChatBox] = useState(false);
   const [selectedUser, setSelectedUser] = useState({});
   const [isOpenConversation, setIsOpenConversation] = useState(true);
 
@@ -15,11 +15,11 @@ export const ChatBoxMobile = () => {
   const toggleChatBox = () => {
     setIsOpenChatBox((prevState) => !prevState);
   };
+  
   const toggleConversation = () => {
     setIsOpenConversation((prevState) => !prevState);
   };
-  
-  console.log(isOpenConversation)
+
   return (
     <>
       {!isOpenChatBox && <ChatButton onClick={toggleChatBox} />}
