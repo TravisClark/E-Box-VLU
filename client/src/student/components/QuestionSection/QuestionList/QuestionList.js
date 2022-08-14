@@ -112,8 +112,8 @@ function QuestionList() {
               {secondList}
             </ul>
           )}
-          {(questions.length === 0 && !isSpinnerLoading) && (
-            <div className=" sm:w-96 bg-white p-4 rounded-md drop-shadow-lg">
+          {(currentItems.length === 0 && !isSpinnerLoading) && (
+            <div className="sm:w-96 bg-white p-4 rounded-md drop-shadow-lg">
               <h1>Không tìm thấy câu hỏi!</h1>
             </div>
           )}
