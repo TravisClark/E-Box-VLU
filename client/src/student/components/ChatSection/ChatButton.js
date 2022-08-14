@@ -2,7 +2,7 @@ import React from "react";
 
 export const ChatButton = (props) => {
   return (
-    <button className="btn-primary fixed z-20 right-10 bottom-10" {...props}>
+    <button className="btn-primary fixed z-40 right-10 bottom-10" {...props}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
