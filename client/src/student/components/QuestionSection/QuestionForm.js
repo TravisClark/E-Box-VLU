@@ -33,7 +33,7 @@ function QuestionForm(props) {
         })
       );
       props.onClose();
-      dispatch(uiActions.showSuccessNotification("Đặt câu hỏi thành công"));
+      dispatch(uiActions.showSuccessNotification("Đặt câu hỏi thành công"));  
     } catch (error) {}
   };
 

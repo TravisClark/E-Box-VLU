@@ -7,7 +7,7 @@ import { Roles } from "../../../roles/roles";
 import { uiActions } from "../../../store/ui-slice";
 import { SearchItem } from "../../SearchItem/SearchItem";
 
-export const ContactList = ({ onSelectUser, selectedUser, maxHeight, minWidth }) => {
+export const ContactList = ({ onSelectUser, selectedUser, maxHeight, minWidth, className, toggleConversation }) => {
   const { sendRequest } = useHttpClient();
   const { account } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
@@ -15,12 +15,15 @@ export const ContactList = ({ onSelectUser, selectedUser, maxHeight, minWidth })
   const { itemSearching } = useSelector((state) => state.item);
   const dispatch = useDispatch();
 
+  const defaultStyles = `h-auto min-w-1/3 bg-white rounded-md border flex flex-col space-y-4 p-6 items-center w-96`
+
   useEffect(() => {
     const request = async () => {
       const response = await sendRequest(
         LoadingList.fetchUsersContact,
         Requests.fetchUsersContact
       );
+      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       if (response[0].members[1] === account.username) {
         for (let index = 0; index < response.length; index++) {
           let temp = response[index].members[0];
@@ -29,8 +32,6 @@ export const ContactList = ({ onSelectUser, selectedUser, maxHeight, minWidth })
         }
       }
       setUsers(response);
-      console.log(response);
-      dispatch(uiActions.setSpinnerState({ type: "DONE" }));
       onSelectUser(response[0]);
     };
     request();
@@ -40,7 +41,6 @@ export const ContactList = ({ onSelectUser, selectedUser, maxHeight, minWidth })
     const searchUser = users.filter((user) =>
       user.members[1].toLowerCase().includes(itemSearching.toLowerCase())
     );
-    console.log(searchUser);
     setUsersDisplay(
       account.role_name === Roles.admin || account.role_name === Roles.assistant
         ? searchUser
@@ -79,7 +79,7 @@ export const ContactList = ({ onSelectUser, selectedUser, maxHeight, minWidth })
   return (
     <>
       {users.length !== 0 && (
-        <div className="h-auto min-w-1/3 bg-white rounded-md border flex flex-col space-y-4 p-6 items-center w-96" style={{minWidth}}>
+        <div className={className ? className : defaultStyles} style={{minWidth}}>
           <div className="flex flex-col space-y-2 bg-gray-200 rounded-md justify-center items-center p-6 w-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
