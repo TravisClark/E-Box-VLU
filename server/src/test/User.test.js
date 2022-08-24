@@ -7,7 +7,7 @@ describe('Unit test of Generate account when entering complete information', () 
         const response = await request(app)
             .post('/api/admin/user/add_user')
             .send({
-                username: '197pm28901',
+                username: '197pm28091',
                 role_name: 'Sinh Viên',
             })
             .set({
