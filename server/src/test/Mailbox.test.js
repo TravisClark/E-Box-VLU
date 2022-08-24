@@ -469,14 +469,21 @@ describe('Unit Tests of view rejection notice function', () => {
         var count_refused = await Mailbox.count({
             status_question: 'Đã bị từ chối',
         });
-        var count_type1 = await Mailbox.count({ type_name: 'Học phần' });
-        var count_type2 = await Mailbox.count({ type_name: 'Học phí' });
-        var count_type3 = await Mailbox.count({ type_name: 'Học bổng' });
-        var count_type4 = await Mailbox.count({
-            type_name: 'Chương trình đào tạo',
-        });
-        var count_type5 = await Mailbox.count({ type_name: 'Hướng nghiệp' });
-        var count_type6 = await Mailbox.count({ type_name: 'Câu hỏi khác' });
+        var count_type1 = await Mailbox.count({status_question: 'Đã được trả lời', type_name: 'Học phần' });
+            var count_type2 = await Mailbox.count({status_question: 'Đã được trả lời', type_name: 'Học phí' });
+            var count_type3 = await Mailbox.count({status_question: 'Đã được trả lời', type_name: 'Học bổng' });
+            var count_type4 = await Mailbox.count({
+                status_question: 'Đã được trả lời',
+                type_name: 'Chương trình đào tạo',
+            });
+            var count_type5 = await Mailbox.count({
+                status_question: 'Đã được trả lời',
+                type_name: 'Hướng nghiệp',
+            });
+            var count_type6 = await Mailbox.count({
+                status_question: 'Đã được trả lời',
+                type_name: 'Câu hỏi khác',
+            });
         const list_questions = await Mailbox.find({
             status_question: 'Đã được trả lời',
         });
